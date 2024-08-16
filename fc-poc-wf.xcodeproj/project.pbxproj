@@ -1,0 +1,814 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
+		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
+		47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324062C6E578400BE03C2 /* Assets.xcassets */; };
+		47C3240A2C6E578400BE03C2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324092C6E578400BE03C2 /* Preview Assets.xcassets */; };
+		47C324142C6E578400BE03C2 /* fc_poc_wfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324132C6E578400BE03C2 /* fc_poc_wfTests.swift */; };
+		47C3241E2C6E578400BE03C2 /* fc_poc_wfUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3241D2C6E578400BE03C2 /* fc_poc_wfUITests.swift */; };
+		47C324202C6E578400BE03C2 /* fc_poc_wfUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3241F2C6E578400BE03C2 /* fc_poc_wfUITestsLaunchTests.swift */; };
+		47C324332C6E57D500BE03C2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
+		47C324352C6E57D500BE03C2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
+		47C324382C6E57D500BE03C2 /* FCWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324372C6E57D500BE03C2 /* FCWidgetsBundle.swift */; };
+		47C3243A2C6E57D500BE03C2 /* FCWidgetsLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324392C6E57D500BE03C2 /* FCWidgetsLiveActivity.swift */; };
+		47C3243C2C6E57D500BE03C2 /* FCWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3243B2C6E57D500BE03C2 /* FCWidgets.swift */; };
+		47C3243E2C6E57D500BE03C2 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3243D2C6E57D500BE03C2 /* AppIntent.swift */; };
+		47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C3243F2C6E57D500BE03C2 /* Assets.xcassets */; };
+		47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47C3244B2C6E599300BE03C2 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = 47C3244A2C6E599300BE03C2 /* OpenGraph */; };
+		47C3244D2C6E935E00BE03C2 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = 47C3244C2C6E935E00BE03C2 /* OpenGraph */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47C324102C6E578400BE03C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47C323FE2C6E578300BE03C2;
+			remoteInfo = "fc-poc-wf";
+		};
+		47C3241A2C6E578400BE03C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47C323FE2C6E578300BE03C2;
+			remoteInfo = "fc-poc-wf";
+		};
+		47C324422C6E57D500BE03C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47C3242F2C6E57D400BE03C2;
+			remoteInfo = FCWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		47C324482C6E57D500BE03C2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
+		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		47C324062C6E578400BE03C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		47C324092C6E578400BE03C2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		47C3240F2C6E578400BE03C2 /* fc-poc-wfTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fc-poc-wfTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C324132C6E578400BE03C2 /* fc_poc_wfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfTests.swift; sourceTree = "<group>"; };
+		47C324192C6E578400BE03C2 /* fc-poc-wfUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fc-poc-wfUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C3241D2C6E578400BE03C2 /* fc_poc_wfUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfUITests.swift; sourceTree = "<group>"; };
+		47C3241F2C6E578400BE03C2 /* fc_poc_wfUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FCWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C324322C6E57D400BE03C2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		47C324342C6E57D500BE03C2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		47C324372C6E57D500BE03C2 /* FCWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCWidgetsBundle.swift; sourceTree = "<group>"; };
+		47C324392C6E57D500BE03C2 /* FCWidgetsLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCWidgetsLiveActivity.swift; sourceTree = "<group>"; };
+		47C3243B2C6E57D500BE03C2 /* FCWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCWidgets.swift; sourceTree = "<group>"; };
+		47C3243D2C6E57D500BE03C2 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		47C3243F2C6E57D500BE03C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		47C324412C6E57D500BE03C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		47C323FC2C6E578300BE03C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C3244D2C6E935E00BE03C2 /* OpenGraph in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C3240C2C6E578400BE03C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C324162C6E578400BE03C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C3242D2C6E57D400BE03C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C324352C6E57D500BE03C2 /* SwiftUI.framework in Frameworks */,
+				47C324332C6E57D500BE03C2 /* WidgetKit.framework in Frameworks */,
+				47C3244B2C6E599300BE03C2 /* OpenGraph in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		47C323F62C6E578300BE03C2 = {
+			isa = PBXGroup;
+			children = (
+				47C324012C6E578300BE03C2 /* fc-poc-wf */,
+				47C324122C6E578400BE03C2 /* fc-poc-wfTests */,
+				47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */,
+				47C324362C6E57D500BE03C2 /* FCWidgets */,
+				47C324312C6E57D400BE03C2 /* Frameworks */,
+				47C324002C6E578300BE03C2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		47C324002C6E578300BE03C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */,
+				47C3240F2C6E578400BE03C2 /* fc-poc-wfTests.xctest */,
+				47C324192C6E578400BE03C2 /* fc-poc-wfUITests.xctest */,
+				47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		47C324012C6E578300BE03C2 /* fc-poc-wf */ = {
+			isa = PBXGroup;
+			children = (
+				47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */,
+				47C324042C6E578300BE03C2 /* ContentView.swift */,
+				47C324062C6E578400BE03C2 /* Assets.xcassets */,
+				47C324082C6E578400BE03C2 /* Preview Content */,
+			);
+			path = "fc-poc-wf";
+			sourceTree = "<group>";
+		};
+		47C324082C6E578400BE03C2 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				47C324092C6E578400BE03C2 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		47C324122C6E578400BE03C2 /* fc-poc-wfTests */ = {
+			isa = PBXGroup;
+			children = (
+				47C324132C6E578400BE03C2 /* fc_poc_wfTests.swift */,
+			);
+			path = "fc-poc-wfTests";
+			sourceTree = "<group>";
+		};
+		47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */ = {
+			isa = PBXGroup;
+			children = (
+				47C3241D2C6E578400BE03C2 /* fc_poc_wfUITests.swift */,
+				47C3241F2C6E578400BE03C2 /* fc_poc_wfUITestsLaunchTests.swift */,
+			);
+			path = "fc-poc-wfUITests";
+			sourceTree = "<group>";
+		};
+		47C324312C6E57D400BE03C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47C324322C6E57D400BE03C2 /* WidgetKit.framework */,
+				47C324342C6E57D500BE03C2 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		47C324362C6E57D500BE03C2 /* FCWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				47C324372C6E57D500BE03C2 /* FCWidgetsBundle.swift */,
+				47C324392C6E57D500BE03C2 /* FCWidgetsLiveActivity.swift */,
+				47C3243B2C6E57D500BE03C2 /* FCWidgets.swift */,
+				47C3243D2C6E57D500BE03C2 /* AppIntent.swift */,
+				47C3243F2C6E57D500BE03C2 /* Assets.xcassets */,
+				47C324412C6E57D500BE03C2 /* Info.plist */,
+			);
+			path = FCWidgets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		47C323FE2C6E578300BE03C2 /* fc-poc-wf */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C324232C6E578400BE03C2 /* Build configuration list for PBXNativeTarget "fc-poc-wf" */;
+			buildPhases = (
+				47C323FB2C6E578300BE03C2 /* Sources */,
+				47C323FC2C6E578300BE03C2 /* Frameworks */,
+				47C323FD2C6E578300BE03C2 /* Resources */,
+				47C324482C6E57D500BE03C2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47C324432C6E57D500BE03C2 /* PBXTargetDependency */,
+			);
+			name = "fc-poc-wf";
+			packageProductDependencies = (
+				47C3244C2C6E935E00BE03C2 /* OpenGraph */,
+			);
+			productName = "fc-poc-wf";
+			productReference = 47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47C3240E2C6E578400BE03C2 /* fc-poc-wfTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C324262C6E578400BE03C2 /* Build configuration list for PBXNativeTarget "fc-poc-wfTests" */;
+			buildPhases = (
+				47C3240B2C6E578400BE03C2 /* Sources */,
+				47C3240C2C6E578400BE03C2 /* Frameworks */,
+				47C3240D2C6E578400BE03C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47C324112C6E578400BE03C2 /* PBXTargetDependency */,
+			);
+			name = "fc-poc-wfTests";
+			productName = "fc-poc-wfTests";
+			productReference = 47C3240F2C6E578400BE03C2 /* fc-poc-wfTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		47C324182C6E578400BE03C2 /* fc-poc-wfUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C324292C6E578400BE03C2 /* Build configuration list for PBXNativeTarget "fc-poc-wfUITests" */;
+			buildPhases = (
+				47C324152C6E578400BE03C2 /* Sources */,
+				47C324162C6E578400BE03C2 /* Frameworks */,
+				47C324172C6E578400BE03C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47C3241B2C6E578400BE03C2 /* PBXTargetDependency */,
+			);
+			name = "fc-poc-wfUITests";
+			productName = "fc-poc-wfUITests";
+			productReference = 47C324192C6E578400BE03C2 /* fc-poc-wfUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C324452C6E57D500BE03C2 /* Build configuration list for PBXNativeTarget "FCWidgetsExtension" */;
+			buildPhases = (
+				47C3242C2C6E57D400BE03C2 /* Sources */,
+				47C3242D2C6E57D400BE03C2 /* Frameworks */,
+				47C3242E2C6E57D400BE03C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FCWidgetsExtension;
+			packageProductDependencies = (
+				47C3244A2C6E599300BE03C2 /* OpenGraph */,
+			);
+			productName = FCWidgetsExtension;
+			productReference = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		47C323F72C6E578300BE03C2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1510;
+				LastUpgradeCheck = 1510;
+				TargetAttributes = {
+					47C323FE2C6E578300BE03C2 = {
+						CreatedOnToolsVersion = 15.1;
+					};
+					47C3240E2C6E578400BE03C2 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 47C323FE2C6E578300BE03C2;
+					};
+					47C324182C6E578400BE03C2 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 47C323FE2C6E578300BE03C2;
+					};
+					47C3242F2C6E57D400BE03C2 = {
+						CreatedOnToolsVersion = 15.1;
+					};
+				};
+			};
+			buildConfigurationList = 47C323FA2C6E578300BE03C2 /* Build configuration list for PBXProject "fc-poc-wf" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 47C323F62C6E578300BE03C2;
+			packageReferences = (
+				47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */,
+			);
+			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47C323FE2C6E578300BE03C2 /* fc-poc-wf */,
+				47C3240E2C6E578400BE03C2 /* fc-poc-wfTests */,
+				47C324182C6E578400BE03C2 /* fc-poc-wfUITests */,
+				47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		47C323FD2C6E578300BE03C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C3240A2C6E578400BE03C2 /* Preview Assets.xcassets in Resources */,
+				47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C3240D2C6E578400BE03C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C324172C6E578400BE03C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C3242E2C6E57D400BE03C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47C323FB2C6E578300BE03C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C324052C6E578300BE03C2 /* ContentView.swift in Sources */,
+				47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C3240B2C6E578400BE03C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C324142C6E578400BE03C2 /* fc_poc_wfTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C324152C6E578400BE03C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C3241E2C6E578400BE03C2 /* fc_poc_wfUITests.swift in Sources */,
+				47C324202C6E578400BE03C2 /* fc_poc_wfUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C3242C2C6E57D400BE03C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C3243C2C6E57D500BE03C2 /* FCWidgets.swift in Sources */,
+				47C3243E2C6E57D500BE03C2 /* AppIntent.swift in Sources */,
+				47C324382C6E57D500BE03C2 /* FCWidgetsBundle.swift in Sources */,
+				47C3243A2C6E57D500BE03C2 /* FCWidgetsLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47C324112C6E578400BE03C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47C323FE2C6E578300BE03C2 /* fc-poc-wf */;
+			targetProxy = 47C324102C6E578400BE03C2 /* PBXContainerItemProxy */;
+		};
+		47C3241B2C6E578400BE03C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47C323FE2C6E578300BE03C2 /* fc-poc-wf */;
+			targetProxy = 47C3241A2C6E578400BE03C2 /* PBXContainerItemProxy */;
+		};
+		47C324432C6E57D500BE03C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */;
+			targetProxy = 47C324422C6E57D500BE03C2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		47C324212C6E578400BE03C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		47C324222C6E578400BE03C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		47C324242C6E578400BE03C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"fc-poc-wf/Preview Content\"";
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47C324252C6E578400BE03C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"fc-poc-wf/Preview Content\"";
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		47C324272C6E578400BE03C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wfTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fc-poc-wf.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/fc-poc-wf";
+			};
+			name = Debug;
+		};
+		47C324282C6E578400BE03C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wfTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fc-poc-wf.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/fc-poc-wf";
+			};
+			name = Release;
+		};
+		47C3242A2C6E578400BE03C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wfUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "fc-poc-wf";
+			};
+			name = Debug;
+		};
+		47C3242B2C6E578400BE03C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wfUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "fc-poc-wf";
+			};
+			name = Release;
+		};
+		47C324462C6E57D500BE03C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FCWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FCWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.FCWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47C324472C6E57D500BE03C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FCWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FCWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.FCWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		47C323FA2C6E578300BE03C2 /* Build configuration list for PBXProject "fc-poc-wf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C324212C6E578400BE03C2 /* Debug */,
+				47C324222C6E578400BE03C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C324232C6E578400BE03C2 /* Build configuration list for PBXNativeTarget "fc-poc-wf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C324242C6E578400BE03C2 /* Debug */,
+				47C324252C6E578400BE03C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C324262C6E578400BE03C2 /* Build configuration list for PBXNativeTarget "fc-poc-wfTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C324272C6E578400BE03C2 /* Debug */,
+				47C324282C6E578400BE03C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C324292C6E578400BE03C2 /* Build configuration list for PBXNativeTarget "fc-poc-wfUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C3242A2C6E578400BE03C2 /* Debug */,
+				47C3242B2C6E578400BE03C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C324452C6E57D500BE03C2 /* Build configuration list for PBXNativeTarget "FCWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C324462C6E57D500BE03C2 /* Debug */,
+				47C324472C6E57D500BE03C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:satoshi-takano/OpenGraph.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		47C3244A2C6E599300BE03C2 /* OpenGraph */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */;
+			productName = OpenGraph;
+		};
+		47C3244C2C6E935E00BE03C2 /* OpenGraph */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */;
+			productName = OpenGraph;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 47C323F72C6E578300BE03C2 /* Project object */;
+}

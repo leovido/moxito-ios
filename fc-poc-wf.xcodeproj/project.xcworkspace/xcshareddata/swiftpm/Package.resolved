@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "opengraph",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:satoshi-takano/OpenGraph.git",
+      "state" : {
+        "revision" : "15fa71b31cf85695cf7035a077aaa624f679f53a",
+        "version" : "1.6.0"
+      }
+    }
+  ],
+  "version" : 2
+}
