@@ -31,9 +31,7 @@
 		B9DF7F652C73B0FD0073D772 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F642C73B0FD0073D772 /* AppIntent.swift */; };
 		B9DF7F672C73B1000073D772 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9DF7F662C73B1000073D772 /* Assets.xcassets */; };
 		B9DF7F6B2C73B1000073D772 /* FartherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B9DF7F702C73B18A0073D772 /* TipDependencies in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F6F2C73B18A0073D772 /* TipDependencies */; };
 		B9DF7F722C73C5E90073D772 /* WaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F712C73C5E90073D772 /* WaterView.swift */; };
-		B9DF7F752C73CA2B0073D772 /* TipDependencies in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F742C73CA2B0073D772 /* TipDependencies */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +108,6 @@
 		B9DF7F662C73B1000073D772 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9DF7F682C73B1000073D772 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9DF7F712C73C5E90073D772 /* WaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterView.swift; sourceTree = "<group>"; };
-		B9DF7F762C73CAA80073D772 /* TipDependencies */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TipDependencies; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,10 +146,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9DF7F702C73B18A0073D772 /* TipDependencies in Frameworks */,
 				B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */,
 				B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */,
-				B9DF7F752C73CA2B0073D772 /* TipDependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +157,6 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
-				B9DF7F762C73CAA80073D772 /* TipDependencies */,
 				47C324012C6E578300BE03C2 /* fc-poc-wf */,
 				47C324122C6E578400BE03C2 /* fc-poc-wfTests */,
 				47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */,
@@ -352,8 +346,6 @@
 			);
 			name = FartherWidgetExtension;
 			packageProductDependencies = (
-				B9DF7F6F2C73B18A0073D772 /* TipDependencies */,
-				B9DF7F742C73CA2B0073D772 /* TipDependencies */,
 			);
 			productName = FartherWidgetExtension;
 			productReference = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */;
@@ -971,14 +963,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */;
 			productName = OpenGraph;
-		};
-		B9DF7F6F2C73B18A0073D772 /* TipDependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TipDependencies;
-		};
-		B9DF7F742C73CA2B0073D772 /* TipDependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TipDependencies;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

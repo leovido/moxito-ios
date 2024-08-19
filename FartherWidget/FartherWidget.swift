@@ -25,7 +25,7 @@ struct Provider: AppIntentTimelineProvider {
 	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
 		var entries: [SimpleEntry] = []
 		
-		let result = try! await client.requestFartherTips()
+		let result = try! await client.fetchFartherTips()
 		
 		// Generate a timeline consisting of five entries an hour apart, starting from the current date.
 		let currentDate = Date()
@@ -47,71 +47,78 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct FartherWidgetEntryView : View {
+	@Environment(\.widgetFamily) private var family
+
 	var entry: Provider.Entry
 	
 	var body: some View {
-		ZStack {
-			FartherTheme.backgroundColor
-			VStack(alignment: .leading) {
-				HStack {
+		switch family {
+			case .systemSmall:
+				ZStack {
+					FartherTheme.backgroundColor
 					VStack(alignment: .leading) {
-						Text("✨Balance")
-							.font(.custom("Avenir-Black", size: 12))
-						Text("\(entry.model.balance)")
-							.foregroundStyle(.white)
-							.fontDesign(.rounded)
-							.font(.system(size: 16))
-							.bold()
+						HStack {
+							VStack(alignment: .leading) {
+								Text("✨Balance")
+									.font(.custom("Avenir-Black", size: 12))
+								Text("\(entry.model.balance)")
+									.foregroundStyle(.white)
+									.fontDesign(.rounded)
+									.font(.system(size: 16))
+									.bold()
+							}
+							.font(.system(size: 13))
+							
+							Spacer()
+							
+							VStack(alignment: .leading) {
+								Text("Min✨")
+									.font(.custom("Avenir-Black", size: 12))
+								Text("\(entry.model.tipMin)")
+									.foregroundStyle(.white)
+									.fontDesign(.rounded)
+									.font(.system(size: 16))
+									.bold()
+							}
+							.font(.system(size: 13))
+						}
+						.padding([.vertical], 4)
+						.padding([.top], 4)
+						
+						VStack(alignment: .leading) {
+							Text("Daily✨")
+								.font(.custom("Avenir-Black", size: 12))
+								.bold()
+							Text("\(entry.model.given)/\(entry.model.allowance)")
+								.foregroundStyle(.white)
+								.fontDesign(.rounded)
+								.fontWeight(.bold)
+								.scaledToFill()
+								.minimumScaleFactor(0.5)
+								.font(.system(size: 20))
+						}
+						.font(.system(size: 13))
+						.padding(.bottom, 4)
+						
+						VStack(alignment: .leading) {
+							Text("Received✨")
+								.font(.custom("Avenir-Black", size: 12))
+								.bold()
+							Text("\(entry.model.received)")
+								.foregroundStyle(.white)
+								.fontDesign(.rounded)
+								.fontWeight(.semibold)
+								.font(.system(size: 20))
+						}
+						.font(.system(size: 13))
+						
+						Spacer()
+						
 					}
-					.font(.system(size: 13))
-					
-					Spacer()
-
-					VStack(alignment: .leading) {
-						Text("Min✨")
-							.font(.custom("Avenir-Black", size: 12))
-						Text("\(entry.model.tipMin)")
-							.foregroundStyle(.white)
-							.fontDesign(.rounded)
-							.font(.system(size: 16))
-							.bold()
-					}
-					.font(.system(size: 13))
+					.foregroundColor(FartherTheme.foregroundColor)
 				}
-				.padding([.vertical], 4)
-				.padding([.top], 4)
-
-				VStack(alignment: .leading) {
-					Text("Daily✨")
-						.font(.custom("Avenir-Black", size: 12))
-						.bold()
-					Text("\(entry.model.given)/\(entry.model.allowance)")
-						.foregroundStyle(.white)
-						.fontDesign(.rounded)
-						.fontWeight(.bold)
-						.scaledToFill()
-						.minimumScaleFactor(0.5)
-						.font(.system(size: 20))
-				}
-				.font(.system(size: 13))
-				.padding(.bottom, 4)
-				
-				VStack(alignment: .leading) {
-					Text("Received✨")
-						.font(.custom("Avenir-Black", size: 12))
-						.bold()
-					Text("\(entry.model.received)")
-						.foregroundStyle(.white)
-						.fontDesign(.rounded)
-						.fontWeight(.semibold)
-						.font(.system(size: 20))
-				}
-				.font(.system(size: 13))
-				
-				Spacer()
-				
-			}
-			.foregroundColor(FartherTheme.foregroundColor)
+			default:
+				Text("unimplemented")
 		}
 	}
 }
@@ -265,14 +272,21 @@ struct WaterView_Previews: PreviewProvider {
 	FartherWidget()
 } timeline: {
 	SimpleEntry(date: .now,
-							model: .init(id: UUID(), tipMin: Int.random(in: 100...200),
-													 balance: 1000, allowance: Int.random(in: 1000...5000), given: Int.random(in: 1000...4000), received: Int.random(in: 1000...50_000), date: Date(), rank: 342),
+							model: .init(id: UUID(), 
+													 allowance: Int.random(in: 100...200),
+													 given: 1000,
+													 received: Int.random(in: 1000...5000),
+													 balance: String(Int.random(in: 1000...4000)),
+													 tipMin: Int.random(in: 1000...50_000),
+													 rank: 342),
 							configuration: .smiley)
 	SimpleEntry(date: .now,
-							model: .init(id: UUID(), tipMin: Int.random(in: 100...200),
-													 balance: 1000,
-													 allowance: Int.random(in: 10000...50000),
-													 given: Int.random(in: 1000...4000),
-													 received: Int.random(in: 1000...50_000), date: Date(), rank: 342),
+							model: .init(id: UUID(),
+													 allowance: Int.random(in: 100...200),
+													 given: 1000,
+													 received: Int.random(in: 1000...5000),
+													 balance: String(Int.random(in: 1000...4000)),
+													 tipMin: Int.random(in: 1000...50_000),
+													 rank: 342),
 							configuration: .starEyes)
 }

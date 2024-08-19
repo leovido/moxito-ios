@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:fc-poc-wf/fc-poc-wf.xcodeproj">
+      location = "group:TipLibs">
+   </FileRef>
+   <FileRef
+      location = "container:fc-poc-wf.xcodeproj">
    </FileRef>
 </Workspace>
