@@ -33,6 +33,7 @@
 		B9DF7F6B2C73B1000073D772 /* FartherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9DF7F702C73B18A0073D772 /* TipDependencies in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F6F2C73B18A0073D772 /* TipDependencies */; };
 		B9DF7F722C73C5E90073D772 /* WaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F712C73C5E90073D772 /* WaterView.swift */; };
+		B9DF7F752C73CA2B0073D772 /* TipDependencies in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F742C73CA2B0073D772 /* TipDependencies */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,7 +102,6 @@
 		47C3243D2C6E57D500BE03C2 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		47C3243F2C6E57D500BE03C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47C324412C6E57D500BE03C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B9DF7F552C739F870073D772 /* TipDependencies */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TipDependencies; path = ../TipDependencies; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -110,6 +110,7 @@
 		B9DF7F662C73B1000073D772 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9DF7F682C73B1000073D772 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9DF7F712C73C5E90073D772 /* WaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterView.swift; sourceTree = "<group>"; };
+		B9DF7F762C73CAA80073D772 /* TipDependencies */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TipDependencies; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +152,7 @@
 				B9DF7F702C73B18A0073D772 /* TipDependencies in Frameworks */,
 				B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */,
 				B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */,
+				B9DF7F752C73CA2B0073D772 /* TipDependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +162,7 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
-				B9DF7F552C739F870073D772 /* TipDependencies */,
+				B9DF7F762C73CAA80073D772 /* TipDependencies */,
 				47C324012C6E578300BE03C2 /* fc-poc-wf */,
 				47C324122C6E578400BE03C2 /* fc-poc-wfTests */,
 				47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */,
@@ -351,6 +353,7 @@
 			name = FartherWidgetExtension;
 			packageProductDependencies = (
 				B9DF7F6F2C73B18A0073D772 /* TipDependencies */,
+				B9DF7F742C73CA2B0073D772 /* TipDependencies */,
 			);
 			productName = FartherWidgetExtension;
 			productReference = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */;
@@ -970,6 +973,10 @@
 			productName = OpenGraph;
 		};
 		B9DF7F6F2C73B18A0073D772 /* TipDependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TipDependencies;
+		};
+		B9DF7F742C73CA2B0073D772 /* TipDependencies */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TipDependencies;
 		};
