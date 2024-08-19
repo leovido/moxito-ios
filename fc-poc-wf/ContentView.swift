@@ -16,7 +16,7 @@ struct ContentView: View {
 			Image(systemName: "globe")
 				.imageScale(.large)
 				.foregroundStyle(.tint)
-			Text("Hello, world!")
+			Text("Hello, tips!")
 			if !ogImage.isEmpty {
 				AsyncImage(url: URL.init(string: ogImage)!)
 
