@@ -22,8 +22,17 @@
 		47C3243E2C6E57D500BE03C2 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3243D2C6E57D500BE03C2 /* AppIntent.swift */; };
 		47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C3243F2C6E57D500BE03C2 /* Assets.xcassets */; };
 		47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		47C3244B2C6E599300BE03C2 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = 47C3244A2C6E599300BE03C2 /* OpenGraph */; };
-		47C3244D2C6E935E00BE03C2 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = 47C3244C2C6E935E00BE03C2 /* OpenGraph */; };
+		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
+		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
+		B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
+		B9DF7F5F2C73B0FD0073D772 /* FartherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */; };
+		B9DF7F612C73B0FD0073D772 /* FartherWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */; };
+		B9DF7F632C73B0FD0073D772 /* FartherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F622C73B0FD0073D772 /* FartherWidget.swift */; };
+		B9DF7F652C73B0FD0073D772 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F642C73B0FD0073D772 /* AppIntent.swift */; };
+		B9DF7F672C73B1000073D772 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9DF7F662C73B1000073D772 /* Assets.xcassets */; };
+		B9DF7F6B2C73B1000073D772 /* FartherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B9DF7F702C73B18A0073D772 /* TipDependencies in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F6F2C73B18A0073D772 /* TipDependencies */; };
+		B9DF7F722C73C5E90073D772 /* WaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF7F712C73C5E90073D772 /* WaterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +57,13 @@
 			remoteGlobalIDString = 47C3242F2C6E57D400BE03C2;
 			remoteInfo = FCWidgetsExtension;
 		};
+		B9DF7F692C73B1000073D772 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9DF7F592C73B0FD0073D772;
+			remoteInfo = FartherWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +74,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */,
+				B9DF7F6B2C73B1000073D772 /* FartherWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +101,15 @@
 		47C3243D2C6E57D500BE03C2 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		47C3243F2C6E57D500BE03C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47C324412C6E57D500BE03C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9DF7F552C739F870073D772 /* TipDependencies */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TipDependencies; path = ../TipDependencies; sourceTree = "<group>"; };
+		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
+		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		B9DF7F622C73B0FD0073D772 /* FartherWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidget.swift; sourceTree = "<group>"; };
+		B9DF7F642C73B0FD0073D772 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		B9DF7F662C73B1000073D772 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B9DF7F682C73B1000073D772 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9DF7F712C73C5E90073D772 /* WaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +117,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47C3244D2C6E935E00BE03C2 /* OpenGraph in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +140,17 @@
 			files = (
 				47C324352C6E57D500BE03C2 /* SwiftUI.framework in Frameworks */,
 				47C324332C6E57D500BE03C2 /* WidgetKit.framework in Frameworks */,
-				47C3244B2C6E599300BE03C2 /* OpenGraph in Frameworks */,
+				B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DF7F572C73B0FD0073D772 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DF7F702C73B18A0073D772 /* TipDependencies in Frameworks */,
+				B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */,
+				B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,10 +160,12 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
+				B9DF7F552C739F870073D772 /* TipDependencies */,
 				47C324012C6E578300BE03C2 /* fc-poc-wf */,
 				47C324122C6E578400BE03C2 /* fc-poc-wfTests */,
 				47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */,
 				47C324362C6E57D500BE03C2 /* FCWidgets */,
+				B9DF7F5D2C73B0FD0073D772 /* FartherWidget */,
 				47C324312C6E57D400BE03C2 /* Frameworks */,
 				47C324002C6E578300BE03C2 /* Products */,
 			);
@@ -141,6 +178,7 @@
 				47C3240F2C6E578400BE03C2 /* fc-poc-wfTests.xctest */,
 				47C324192C6E578400BE03C2 /* fc-poc-wfUITests.xctest */,
 				47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */,
+				B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,6 +188,7 @@
 			children = (
 				47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */,
 				47C324042C6E578300BE03C2 /* ContentView.swift */,
+				B9DF7F712C73C5E90073D772 /* WaterView.swift */,
 				47C324062C6E578400BE03C2 /* Assets.xcassets */,
 				47C324082C6E578400BE03C2 /* Preview Content */,
 			);
@@ -203,6 +242,19 @@
 			path = FCWidgets;
 			sourceTree = "<group>";
 		};
+		B9DF7F5D2C73B0FD0073D772 /* FartherWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */,
+				B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */,
+				B9DF7F622C73B0FD0073D772 /* FartherWidget.swift */,
+				B9DF7F642C73B0FD0073D772 /* AppIntent.swift */,
+				B9DF7F662C73B1000073D772 /* Assets.xcassets */,
+				B9DF7F682C73B1000073D772 /* Info.plist */,
+			);
+			path = FartherWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -219,10 +271,10 @@
 			);
 			dependencies = (
 				47C324432C6E57D500BE03C2 /* PBXTargetDependency */,
+				B9DF7F6A2C73B1000073D772 /* PBXTargetDependency */,
 			);
 			name = "fc-poc-wf";
 			packageProductDependencies = (
-				47C3244C2C6E935E00BE03C2 /* OpenGraph */,
 			);
 			productName = "fc-poc-wf";
 			productReference = 47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */;
@@ -278,10 +330,30 @@
 			);
 			name = FCWidgetsExtension;
 			packageProductDependencies = (
-				47C3244A2C6E599300BE03C2 /* OpenGraph */,
+				B9DF7F532C73611B0073D772 /* OpenGraph */,
 			);
 			productName = FCWidgetsExtension;
 			productReference = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		B9DF7F592C73B0FD0073D772 /* FartherWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9DF7F6C2C73B1000073D772 /* Build configuration list for PBXNativeTarget "FartherWidgetExtension" */;
+			buildPhases = (
+				B9DF7F562C73B0FD0073D772 /* Sources */,
+				B9DF7F572C73B0FD0073D772 /* Frameworks */,
+				B9DF7F582C73B0FD0073D772 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FartherWidgetExtension;
+			packageProductDependencies = (
+				B9DF7F6F2C73B18A0073D772 /* TipDependencies */,
+			);
+			productName = FartherWidgetExtension;
+			productReference = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -291,7 +363,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					47C323FE2C6E578300BE03C2 = {
@@ -308,6 +380,9 @@
 					47C3242F2C6E57D400BE03C2 = {
 						CreatedOnToolsVersion = 15.1;
 					};
+					B9DF7F592C73B0FD0073D772 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
 				};
 			};
 			buildConfigurationList = 47C323FA2C6E578300BE03C2 /* Build configuration list for PBXProject "fc-poc-wf" */;
@@ -320,7 +395,7 @@
 			);
 			mainGroup = 47C323F62C6E578300BE03C2;
 			packageReferences = (
-				47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */,
+				B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -330,6 +405,7 @@
 				47C3240E2C6E578400BE03C2 /* fc-poc-wfTests */,
 				47C324182C6E578400BE03C2 /* fc-poc-wfUITests */,
 				47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */,
+				B9DF7F592C73B0FD0073D772 /* FartherWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -366,6 +442,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9DF7F582C73B0FD0073D772 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DF7F672C73B1000073D772 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -374,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C324052C6E578300BE03C2 /* ContentView.swift in Sources */,
+				B9DF7F722C73C5E90073D772 /* WaterView.swift in Sources */,
 				47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,6 +491,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9DF7F562C73B0FD0073D772 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DF7F5F2C73B0FD0073D772 /* FartherWidgetBundle.swift in Sources */,
+				B9DF7F652C73B0FD0073D772 /* AppIntent.swift in Sources */,
+				B9DF7F612C73B0FD0073D772 /* FartherWidgetLiveActivity.swift in Sources */,
+				B9DF7F632C73B0FD0073D772 /* FartherWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -423,6 +519,11 @@
 			isa = PBXTargetDependency;
 			target = 47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */;
 			targetProxy = 47C324422C6E57D500BE03C2 /* PBXContainerItemProxy */;
+		};
+		B9DF7F6A2C73B1000073D772 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9DF7F592C73B0FD0073D772 /* FartherWidgetExtension */;
+			targetProxy = B9DF7F692C73B1000073D772 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -479,7 +580,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -536,7 +637,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -563,6 +664,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -593,6 +695,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -736,6 +839,60 @@
 			};
 			name = Release;
 		};
+		B9DF7F6D2C73B1000073D772 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FartherWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FartherWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.FartherWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B9DF7F6E2C73B1000073D772 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FartherWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FartherWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.FartherWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -784,12 +941,21 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B9DF7F6C2C73B1000073D772 /* Build configuration list for PBXNativeTarget "FartherWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9DF7F6D2C73B1000073D772 /* Debug */,
+				B9DF7F6E2C73B1000073D772 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */ = {
+		B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:satoshi-takano/OpenGraph.git";
+			repositoryURL = "https://github.com/satoshi-takano/OpenGraph";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.6.0;
@@ -798,15 +964,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		47C3244A2C6E599300BE03C2 /* OpenGraph */ = {
+		B9DF7F532C73611B0073D772 /* OpenGraph */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */;
+			package = B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */;
 			productName = OpenGraph;
 		};
-		47C3244C2C6E935E00BE03C2 /* OpenGraph */ = {
+		B9DF7F6F2C73B18A0073D772 /* TipDependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 47C324492C6E599300BE03C2 /* XCRemoteSwiftPackageReference "OpenGraph" */;
-			productName = OpenGraph;
+			productName = TipDependencies;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -84,10 +84,20 @@ struct FCWidgetsEntryView : View {
 					self.ogImage = result.source[.image]!
 				}
 			}
-		case .systemSmall:
-			Text("Small")
-		default:
-			Text("Unimplemented")
+			case .accessoryRectangular:
+				VStack {
+					Text("Hello")
+						.background(.red)
+					
+					Text("World")
+					Button(action: {}, label: {
+						Text("Button")
+					})
+				}
+			case .systemSmall:
+				Text("Small")
+			default:
+				Text("Unimplemented")
 		}
 	}
 }
@@ -171,7 +181,7 @@ extension ConfigurationAppIntent {
 	}
 }
 
-#Preview(as: .systemExtraLarge) {
+#Preview(as: .accessoryRectangular) {
 	FCWidgets()
 } timeline: {
 	SimpleEntry(date: .now, configuration: .smiley)

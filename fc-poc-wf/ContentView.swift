@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import OpenGraph
+//import OpenGraph
 
 struct ContentView: View {
 	@State private var ogImage: String = ""
@@ -24,13 +24,13 @@ struct ContentView: View {
 		}
 		.padding()
 		.onAppear() {
-			Task {
-				let result = try await OpenGraph.fetch(url: URL(string: "https://toth-frame.vercel.app/toth")!)
-				
-				self.ogImage = result.source[.image]!
-				
-				dump(ogImage)
-			}
+//			Task {
+//				let result = try await OpenGraph.fetch(url: URL(string: "https://toth-frame.vercel.app/toth")!)
+//				
+//				self.ogImage = result.source[.image]!
+//				
+//				dump(ogImage)
+//			}
 		}
 	}
 }
