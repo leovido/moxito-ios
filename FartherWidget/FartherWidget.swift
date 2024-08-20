@@ -1,6 +1,6 @@
 import WidgetKit
 import SwiftUI
-import TipDependencies
+import TipLibs
 
 enum FartherTheme {
 	static let backgroundColor = Color(red: 0.118, green: 0.227, blue: 0.541) // #1e3a8a
@@ -259,14 +259,6 @@ struct MeatOnBone: Shape {
 		return path
 	}
 }
-
-
-struct WaterView_Previews: PreviewProvider {
-	static var previews: some View {
-		CircleWaveView(percent: 40)
-	}
-}
-
 
 #Preview(as: .systemSmall) {
 	FartherWidget()

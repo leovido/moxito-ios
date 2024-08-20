@@ -22,6 +22,7 @@
 		47C3243E2C6E57D500BE03C2 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3243D2C6E57D500BE03C2 /* AppIntent.swift */; };
 		47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C3243F2C6E57D500BE03C2 /* Assets.xcassets */; };
 		47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
 		B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
@@ -146,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */,
 				B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */,
 				B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */,
 			);
@@ -346,6 +348,7 @@
 			);
 			name = FartherWidgetExtension;
 			packageProductDependencies = (
+				B983C1022C74BC3E009B8893 /* TipLibs */,
 			);
 			productName = FartherWidgetExtension;
 			productReference = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */;
@@ -959,6 +962,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B983C1022C74BC3E009B8893 /* TipLibs */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TipLibs;
+		};
 		B9DF7F532C73611B0073D772 /* OpenGraph */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */;

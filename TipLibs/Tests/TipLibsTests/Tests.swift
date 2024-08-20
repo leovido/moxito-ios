@@ -13,7 +13,7 @@ final class MockClient: TipProvider {
 	}
 }
 
-final class TipDependenciesTests: XCTestCase {
+final class TipTests: XCTestCase {
 	var client: TipProvider!
 	
 	override func setUp() async throws {
@@ -24,7 +24,7 @@ final class TipDependenciesTests: XCTestCase {
 		client = nil
 	}
 	
-	func testExample() async throws {
+	func testFartherTips() async throws {
 		let result = try await client.fetchFartherTips()
 		
 		XCTAssertEqual(result.allowance, 10000)
