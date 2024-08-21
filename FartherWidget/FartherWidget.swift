@@ -2,51 +2,13 @@ import WidgetKit
 import SwiftUI
 import TipLibs
 
-enum FartherTheme {
-	static let backgroundColor = Color(red: 0.118, green: 0.227, blue: 0.541) // #1e3a8a
-	static let foregroundColor = Color(red: 1, green: 0.843, blue: 0) // #ffd700
-}
-
-struct Provider: AppIntentTimelineProvider {
-	let client: TipClient = .init()
-	
-	func placeholder(in context: Context) -> SimpleEntry {
-		SimpleEntry(date: Date(), 
-								model: TipModel.placeholder,
-								configuration: ConfigurationAppIntent())
-	}
-	
-	func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-		SimpleEntry(date: Date(), 
-								model: TipModel.placeholder,
-								configuration: configuration)
-	}
-	
-	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-		var entries: [SimpleEntry] = []
-		
-		let result = try! await client.fetchFartherTips()
-		
-		// Generate a timeline consisting of five entries an hour apart, starting from the current date.
-		let currentDate = Date()
-		for hourOffset in 0 ..< 5 {
-			let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-			let entry = SimpleEntry(date: Date(), model: result, configuration: configuration)
-			entries.append(entry)
-		}
-		
-		return Timeline(entries: entries, policy: .atEnd)
-	}
-}
-
-struct SimpleEntry: TimelineEntry {
-	var date: Date
-	
-	let model: TipModel
-	let configuration: ConfigurationAppIntent
-}
-
 struct FartherWidgetEntryView : View {
+	var balanceFormatted: String {
+		let value = ((Double(entry.model.balance) ?? 0) * pow(10, -18)).rounded(.toNearestOrAwayFromZero)
+		return value.formatted(.number.precision(.fractionLength(0)))
+
+	}
+	
 	@Environment(\.widgetFamily) private var family
 
 	var entry: Provider.Entry
@@ -55,17 +17,19 @@ struct FartherWidgetEntryView : View {
 		switch family {
 			case .systemSmall:
 				ZStack {
-					FartherTheme.backgroundColor
+					FartherTheme.backgroundColor.edgesIgnoringSafeArea(.all)
 					VStack(alignment: .leading) {
 						HStack {
 							VStack(alignment: .leading) {
-								Text("✨Balance")
+								Text("Balance✨")
 									.font(.custom("Avenir-Black", size: 12))
-								Text("\(entry.model.balance)")
+								Text("\(balanceFormatted)")
 									.foregroundStyle(.white)
 									.fontDesign(.rounded)
 									.font(.system(size: 16))
-									.bold()
+//									.scaleEffect(0.8)
+									.frame(alignment: .leading)
+									.fontWeight(.semibold)
 							}
 							.font(.system(size: 13))
 							
@@ -78,7 +42,7 @@ struct FartherWidgetEntryView : View {
 									.foregroundStyle(.white)
 									.fontDesign(.rounded)
 									.font(.system(size: 16))
-									.bold()
+									.fontWeight(.bold)
 							}
 							.font(.system(size: 13))
 						}
@@ -107,7 +71,7 @@ struct FartherWidgetEntryView : View {
 							Text("\(entry.model.received)")
 								.foregroundStyle(.white)
 								.fontDesign(.rounded)
-								.fontWeight(.semibold)
+								.fontWeight(.bold)
 								.font(.system(size: 20))
 						}
 						.font(.system(size: 13))
@@ -265,6 +229,10 @@ struct MeatOnBone: Shape {
 } timeline: {
 	SimpleEntry(date: .now,
 							model: .init(id: UUID(), 
+													 fid: 0,
+													 username: "testing",
+													 displayName: "testing",
+													 pfpUrl: "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/883cecce-71a6-4f84-68da-426bedf00e00/rectcrop3",
 													 allowance: Int.random(in: 100...200),
 													 given: 1000,
 													 received: Int.random(in: 1000...5000),
@@ -274,6 +242,10 @@ struct MeatOnBone: Shape {
 							configuration: .smiley)
 	SimpleEntry(date: .now,
 							model: .init(id: UUID(),
+													 fid: 0,
+													 username: "testing",
+													 displayName: "testing",
+													 pfpUrl: "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/883cecce-71a6-4f84-68da-426bedf00e00/rectcrop3",
 													 allowance: Int.random(in: 100...200),
 													 given: 1000,
 													 received: Int.random(in: 1000...5000),
