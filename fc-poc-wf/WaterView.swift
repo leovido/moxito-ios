@@ -14,7 +14,7 @@ struct WaterView: View {
 	
 	var body: some View {
 		VStack {
-			CircleWaveView(percent: percent)
+			CircleWaveView(percent: percent, color: Color.red)
 		}
 		.padding(.all)
 	}
@@ -61,19 +61,20 @@ struct Wave: Shape {
 struct CircleWaveView: View {
 	@State private var waveOffset = Angle(degrees: 0)
 	let percent: String
+	let color: Color
 	
 	var body: some View {
 		GeometryReader { geo in
 			ZStack {
 				Text("\(self.percent)")
-					.foregroundColor(FartherTheme.foregroundColor)
+					.foregroundColor(color)
 					.font(Font.system(size: 0.20 * min(geo.size.width, geo.size.height) ))
 				Circle()
-					.stroke(FartherTheme.foregroundColor.opacity(0.2), lineWidth: 0.025 * min(geo.size.width, geo.size.height))
+					.stroke(color.opacity(0.2), lineWidth: 0.025 * min(geo.size.width, geo.size.height))
 					.overlay(
 						Wave(offset: Angle(degrees: self.waveOffset.degrees),
 								 percent: (Double(percent.dropLast()) ?? 0) / 100)
-							.fill(FartherTheme.foregroundColor.opacity(0.3))
+							.fill(color.opacity(0.3))
 							.clipShape(Circle().scale(0.92))
 					)
 			}
@@ -90,6 +91,6 @@ struct CircleWaveView: View {
 
 struct WaterView_Previews: PreviewProvider {
 	static var previews: some View {
-		CircleWaveView(percent: "40")
+		CircleWaveView(percent: "40", color: .blue)
 	}
 }

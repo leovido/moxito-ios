@@ -2,10 +2,12 @@ import SwiftUI
 import TipLibs
 
 struct FCard: View {
+	let theme: Theme
 	let model: TipModel?
 	let willRedact: RedactionReasons
 	
-	init(model: TipModel?, willRedact: RedactionReasons) {
+	init(theme: Theme = HamTheme(), model: TipModel?, willRedact: RedactionReasons) {
+		self.theme = theme
 		self.model = model
 		self.willRedact = willRedact
 	}
@@ -44,10 +46,10 @@ struct FCard: View {
 			
 		}
 		.padding()
-		.background(FartherTheme.backgroundColor.blendMode(.screen))
-		.background(FartherTheme.backgroundColor)
+		.background(Color(theme.secondary).blendMode(.screen))
+		.background(Color(theme.secondary))
 		.clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
-		.foregroundStyle(FartherTheme.foregroundColor)
+		.foregroundStyle(Color(theme.primary))
 		.redacted(reason: willRedact)
 	}
 }

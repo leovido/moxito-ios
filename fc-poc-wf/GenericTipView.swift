@@ -1,18 +1,29 @@
-//
-//  ContentView.swift
-//  fc-poc-wf
-//
-//  Created by Christian Ray Leovido on 15/08/2024.
-//
-
 import SwiftUI
 import TipLibs
-//import OpenGraph
 
-struct FartherView: View {
-	@State private var ogImage: String = ""
+protocol Theme {
+	var primary: String { get }
+	var secondary: String { get }
+	var ternary: String { get }
+	
+	var fontMain: String { get }
+}
+
+struct HamTheme: Theme {
+	let primary: String = "HamPrimary" // red
+	let secondary: String = "HamSecondary" // yellow
+	let ternary: String = "HamTernary" // blue
+	
+	let fontMain: String = "Nerko One"
+	let fontTextSans: String = "Instrument Sans"
+	let fontTextSerif: String = "Instrument Serif"
+}
+
+struct GenericTipView: View {
 	@State private var model: TipModel?
 	
+	let theme: Theme
+
 	var willRedact: RedactionReasons {
 		return model != nil ? [] : .placeholder
 	}
@@ -37,58 +48,47 @@ struct FartherView: View {
 	
 	let client: TipClient = .init()
 	
-	init(ogImage: String = "", model: TipModel? = nil) {
-		self.ogImage = ogImage
+	init(theme: Theme, model: TipModel? = nil) {
+		self.theme = theme
 		self.model = model
 	}
 	
 	var body: some View {
 		NavigationStack {
 			ZStack {
-				FartherTheme.backgroundColor.edgesIgnoringSafeArea(.all)
+				Color.white.edgesIgnoringSafeArea(.all)
 				VStack {
-					Text("✨Farther✨".uppercased())
+					Text("🍖HAM🍖".uppercased())
 						.font(.largeTitle)
-						.foregroundStyle(FartherTheme.foregroundColor)
+						.foregroundStyle(Color(theme.primary))
 						.fontWeight(.black)
+						.font(.custom("NerkoOne-Regular", size: 10))
+
 					ScrollView {
 						VStack {
 							FCard(model: model, willRedact: willRedact)
 
 							Divider()
-								.background(Color.red)
 							
 							HStack {
 								VStack(alignment: .leading) {
-									Text("Balance✨")
+									Text("Balance🍖")
 										.font(.title)
 										.fontWeight(.heavy)
-										.foregroundStyle(FartherTheme.foregroundColor)
-									Text("\(balanceFormatted) $FARTHER")
+										.font(.custom("NerkoOne-Regular", size: 10))
+										.foregroundStyle(Color(theme.primary))
+									Text("\(balanceFormatted) $HAM")
 										.font(.headline)
-										.foregroundStyle(.white)
+										.foregroundStyle(Color(theme.secondary))
 										.fontDesign(.rounded)
 										.font(.system(size: 21))
 										.fontWeight(.bold)
 								}
 								Spacer()
-								VStack(alignment: .leading) {
-									Text("Min✨")
-										.font(.title)
-										.fontWeight(.heavy)
-										.foregroundStyle(FartherTheme.foregroundColor)
-
-									Text("\(model?.tipMin ?? 0)")
-										
-										.foregroundStyle(.white)
-										.fontDesign(.rounded)
-										.font(.system(size: 21))
-										.bold()
-								}
 							}
 							
 							CircleWaveView(percent: percentageFormatted,
-														 color: Color(FartherTheme.foregroundColor))
+														 color: Color(theme.primary))
 								.padding()
 								.frame(width: 250)
 								.redacted(reason: willRedact)
@@ -98,17 +98,17 @@ struct FartherView: View {
 								HStack {
 									VStack(alignment: .leading) {
 										Text("Daily✨")
+											.foregroundStyle(Color(theme.primary))
 											.font(.title2)
 											.fontWeight(.heavy)
 										
 										Text("\(model?.given ?? 0)/\(model?.allowance ?? 0)")
-											.foregroundStyle(.white)
 											.fontDesign(.rounded)
 											.fontWeight(.bold)
 											.scaledToFill()
 											.minimumScaleFactor(0.5)
 											.font(.system(size: 21))
-										
+											.foregroundStyle(Color(theme.secondary))
 									}
 									.frame(alignment: .leading)
 									.padding(.bottom, 4)
@@ -121,23 +121,20 @@ struct FartherView: View {
 										.font(.title2)
 										.fontWeight(.heavy)
 										.font(.custom("Avenir-Black", size: 18))
-									
+										.foregroundStyle(Color(theme.primary))
+
 									Text("\(model?.received ?? 0)")
-										.foregroundStyle(.white)
 										.fontDesign(.rounded)
 										.fontWeight(.bold)
 										.font(.system(size: 21))
+										.foregroundStyle(Color(theme.secondary))
 									
 								}
 								
 								Spacer()
 							}
-							.foregroundColor(FartherTheme.foregroundColor)
 							.redacted(reason: willRedact)
 							
-							if !ogImage.isEmpty {
-								AsyncImage(url: URL.init(string: ogImage)!)
-							}
 							Spacer()
 						}
 						.padding()
@@ -148,6 +145,18 @@ struct FartherView: View {
 						}
 					}
 				}
+				.toolbar(content: {
+					ToolbarItem(placement: .topBarTrailing) {
+						Menu("Menu", systemImage: "line.3.horizontal.decrease.circle") {
+							Button(action: {}, label: {
+								Text("$FARTHER ✨")
+							})
+							.tint(Color(theme.primary))
+						} primaryAction: {
+							// action
+						}
+					}
+				})
 				.onAppear() {
 					guard model == nil else {
 						return
@@ -156,45 +165,12 @@ struct FartherView: View {
 						Thread.sleep(forTimeInterval: 1)
 						model = try await client.fetchFartherTips(forceRemote: false)
 					}
-		//			Task {
-		//				let result = try await OpenGraph.fetch(url: URL(string: "https://toth-frame.vercel.app/toth")!)
-		//
-		//				self.ogImage = result.source[.image]!
-		//
-		//				dump(ogImage)
-		//			}
 				}
 			}
 		}
 	}
 }
 
-struct MainView: View {
-	var body: some View {
-		NavigationStack {
-			List {
-				NavigationLink("$FARTHER tips") {
-					FartherView()
-				}
-				NavigationLink("$HAM tips") {
-					GenericTipView(theme: HamTheme())
-				}
-				.tint(Color(.red))
-
-				NavigationLink("$DEGEN tips") {
-					FartherView()
-				}
-			}
-			.listStyle(GroupedListStyle())
-			.navigationTitle("Farcaster tips")
-		}
-	}
-}
-
 #Preview {
-	FartherView(model: TipModel.placeholder)
-}
-
-#Preview {
-	MainView()
+	GenericTipView(theme: HamTheme(), model: TipModel.placeholder)
 }
