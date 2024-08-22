@@ -46,7 +46,7 @@ struct GenericTipView: View {
 		return formattedPercentage
 	}
 	
-	let client: TipClient = .init()
+	let client: HamClient = .init()
 	
 	init(theme: Theme, model: TipModel? = nil) {
 		self.theme = theme
@@ -141,7 +141,7 @@ struct GenericTipView: View {
 					}
 					.refreshable {
 						Task {
-							model = try await client.fetchFartherTips(forceRemote: true)
+							model = try await client.fetchHamTips(userFID: 203666)
 						}
 					}
 				}
@@ -163,7 +163,7 @@ struct GenericTipView: View {
 					}
 					Task {
 						Thread.sleep(forTimeInterval: 1)
-						model = try await client.fetchFartherTips(forceRemote: false)
+						model = try await client.fetchHamTips(userFID: 203666)
 					}
 				}
 			}

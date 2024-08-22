@@ -40,7 +40,7 @@ struct FCard: View {
 			
 			Spacer()
 			
-			Text("#21")
+			Text("#\(model?.rank ?? 0)")
 				.font(.largeTitle)
 				.fontWeight(.heavy)
 			

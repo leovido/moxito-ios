@@ -4,6 +4,10 @@ import XCTest
 final class MockClient: TipProvider {
 	func fetchFartherTips(forceRemote: Bool) async throws -> TipModel {
 		return TipModel(id: UUID(),
+										fid: 111,
+										username: "",
+										displayName: "",
+										pfpUrl: "",
 										allowance: 10_000,
 										given: 5_000,
 										received: 200_000,
