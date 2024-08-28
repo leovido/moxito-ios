@@ -11,12 +11,17 @@ let package = Package(
         .library(
             name: "TipLibs",
             targets: ["TipLibs"]),
+				.library(
+						name: "MoxieLib",
+						targets: ["MoxieLib"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "TipLibs"),
+				.target(
+						name: "MoxieLib"),
         .testTarget(
             name: "TipLibsTests",
             dependencies: ["TipLibs"]),

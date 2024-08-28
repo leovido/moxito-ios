@@ -6,18 +6,38 @@
 	<dict>
 		<key>App.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 		<key>FCWidgetsExtension.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>FartherWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+		<key>MoxieTracker.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>MoxieWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>fc-poc-wf.xcscheme_^#shared#^_</key>
 		<dict>
@@ -27,6 +47,31 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>471FE9572C7E59A500D20F4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>471FE9722C7F808C00D20F4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>471FE9812C7F808D00D20F4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>471FE98B2C7F808D00D20F4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>471FE9A62C7F821400D20F4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>47C323FE2C6E578300BE03C2</key>
 		<dict>
 			<key>primary</key>
