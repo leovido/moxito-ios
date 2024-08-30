@@ -1,17 +1,11 @@
-//
-//  MoxieTrackerApp.swift
-//  MoxieTracker
-//
-//  Created by Christian Ray Leovido on 28/08/2024.
-//
-
 import SwiftUI
+import MoxieLib
 
 @main
 struct MoxieTrackerApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+	var body: some Scene {
+		WindowGroup {
+			ContentView(viewModel: .init(model: .noop, client: MoxieClient()))
+		}
+	}
 }

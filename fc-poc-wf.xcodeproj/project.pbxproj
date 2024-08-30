@@ -45,6 +45,7 @@
 		47C3243E2C6E57D500BE03C2 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3243D2C6E57D500BE03C2 /* AppIntent.swift */; };
 		47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C3243F2C6E57D500BE03C2 /* Assets.xcassets */; };
 		47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -195,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +449,9 @@
 				471FE9B72C7F821400D20F4C /* PBXTargetDependency */,
 			);
 			name = MoxieTracker;
+			packageProductDependencies = (
+				47EC54632C808080006C2820 /* MoxieLib */,
+			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* MoxieTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -1568,6 +1573,10 @@
 			productName = MoxieLib;
 		};
 		471FE9C42C7F82E400D20F4C /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
+		};
+		47EC54632C808080006C2820 /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
 		};

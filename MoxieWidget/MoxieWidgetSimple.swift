@@ -1,23 +1,9 @@
-//
-//  MoxieWidgetSimple.swift
-//  MoxieWidgetSimple
-//
-//  Created by Christian Ray Leovido on 27/08/2024.
-//
-
 import WidgetKit
 import SwiftUI
 import MoxieLib
 
 enum FeatureFlag {
 	static let claimButton = false
-}
-
-enum MoxieColor {
-	static let textColor = UIColor(red: 0.28, green: 0.37, blue: 0.84, alpha: 1.00)
-	static let backgroundColor = UIColor(red: 0.69, green: 0.53, blue: 1.00, alpha: 0.6)
-	static let otherColor = UIColor(red: 0.91, green: 0.87, blue: 1.00, alpha: 1.00)
-	static let dark = UIColor(red: 0.37, green: 0.16, blue: 0.79, alpha: 1.00)
 }
 
 struct Provider: AppIntentTimelineProvider {
@@ -40,17 +26,21 @@ struct Provider: AppIntentTimelineProvider {
 	}
 	
 	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-		let data = try! await client.fetchMoxieStats(userFID: 203666)
-		
-		var entries: [SimpleEntry] = [
-			SimpleEntry.init(date: .now,
-											 dailyMoxie: data.allEarningsAmount,
-											 claimableMoxie: data.moxieClaimTotals.first!.availableClaimAmount,
-											 claimedMoxie: data.moxieClaimTotals.first!.claimedAmount,
-											 configuration: .init())
-		]
-		
-		return Timeline(entries: entries, policy: .atEnd)
+		do {
+			let data = try await client.fetchMoxieStats(userFID: 203666)
+			
+			var entries: [SimpleEntry] = [
+				SimpleEntry.init(date: .now,
+												 dailyMoxie: data.allEarningsAmount,
+												 claimableMoxie: data.moxieClaimTotals.first!.availableClaimAmount,
+												 claimedMoxie: data.moxieClaimTotals.first!.claimedAmount,
+												 configuration: .init())
+			]
+			
+			return Timeline(entries: entries, policy: .atEnd)
+		} catch {
+			return Timeline(entries: [], policy: .atEnd)
+		}
 	}
 }
 

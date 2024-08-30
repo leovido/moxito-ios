@@ -20,10 +20,13 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "TipLibs"),
+				.testTarget(
+						name: "TipLibsTests",
+						dependencies: ["TipLibs"]),
 				.target(
 						name: "MoxieLib"),
-        .testTarget(
-            name: "TipLibsTests",
-            dependencies: ["TipLibs"]),
+				.testTarget(
+						name: "MoxieTests",
+						dependencies: ["MoxieLib"])
     ]
 )

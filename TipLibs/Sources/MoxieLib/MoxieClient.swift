@@ -1,7 +1,8 @@
 import Foundation
 
 public enum MoxieEndpoint {
-	static let dailyRewards = "http://localhost:3000/moxie-daily"
+	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily"
+	static let price = "https://api.dexscreener.com/latest/dex/pairs/base/0x493AD7E1c509dE7c89e1963fe9005EaD49FdD19c"
 }
 
 public enum MoxieError: LocalizedError {
@@ -10,51 +11,71 @@ public enum MoxieError: LocalizedError {
 
 public protocol MoxieProvider {
 	func fetchMoxieStats(userFID: Int) async throws -> MoxieModel
+	func fetchPrice() async throws -> Decimal
 }
 
-extension MoxieModel {
-	public static let placeholder: MoxieModel = .init(
-		allEarningsAmount: Decimal.init(123),
-		castEarningsAmount: Decimal.init(123),
-		frameDevEarningsAmount: Int.random(in: 1...1000),
-		otherEarningsAmount: Int.random(in: 1...1000),
-		endTimestamp: .now,
-		startTimestamp: .now, 
-		timeframe: "TODAY",
-		socials: [.init(isFarcasterPowerUser: true, profileImage: "", profileDisplayName: "Name", profileHandle: "@test")],
-		entityID: "203666",
-		moxieClaimTotals: [
-			.init(availableClaimAmount: Decimal.init(123),
-						claimedAmount: Decimal.init(123))])
-}
-
-public final class MoxieClient: MoxieProvider {
+public final class MockMoxieClient: MoxieProvider {
 	public init() {}
 	private let session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)
 	
 	public func fetchMoxieStats(userFID: Int) async throws -> MoxieModel {
-		let url = URL(string: MoxieEndpoint.dailyRewards)!
-		
-		guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-			throw MoxieError.message("Invalid")
+		return .placeholder
+	}
+	
+	public func fetchPrice() async throws -> Decimal {
+		return 0.0043
+	}
+}
+
+public final class MoxieClient: MoxieProvider {	public init() {}
+	private let session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)
+	
+	public func fetchPrice() async throws -> Decimal {
+		do {
+			let url = URL(string: MoxieEndpoint.price)!
+			
+			guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+				throw MoxieError.message("Invalid")
+			}
+			
+			var request = URLRequest(url: components.url!)
+			request.cachePolicy = .useProtocolCachePolicy
+			
+			let (data, _) = try await session.data(for: request)
+			let decoder = JSONDecoder()
+			decoder.dateDecodingStrategy = .iso8601
+			let model = try decoder.decode(MoxiePrice.self, from: data)
+			
+			return try! Decimal(model.pair.priceUsd, format: .number.precision(.fractionLength(2)))
+		} catch {
+			throw error
 		}
-		
-		components.queryItems = [
-			.init(name: "fid", value: "\(userFID)")
-		]
-		
-		var request = URLRequest(url: components.url!)
-		request.cachePolicy = .useProtocolCachePolicy
-		
-		let (data, _) = try await session.data(for: request)
-		dump(data)
-		dump("here")
-		let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as! [String: Any]
-		dump(json)
-		let decoder = JSONDecoder()
-		decoder.dateDecodingStrategy = .iso8601
-		let model = try! decoder.decode(MoxieModel.self, from: data)
-		
-		return model
+	}
+	
+	public func fetchMoxieStats(userFID: Int) async throws -> MoxieModel {
+		do {
+			let url = URL(string: MoxieEndpoint.dailyRewards)!
+			
+			guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+						userFID != 0 else {
+				throw MoxieError.message("Invalid")
+			}
+			
+			components.queryItems = [
+				.init(name: "fid", value: "\(userFID)")
+			]
+			
+			var request = URLRequest(url: components.url!)
+			request.cachePolicy = .useProtocolCachePolicy
+			
+			let (data, _) = try await session.data(for: request)
+			let decoder = JSONDecoder()
+			decoder.dateDecodingStrategy = .iso8601
+			let model = try decoder.decode(MoxieModel.self, from: data)
+			
+			return model
+		} catch {
+			throw error
+		}
 	}
 }

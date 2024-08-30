@@ -1,0 +1,8 @@
+import UIKit
+
+public enum MoxieColor {
+	public static let textColor = UIColor(red: 0.28, green: 0.37, blue: 0.84, alpha: 1.00)
+	public static let backgroundColor = UIColor(red: 0.69, green: 0.53, blue: 1.00, alpha: 0.6)
+	public static let otherColor = UIColor(red: 0.91, green: 0.87, blue: 1.00, alpha: 1.00)
+	public static let dark = UIColor(red: 0.37, green: 0.16, blue: 0.79, alpha: 1.00)
+}
