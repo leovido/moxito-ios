@@ -1,9 +1,32 @@
 import WidgetKit
 import SwiftUI
 import MoxieLib
+import AppIntents
 
 enum FeatureFlag {
 	static let claimButton = false
+}
+
+
+struct FetchDataIntent: AppIntent {
+		static var title: LocalizedStringResource = "Fetch Data"
+		
+		// Define parameters if needed
+		@Parameter(title: "API Endpoint")
+		var apiEndpoint: String
+
+		func perform() async throws -> some IntentResult {
+				// Fetch data from the API
+				guard let url = URL(string: apiEndpoint) else {
+						throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
+				}
+				
+				let (data, _) = try await URLSession.shared.data(from: url)
+				
+				// Process the fetched data here
+				
+				return .result(value: "Data fetched successfully!")
+		}
 }
 
 struct Provider: AppIntentTimelineProvider {
@@ -155,6 +178,7 @@ struct MoxieWidgetSimple: Widget {
 		AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
 			MoxieWidgetSimpleEntryView(entry: entry)
 				.containerBackground(Color(uiColor: MoxieColor.backgroundColor), for: .widget)
+				.preferredColorScheme(.light)
 		}
 
 	}

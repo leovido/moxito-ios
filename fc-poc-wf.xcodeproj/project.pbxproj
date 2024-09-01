@@ -46,6 +46,13 @@
 		47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C3243F2C6E57D500BE03C2 /* Assets.xcassets */; };
 		47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
+		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
+		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
+		47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54692C8229F4006C2820 /* MoxieViewModel.swift */; };
+		47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC546B2C822A25006C2820 /* ScheduleNotificationView.swift */; };
+		47EC546E2C822A69006C2820 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC546D2C822A69006C2820 /* CardView.swift */; };
+		47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC546F2C822AC4006C2820 /* ProfileCardView.swift */; };
+		47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54732C822DA5006C2820 /* ErrorView.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -150,7 +157,7 @@
 		471FE9602C7E59A500D20F4C /* MoxieWidgetSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieWidgetSimple.swift; sourceTree = "<group>"; };
 		471FE9622C7E59A500D20F4C /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppIntent.swift; path = MoxieWidgetSimple/AppIntent.swift; sourceTree = SOURCE_ROOT; };
 		471FE9642C7E59A600D20F4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = MoxieWidgetSimple/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-		471FE9732C7F808C00D20F4C /* MoxieTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoxieTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		471FE9732C7F808C00D20F4C /* Moxito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moxito.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieTrackerApp.swift; sourceTree = "<group>"; };
 		471FE9772C7F808C00D20F4C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		471FE9792C7F808D00D20F4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -181,6 +188,14 @@
 		47C3243D2C6E57D500BE03C2 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		47C3243F2C6E57D500BE03C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47C324412C6E57D500BE03C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
+		47EC546B2C822A25006C2820 /* ScheduleNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleNotificationView.swift; sourceTree = "<group>"; };
+		47EC546D2C822A69006C2820 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		47EC546F2C822AC4006C2820 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
+		47EC54732C822DA5006C2820 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		47EC54752C8479D2006C2820 /* Moxito-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Moxito-Info.plist"; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -273,10 +288,15 @@
 		471FE9742C7F808C00D20F4C /* MoxieTracker */ = {
 			isa = PBXGroup;
 			children = (
-				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
+				47EC546D2C822A69006C2820 /* CardView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
+				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
+				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
+				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
+				47EC54712C822B23006C2820 /* Home */,
 				471FE97B2C7F808D00D20F4C /* Preview Content */,
+				47EC54722C822B2D006C2820 /* Settings */,
 			);
 			path = MoxieTracker;
 			sourceTree = "<group>";
@@ -322,6 +342,7 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
+				47EC54752C8479D2006C2820 /* Moxito-Info.plist */,
 				47C324012C6E578300BE03C2 /* fc-poc-wf */,
 				47C324122C6E578400BE03C2 /* fc-poc-wfTests */,
 				47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */,
@@ -344,7 +365,7 @@
 				47C324192C6E578400BE03C2 /* fc-poc-wfUITests.xctest */,
 				47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */,
 				B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */,
-				471FE9732C7F808C00D20F4C /* MoxieTracker.app */,
+				471FE9732C7F808C00D20F4C /* Moxito.app */,
 				471FE9822C7F808D00D20F4C /* MoxieTrackerTests.xctest */,
 				471FE98C2C7F808D00D20F4C /* MoxieTrackerUITests.xctest */,
 				471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */,
@@ -417,6 +438,24 @@
 			path = FCWidgets;
 			sourceTree = "<group>";
 		};
+		47EC54712C822B23006C2820 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				47EC54652C822950006C2820 /* HomeView.swift */,
+				47EC54732C822DA5006C2820 /* ErrorView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		47EC54722C822B2D006C2820 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				47EC546B2C822A25006C2820 /* ScheduleNotificationView.swift */,
+				47EC54672C8229B2006C2820 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		B9DF7F5D2C73B0FD0073D772 /* FartherWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,9 +473,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		471FE9722C7F808C00D20F4C /* MoxieTracker */ = {
+		471FE9722C7F808C00D20F4C /* Moxito */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 471FE9942C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxieTracker" */;
+			buildConfigurationList = 471FE9942C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "Moxito" */;
 			buildPhases = (
 				471FE96F2C7F808C00D20F4C /* Sources */,
 				471FE9702C7F808C00D20F4C /* Frameworks */,
@@ -448,12 +487,12 @@
 			dependencies = (
 				471FE9B72C7F821400D20F4C /* PBXTargetDependency */,
 			);
-			name = MoxieTracker;
+			name = Moxito;
 			packageProductDependencies = (
 				47EC54632C808080006C2820 /* MoxieLib */,
 			);
 			productName = MoxieTracker;
-			productReference = 471FE9732C7F808C00D20F4C /* MoxieTracker.app */;
+			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
 			productType = "com.apple.product-type.application";
 		};
 		471FE9812C7F808D00D20F4C /* MoxieTrackerTests */ = {
@@ -678,7 +717,7 @@
 				47C324182C6E578400BE03C2 /* fc-poc-wfUITests */,
 				47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */,
 				B9DF7F592C73B0FD0073D772 /* FartherWidgetExtension */,
-				471FE9722C7F808C00D20F4C /* MoxieTracker */,
+				471FE9722C7F808C00D20F4C /* Moxito */,
 				471FE9812C7F808D00D20F4C /* MoxieTrackerTests */,
 				471FE98B2C7F808D00D20F4C /* MoxieTrackerUITests */,
 				471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */,
@@ -764,7 +803,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47EC546E2C822A69006C2820 /* CardView.swift in Sources */,
+				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
+				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
+				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
+				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
+				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
+				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
 				471FE9762C7F808C00D20F4C /* MoxieTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -856,12 +902,12 @@
 /* Begin PBXTargetDependency section */
 		471FE9842C7F808D00D20F4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 471FE9722C7F808C00D20F4C /* MoxieTracker */;
+			target = 471FE9722C7F808C00D20F4C /* Moxito */;
 			targetProxy = 471FE9832C7F808D00D20F4C /* PBXContainerItemProxy */;
 		};
 		471FE98E2C7F808D00D20F4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 471FE9722C7F808C00D20F4C /* MoxieTracker */;
+			target = 471FE9722C7F808C00D20F4C /* Moxito */;
 			targetProxy = 471FE98D2C7F808D00D20F4C /* PBXContainerItemProxy */;
 		};
 		471FE9B72C7F821400D20F4C /* PBXTargetDependency */ = {
@@ -904,6 +950,7 @@
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Moxito-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -935,6 +982,7 @@
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Moxito-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1460,7 +1508,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		471FE9942C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxieTracker" */ = {
+		471FE9942C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "Moxito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				471FE9952C7F808D00D20F4C /* Debug */,
