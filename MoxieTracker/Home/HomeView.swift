@@ -101,7 +101,7 @@ struct HomeView: View {
 			.refreshable {
 				Task {
 					try await viewModel.fetchPrice()
-					try await viewModel.fetchStats()
+					try await viewModel.fetchStats(filter: MoxieFilter(rawValue: viewModel.filterSelection) ?? .today)
 				}
 			}
 		}

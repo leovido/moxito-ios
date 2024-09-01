@@ -53,6 +53,7 @@
 		47EC546E2C822A69006C2820 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC546D2C822A69006C2820 /* CardView.swift */; };
 		47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC546F2C822AC4006C2820 /* ProfileCardView.swift */; };
 		47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54732C822DA5006C2820 /* ErrorView.swift */; };
+		47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54762C84DF3A006C2820 /* SearchListView.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -196,6 +197,7 @@
 		47EC546F2C822AC4006C2820 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
 		47EC54732C822DA5006C2820 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		47EC54752C8479D2006C2820 /* Moxito-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Moxito-Info.plist"; sourceTree = "<group>"; };
+		47EC54762C84DF3A006C2820 /* SearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				47EC546D2C822A69006C2820 /* CardView.swift */,
+				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
@@ -807,6 +810,7 @@
 				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
+				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,

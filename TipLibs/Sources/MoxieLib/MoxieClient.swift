@@ -38,6 +38,7 @@ extension MoxieFilter: CustomStringConvertible {
 public enum MoxieEndpoint {
 	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily"
 	static let price = "https://api.dexscreener.com/latest/dex/pairs/base/0x493AD7E1c509dE7c89e1963fe9005EaD49FdD19c"
+	static let usersEndpoint = "https://api.neynar.com/v2/farcaster/user/search"
 }
 
 public enum MoxieError: LocalizedError {
@@ -45,7 +46,7 @@ public enum MoxieError: LocalizedError {
 }
 
 public protocol MoxieProvider {
-	func fetchMoxieStats(userFID: Int,  filter: MoxieFilter) async throws -> MoxieModel
+	func fetchMoxieStats(userFID: Int, filter: MoxieFilter) async throws -> MoxieModel
 	func fetchPrice() async throws -> Decimal
 }
 

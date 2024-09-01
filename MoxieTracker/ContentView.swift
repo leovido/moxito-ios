@@ -9,6 +9,8 @@ struct ContentView: View {
 		TabView {
 			HomeView(viewModel: viewModel)
 			
+			SearchListView(viewModel: .init(client: .init(), query: "", items: []))
+			
 			SettingsView(viewModel: viewModel)
 		}
 		.tint(Color(uiColor: MoxieColor.dark))
