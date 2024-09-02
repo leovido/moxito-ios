@@ -81,9 +81,9 @@ public struct SearchListView: View {
 								})
 								
 								VStack(alignment: .leading) {
-									Text(item.displayName)
+									Text(item.displayName ?? "")
 										.font(.headline)
-									Text(item.username)
+									Text(item.username ?? "")
 										.font(.subheadline)
 									Text(item.fid.description)
 										.fontWeight(.light)

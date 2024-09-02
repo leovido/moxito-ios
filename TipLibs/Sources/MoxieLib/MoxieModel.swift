@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - MoxieModel
-public struct MoxieModel: Codable {
+public struct MoxieModel: Codable, Hashable {
 	public let allEarningsAmount, castEarningsAmount: Decimal
 	public let frameDevEarningsAmount, otherEarningsAmount: Decimal
 	public let endTimestamp, startTimestamp: Date
@@ -30,7 +30,7 @@ public struct MoxieModel: Codable {
 }
 
 // MARK: - MoxieClaimTotal
-public struct MoxieClaimTotal: Codable {
+public struct MoxieClaimTotal: Codable, Hashable {
 	public let availableClaimAmount: Decimal
 	public let claimedAmount: Decimal
 	
@@ -41,7 +41,7 @@ public struct MoxieClaimTotal: Codable {
 }
 
 // MARK: - Social
-public struct Social: Codable {
+public struct Social: Codable, Hashable {
 	public let isFarcasterPowerUser: Bool
 	public let profileImage: String
 	public let profileDisplayName, profileHandle: String

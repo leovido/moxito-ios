@@ -23,7 +23,7 @@ public struct User: Codable, Identifiable, Hashable {
 	}
 	public let object: String
 	public let fid: Int
-	public let custodyAddress, username, displayName: String
+	public let custodyAddress, username, displayName: String?
 	public let pfpURL: String
 	public let profile: Profile
 	public let followerCount, followingCount: Int

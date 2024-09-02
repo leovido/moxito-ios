@@ -9,11 +9,11 @@ final class MoxieViewModel: ObservableObject {
 	@Published var isLoading: Bool = false
 	@Published var price: Decimal = 0
 	@Published var timeAgo: String = ""
-	@Published var userInputNotifications: Decimal = 0
+	@Published var userInputNotifications: Decimal
 	@Published var isSearchMode: Bool = false
 	@Published var moxieChangeText: String = ""
 	
-	@Published var filterSelection: Int = 0
+	@Published var filterSelection: Int
 	@Published var error: Error?
 
 	@Published var dollarValueMoxie: Decimal = 0
@@ -27,9 +27,12 @@ final class MoxieViewModel: ObservableObject {
 	init(input: String = "",
 			 model: MoxieModel = .noop,
 			 client: MoxieProvider,
-			 isSearchMode: Bool = false) {
+			 isSearchMode: Bool = false,
+			 filterSelection: Int = 0,
+			 userInputNotifications: Decimal = 0) {
 		self.client = client
 		self.isSearchMode = isSearchMode
+		self.filterSelection = filterSelection
 		
 		if let data = UserDefaults.standard.data(forKey: "moxieModel"),
 			 let decodedModel = try? CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: data) {
@@ -40,52 +43,46 @@ final class MoxieViewModel: ObservableObject {
 			self.input = input
 		}
 		
-		if let decodedUserInputNotifications = UserDefaults.standard.string(forKey: "userInputNotifications"),
-			 let decimalValue = Decimal(string: decodedUserInputNotifications) {
+		if let decodedUserInputNotifications = UserDefaults.standard.string(forKey: "userInputNotifications") {
+			let decimalValue = Decimal(string: decodedUserInputNotifications) ?? 100000
 			 self.userInputNotifications = decimalValue
 		} else {
-			self.userInputNotifications = 0
+			self.userInputNotifications = userInputNotifications
 		}
 		
 		setupListeners()
 	}
 	
 	func setupListeners() {
-		$filterSelection
-			.receive(on: DispatchQueue.main)
-			.sink { [weak self] value in
-				guard let self = self else {
-					return
-				}
-				Task {
-					try await self.fetchStats(filter: MoxieFilter(rawValue: value) ?? .today)
-				}
-			}
-			.store(in: &subscriptions)
 		
 		$input
+			.removeDuplicates()
 			.sink { newValue in
 				self.inputFID = Int(newValue) ?? 0
 			}
 			.store(in: &subscriptions)
 		
-		$inputFID
-			.receive(on: DispatchQueue.main)
+		Publishers.CombineLatest($inputFID, $filterSelection)
+			.removeDuplicates { $0 == $1 } // Optional: Avoid triggering for the same values
 			.debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+			.receive(on: DispatchQueue.main)
 			.sink { [weak self] value in
-				guard let self = self, value != 0 else {
+				guard let self = self, value.0 != 0 else {
 					return
 				}
 				Task {
-					try await self.fetchStats(filter: MoxieFilter(rawValue: self.filterSelection) ?? .today)
+					try await self.fetchStats(filter: MoxieFilter(rawValue: value.1) ?? .today)
 				}
 			}
 			.store(in: &subscriptions)
 		
 		$moxieChangeText
+			.filter({ !$0.isEmpty })
+			.removeDuplicates()
 			.receive(on: DispatchQueue.main)
 			.sink {
 				UserDefaults.standard.setValue($0, forKey: "userInputNotifications")
+				self.userInputNotifications = Decimal(string: $0) ?? 0
 			}
 			.store(in: &subscriptions)
 
@@ -100,25 +97,27 @@ final class MoxieViewModel: ObservableObject {
 			.store(in: &subscriptions)
 		
 		$model
-				.receive(on: DispatchQueue.main)
-				.tryMap { model in
-						let encoder = CustomDecoderAndEncoder.encoder
-						let encodedData = try encoder.encode(model)
-						return encodedData
+			.removeDuplicates()
+			.receive(on: DispatchQueue.main)
+			.tryMap { model in
+				let encoder = CustomDecoderAndEncoder.encoder
+				let encodedData = try encoder.encode(model)
+				return encodedData
+			}
+			.catch { error -> Just<Data?> in
+				print("Failed to encode model: \(error.localizedDescription)")
+				return Just(nil) // You can choose how to handle errors, here we're returning nil
+			}
+			.compactMap { $0 }
+			.sink { encodedData in
+				if !self.isSearchMode {
+					UserDefaults.standard.set(encodedData, forKey: "moxieModel")
 				}
-				.catch { error -> Just<Data?> in
-						print("Failed to encode model: \(error.localizedDescription)")
-						return Just(nil) // You can choose how to handle errors, here we're returning nil
-				}
-				.compactMap { $0 }
-				.sink { encodedData in
-					if !self.isSearchMode {
-						UserDefaults.standard.set(encodedData, forKey: "moxieModel")
-					}
-				}
-				.store(in: &subscriptions)
-				
+			}
+			.store(in: &subscriptions)
+		
 		$price
+			.removeDuplicates()
 			.sink { [weak self] in
 				self?.dollarValueMoxie = $0 * (self?.model.moxieClaimTotals.first?.claimedAmount ?? 0)
 			}
@@ -145,6 +144,7 @@ final class MoxieViewModel: ObservableObject {
 			isLoading = false
 		} catch {
 			self.error = error
+			self.model = .noop
 			isLoading = false
 		}
 	}
@@ -155,10 +155,10 @@ final class MoxieViewModel: ObservableObject {
 		
 		let delta = newAmount - currentEarnings
 		
-		if delta > userInput {
+		if delta >= userInput {
 			let content = UNMutableNotificationContent()
 			content.title = "$MOXIE earnings"
-			content.body = "Congrats! Your Moxie earnings have now reached \(newAmount). Check out your latest gains and keep the momentum going! 🚀"
+			content.body = "Congrats! Your Moxie earnings have now reached \(newAmount.formatted(.number.precision(.fractionLength(2)))). Check out your latest gains and keep the momentum going! 🚀"
 			content.sound = .default
 			
 			let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)

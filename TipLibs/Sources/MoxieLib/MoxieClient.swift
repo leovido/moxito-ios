@@ -41,8 +41,23 @@ public enum MoxieEndpoint {
 	static let usersEndpoint = "https://api.neynar.com/v2/farcaster/user/search"
 }
 
-public enum MoxieError: LocalizedError {
+public enum MoxieError {
 	case message(String)
+	case badRequest
+	case rateLimited
+}
+
+extension MoxieError: LocalizedError {
+	public var errorDescription: String? {
+		switch self {
+		case .message(let mess):
+			return mess
+		case .badRequest:
+			return "Bad request"
+		case .rateLimited:
+			return "Rate limited. Please try again in a few minutes"
+		}
+	}
 }
 
 public protocol MoxieProvider {
@@ -63,9 +78,16 @@ public final class MockMoxieClient: MoxieProvider {
 	}
 }
 
-public final class MoxieClient: MoxieProvider {	public init() {}
-	private let session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)
-	
+public final class MoxieClient: MoxieProvider {
+	private let session: URLSession
+
+	public init(session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)) {
+		self.session = session
+		
+		session.configuration.urlCache = URLCache(memoryCapacity: 512_000, diskCapacity: 10_240_000, diskPath: nil)
+		session.configuration.requestCachePolicy = .returnCacheDataElseLoad
+	}
+
 	public func fetchPrice() async throws -> Decimal {
 		do {
 			guard let url = URL(string: MoxieEndpoint.price),
@@ -73,10 +95,22 @@ public final class MoxieClient: MoxieProvider {	public init() {}
 				throw MoxieError.message("Invalid")
 			}
 			
-			var request = URLRequest(url: components.url!)
-			request.cachePolicy = .useProtocolCachePolicy
+			let request = URLRequest(url: components.url!)
 			
-			let (data, _) = try await session.data(for: request)
+			let (data, response) = try await session.data(for: request)
+			
+			guard let response = response as? HTTPURLResponse else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 400 else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 429 else {
+				throw MoxieError.rateLimited
+			}
+			
 			let decoder = JSONDecoder()
 			decoder.dateDecodingStrategy = .iso8601
 			let model = try decoder.decode(MoxiePrice.self, from: data)
@@ -100,18 +134,29 @@ public final class MoxieClient: MoxieProvider {	public init() {}
 				.init(name: "filter", value: filter.description)
 			]
 			
-			var request = URLRequest(url: components.url!)
-			request.cachePolicy = .useProtocolCachePolicy
+			let request = URLRequest(url: components.url!)
 			
-			let (data, _) = try await session.data(for: request)
-						
+			let (data, response) = try await session.data(for: request)
+			
+			guard let response = response as? HTTPURLResponse else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 400 else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 429 else {
+				throw MoxieError.rateLimited
+			}
+			
 			let decoder = JSONDecoder()
 			decoder.dateDecodingStrategy = .iso8601
 			let model = try decoder.decode(MoxieModel.self, from: data)
 			
 			return model
 		} catch {
-			throw error
+			throw MoxieError.message(error.localizedDescription)
 		}
 	}
 }

@@ -9,10 +9,15 @@ public protocol FarcasterProvider {
 }
 
 public final class FarcasterClient: FarcasterProvider {
-	public init() {}
-	
-	private let session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)
+	private let session: URLSession
 
+	public init(session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)) {
+		self.session = session
+		
+		session.configuration.urlCache = URLCache(memoryCapacity: 512000, diskCapacity: 10240000, diskPath: nil)
+		session.configuration.requestCachePolicy = .returnCacheDataElseLoad
+	}
+	
 	public func searchUsername(username: String, viewerFid: Int, limit: Int = 5) async throws -> FarcasterUser {
 		do {
 			guard let url = URL(string: FCEndpoint.usersEndpoint),
