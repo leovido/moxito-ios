@@ -78,7 +78,7 @@ public final class MockMoxieClient: MoxieProvider {
 	}
 }
 
-public final class MoxieClient: MoxieProvider {
+public final actor MoxieClient: MoxieProvider {
 	private let session: URLSession
 
 	public init(session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)) {

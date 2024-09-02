@@ -10,7 +10,7 @@ struct HomeView: View {
 				.ignoresSafeArea(.all)
 			VStack(alignment: .leading) {
 				VStack {
-					Text("Hello, \(viewModel.model.socials.first?.profileDisplayName ?? "Moxie")!")
+					Text("\(viewModel.isSearchMode ? viewModel.model.socials.first?.profileDisplayName ?? "Moxie" : "Hello, " + (viewModel.model.socials.first?.profileDisplayName ?? "Moxie"))")
 						.font(.largeTitle)
 						.scaledToFit()
 						.fontDesign(.serif)
@@ -18,14 +18,16 @@ struct HomeView: View {
 						.fontWeight(.bold)
 					
 					Picker("Filter", selection: $viewModel.filterSelection) {
-						Text("Daily").tag(0)
-						Text("Weekly").tag(1)
-						Text("Lifetime").tag(2)
+							Text("Daily").tag(0)
+							Text("Weekly").tag(1)
+							Text("Lifetime").tag(2)
 					}
+					.tint(Color(uiColor: MoxieColor.dark))
 					.pickerStyle(.segmented)
 					
 					TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
 						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+						.autocorrectionDisabled()
 						.textFieldStyle(RoundedBorderTextFieldStyle())
 						.fontDesign(.rounded)
 						.padding(.vertical)
@@ -64,11 +66,20 @@ struct HomeView: View {
 								}
 							} else {
 								VStack {
-									CardView(imageSystemName: "text.bubble", title: "Cast earnings", amount: viewModel.model.castEarningsAmount.formatted(.number.precision(.fractionLength(2))))
+									CardView(imageSystemName: "text.bubble", 
+													 title: "Cast earnings",
+													 amount: viewModel.model.castEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+													 price: viewModel.price)
 									
-									CardView(imageSystemName: "laptopcomputer", title: "Frame earnings", amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))))
+									CardView(imageSystemName: "laptopcomputer",
+													 title: "Frame earnings",
+													 amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+													 price: viewModel.price)
 									
-									CardView(imageSystemName: "circle.circle", title: "All earnings", amount: viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))))
+									CardView(imageSystemName: "circle.circle",
+													 title: "All earnings",
+													 amount: viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+													 price: viewModel.price)
 								}
 								
 								Text("Last update: \(viewModel.timeAgo)")
@@ -113,4 +124,8 @@ struct HomeView: View {
 
 #Preview {
 	HomeView(viewModel: MoxieViewModel(client: MockMoxieClient()))
+}
+
+#Preview {
+	HomeView(viewModel: MoxieViewModel(isLoading: true, client: MockMoxieClient()))
 }

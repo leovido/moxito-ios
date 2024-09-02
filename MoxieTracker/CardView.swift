@@ -2,9 +2,26 @@ import SwiftUI
 import MoxieLib
 
 struct CardView: View {
+	@Environment(\.locale) var locale
+
 	let imageSystemName: String
 	let title: String
 	let amount: String
+	let price: Decimal
+	
+	var dollarValue: Decimal {
+		do {
+			let am = try Decimal(amount,
+									format: .currency(code: locale.currency?.identifier ?? "USD"))
+			
+			return price * am
+
+		} catch {
+			dump(error)
+		}
+		
+		return 0
+	}
 	
 	var body: some View {
 		HStack {
@@ -26,6 +43,11 @@ struct CardView: View {
 					.font(.title2)
 					.fontDesign(.rounded)
 					.foregroundStyle(Color(uiColor: MoxieColor.otherColor).blendMode(.difference))
+					.fontWeight(.medium)
+				Text("$\(dollarValue.formatted(.number.precision(.fractionLength(2))))")
+					.font(.caption)
+					.fontDesign(.rounded)
+					.foregroundStyle(Color(uiColor: MoxieColor.otherColor).blendMode(.difference).opacity(0.9))
 					.fontWeight(.medium)
 			}
 			
@@ -51,8 +73,8 @@ struct CardView: View {
 
 #Preview {
 	Group {
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34")
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34")
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34")
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023)
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023)
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023)
 	}
 }

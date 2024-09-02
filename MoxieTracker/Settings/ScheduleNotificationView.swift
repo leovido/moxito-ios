@@ -26,7 +26,8 @@ struct ScheduleNotificationView: View {
 				TextField("Change value", 
 									text: $viewModel.moxieChangeText,
 									prompt: Text("e.g. 100"))
-					.textFieldStyle(RoundedBorderTextFieldStyle())
+				.autocorrectionDisabled()
+				.textFieldStyle(RoundedBorderTextFieldStyle())
 			} footer: {
 				Text("You will receive a notification every \(viewModel.moxieChangeText.isEmpty ? "x" : viewModel.moxieChangeText) $MOXIE you receive")
 					.font(.caption)

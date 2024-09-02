@@ -1,6 +1,7 @@
 import WidgetKit
 import AppIntents
 import MoxieLib
+@preconcurrency import SwiftUI
 
 //extension MoxieModel: AppEntity {
 //	public var id: ObjectIdentifier {
@@ -35,6 +36,8 @@ import MoxieLib
 //}
 
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
+	let client: MoxieClient = .init()
+
 	static var title: LocalizedStringResource = "Moxie tracker"
 	static var description = IntentDescription("Moxie tracker widget")
 	

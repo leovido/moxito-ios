@@ -62,54 +62,59 @@ public struct SearchListView: View {
 	
 	public var body: some View {
 		NavigationStack {
-			Group {
-				if viewModel.items.isEmpty {
-					ContentUnavailableView("FC users search", systemImage: "magnifyingglass", description: Text("Search for any Farcaster user"))
-				} else {
-					List(viewModel.items) { item in
-						NavigationLink(value: item.fid) {
-							HStack {
-								AsyncImage(url: URL(string: item.pfpURL),
-													 content: { image in
-									image
-										.resizable()
-										.aspectRatio(contentMode: .fit)
-										.clipShape(Circle())
-										.frame(width: 50, height: 50)
-								}, placeholder: {
-									ProgressView()
-								})
-								
-								VStack(alignment: .leading) {
-									Text(item.displayName ?? "")
-										.font(.headline)
-									Text(item.username ?? "")
-										.font(.subheadline)
-									Text(item.fid.description)
-										.fontWeight(.light)
-										.font(.caption)
+			ZStack {
+				Color(uiColor: MoxieColor.backgroundColor)
+					.ignoresSafeArea(.all)
+				Group {
+					if viewModel.items.isEmpty {
+						ContentUnavailableView("FC users search", systemImage: "magnifyingglass", description: Text("Search for any Farcaster user"))
+					} else {
+						List(viewModel.items) { item in
+							NavigationLink(value: item.fid) {
+								HStack {
+									AsyncImage(url: URL(string: item.pfpURL),
+														 content: { image in
+										image
+											.resizable()
+											.aspectRatio(contentMode: .fit)
+											.clipShape(Circle())
+											.frame(width: 50, height: 50)
+									}, placeholder: {
+										ProgressView()
+									})
+									
+									VStack(alignment: .leading) {
+										Text(item.displayName ?? "")
+											.font(.headline)
+										Text(item.username ?? "")
+											.font(.subheadline)
+										Text(item.fid.description)
+											.fontWeight(.light)
+											.font(.caption)
+									}
 								}
 							}
 						}
-					}
-					.navigationDestination(for: Int.self, destination: { userFID in
-						HomeView(
-							viewModel: MoxieViewModel(
-								input: userFID.description,
-								client: MoxieClient(),
-								isSearchMode: true
+						.navigationDestination(for: Int.self, destination: { userFID in
+							HomeView(
+								viewModel: MoxieViewModel(
+									input: userFID.description,
+									client: MoxieClient(),
+									isSearchMode: true
+								)
 							)
-						)
-						.navigationBarTitleDisplayMode(.inline)
-					})
+							.navigationBarTitleDisplayMode(.inline)
+						})
+					}
 				}
+				.redacted(reason: viewModel.isLoading ? .placeholder : [])
+				.navigationTitle("Search")
+				.refreshable {
+					viewModel.searchUser()
+				}
+				.searchable(text: $viewModel.query, prompt: "e.g. username")
+				.autocorrectionDisabled()
 			}
-			.redacted(reason: viewModel.isLoading ? .placeholder : [])
-			.navigationTitle("Search")
-			.refreshable {
-				viewModel.searchUser()
-			}
-			.searchable(text: $viewModel.query, prompt: "e.g. username")
 		}
 		.tabItem {
 			Label("Search", systemImage: "magnifyingglass")

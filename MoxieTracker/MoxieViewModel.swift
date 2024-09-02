@@ -10,7 +10,7 @@ final class MoxieViewModel: ObservableObject {
 	@Published var price: Decimal = 0
 	@Published var timeAgo: String = ""
 	@Published var userInputNotifications: Decimal
-	@Published var isSearchMode: Bool = false
+	@Published var isSearchMode: Bool
 	@Published var moxieChangeText: String = ""
 	
 	@Published var filterSelection: Int
@@ -26,6 +26,7 @@ final class MoxieViewModel: ObservableObject {
 	
 	init(input: String = "",
 			 model: MoxieModel = .noop,
+			 isLoading: Bool = false,
 			 client: MoxieProvider,
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
@@ -54,6 +55,9 @@ final class MoxieViewModel: ObservableObject {
 	}
 	
 	func setupListeners() {
+		$error
+			.sink { _ in }
+			.store(in: &subscriptions)
 		
 		$input
 			.removeDuplicates()

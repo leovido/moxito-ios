@@ -30,12 +30,12 @@ struct FetchDataIntent: AppIntent {
 }
 
 struct Provider: AppIntentTimelineProvider {
-	let client: MoxieClient = .init()
-	
 	func placeholder(in context: Context) -> SimpleEntry {
 		SimpleEntry(date: Date(),
 								dailyMoxie: 0,
+								dailyUSD: 0,
 								claimableMoxie: 0,
+								claimableUSD: 0,
 								claimedMoxie: 0,
 								configuration: ConfigurationAppIntent())
 	}
@@ -43,19 +43,24 @@ struct Provider: AppIntentTimelineProvider {
 	func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
 		SimpleEntry(date: Date(),
 								dailyMoxie: 0,
+								dailyUSD: 0,
 								claimableMoxie: 0,
+								claimableUSD: 0,
 								claimedMoxie: 0,
 								configuration: configuration)
 	}
 	
 	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
 		do {
-			let data = try await client.fetchMoxieStats(userFID: 203666)
-			
-			var entries: [SimpleEntry] = [
+			let data = try await configuration.client.fetchMoxieStats(userFID: 203666)
+			let price = try await configuration.client.fetchPrice()
+
+			let entries: [SimpleEntry] = [
 				SimpleEntry.init(date: .now,
 												 dailyMoxie: data.allEarningsAmount,
+												 dailyUSD: price * data.allEarningsAmount,
 												 claimableMoxie: data.moxieClaimTotals.first!.availableClaimAmount,
+												 claimableUSD: price * data.moxieClaimTotals.first!.availableClaimAmount,
 												 claimedMoxie: data.moxieClaimTotals.first!.claimedAmount,
 												 configuration: .init())
 			]
@@ -70,13 +75,15 @@ struct Provider: AppIntentTimelineProvider {
 struct SimpleEntry: TimelineEntry {
 	let date: Date
 	var dailyMoxie: Decimal
+	var dailyUSD: Decimal
 	var claimableMoxie: Decimal
+	var claimableUSD: Decimal
 	var claimedMoxie: Decimal
+	
 	let configuration: ConfigurationAppIntent
 }
 
 struct MoxieWidgetSimpleEntryView : View {
-	let client = MoxieClient()
 	var entry: Provider.Entry
 	
 	var body: some View {
@@ -94,8 +101,13 @@ struct MoxieWidgetSimpleEntryView : View {
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
 							.fontDesign(.rounded)
+						Text("$\(entry.dailyUSD.formatted(.number.precision(.fractionLength(2))))")
+							.foregroundStyle(Color(uiColor: MoxieColor.dark))
+							.font(.caption)
+							.fontWeight(.light)
+							.fontDesign(.rounded)
 							.padding(.bottom, 4)
-						
+
 						Text("Claimable Ⓜ️")
 							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
 							.fontDesign(.rounded)
@@ -104,6 +116,11 @@ struct MoxieWidgetSimpleEntryView : View {
 						Text(entry.claimableMoxie.formatted(.number.precision(.fractionLength(2))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
+							.fontDesign(.rounded)
+						Text("$\(entry.claimableUSD.formatted(.number.precision(.fractionLength(2))))")
+							.foregroundStyle(Color(uiColor: MoxieColor.dark))
+							.font(.caption)
+							.fontWeight(.light)
 							.fontDesign(.rounded)
 						
 						Spacer()
@@ -124,53 +141,6 @@ struct MoxieWidgetSimpleEntryView : View {
 	}
 }
 
-//struct MoxieWidgetBigView: View {
-//	let client = MoxieClient()
-//	var entry: Provider.Entry
-//	
-//	var body: some View {
-//		VStack(alignment: .center) {
-////			HStack {
-////				Text("@leovido - 203666")
-////					.font(.custom("AvenirNext", fixedSize: 10))
-////					.foregroundStyle(Color(uiColor: MoxieColor.dark))
-////			}
-//			
-//			Spacer()
-//
-//			Text("DAILY Ⓜ️")
-//				.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-//				.fontWeight(.heavy)
-//				.kerning(1.0)
-//				.fontDesign(.serif)
-//			
-//			Text("\(entry.configuration.dailyMoxie)")
-//				.foregroundStyle(Color(uiColor: MoxieColor.dark))
-//				.fontWeight(.medium)
-//				.fontDesign(.rounded)
-//				.padding(.bottom, 4)
-//				.font(.custom("Avenir-Black", size: 23))
-//				.textScale(.default, isEnabled: true)
-//								
-//			Divider()
-//			
-//			Text("CLAIM Ⓜ️")
-//				.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-//				.fontWeight(.heavy)
-//				.kerning(1.0)
-//				.fontDesign(.serif)
-//			Text("\(entry.configuration.claimableMoxie)")
-//				.foregroundStyle(Color(uiColor: MoxieColor.dark))
-//				.fontWeight(.heavy)
-//				.fontDesign(.rounded)
-//				.scaledToFit()
-//				.textScale(.default)
-//
-//			Spacer()
-//		}
-//	}
-//}
-
 struct MoxieWidgetSimple: Widget {
 	let kind: String = "MoxieWidgetSimple"
 	
@@ -180,20 +150,8 @@ struct MoxieWidgetSimple: Widget {
 				.containerBackground(Color(uiColor: MoxieColor.backgroundColor), for: .widget)
 				.preferredColorScheme(.light)
 		}
-
 	}
 }
-
-//struct MoxieWidgetBig: Widget {
-//	let kind: String = "MoxieWidgetBig"
-//	
-//	var body: some WidgetConfiguration {
-//		AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-//			MoxieWidgetBigView(entry: entry)
-//				.containerBackground(Color(uiColor: MoxieColor.backgroundColor), for: .widget)
-//		}
-//	}
-//}
 
 extension ConfigurationAppIntent {
 	fileprivate static var smallNumber: ConfigurationAppIntent {
@@ -218,25 +176,17 @@ extension ConfigurationAppIntent {
 } timeline: {
 	SimpleEntry(date: .now,
 							dailyMoxie: 0,
+							dailyUSD: 4.32,
 							claimableMoxie: 0,
+							claimableUSD: 32.32,
 							claimedMoxie: 0,
 							configuration: .smallNumber)
 	SimpleEntry(date: .now,
 							dailyMoxie: 0,
+							dailyUSD: 1000.33,
 							claimableMoxie: 0,
+							claimableUSD: 32.32,
 							claimedMoxie: 0,
 							configuration: .bigNumber)
 }
 
-//#Preview(as: .systemSmall) {
-//	MoxieWidgetBig()
-//} timeline: {
-//	SimpleEntry(date: .now, dailyMoxie: 0,
-//							claimableMoxie: 0,
-//							claimedMoxie: 0,
-//							configuration: .smallNumber)
-//	SimpleEntry(date: .now, dailyMoxie: 0,
-//							claimableMoxie: 0,
-//							claimedMoxie: 0,
-//							configuration: .bigNumber)
-//}
