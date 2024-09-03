@@ -2,6 +2,13 @@ import SwiftUI
 import MoxieLib
 import Combine
 
+enum NotificationOption: Codable, Hashable {
+	case hour
+	case week
+	case month
+	case custom(String)
+}
+
 @MainActor
 final class MoxieViewModel: ObservableObject {
 	@Published var input = ""
@@ -12,6 +19,9 @@ final class MoxieViewModel: ObservableObject {
 	@Published var userInputNotifications: Decimal
 	@Published var isSearchMode: Bool
 	@Published var moxieChangeText: String = ""
+	@Published var isNotificationSheetPresented: Bool = false
+
+	@Published var selectedNotificationOptions: [NotificationOption] = []
 	
 	@Published var filterSelection: Int
 	@Published var error: Error?
@@ -35,6 +45,15 @@ final class MoxieViewModel: ObservableObject {
 		self.isSearchMode = isSearchMode
 		self.filterSelection = filterSelection
 		
+		if let savedData = UserDefaults.standard.data(forKey: "notificationOptions") {
+			do {
+				let notificationOptions = try JSONDecoder().decode([NotificationOption].self, from: savedData)
+				self.selectedNotificationOptions = notificationOptions
+			} catch {
+				print("Failed to decode notification options: \(error.localizedDescription)")
+			}
+		}
+		
 		if let data = UserDefaults.standard.data(forKey: "moxieModel"),
 			 let decodedModel = try? CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: data) {
 			self.model = decodedModel
@@ -54,7 +73,29 @@ final class MoxieViewModel: ObservableObject {
 		setupListeners()
 	}
 	
+	func updateNotificationOption(_ option: NotificationOption) {
+		if selectedNotificationOptions.contains(option)  {
+			selectedNotificationOptions.removeAll(where: {
+				$0 == option
+			})
+		} else {
+			selectedNotificationOptions.append(option)
+		}
+	}
+	
 	func setupListeners() {
+		$selectedNotificationOptions
+			.removeDuplicates()
+			.sink { [weak self] options in
+				let encoder = CustomDecoderAndEncoder.encoder
+				let encodedData = try! encoder.encode(options)
+				
+				UserDefaults.standard.setValue(encodedData, forKey: "notificationOptions")
+				
+				self?.notify()
+			}
+			.store(in: &subscriptions)
+
 		$error
 			.sink { _ in }
 			.store(in: &subscriptions)
@@ -67,6 +108,7 @@ final class MoxieViewModel: ObservableObject {
 			.store(in: &subscriptions)
 		
 		Publishers.CombineLatest($inputFID, $filterSelection)
+			.dropFirst() // Skip the first emitted value
 			.removeDuplicates { $0 == $1 } // Optional: Avoid triggering for the same values
 			.debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
 			.receive(on: DispatchQueue.main)
@@ -79,21 +121,11 @@ final class MoxieViewModel: ObservableObject {
 				}
 			}
 			.store(in: &subscriptions)
-		
-		$moxieChangeText
-			.filter({ !$0.isEmpty })
-			.removeDuplicates()
-			.receive(on: DispatchQueue.main)
-			.sink {
-				UserDefaults.standard.setValue($0, forKey: "userInputNotifications")
-				self.userInputNotifications = Decimal(string: $0) ?? 0
-			}
-			.store(in: &subscriptions)
 
 		$model
 			.receive(on: DispatchQueue.main)
 			.compactMap({ $0.moxieClaimTotals.first })
-			.map({ $0.claimedAmount * self.price })
+			.map({ $0.availableClaimAmount * self.price })
 			.sink { [weak self] in
 				self?.dollarValueMoxie = $0
 				
@@ -123,9 +155,14 @@ final class MoxieViewModel: ObservableObject {
 		$price
 			.removeDuplicates()
 			.sink { [weak self] in
-				self?.dollarValueMoxie = $0 * (self?.model.moxieClaimTotals.first?.claimedAmount ?? 0)
+				self?.dollarValueMoxie = $0 * (self?.model.moxieClaimTotals.first?.availableClaimAmount ?? 0)
 			}
 			.store(in: &subscriptions)
+	}
+	
+	func saveCustomMoxieInput() {
+		UserDefaults.standard.setValue(moxieChangeText, forKey: "userInputNotifications")
+		self.userInputNotifications = Decimal(string: moxieChangeText) ?? 0
 	}
 	
 	func fetchPrice() async throws {
@@ -171,6 +208,46 @@ final class MoxieViewModel: ObservableObject {
 			UNUserNotificationCenter.current().add(request) { error in
 				if let error = error {
 					print("Failed to schedule notification: \(error.localizedDescription)")
+				}
+			}
+		}
+	}
+	
+	func removeAllScheduledNotifications() {
+		UserDefaults.standard.removeObject(forKey: "notificationOptions")
+		selectedNotificationOptions.removeAll()
+
+		UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+		UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+	}
+	
+	func notify() {
+		let content = UNMutableNotificationContent()
+		content.title = "$MOXIE earnings"
+		content.body = "\(model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))))"
+		content.sound = .default
+		
+		selectedNotificationOptions.forEach { option in
+			let interval: TimeInterval
+			switch option {
+			case .hour:
+				interval = 3600
+			case .week:
+				interval = 3600 * 24 * 7
+			case .month:
+				interval = 3600 * 24 * 7 * 30
+			default:
+				interval = 0
+			}
+			
+			if interval > 0 {
+				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: true)
+				let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+				
+				UNUserNotificationCenter.current().add(request) { error in
+					if let error = error {
+						print("Failed to schedule notification: \(error.localizedDescription)")
+					}
 				}
 			}
 		}

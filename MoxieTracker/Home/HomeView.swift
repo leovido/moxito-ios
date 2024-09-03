@@ -24,6 +24,21 @@ struct HomeView: View {
 					}
 					.tint(Color(uiColor: MoxieColor.dark))
 					.pickerStyle(.segmented)
+					.gesture(
+						DragGesture()
+							.onEnded { value in
+								// Detect the drag direction
+								if value.translation.width < 0 { // Swipe left
+									if viewModel.filterSelection < viewModel.selectedNotificationOptions.count - 1 {
+										viewModel.filterSelection += 1
+									}
+								} else if value.translation.width > 0 { // Swipe right
+									if viewModel.filterSelection > 0 {
+										viewModel.filterSelection -= 1
+									}
+								}
+							}
+					)
 					
 					TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
 						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
@@ -34,13 +49,13 @@ struct HomeView: View {
 				}
 				
 				VStack(alignment: .leading) {
-					Text("Claimed")
+					Text("Claimable")
 						.font(.title)
 						.fontDesign(.serif)
 						.foregroundStyle(Color(uiColor: MoxieColor.dark).blendMode(.luminosity))
 						.fontWeight(.bold)
 					
-					Text("\(viewModel.model.moxieClaimTotals.first?.claimedAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE") Ⓜ️")
+					Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE") Ⓜ️")
 						.font(.largeTitle)
 						.fontDesign(.rounded)
 						.foregroundStyle(Color(uiColor: MoxieColor.dark))
