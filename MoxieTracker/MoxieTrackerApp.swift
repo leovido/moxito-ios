@@ -11,7 +11,9 @@ struct MoxieTrackerApp: App {
 	
 	init() {
 		UNUserNotificationCenter.current().delegate = notificationDelegate
+		registerBackgroundTasks()
 	}
+	
 	var body: some Scene {
 		WindowGroup {
 			ContentView()
