@@ -24,21 +24,6 @@ struct HomeView: View {
 					}
 					.tint(Color(uiColor: MoxieColor.dark))
 					.pickerStyle(.segmented)
-					.gesture(
-						DragGesture()
-							.onEnded { value in
-								// Detect the drag direction
-								if value.translation.width < 0 { // Swipe left
-									if viewModel.filterSelection < viewModel.selectedNotificationOptions.count - 1 {
-										viewModel.filterSelection += 1
-									}
-								} else if value.translation.width > 0 { // Swipe right
-									if viewModel.filterSelection > 0 {
-										viewModel.filterSelection -= 1
-									}
-								}
-							}
-					)
 					
 					TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
 						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
