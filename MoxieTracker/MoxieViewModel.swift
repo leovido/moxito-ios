@@ -10,7 +10,7 @@ enum NotificationOption: Codable, Hashable {
 }
 
 @MainActor
-final class MoxieViewModel: ObservableObject {
+final class MoxieViewModel: ObservableObject, Observable {
 	@Published var input = ""
 	@Published var model: MoxieModel
 	@Published var isLoading: Bool = false
@@ -37,7 +37,7 @@ final class MoxieViewModel: ObservableObject {
 	init(input: String = "",
 			 model: MoxieModel = .noop,
 			 isLoading: Bool = false,
-			 client: MoxieProvider,
+			 client: MoxieProvider = MoxieClient(),
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
 			 userInputNotifications: Decimal = 0) {

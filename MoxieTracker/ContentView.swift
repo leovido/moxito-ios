@@ -3,7 +3,7 @@ import MoxieLib
 import Combine
 
 struct ContentView: View {
-	@StateObject var viewModel: MoxieViewModel
+	@EnvironmentObject var viewModel: MoxieViewModel
 	
 	var body: some View {
 		TabView {
@@ -18,9 +18,10 @@ struct ContentView: View {
 }
 
 #Preview {
-	ContentView(viewModel: .init(
-		model: MoxieModel.placeholder,
-		client: MockMoxieClient()))
+	ContentView()
+		.environment(MoxieViewModel(
+			model: MoxieModel.placeholder,
+		 client: MockMoxieClient()))
 }
 
 #Preview {
