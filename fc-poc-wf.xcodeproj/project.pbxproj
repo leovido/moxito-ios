@@ -56,6 +56,8 @@
 		47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54762C84DF3A006C2820 /* SearchListView.swift */; };
 		47EC54792C87143E006C2820 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54782C87143E006C2820 /* AppDelegate.swift */; };
 		47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547A2C87164E006C2820 /* BackgroundTasks.swift */; };
+		47EC547D2C88324E006C2820 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547C2C88324E006C2820 /* Haptics.swift */; };
+		47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -202,6 +204,10 @@
 		47EC54762C84DF3A006C2820 /* SearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
 		47EC54782C87143E006C2820 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47EC547A2C87164E006C2820 /* BackgroundTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTasks.swift; sourceTree = "<group>"; };
+		47EC547C2C88324E006C2820 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		47EC547E2C8B0121006C2820 /* MoxieWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxieWidgetExtension.entitlements; sourceTree = "<group>"; };
+		47EC547F2C8B019F006C2820 /* Moxito.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Moxito.entitlements; sourceTree = "<group>"; };
+		47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -295,8 +301,10 @@
 			isa = PBXGroup;
 			children = (
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
+				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
+				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
@@ -351,6 +359,8 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
+				47EC547F2C8B019F006C2820 /* Moxito.entitlements */,
+				47EC547E2C8B0121006C2820 /* MoxieWidgetExtension.entitlements */,
 				47EC54752C8479D2006C2820 /* Moxito-Info.plist */,
 				47C324012C6E578300BE03C2 /* fc-poc-wf */,
 				47C324122C6E578400BE03C2 /* fc-poc-wfTests */,
@@ -818,7 +828,9 @@
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
+				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
+				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
@@ -956,6 +968,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
@@ -963,6 +976,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Moxito-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Moxito;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -988,6 +1003,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
@@ -995,6 +1011,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Moxito-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Moxito;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1097,6 +1115,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoxieWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
@@ -1125,6 +1144,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoxieWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HL92L2PJSU;

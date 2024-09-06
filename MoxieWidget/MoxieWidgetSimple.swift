@@ -7,7 +7,6 @@ enum FeatureFlag {
 	static let claimButton = false
 }
 
-
 struct FetchDataIntent: AppIntent {
 		static var title: LocalizedStringResource = "Fetch Data"
 		
@@ -52,8 +51,22 @@ struct Provider: AppIntentTimelineProvider {
 	
 	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
 		do {
-			let data = try await configuration.client.fetchMoxieStats(userFID: 203666)
+			var fid = "0"
+
+			if let userDefaults = UserDefaults(suiteName: "group.com.christianleovido.moxito"),
+				 let data = userDefaults.data(forKey: "moxieModel"),
+				 let decodedModel = try? CustomDecoderAndEncoder.decoder.decode(
+					MoxieModel.self,
+					from: data
+				 ) {
+				fid = decodedModel.entityID
+				userDefaults.synchronize()
+			}
+			
+			let data = try await configuration.client.fetchMoxieStats(userFID: Int(fid) ?? 0)
 			let price = try await configuration.client.fetchPrice()
+			
+			
 
 			let entries: [SimpleEntry] = [
 				SimpleEntry.init(date: .now,
@@ -87,8 +100,6 @@ struct MoxieWidgetSimpleEntryView : View {
 	var entry: Provider.Entry
 	
 	var body: some View {
-		Link(destination: URL(string: "https://www.example.com/rewards")!) {
-			
 			VStack(alignment: .leading) {
 				HStack {
 					VStack(alignment: .leading) {
@@ -137,7 +148,6 @@ struct MoxieWidgetSimpleEntryView : View {
 					Spacer()
 				}
 			}
-		}
 	}
 }
 

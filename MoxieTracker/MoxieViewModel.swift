@@ -11,8 +11,15 @@ enum NotificationOption: Codable, Hashable {
 
 @MainActor
 final class MoxieViewModel: ObservableObject, Observable {
+	static let shared = MoxieViewModel()
+	
+	var inFlightTask: Task<Void, Error>?
+	
+	@Published var persistence: UserDefaults
+
 	@Published var input = ""
 	@Published var model: MoxieModel
+	
 	@Published var isLoading: Bool = false
 	@Published var price: Decimal = 0
 	@Published var timeAgo: String = ""
@@ -29,8 +36,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var dollarValueMoxie: Decimal = 0
 	
 	@Published var inputFID: Int = -1
-	
-	let client: MoxieProvider
+
+	private let client: MoxieProvider
 	
 	private(set) var subscriptions: Set<AnyCancellable> = []
 	
@@ -44,33 +51,15 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.client = client
 		self.isSearchMode = isSearchMode
 		self.filterSelection = filterSelection
-		
-		if let savedData = UserDefaults.standard.data(forKey: "notificationOptions") {
-			do {
-				let notificationOptions = try JSONDecoder().decode([NotificationOption].self, from: savedData)
-				self.selectedNotificationOptions = notificationOptions
-			} catch {
-				print("Failed to decode notification options: \(error.localizedDescription)")
-			}
-		}
-		
-		if let data = UserDefaults.standard.data(forKey: "moxieModel"),
-			 let decodedModel = try? CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: data) {
-			self.model = decodedModel
-			self.input = input.isEmpty ? decodedModel.entityID : input
-		} else {
-			self.model = model
-			self.input = input
-		}
-		
-		if let decodedUserInputNotifications = UserDefaults.standard.string(forKey: "userInputNotifications") {
-			let decimalValue = Decimal(string: decodedUserInputNotifications) ?? 100000
-			 self.userInputNotifications = decimalValue
-		} else {
-			self.userInputNotifications = userInputNotifications
-		}
+		self.userInputNotifications = userInputNotifications
+		self.persistence = UserDefaults.group ?? UserDefaults.standard
+		self.model = model
 		
 		setupListeners()
+	}
+	
+	func claimMoxie() {
+		
 	}
 	
 	func updateNotificationOption(_ option: NotificationOption) {
@@ -87,11 +76,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 		$selectedNotificationOptions
 			.removeDuplicates()
 			.sink { [weak self] options in
-				let encoder = CustomDecoderAndEncoder.encoder
-				let encodedData = try! encoder.encode(options)
-				
-				UserDefaults.standard.setValue(encodedData, forKey: "notificationOptions")
-				
 				self?.notify()
 			}
 			.store(in: &subscriptions)
@@ -103,37 +87,53 @@ final class MoxieViewModel: ObservableObject, Observable {
 		$input
 			.removeDuplicates()
 			.sink { newValue in
-				self.inputFID = Int(newValue) ?? 0
+				let decimalCharacters = CharacterSet.decimalDigits
+				let decimalRange = newValue.rangeOfCharacter(from: decimalCharacters)
+
+				if decimalRange != nil {
+					self.inputFID = Int(newValue) ?? 0
+					self.error = nil
+				} else {
+					self.error = MoxieError.message("Please enter a number")
+				}
 			}
 			.store(in: &subscriptions)
 		
 		Publishers.CombineLatest($inputFID, $filterSelection)
-			.dropFirst() // Skip the first emitted value
-			.removeDuplicates { $0 == $1 } // Optional: Avoid triggering for the same values
-			.debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+			.dropFirst()
+			.removeDuplicates { $0 == $1 }
 			.receive(on: DispatchQueue.main)
+			.handleEvents(receiveRequest: { _ in
+				self.inFlightTask?.cancel()
+			})
+			.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
 			.sink { [weak self] value in
 				guard let self = self, value.0 != 0 else {
 					return
 				}
-				Task {
+				inFlightTask = Task {
 					try await self.fetchStats(filter: MoxieFilter(rawValue: value.1) ?? .today)
 				}
 			}
 			.store(in: &subscriptions)
-
+				
+		$model
+			.receive(on: DispatchQueue.main)
+			.sink {
+				self.input = $0.entityID
+			}
+			.store(in: &subscriptions)
+		
 		$model
 			.receive(on: DispatchQueue.main)
 			.compactMap({ $0.moxieClaimTotals.first })
 			.map({ $0.availableClaimAmount * self.price })
 			.sink { [weak self] in
 				self?.dollarValueMoxie = $0
-				
 			}
 			.store(in: &subscriptions)
 		
 		$model
-			.removeDuplicates()
 			.receive(on: DispatchQueue.main)
 			.tryMap { model in
 				let encoder = CustomDecoderAndEncoder.encoder
@@ -145,10 +145,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				return Just(nil) // You can choose how to handle errors, here we're returning nil
 			}
 			.compactMap { $0 }
-			.sink { encodedData in
-				if !self.isSearchMode {
-					UserDefaults.standard.set(encodedData, forKey: "moxieModel")
-				}
+			.sink { _ in
 			}
 			.store(in: &subscriptions)
 		
@@ -161,7 +158,10 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 	
 	func saveCustomMoxieInput() {
-		UserDefaults.standard.setValue(moxieChangeText, forKey: "userInputNotifications")
+		guard let group = UserDefaults.group else {
+			return
+		}
+		group.setValue(moxieChangeText, forKey: "userInputNotifications")
 		self.userInputNotifications = Decimal(string: moxieChangeText) ?? 0
 	}
 	
@@ -169,7 +169,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 		do {
 			price = try await client.fetchPrice()
 		} catch {
-			self.error = error
 			price = 0
 		}
 	}
@@ -180,13 +179,24 @@ final class MoxieViewModel: ObservableObject, Observable {
 			
 			let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: filter)
 			self.model = newModel
-			checkAndNotify(newModel: newModel, userInput: userInputNotifications)
+			self.error = nil
+			self.inFlightTask = nil
 			
 			isLoading = false
 		} catch {
 			self.error = error
 			self.model = .noop
 			isLoading = false
+		}
+	}
+	
+	func onAppear() async {
+		do {
+			let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: MoxieFilter(rawValue: filterSelection) ?? .today)
+			self.model = newModel
+			checkAndNotify(newModel: newModel, userInput: userInputNotifications)
+		} catch {
+			self.error = error
 		}
 	}
 	
@@ -214,7 +224,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 	
 	func removeAllScheduledNotifications() {
-		UserDefaults.standard.removeObject(forKey: "notificationOptions")
+		persistence.removeObject(forKey: "notificationOptions")
 		selectedNotificationOptions.removeAll()
 
 		UNUserNotificationCenter.current().removeAllDeliveredNotifications()
@@ -242,6 +252,15 @@ final class MoxieViewModel: ObservableObject, Observable {
 			
 			if interval > 0 {
 				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: true)
+				let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+				
+				UNUserNotificationCenter.current().add(request) { error in
+					if let error = error {
+						print("Failed to schedule notification: \(error.localizedDescription)")
+					}
+				}
+			} else {
+				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
 				let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 				
 				UNUserNotificationCenter.current().add(request) { error in

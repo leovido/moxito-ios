@@ -42,12 +42,10 @@ public struct MoxieClaimTotal: Codable, Hashable {
 
 // MARK: - Social
 public struct Social: Codable, Hashable {
-	public let isFarcasterPowerUser: Bool
 	public let profileImage: String
 	public let profileDisplayName, profileHandle: String
 	
-	public init(isFarcasterPowerUser: Bool, profileImage: String, profileDisplayName: String, profileHandle: String) {
-		self.isFarcasterPowerUser = isFarcasterPowerUser
+	public init(profileImage: String, profileDisplayName: String, profileHandle: String) {
 		self.profileImage = profileImage
 		self.profileDisplayName = profileDisplayName
 		self.profileHandle = profileHandle
@@ -63,7 +61,7 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(isFarcasterPowerUser: true, profileImage: "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/883cecce-71a6-4f84-68da-426bedf00e00/rectcrop3", profileDisplayName: "Leovido🎩", profileHandle: "@test")],
+		socials: [.init(profileImage: "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/883cecce-71a6-4f84-68da-426bedf00e00/rectcrop3", profileDisplayName: "Leovido🎩", profileHandle: "@test")],
 		entityID: "203666",
 		moxieClaimTotals: [
 			.init(
@@ -80,7 +78,7 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(isFarcasterPowerUser: false, profileImage: "", profileDisplayName: "Anon", profileHandle: "")],
+		socials: [.init(profileImage: "", profileDisplayName: "Anon", profileHandle: "")],
 		entityID: "-1",
 		moxieClaimTotals: [
 			.init(

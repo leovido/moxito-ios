@@ -67,7 +67,10 @@ public struct SearchListView: View {
 					.ignoresSafeArea(.all)
 				Group {
 					if viewModel.items.isEmpty {
-						ContentUnavailableView("FC users search", systemImage: "magnifyingglass", description: Text("Search for any Farcaster user"))
+						ContentUnavailableView(
+							"FC users search",
+							systemImage: "magnifyingglass",
+							description: Text("Search for any Farcaster user"))
 					} else {
 						List(viewModel.items) { item in
 							NavigationLink(value: item.fid) {

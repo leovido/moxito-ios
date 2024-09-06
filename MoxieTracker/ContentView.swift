@@ -4,11 +4,13 @@ import Combine
 
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
+	@State private var selectedTab = 0
 	
 	var body: some View {
-		TabView {
+		TabView(selection: $selectedTab) {
 			HomeView(viewModel: viewModel)
-			
+				.sensoryFeedback(.selection, trigger: selectedTab)
+
 			SearchListView(viewModel: .init(client: .init(), query: "", items: []))
 			
 			SettingsView(viewModel: viewModel)

@@ -51,6 +51,9 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
 	@Parameter(title: "Claimed", default: 12_000)
 	var claimedMoxie: Int
 	
+	@Parameter(title: "FID", default: 0)
+	var fid: Int
+	
 	@Parameter(title: "Refresh", default: .daily)
 	var interval: RefreshInterval
 	
