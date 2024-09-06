@@ -10,7 +10,7 @@ struct MoxieTrackerApp: App {
 	var body: some Scene {
 		WindowGroup {
 			ContentView()
-				.environment(MoxieViewModel.shared)
+				.environment(mainViewModel)
 				.preferredColorScheme(.light)
 				.defaultAppStorage(.group!)
 		}

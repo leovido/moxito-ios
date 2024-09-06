@@ -51,30 +51,26 @@ struct Provider: AppIntentTimelineProvider {
 	
 	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
 		do {
-			var fid = "0"
+			var moxieModel: MoxieModel = .noop
 
 			if let userDefaults = UserDefaults(suiteName: "group.com.christianleovido.moxito"),
-				 let data = userDefaults.data(forKey: "moxieModel"),
+				 let data = userDefaults.data(forKey: "moxieData"),
 				 let decodedModel = try? CustomDecoderAndEncoder.decoder.decode(
 					MoxieModel.self,
 					from: data
 				 ) {
-				fid = decodedModel.entityID
-				userDefaults.synchronize()
+				moxieModel = decodedModel
 			}
 			
-			let data = try await configuration.client.fetchMoxieStats(userFID: Int(fid) ?? 0)
 			let price = try await configuration.client.fetchPrice()
 			
-			
-
 			let entries: [SimpleEntry] = [
 				SimpleEntry.init(date: .now,
-												 dailyMoxie: data.allEarningsAmount,
-												 dailyUSD: price * data.allEarningsAmount,
-												 claimableMoxie: data.moxieClaimTotals.first!.availableClaimAmount,
-												 claimableUSD: price * data.moxieClaimTotals.first!.availableClaimAmount,
-												 claimedMoxie: data.moxieClaimTotals.first!.claimedAmount,
+												 dailyMoxie: moxieModel.allEarningsAmount,
+												 dailyUSD: price * moxieModel.allEarningsAmount,
+												 claimableMoxie: moxieModel.moxieClaimTotals.first!.availableClaimAmount,
+												 claimableUSD: price * moxieModel.moxieClaimTotals.first!.availableClaimAmount,
+												 claimedMoxie: moxieModel.moxieClaimTotals.first!.claimedAmount,
 												 configuration: .init())
 			]
 			

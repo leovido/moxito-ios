@@ -58,10 +58,7 @@ struct HomeView: View {
 							.fontDesign(.rounded)
 							.foregroundStyle(Color(uiColor: MoxieColor.primary))
 							.fontWeight(.heavy)
-						
-						
 					}
-					
 				}
 				.padding(32)
 				.background(Color.white)
@@ -74,26 +71,22 @@ struct HomeView: View {
 					.textFieldStyle(RoundedBorderTextFieldStyle())
 					.fontDesign(.rounded)
 					.padding(.vertical)
-					.onSubmit {
-						WidgetCenter.shared.reloadAllTimelines()
-					}
 				
 				Picker("Filter", selection: $viewModel.filterSelection) {
-						Text("Daily").tag(0)
-						Text("Weekly").tag(1)
-						Text("Lifetime").tag(2)
+					Text("Daily").tag(0)
+					Text("Weekly").tag(1)
+					Text("Lifetime").tag(2)
 				}
 				.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
 				.tint(Color(uiColor: MoxieColor.dark))
 				.pickerStyle(.segmented)
 				.padding()
-				
 
 				ScrollView {
 						VStack(alignment: .leading) {
 							if viewModel.inputFID == -1 {
 								ContentUnavailableView {
-									Label("No FID input", systemImage: "m.circle.fill")
+									Label("No FID input", systemImage: "m.circe.fill")
 										.foregroundStyle(Color(uiColor: MoxieColor.dark))
 								} description: {
 									Text("Try to search for another title.")

@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 import MoxieLib
 import Combine
 
@@ -35,7 +36,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 	@Published var dollarValueMoxie: Decimal = 0
 	
-	@Published var inputFID: Int = -1
+	@Published var inputFID: Int = 0
 
 	private let client: MoxieProvider
 	
@@ -86,16 +87,17 @@ final class MoxieViewModel: ObservableObject, Observable {
 		
 		$input
 			.removeDuplicates()
+			.print()
 			.sink { newValue in
-				let decimalCharacters = CharacterSet.decimalDigits
-				let decimalRange = newValue.rangeOfCharacter(from: decimalCharacters)
-
-				if decimalRange != nil {
-					self.inputFID = Int(newValue) ?? 0
-					self.error = nil
-				} else {
-					self.error = MoxieError.message("Please enter a number")
-				}
+//				let decimalCharacters = CharacterSet.decimalDigits
+//				let isNumber = newValue.rangeOfCharacter(from: decimalCharacters)
+//
+//				if isNumber != nil {
+					self.inputFID = Int(newValue) ?? 123123
+//				} else {
+//					self.error = MoxieError.message("Please enter a number")
+//					self.inputFID = 3423
+//				}
 			}
 			.store(in: &subscriptions)
 		
@@ -106,9 +108,14 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.handleEvents(receiveRequest: { _ in
 				self.inFlightTask?.cancel()
 			})
-			.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+			.debounce(for: .seconds(1.25), scheduler: DispatchQueue.main)
+			.print()
 			.sink { [weak self] value in
-				guard let self = self, value.0 != 0 else {
+				guard let self = self else {
+					return
+				}
+				// Prevent running task on invalid input
+				guard value.0 != -1 else {
 					return
 				}
 				inFlightTask = Task {
@@ -119,6 +126,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				
 		$model
 			.receive(on: DispatchQueue.main)
+			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID
 			}
@@ -141,7 +149,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 				return encodedData
 			}
 			.catch { error -> Just<Data?> in
-				print("Failed to encode model: \(error.localizedDescription)")
 				return Just(nil) // You can choose how to handle errors, here we're returning nil
 			}
 			.compactMap { $0 }
@@ -184,7 +191,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			
 			isLoading = false
 		} catch {
-			self.error = error
+			self.error = MoxieError.message("User not found")
 			self.model = .noop
 			isLoading = false
 		}
@@ -192,9 +199,15 @@ final class MoxieViewModel: ObservableObject, Observable {
 	
 	func onAppear() async {
 		do {
-			let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: MoxieFilter(rawValue: filterSelection) ?? .today)
-			self.model = newModel
-			checkAndNotify(newModel: newModel, userInput: userInputNotifications)
+			if inputFID != 0 {
+				let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: MoxieFilter(rawValue: filterSelection) ?? .today)
+				self.model = newModel
+				checkAndNotify(newModel: newModel, userInput: userInputNotifications)
+				
+//				WidgetCenter.shared.reloadAllTimelines()
+			} else {
+				
+			}
 		} catch {
 			self.error = error
 		}
