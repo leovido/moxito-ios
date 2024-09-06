@@ -24,7 +24,7 @@ public final class SearchViewModel: ObservableObject {
 	
 	public func setupListeners() {
 		$query
-			.debounce(for: .seconds(0.5), scheduler: RunLoop.current)
+			.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
 			.filter({
 				!$0.isEmpty
 			})

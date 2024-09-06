@@ -7,6 +7,8 @@ struct HomeView: View {
 	@AppStorage("selectedNotificationOptionsData") var selectedNotificationOptionsData: Data = .init()
 	@AppStorage("userInputNotificationsData") var userInputNotificationsString: String = ""
 	
+	@Environment(\.scenePhase) var scenePhase
+
 	@ObservedObject var viewModel: MoxieViewModel
 	
 	var body: some View {
@@ -119,9 +121,15 @@ struct HomeView: View {
 			}
 			.padding()
 			.redacted(reason: viewModel.isLoading ? .placeholder : [])
-			.onAppear {
-				Task {
-					await viewModel.onAppear()
+			.onChange(of: scenePhase) { oldPhase, newPhase in
+				if newPhase == .active {
+					Task {
+						await viewModel.onAppear()
+					}
+				} else if newPhase == .inactive {
+					print("Inactive")
+				} else if newPhase == .background {
+					print("Background")
 				}
 			}
 			.onChange(of: viewModel.model, initial: false, { oldValue, newValue in
@@ -151,20 +159,6 @@ struct HomeView: View {
 				Task {
 					try await viewModel.fetchPrice()
 					viewModel.timeAgoDisplay()
-				}
-			}
-			.onAppear() {
-				do {
-					viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
-					
-					viewModel.selectedNotificationOptions = try JSONDecoder().decode(
-						[NotificationOption].self,
-						from: selectedNotificationOptionsData
-					)
-					
-					viewModel.userInputNotifications = Decimal(string: userInputNotificationsString) ?? 0
-				} catch {
-					dump(error)
 				}
 			}
 			.overlay(alignment: .top) {

@@ -18,7 +18,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	
 	@Published var persistence: UserDefaults
 
-	@Published var input = ""
+	@Published var input: String
 	@Published var model: MoxieModel
 	
 	@Published var isLoading: Bool = false
@@ -36,7 +36,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 	@Published var dollarValueMoxie: Decimal = 0
 	
-	@Published var inputFID: Int = 0
+	@Published var inputFID: Int
 
 	private let client: MoxieProvider
 	
@@ -55,6 +55,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.userInputNotifications = userInputNotifications
 		self.persistence = UserDefaults.group ?? UserDefaults.standard
 		self.model = model
+		self.input = input
+		self.inputFID = Int(input) ?? 0
 		
 		setupListeners()
 	}
@@ -86,41 +88,68 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.store(in: &subscriptions)
 		
 		$input
+			.dropFirst()
 			.removeDuplicates()
-			.print()
 			.sink { newValue in
-//				let decimalCharacters = CharacterSet.decimalDigits
-//				let isNumber = newValue.rangeOfCharacter(from: decimalCharacters)
-//
-//				if isNumber != nil {
-					self.inputFID = Int(newValue) ?? 123123
-//				} else {
-//					self.error = MoxieError.message("Please enter a number")
-//					self.inputFID = 3423
-//				}
+				let decimalCharacters = CharacterSet.decimalDigits
+				let isNumber = newValue.rangeOfCharacter(from: decimalCharacters)
+
+				if isNumber != nil {
+					self.inputFID = Int(newValue)!
+				} else {
+					self.error = MoxieError.message("Please enter a number")
+				}
 			}
 			.store(in: &subscriptions)
 		
-		Publishers.CombineLatest($inputFID, $filterSelection)
+		$filterSelection
 			.dropFirst()
-			.removeDuplicates { $0 == $1 }
 			.receive(on: DispatchQueue.main)
 			.handleEvents(receiveRequest: { _ in
 				self.inFlightTask?.cancel()
 			})
-			.debounce(for: .seconds(1.25), scheduler: DispatchQueue.main)
-			.print()
+			.debounce(for: .seconds(0.25), scheduler: RunLoop.main)
 			.sink { [weak self] value in
 				guard let self = self else {
 					return
 				}
-				// Prevent running task on invalid input
-				guard value.0 != -1 else {
+				inFlightTask = Task {
+					try await self.fetchStats(filter: MoxieFilter(rawValue: value) ?? .today)
+				}
+			}
+			.store(in: &subscriptions)
+		
+		$isSearchMode
+			.handleEvents(receiveRequest: { _ in
+				self.inFlightTask?.cancel()
+			})
+			.sink { [weak self] value in
+				guard let self = self else {
 					return
 				}
 				inFlightTask = Task {
-					try await self.fetchStats(filter: MoxieFilter(rawValue: value.1) ?? .today)
+					try await self.fetchStats(filter: MoxieFilter(rawValue: 0) ?? .today)
 				}
+			}
+			.store(in: &subscriptions)
+		
+		Publishers.CombineLatest3($inputFID, $filterSelection, $model)
+			.dropFirst()
+			.receive(on: DispatchQueue.main)
+			.handleEvents(receiveRequest: { _ in
+				self.inFlightTask?.cancel()
+			})
+			.debounce(for: .seconds(1.25), scheduler: RunLoop.main)
+			.sink { [weak self] newInput, newFilter, newModel in
+				guard let self = self, newInput > 0 else {
+					return
+				}
+				if newInput.description != newModel.entityID {
+					inFlightTask = Task {
+						try await self.fetchStats(filter: MoxieFilter(rawValue: newFilter) ?? .today)
+					}
+				}
+				
 			}
 			.store(in: &subscriptions)
 				
@@ -169,7 +198,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			return
 		}
 		group.setValue(moxieChangeText, forKey: "userInputNotifications")
-		self.userInputNotifications = Decimal(string: moxieChangeText) ?? 0
+		userInputNotifications = Decimal(string: moxieChangeText) ?? 0
 	}
 	
 	func fetchPrice() async throws {
@@ -191,9 +220,12 @@ final class MoxieViewModel: ObservableObject, Observable {
 			
 			isLoading = false
 		} catch {
-			self.error = MoxieError.message("User not found")
-			self.model = .noop
+			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
+				self.error = MoxieError.message(error.localizedDescription)
+			}
 			isLoading = false
+			self.model = .noop
+			self.inFlightTask = nil
 		}
 	}
 	
@@ -204,9 +236,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				self.model = newModel
 				checkAndNotify(newModel: newModel, userInput: userInputNotifications)
 				
-//				WidgetCenter.shared.reloadAllTimelines()
-			} else {
-				
+				WidgetCenter.shared.reloadAllTimelines()
 			}
 		} catch {
 			self.error = error
