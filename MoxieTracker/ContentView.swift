@@ -15,7 +15,7 @@ struct ContentView: View {
 			
 			SettingsView(viewModel: viewModel)
 		}
-		.tint(Color(uiColor: MoxieColor.dark))
+		.tint(.white)
 	}
 }
 

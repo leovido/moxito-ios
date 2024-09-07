@@ -32,22 +32,23 @@ struct CardView: View {
 				.frame(width: 40)
 				.padding(.trailing)
 				.foregroundStyle(Color(uiColor: MoxieColor.otherColor))
+				.background(Color.green)
 			
 			VStack(alignment: .leading) {
 				Text(title)
 					.font(.headline)
 					.fontDesign(.rounded)
-					.foregroundStyle(Color(uiColor: MoxieColor.otherColor))
+					.foregroundStyle(Color.white)
 					.fontWeight(.semibold)
 				Text(amount)
 					.font(.title2)
 					.fontDesign(.rounded)
-					.foregroundStyle(Color(uiColor: MoxieColor.otherColor).blendMode(.difference))
-					.fontWeight(.medium)
-				Text("$\(dollarValue.formatted(.number.precision(.fractionLength(2))))")
+					.foregroundStyle(Color.white)
+					.fontWeight(.heavy)
+				Text("~$\(dollarValue.formatted(.number.precision(.fractionLength(2))))")
 					.font(.caption)
 					.fontDesign(.rounded)
-					.foregroundStyle(Color(uiColor: MoxieColor.otherColor).blendMode(.difference).opacity(0.9))
+					.foregroundStyle(Color.white)
 					.fontWeight(.medium)
 			}
 			
@@ -64,10 +65,10 @@ struct CardView: View {
 					.padding(.trailing)
 					.tint(Color(uiColor: MoxieColor.otherColor))
 			}
-			
 		}
 		.padding()
-		.background(Color.init(uiColor: MoxieColor.dark))
+		.background(Color(uiColor: MoxieColor.primary))
+		.clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
 	}
 }
 

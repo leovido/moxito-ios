@@ -8,13 +8,17 @@ struct HomeView: View {
 	@AppStorage("userInputNotificationsData") var userInputNotificationsString: String = ""
 	
 	@Environment(\.scenePhase) var scenePhase
-
+	
 	@ObservedObject var viewModel: MoxieViewModel
 	
 	var body: some View {
 		ZStack {
 			Color(uiColor: MoxieColor.primary)
-				.ignoresSafeArea(.all)
+				.ignoresSafeArea()
+			Image("wave", bundle: .main)
+				.resizable()
+				.padding(.top, 70)
+				.ignoresSafeArea()
 			VStack {
 				HStack {
 					VStack {
@@ -42,78 +46,75 @@ struct HomeView: View {
 					.background(Color(uiColor: MoxieColor.green))
 					.clipShape(Capsule())
 				}
-				
-				HStack {
-					VStack(alignment: .center) {
-						Text("Your claimable balance is")
-							.font(.body)
-							.fontDesign(.rounded)
-							.foregroundStyle(Color(uiColor: MoxieColor.primary))
-						
-						Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE") Ⓜ️")
-							.font(.largeTitle)
-							.fontDesign(.serif)
-							.foregroundStyle(Color(uiColor: MoxieColor.primary))
-							.fontWeight(.heavy)
-						Text("$\(viewModel.dollarValueMoxie.formatted(.number.precision(.fractionLength(2))))")
-							.font(.caption)
-							.fontDesign(.rounded)
-							.foregroundStyle(Color(uiColor: MoxieColor.primary))
-							.fontWeight(.heavy)
-					}
-				}
-				.padding(32)
-				.background(Color.white)
-				.clipShape(RoundedRectangle(cornerRadius: 24))
-				.frame(maxWidth: .infinity)
-				
-				TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
-					.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-					.autocorrectionDisabled()
-					.textFieldStyle(RoundedBorderTextFieldStyle())
-					.fontDesign(.rounded)
-					.padding(.vertical)
-				
-				Picker("Filter", selection: $viewModel.filterSelection) {
-					Text("Daily").tag(0)
-					Text("Weekly").tag(1)
-					Text("Lifetime").tag(2)
-				}
-				.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
-				.tint(Color(uiColor: MoxieColor.dark))
-				.pickerStyle(.segmented)
-				.padding()
-
 				ScrollView {
-						VStack(alignment: .leading) {
-							if viewModel.inputFID == -1 {
-								ContentUnavailableView {
-									Label("No FID input", systemImage: "m.circe.fill")
-										.foregroundStyle(Color(uiColor: MoxieColor.dark))
-								} description: {
-									Text("Try to search for another title.")
-										.fontDesign(.rounded)
-										.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-								}
-							} else {
-								VStack {
-									CardView(imageSystemName: "text.bubble", 
-													 title: "Cast earnings",
-													 amount: viewModel.model.castEarningsAmount.formatted(.number.precision(.fractionLength(2))),
-													 price: viewModel.price)
-									
-									CardView(imageSystemName: "laptopcomputer",
-													 title: "Frame earnings",
-													 amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))),
-													 price: viewModel.price)
-									
-									CardView(imageSystemName: "circle.circle",
-													 title: "All earnings",
-													 amount: viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))),
-													 price: viewModel.price)
-								}
+					HStack {
+						VStack(alignment: .center) {
+							Text("Your claimable balance is")
+								.font(.footnote)
+								.fontDesign(.rounded)
+								.foregroundStyle(Color(uiColor: MoxieColor.primary))
+							
+							Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE") Ⓜ️")
+								.font(.largeTitle)
+								.fontDesign(.serif)
+								.foregroundStyle(Color(uiColor: MoxieColor.primary))
+								.fontWeight(.heavy)
+							Text("~$\(viewModel.dollarValueMoxie.formatted(.number.precision(.fractionLength(2))))")
+								.font(.caption)
+								.fontDesign(.rounded)
+								.foregroundStyle(Color(uiColor: MoxieColor.primary))
+						}
+					}
+					.padding(32)
+					.background(Color.white)
+					.clipShape(RoundedRectangle(cornerRadius: 24))
+					.frame(maxWidth: .infinity)
+					
+					TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
+						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+						.autocorrectionDisabled()
+						.textFieldStyle(RoundedBorderTextFieldStyle())
+						.fontDesign(.rounded)
+						.padding(.vertical)
+					
+					Picker("Filter", selection: $viewModel.filterSelection) {
+						Text("Daily").tag(0)
+						Text("Weekly").tag(1)
+						Text("Lifetime").tag(2)
+					}
+					.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
+					.pickerStyle(.segmented)
+					.padding()
+					
+					VStack(alignment: .leading) {
+						if viewModel.inputFID == -1 {
+							ContentUnavailableView {
+								Label("No FID input", systemImage: "m.circe.fill")
+									.foregroundStyle(Color(uiColor: MoxieColor.dark))
+							} description: {
+								Text("Try to search for another title.")
+									.fontDesign(.rounded)
+									.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+							}
+						} else {
+							VStack {
+								CardView(imageSystemName: "square.grid.2x2",
+												 title: "Cast earnings",
+												 amount: viewModel.model.castEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+												 price: viewModel.price)
+								
+								CardView(imageSystemName: "rectangle.grid.1x2",
+												 title: "Frame earnings",
+												 amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+												 price: viewModel.price)
+								
+								CardView(imageSystemName: "circle.hexagongrid",
+												 title: "All earnings",
+												 amount: viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+												 price: viewModel.price)
 							}
 						}
+					}
 					
 				}
 				
@@ -176,6 +177,7 @@ struct HomeView: View {
 		.tabItem {
 			Label("Home", systemImage: "house.fill")
 		}
+		.toolbarBackground(Color.red, for: .tabBar)
 	}
 }
 
