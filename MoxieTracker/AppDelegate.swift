@@ -8,6 +8,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 		UNUserNotificationCenter.current().delegate = self
 
 		registerBackgroundTasks()
+		scheduleAppRefresh()
 		return true
 	}
 	

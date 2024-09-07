@@ -135,6 +135,11 @@ final class MoxieViewModel: ObservableObject, Observable {
 		
 		Publishers.CombineLatest3($inputFID, $filterSelection, $model)
 			.dropFirst()
+			.removeDuplicates { (previous, current) in
+				return previous.0 == current.0 && // Compare inputFID
+				previous.1 == current.1 && // Compare filterSelection
+				previous.2 == current.2    // Compare model
+			}
 			.receive(on: DispatchQueue.main)
 			.handleEvents(receiveRequest: { _ in
 				self.inFlightTask?.cancel()
@@ -248,6 +253,10 @@ final class MoxieViewModel: ObservableObject, Observable {
 		let newAmount = newModel.allEarningsAmount
 		
 		let delta = newAmount - currentEarnings
+		
+		guard delta > 0 && userInput > 0 else {
+			return
+		}
 		
 		if delta >= userInput {
 			let content = UNMutableNotificationContent()

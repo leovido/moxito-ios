@@ -8,8 +8,14 @@ struct ContentView: View {
 	
 	var body: some View {
 		TabView(selection: $selectedTab) {
-			HomeView(viewModel: viewModel)
-				.sensoryFeedback(.selection, trigger: selectedTab)
+			if viewModel.isSearchMode {
+				HomeView(viewModel: viewModel)
+					.sensoryFeedback(.selection, trigger: selectedTab)
+					.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
+			} else {
+				HomeView(viewModel: viewModel)
+					.sensoryFeedback(.selection, trigger: selectedTab)
+			}
 
 			SearchListView(viewModel: .init(client: .init(), query: "", items: []))
 			

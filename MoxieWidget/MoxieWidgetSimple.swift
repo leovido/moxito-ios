@@ -20,7 +20,7 @@ struct FetchDataIntent: AppIntent {
 						throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
 				}
 				
-				let (data, _) = try await URLSession.shared.data(from: url)
+				let (_, _) = try await URLSession.shared.data(from: url)
 				
 				// Process the fetched data here
 				

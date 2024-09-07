@@ -8,9 +8,6 @@ struct SettingsView: View {
 		NavigationStack {
 			ZStack {
 				VStack {
-					ProfileCardView(model: viewModel.model)
-						.padding(.vertical)
-					
 					List {
 						Section {
 							NavigationLink("Schedule notifications") {

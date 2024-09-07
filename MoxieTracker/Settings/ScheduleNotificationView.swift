@@ -78,18 +78,18 @@ struct ScheduleNotificationView: View {
 				}
 			}
 			.listStyle(PlainListStyle())
-			if viewModel.userInputNotifications != 0 {
-				
-			} else {
-				ContentUnavailableView {
-					Label("No scheduled notifications", systemImage: "bell.fill")
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-				} description: {
-					Text("Keep updated with your daily $MOXIE earnings")
-						.fontDesign(.rounded)
-						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-				}
-			}
+//			if viewModel.userInputNotifications != 0 {
+//				
+//			} else {
+//				ContentUnavailableView {
+//					Label("No scheduled notifications", systemImage: "bell.fill")
+//						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+//				} description: {
+//					Text("Keep updated with your daily $MOXIE earnings")
+//						.fontDesign(.rounded)
+//						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+//				}
+//			}
 		}
 		
 		.sheet(isPresented: $viewModel.isNotificationSheetPresented, content: {

@@ -17,7 +17,7 @@ extension AppDelegate {
 		// Perform the background fetch
 		Task {
 			do {
-//				try await MoxieViewModel.shared.fetchStats(filter: .today)
+				try await MoxieViewModel.shared.fetchStats(filter: .today)
 				print("Background fetch completed successfully.")
 				task.setTaskCompleted(success: true) // Indicate the task was successful
 			} catch {
