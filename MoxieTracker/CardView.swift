@@ -41,24 +41,35 @@ struct CardView: View {
 			.frame(width: 40, height: 40)
 			.padding(.leading)
 			.padding(.trailing, 12)
-				
-
-			VStack(alignment: .leading) {
+			
+			VStack(alignment: .leading, spacing: 0) {
 				Text(title)
 					.font(.headline)
 					.fontDesign(.rounded)
 					.foregroundStyle(Color.white)
-				Text(amount)
-					.font(.title2)
-					.fontDesign(.rounded)
-					.foregroundStyle(Color.white)
-					.fontWeight(.heavy)
+				
+				HStack(spacing: 1) {
+					Text(amount)
+						.font(.title)
+						.fontDesign(.rounded)
+						.foregroundStyle(Color.white)
+						.fontWeight(.heavy)
+						.padding(.trailing, -4)
+					
+					Image("CoinMoxie", bundle: .main)
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+						.frame(height: 35)
+				}
+				.frame(maxHeight: .infinity)
+				
 				Text("~$\(dollarValue.formatted(.number.precision(.fractionLength(2))))")
 					.font(.caption)
 					.fontDesign(.rounded)
 					.foregroundStyle(Color.white)
-					.fontWeight(.medium)
+					.fontWeight(.light)
 			}
+			.padding(.all, 0)
 			
 			Spacer()
 			
@@ -81,8 +92,8 @@ struct CardView: View {
 
 #Preview {
 	Group {
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023)
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023)
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023)
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023, info: "Earnings from casts")
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023, info: "Earnings from casts")
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023, info: "Earnings from casts")
 	}
 }

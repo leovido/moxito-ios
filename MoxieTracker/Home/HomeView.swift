@@ -11,6 +11,15 @@ struct HomeView: View {
 	
 	@ObservedObject var viewModel: MoxieViewModel
 	
+	init(viewModel: MoxieViewModel) {
+		self.viewModel = viewModel
+		
+		UISegmentedControl.appearance().selectedSegmentTintColor = MoxieColor.green
+			UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+		UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
+		UISegmentedControl.appearance().backgroundColor = .white
+	}
+	
 	var body: some View {
 		ZStack {
 			Color(uiColor: MoxieColor.primary)
@@ -84,6 +93,7 @@ struct HomeView: View {
 					}
 					.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
 					.pickerStyle(.segmented)
+					
 					.padding()
 					
 					VStack(alignment: .leading) {
@@ -104,7 +114,8 @@ struct HomeView: View {
 												 price: viewModel.price,
 												 info: "Earnings from casts. Likes, recasts/quoteCasts and replies all earn you $MOXIE"
 								)
-								
+								.help("Just do something")
+
 								CardView(imageSystemName: "rectangle.grid.1x2.fill",
 												 title: "Frame earnings",
 												 amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))),
