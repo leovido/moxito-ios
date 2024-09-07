@@ -46,7 +46,9 @@ struct HomeView: View {
 						}
 						Spacer()
 						
-						Button(action: {}, label: {
+						Button(action: {
+							viewModel.claimMoxie()
+						}, label: {
 							Text("Claim")
 								.foregroundStyle(.white)
 								.padding(16)
@@ -199,6 +201,15 @@ struct HomeView: View {
 							dump(error)
 						}
 					}
+				})
+				.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
+					Button {
+						
+					} label: {
+						Text("Ok")
+					}
+				}, message: {
+					Text("Claim will be available soon once approved by Airstack")
 				})
 				.onAppear() {
 					Task {

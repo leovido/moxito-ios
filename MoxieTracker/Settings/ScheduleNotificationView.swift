@@ -72,11 +72,8 @@ struct ScheduleNotificationView: View {
 						}
 					}
 				} header: {
-					Text("Delete")
-				} footer: {
-					Text("Deletes all scheduled notifications")
-				}
-			}
+					Text("Delete all scheduled notifications")
+				}			}
 			.listStyle(PlainListStyle())
 //			if viewModel.userInputNotifications != 0 {
 //				
@@ -91,7 +88,6 @@ struct ScheduleNotificationView: View {
 //				}
 //			}
 		}
-		
 		.sheet(isPresented: $viewModel.isNotificationSheetPresented, content: {
 			VStack(alignment: .leading) {
 				Section {
@@ -132,7 +128,6 @@ struct ScheduleNotificationView: View {
 			.presentationDragIndicator(.visible)
 		})
 		.toolbar(.hidden, for: .tabBar)
-		.padding()
 		.navigationTitle("Notifications")
 		.onAppear() {
 			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in

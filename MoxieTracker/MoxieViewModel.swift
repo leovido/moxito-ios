@@ -28,6 +28,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var isSearchMode: Bool
 	@Published var moxieChangeText: String = ""
 	@Published var isNotificationSheetPresented: Bool = false
+	@Published var isClaimAlertShowing: Bool = false
 
 	@Published var selectedNotificationOptions: [NotificationOption] = []
 	
@@ -62,7 +63,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 	
 	func claimMoxie() {
-		
+		isClaimAlertShowing.toggle()
 	}
 	
 	func updateNotificationOption(_ option: NotificationOption) {
@@ -115,7 +116,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.handleEvents(receiveRequest: { _ in
 				self.inFlightTask?.cancel()
 			})
-			.debounce(for: .seconds(1.25), scheduler: RunLoop.main)
+			.debounce(for: .seconds(0.25), scheduler: RunLoop.main)
 			.sink { [weak self] newInput, newFilter, newModel in
 				guard let self = self, newInput > 0 else {
 					return

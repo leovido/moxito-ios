@@ -4,10 +4,9 @@ import Combine
 
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
-	@State private var selectedTab = 0
 	
 	var body: some View {
-		TabView(selection: $selectedTab) {
+		TabView {
 			Group {
 				if viewModel.isSearchMode {
 					HomeView(viewModel: viewModel)
