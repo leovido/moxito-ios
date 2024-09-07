@@ -128,6 +128,7 @@ struct HomeView: View {
 						}
 						.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
 						.pickerStyle(.segmented)
+						.padding(.vertical)
 						
 						VStack(alignment: .leading) {
 							if viewModel.inputFID == -1 {
