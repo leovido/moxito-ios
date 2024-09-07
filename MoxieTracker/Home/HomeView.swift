@@ -98,20 +98,26 @@ struct HomeView: View {
 							}
 						} else {
 							VStack {
-								CardView(imageSystemName: "square.grid.2x2",
+								CardView(imageSystemName: "square.grid.2x2.fill",
 												 title: "Cast earnings",
 												 amount: viewModel.model.castEarningsAmount.formatted(.number.precision(.fractionLength(2))),
-												 price: viewModel.price)
+												 price: viewModel.price,
+												 info: "Earnings from casts. Likes, recasts/quoteCasts and replies all earn you $MOXIE"
+								)
 								
-								CardView(imageSystemName: "rectangle.grid.1x2",
+								CardView(imageSystemName: "rectangle.grid.1x2.fill",
 												 title: "Frame earnings",
 												 amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))),
-												 price: viewModel.price)
+												 price: viewModel.price,
+												 info: "Earnings from frames that you build when you use Airstack frame validator"
+								)
 								
-								CardView(imageSystemName: "circle.hexagongrid",
+								CardView(imageSystemName: "circle.hexagongrid.fill",
 												 title: "All earnings",
 												 amount: viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))),
-												 price: viewModel.price)
+												 price: viewModel.price,
+												 info: "All earnings from casts and frames"
+								)
 							}
 						}
 					}

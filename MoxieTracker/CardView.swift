@@ -8,6 +8,7 @@ struct CardView: View {
 	let title: String
 	let amount: String
 	let price: Decimal
+	let info: String
 	
 	var dollarValue: Decimal {
 		do {
@@ -25,21 +26,28 @@ struct CardView: View {
 	
 	var body: some View {
 		HStack {
-			Image(systemName: imageSystemName)
-				.resizable()
-				.renderingMode(.template)
-				.aspectRatio(contentMode: .fit)
-				.frame(width: 40)
-				.padding(.trailing)
-				.foregroundStyle(Color(uiColor: MoxieColor.otherColor))
-				.background(Color.green)
-			
+			VStack {
+				Image(systemName: imageSystemName)
+					.resizable()
+					.renderingMode(.template) // Use .template to apply the foreground color
+					.aspectRatio(contentMode: .fit)
+					.padding(10)
+					.foregroundColor(.white) // Set the SF Symbol color to white
+					.background(
+						RoundedRectangle(cornerRadius: 10)
+							.fill(Color(uiColor: MoxieColor.green)) // Green background with rounded corners
+					)
+			}
+			.frame(width: 40, height: 40)
+			.padding(.leading)
+			.padding(.trailing, 12)
+				
+
 			VStack(alignment: .leading) {
 				Text(title)
 					.font(.headline)
 					.fontDesign(.rounded)
 					.foregroundStyle(Color.white)
-					.fontWeight(.semibold)
 				Text(amount)
 					.font(.title2)
 					.fontDesign(.rounded)
@@ -55,8 +63,7 @@ struct CardView: View {
 			Spacer()
 			
 			Menu {
-				Text("This")
-				Text("That")
+				Text(info)
 			} label: {
 				Image(systemName: "info.circle")
 					.resizable()
@@ -66,7 +73,7 @@ struct CardView: View {
 					.tint(Color(uiColor: MoxieColor.otherColor))
 			}
 		}
-		.padding()
+		.padding(.vertical)
 		.background(Color(uiColor: MoxieColor.primary))
 		.clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
 	}
