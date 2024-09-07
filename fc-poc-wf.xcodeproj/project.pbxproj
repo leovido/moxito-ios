@@ -58,6 +58,7 @@
 		47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547A2C87164E006C2820 /* BackgroundTasks.swift */; };
 		47EC547D2C88324E006C2820 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547C2C88324E006C2820 /* Haptics.swift */; };
 		47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */; };
+		47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54822C8CC4F6006C2820 /* AccountView.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -208,6 +209,7 @@
 		47EC547E2C8B0121006C2820 /* MoxieWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxieWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47EC547F2C8B019F006C2820 /* Moxito.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Moxito.entitlements; sourceTree = "<group>"; };
 		47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		47EC54822C8CC4F6006C2820 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
+				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
 				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
 				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
@@ -831,6 +834,7 @@
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
+				47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,

@@ -12,7 +12,7 @@ struct MoxieTrackerApp: App {
 			ContentView()
 				.environment(mainViewModel)
 				.preferredColorScheme(.light)
-				.defaultAppStorage(.group!)
+				.defaultAppStorage(.group ?? .standard)
 		}
 	}
 }

@@ -87,21 +87,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.sink { _ in }
 			.store(in: &subscriptions)
 		
-		$input
-			.dropFirst()
-			.removeDuplicates()
-			.sink { newValue in
-				let decimalCharacters = CharacterSet.decimalDigits
-				let isNumber = newValue.rangeOfCharacter(from: decimalCharacters)
-
-				if isNumber != nil {
-					self.inputFID = Int(newValue)!
-				} else {
-					self.error = MoxieError.message("Please enter a number")
-				}
-			}
-			.store(in: &subscriptions)
-		
 		$filterSelection
 			.dropFirst()
 			.receive(on: DispatchQueue.main)
@@ -115,20 +100,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 				}
 				inFlightTask = Task {
 					try await self.fetchStats(filter: MoxieFilter(rawValue: value) ?? .today)
-				}
-			}
-			.store(in: &subscriptions)
-		
-		$isSearchMode
-			.handleEvents(receiveRequest: { _ in
-				self.inFlightTask?.cancel()
-			})
-			.sink { [weak self] value in
-				guard let self = self else {
-					return
-				}
-				inFlightTask = Task {
-					try await self.fetchStats(filter: MoxieFilter(rawValue: 0) ?? .today)
 				}
 			}
 			.store(in: &subscriptions)
@@ -204,6 +175,18 @@ final class MoxieViewModel: ObservableObject, Observable {
 		}
 		group.setValue(moxieChangeText, forKey: "userInputNotifications")
 		userInputNotifications = Decimal(string: moxieChangeText) ?? 0
+	}
+	
+	func onSubmitSearch() {
+		let decimalCharacters = CharacterSet.decimalDigits
+		let isNumber = input.rangeOfCharacter(from: decimalCharacters)
+		
+		if isNumber != nil {
+			self.inputFID = Int(input)!
+			self.isSearchMode = false
+		} else {
+			self.error = MoxieError.message("Please enter a number")
+		}
 	}
 	
 	func fetchPrice() async throws {

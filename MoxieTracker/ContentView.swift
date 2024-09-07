@@ -8,20 +8,26 @@ struct ContentView: View {
 	
 	var body: some View {
 		TabView(selection: $selectedTab) {
-			if viewModel.isSearchMode {
-				HomeView(viewModel: viewModel)
-					.sensoryFeedback(.selection, trigger: selectedTab)
-					.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
-			} else {
-				HomeView(viewModel: viewModel)
-					.sensoryFeedback(.selection, trigger: selectedTab)
-			}
+			Group {
+				if viewModel.isSearchMode {
+					HomeView(viewModel: viewModel)
+						.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
+						.onSubmit(of: .search) {
+							viewModel.onSubmitSearch()
+						}
 
-			SearchListView(viewModel: .init(client: .init(), query: "", items: []))
+				} else {
+					HomeView(viewModel: viewModel)
+				}
+
+				SettingsView(viewModel: viewModel)
+				
+				AccountView(viewModel: viewModel)
+			}
+			.toolbar(.visible, for: .tabBar)
+			.toolbarBackground(Color.yellow, for: .tabBar)
 			
-			SettingsView(viewModel: viewModel)
 		}
-		.tint(.white)
 	}
 }
 

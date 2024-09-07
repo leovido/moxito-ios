@@ -131,15 +131,6 @@ struct ScheduleNotificationView: View {
 			.presentationDetents([.medium, .large])
 			.presentationDragIndicator(.visible)
 		})
-		.toolbar {
-			ToolbarItem(placement: .topBarTrailing) {
-				Button(action: {
-					viewModel.isNotificationSheetPresented.toggle()
-				}, label: {
-					Image(systemName: "plus")
-				})
-			}
-		}
 		.toolbar(.hidden, for: .tabBar)
 		.padding()
 		.navigationTitle("Notifications")

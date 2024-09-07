@@ -13,7 +13,7 @@ struct HomeView: View {
 	
 	init(viewModel: MoxieViewModel) {
 		self.viewModel = viewModel
-		
+
 		UISegmentedControl.appearance().selectedSegmentTintColor = MoxieColor.green
 			UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
 		UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
@@ -113,13 +113,6 @@ struct HomeView: View {
 						.padding(.vertical, 20)
 						.background(Color.white)
 						.clipShape(RoundedRectangle(cornerRadius: 24))
-						
-//						TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
-//							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-//							.autocorrectionDisabled()
-//							.textFieldStyle(RoundedBorderTextFieldStyle())
-//							.fontDesign(.rounded)
-//							.padding(.vertical)
 						
 						Picker("Filter", selection: $viewModel.filterSelection) {
 							Text("Daily").tag(0)
