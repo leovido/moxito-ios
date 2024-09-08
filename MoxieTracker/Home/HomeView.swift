@@ -1,6 +1,7 @@
 import SwiftUI
 import WidgetKit
 import MoxieLib
+import ConfettiSwiftUI
 
 struct HomeView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
@@ -204,13 +205,18 @@ struct HomeView: View {
 				})
 				.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
 					Button {
-						
+						viewModel.confettiCounter += 1
 					} label: {
 						Text("Ok")
 					}
 				}, message: {
 					Text("Claim will be available soon once approved by Airstack")
 				})
+				.confettiCannon(counter: $viewModel.confettiCounter, num:1,
+												confettis: [.text("💵"), .text("💶"), .text("💷"), .text("💴")],
+												confettiSize: 30, repetitions: 50, repetitionInterval: 0.1)
+//				.confettiCannon(counter: $viewModel.confettiCounter,
+//												num: 50, confettis: [.text("Ⓜ️"), .text("🍃"), .text("💜"), .text("🎉")], openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200)
 				.onAppear() {
 					Task {
 						try await viewModel.fetchPrice()

@@ -153,9 +153,11 @@ struct MoxieWidgetSimple: Widget {
 	var body: some WidgetConfiguration {
 		AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
 			MoxieWidgetSimpleEntryView(entry: entry)
+				.environment(\.colorScheme, .light)
 				.containerBackground(Color(uiColor: MoxieColor.backgroundColor), for: .widget)
-				.preferredColorScheme(.light)
 		}
+		.configurationDisplayName("Moxito widget")
+		.description("Shows daily $MOXIE rewards.")
 	}
 }
 

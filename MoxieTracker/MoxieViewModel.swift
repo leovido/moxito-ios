@@ -19,6 +19,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var persistence: UserDefaults
 
 	@Published var input: String
+	@Published var confettiCounter: Int = 0
 	@Published var model: MoxieModel
 	
 	@Published var isLoading: Bool = false

@@ -59,6 +59,7 @@
 		47EC547D2C88324E006C2820 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547C2C88324E006C2820 /* Haptics.swift */; };
 		47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */; };
 		47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54822C8CC4F6006C2820 /* AccountView.swift */; };
+		47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -225,6 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
 				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,6 +514,7 @@
 			name = Moxito;
 			packageProductDependencies = (
 				47EC54632C808080006C2820 /* MoxieLib */,
+				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -729,6 +732,7 @@
 			mainGroup = 47C323F62C6E578300BE03C2;
 			packageReferences = (
 				B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */,
+				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -1637,6 +1641,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/satoshi-takano/OpenGraph";
@@ -1663,6 +1675,11 @@
 		47EC54632C808080006C2820 /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
+		};
+		47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 		B983C1022C74BC3E009B8893 /* TipLibs */ = {
 			isa = XCSwiftPackageProductDependency;
