@@ -1,5 +1,46 @@
 import Foundation
 
+public struct MoxieClaimModel: Codable {
+		public let fid: String?
+		public let availableClaimAmount: Int?
+		public let minimumClaimableAmountInWei, availableClaimAmountInWei: String?
+		public let claimedAmount: Int?
+		public let claimedAmountInWei: String?
+		public let processingAmount: Double?
+		public let processingAmountInWei, tokenAddress: String?
+		public let chainID: Int?
+		public let transactionID, transactionHash, transactionStatus: String?
+		public let transactionAmount: Double?
+		public let transactionAmountInWei, rewardsLastEarnedTimestamp: String?
+
+		public enum CodingKeys: String, CodingKey {
+				case fid, availableClaimAmount, minimumClaimableAmountInWei, availableClaimAmountInWei, claimedAmount, claimedAmountInWei, processingAmount, processingAmountInWei, tokenAddress
+				case chainID = "chainId"
+				case transactionID = "transactionId"
+				case transactionHash, transactionStatus, transactionAmount, transactionAmountInWei, rewardsLastEarnedTimestamp
+		}
+}
+
+extension MoxieClaimModel {
+	static let placeholder: Self = .init(fid: "0",
+																			 availableClaimAmount: 1,
+																			 minimumClaimableAmountInWei: "1",
+																			 availableClaimAmountInWei: "",
+																			 claimedAmount: 123, 
+																			 claimedAmountInWei: "",
+																			 processingAmount: 1,
+																			 processingAmountInWei: "",
+																			 tokenAddress: "",
+																			 chainID: 5453,
+																			 transactionID: "",
+																			 transactionHash: "",
+																			 transactionStatus: "",
+																			 transactionAmount: 0,
+																			 transactionAmountInWei: "",
+																			 rewardsLastEarnedTimestamp: "")
+}
+
+
 // MARK: - MoxieModel
 public struct MoxieModel: Codable, Hashable {
 	public let allEarningsAmount, castEarningsAmount: Decimal

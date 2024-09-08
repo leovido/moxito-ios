@@ -37,6 +37,7 @@ extension MoxieFilter: CustomStringConvertible {
 
 public enum MoxieEndpoint {
 	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily"
+	static let claimRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-claim"
 	static let price = "https://api.dexscreener.com/latest/dex/pairs/base/0x493AD7E1c509dE7c89e1963fe9005EaD49FdD19c"
 	static let usersEndpoint = "https://api.neynar.com/v2/farcaster/user/search"
 }
@@ -63,6 +64,7 @@ extension MoxieError: LocalizedError {
 public protocol MoxieProvider {
 	func fetchMoxieStats(userFID: Int, filter: MoxieFilter) async throws -> MoxieModel
 	func fetchPrice() async throws -> Decimal
+	func processClaim(userFID: String, wallet: String) async throws -> MoxieClaimModel
 }
 
 public final class MockMoxieClient: MoxieProvider {
@@ -76,6 +78,11 @@ public final class MockMoxieClient: MoxieProvider {
 	public func fetchPrice() async throws -> Decimal {
 		return 0.0043
 	}
+	
+	public func processClaim(userFID: String, wallet: String) async throws -> MoxieClaimModel {
+		dump("claimed moxie request")
+		return .placeholder
+	}
 }
 
 public final actor MoxieClient: MoxieProvider {
@@ -86,6 +93,43 @@ public final actor MoxieClient: MoxieProvider {
 		
 		session.configuration.urlCache = URLCache(memoryCapacity: 512_000, diskCapacity: 10_240_000, diskPath: nil)
 		session.configuration.requestCachePolicy = .returnCacheDataElseLoad
+	}
+	
+	public func processClaim(userFID: String, wallet: String) async throws -> MoxieClaimModel {
+		do {
+			guard let url = URL(string: MoxieEndpoint.claimRewards),
+						var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+				throw MoxieError.message("Invalid")
+			}
+			
+			components.queryItems = [
+				.init(name: "fid", value: userFID),
+				.init(name: "wallet", value: wallet)
+			]
+			
+			let request = URLRequest(url: components.url!)
+			
+			let (data, response) = try await session.data(for: request)
+			
+			guard let response = response as? HTTPURLResponse else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 400 else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 429 else {
+				throw MoxieError.rateLimited
+			}
+			let json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+			dump(json)
+			let model = try CustomDecoderAndEncoder.decoder.decode(MoxieClaimModel.self, from: data)
+						
+			return model
+		} catch {
+			throw error
+		}
 	}
 
 	public func fetchPrice() async throws -> Decimal {

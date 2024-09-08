@@ -48,7 +48,10 @@ struct HomeView: View {
 						Spacer()
 						
 						Button(action: {
-							viewModel.claimMoxie()
+							Haptics.shared.play(.medium)
+							Task {
+								try await viewModel.claimMoxie()
+							}
 						}, label: {
 							Text("Claim")
 								.foregroundStyle(.white)
@@ -68,6 +71,7 @@ struct HomeView: View {
 								.frame(width: 20, height: 20)
 								.foregroundStyle(Color(uiColor: MoxieColor.primary))
 						})
+						.sensoryFeedback(.success, trigger: viewModel.isSearchMode)
 						.frame(width: 38, height: 38)
 						.font(.callout)
 						.background(Color.white)
@@ -203,14 +207,15 @@ struct HomeView: View {
 						}
 					}
 				})
-				.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
+				.alert("Moxie claim success", isPresented: $viewModel.isClaimAlertShowing, actions: {
 					Button {
 						viewModel.confettiCounter += 1
 					} label: {
 						Text("Ok")
 					}
+					.sensoryFeedback(.success, trigger: viewModel.isClaimAlertShowing)
 				}, message: {
-					Text("Claim will be available soon once approved by Airstack")
+					Text("You successfully claimed $MOXIE!")
 				})
 				.confettiCannon(counter: $viewModel.confettiCounter, num:1,
 												confettis: [.text("💵"), .text("💶"), .text("💷"), .text("💴")],

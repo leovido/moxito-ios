@@ -63,8 +63,14 @@ final class MoxieViewModel: ObservableObject, Observable {
 		setupListeners()
 	}
 	
-	func claimMoxie() {
-		isClaimAlertShowing.toggle()
+	func claimMoxie() async throws {
+		do {
+			let model = try await client.processClaim(userFID: inputFID.description, wallet: "0xc41B192Df74fe564108110Fe854b2bEE70bB0B3A")
+			try await fetchStats(filter: MoxieFilter(rawValue: filterSelection) ?? .today)
+			isClaimAlertShowing.toggle()
+		} catch {
+			dump(error)
+		}
 	}
 	
 	func updateNotificationOption(_ option: NotificationOption) {
