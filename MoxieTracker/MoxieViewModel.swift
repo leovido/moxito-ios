@@ -139,19 +139,12 @@ final class MoxieViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 		
-		$input
-			.receive(on: DispatchQueue.main)
-			.sink { [weak self] newValue in
-				self?.inputFID = Int(newValue) ?? 0
-			}
-			.store(in: &subscriptions)
-		
 		Publishers.CombineLatest3($inputFID, $filterSelection, $model)
 			.dropFirst()
 			.removeDuplicates { (previous, current) in
-				return previous.0 == current.0 && // Compare inputFID
-				previous.1 == current.1 && // Compare filterSelection
-				previous.2 == current.2    // Compare model
+				return previous.0 == current.0 &&
+				previous.1 == current.1 &&
+				previous.2 == current.2
 			}
 			.receive(on: DispatchQueue.main)
 			.handleEvents(receiveRequest: { _ in
@@ -244,14 +237,18 @@ final class MoxieViewModel: ObservableObject, Observable {
 			self.error = nil
 			self.inFlightTask = nil
 			
-			isLoading = false
+			self.isLoading = false
 		} catch {
-			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
-				self.error = MoxieError.message(error.localizedDescription)
-			}
-			isLoading = false
-			self.model = .noop
+			self.isLoading = false
 			self.inFlightTask = nil
+			
+			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
+				if error.localizedDescription == "The data couldn’t be read because it is missing." {
+					self.error = MoxieError.message("User does not have Moxie pass")
+				} else {
+					self.error = MoxieError.message(error.localizedDescription)
+				}
+			}
 		}
 	}
 	

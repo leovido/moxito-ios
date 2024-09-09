@@ -97,6 +97,7 @@ struct LoginView: View {
 					}
 				Button {
 					viewModel.input = viewModelOnboarding.inputTextFID
+					viewModel.inputFID = Int(viewModelOnboarding.inputTextFID) ?? 0
 				} label: {
 					Text("Sign in")
 				}
