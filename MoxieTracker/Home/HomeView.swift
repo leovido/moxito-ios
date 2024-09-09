@@ -7,7 +7,9 @@ struct HomeView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
 	@AppStorage("selectedNotificationOptionsData") var selectedNotificationOptionsData: Data = .init()
 	@AppStorage("userInputNotificationsData") var userInputNotificationsString: String = ""
-	
+	@State private var timer: Timer?
+	@State private var number: Decimal = 0
+
 	@Environment(\.scenePhase) var scenePhase
 	
 	@ObservedObject var viewModel: MoxieViewModel
@@ -99,11 +101,18 @@ struct HomeView: View {
 									.foregroundStyle(Color(uiColor: MoxieColor.primary))
 								
 								HStack {
-									Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE")")
+									Text("\(viewModel.willPlayAnimationNumbers ? number.formatted(.number.precision(.fractionLength(2))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE")")
 										.font(.largeTitle)
 										.fontDesign(.serif)
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
 										.fontWeight(.heavy)
+										.onChange(of: viewModel.willPlayAnimationNumbers) { oldValue, newValue in
+											if newValue {
+												if false {
+													startCountdown()
+												}
+											}
+										}
 									
 									Image("CoinMoxiePurple", bundle: .main)
 										.resizable()
@@ -188,6 +197,7 @@ struct HomeView: View {
 					if oldValue != newValue {
 						do {
 							moxieData = try CustomDecoderAndEncoder.encoder.encode(newValue)
+							number = newValue.moxieClaimTotals.first?.availableClaimAmount ?? 0
 						} catch {
 							dump(error)
 						}
@@ -207,15 +217,28 @@ struct HomeView: View {
 						}
 					}
 				})
-				.alert("Moxie claim success", isPresented: $viewModel.isClaimAlertShowing, actions: {
+				.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
 					Button {
-						viewModel.confettiCounter += 1
+						
 					} label: {
 						Text("Ok")
 					}
-					.sensoryFeedback(.success, trigger: viewModel.isClaimAlertShowing)
+					
 				}, message: {
-					Text("You successfully claimed $MOXIE!")
+					Text("Claim will be soon available")
+				})
+//				.alert("Moxie claim success", isPresented: $viewModel.isClaimAlertShowing, actions: {
+//					Button {
+//						viewModel.confettiCounter += 1
+//					} label: {
+//						Text("Let's go!🚀")
+//					}
+//					
+//				}, message: {
+//					Text("You successfully claimed $MOXIE!")
+//				})
+				.sensoryFeedback(.success, trigger: viewModel.isClaimAlertShowing, condition: { oldValue, newValue in
+					return !newValue
 				})
 				.confettiCannon(counter: $viewModel.confettiCounter, num:1,
 												confettis: [.text("💵"), .text("💶"), .text("💷"), .text("💴")],
@@ -252,6 +275,25 @@ struct HomeView: View {
 			Label("Home", systemImage: "house.fill")
 		}
 	}
+	
+	private func startCountdown() {
+		let totalDuration: Decimal = 3.0 // Total countdown time in seconds
+		let interval: TimeInterval = 0.01 // Fixed time interval for smooth animation
+		let steps = totalDuration / Decimal(interval) // Total number of steps
+		let decrementAmount: Decimal = number / steps // Amount to decrement per step
+		
+		// Schedule the timer
+		timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+			if number > 0 {
+				withAnimation(.linear(duration: interval)) {
+					number -= decrementAmount // Decrement the number smoothly
+				}
+			} else {
+				timer?.invalidate() // Stop the timer when the number reaches 0
+				number = 0 // Ensure it stops exactly at 0
+			}
+		}
+	}
 }
 
 #Preview {
@@ -261,3 +303,41 @@ struct HomeView: View {
 //#Preview {
 //	HomeView(viewModel: MoxieViewModel(isLoading: true, client: MockMoxieClient()))
 //}
+
+struct CountdownView: View {
+		@State private var number: Decimal = 1000.0 // Start value as Decimal
+		@State private var timer: Timer? // Timer to handle countdown
+
+		var body: some View {
+				VStack {
+						Text("\(number.formatted(.number.precision(.fractionLength(0))))")
+								.font(.system(size: 50, weight: .bold, design: .rounded))
+								.foregroundColor(.primary)
+								.onAppear {
+									if false {
+										startCountdown()
+									}
+								}
+								.onDisappear {
+										timer?.invalidate() // Invalidate the timer when view disappears
+								}
+				}
+		}
+
+		// Function to start the countdown animation
+		private func startCountdown() {
+				let totalDuration: Decimal = 3.0 // Total countdown time in seconds
+				let decrementInterval: Decimal = totalDuration / number // Time interval per decrement
+				
+				// Convert the decrement interval to Double for Timer
+				timer = Timer.scheduledTimer(withTimeInterval: Double(truncating: decrementInterval as NSNumber), repeats: true) { _ in
+						if number > 0 {
+								withAnimation(.linear(duration: Double(truncating: decrementInterval as NSNumber))) {
+										number -= 1 // Decrement the number
+								}
+						} else {
+								timer?.invalidate() // Stop the timer when number reaches 0
+						}
+				}
+		}
+}

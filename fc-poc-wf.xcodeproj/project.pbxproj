@@ -60,6 +60,7 @@
 		47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */; };
 		47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54822C8CC4F6006C2820 /* AccountView.swift */; };
 		47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */; };
+		47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47EC54872C8F0582006C2820 /* Launch Screen.storyboard */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -211,6 +212,7 @@
 		47EC547F2C8B019F006C2820 /* Moxito.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Moxito.entitlements; sourceTree = "<group>"; };
 		47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		47EC54822C8CC4F6006C2820 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		47EC54872C8F0582006C2820 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				47EC54712C822B23006C2820 /* Home */,
 				471FE97B2C7F808D00D20F4C /* Preview Content */,
 				47EC54722C822B2D006C2820 /* Settings */,
+				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
 			);
 			path = MoxieTracker;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */,
 				471FE97D2C7F808D00D20F4C /* Preview Assets.xcassets in Resources */,
 				471FE97A2C7F808D00D20F4C /* Assets.xcassets in Resources */,
 			);
@@ -989,6 +993,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -1024,6 +1029,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;

@@ -18,8 +18,6 @@ struct ContentView: View {
 				} else {
 					HomeView(viewModel: viewModel)
 				}
-
-				SettingsView(viewModel: viewModel)
 				
 				AccountView(viewModel: viewModel)
 			}

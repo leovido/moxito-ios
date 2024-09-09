@@ -30,6 +30,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var moxieChangeText: String = ""
 	@Published var isNotificationSheetPresented: Bool = false
 	@Published var isClaimAlertShowing: Bool = false
+	@Published var willPlayAnimationNumbers: Bool = false
 
 	@Published var selectedNotificationOptions: [NotificationOption] = []
 	
@@ -65,8 +66,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	
 	func claimMoxie() async throws {
 		do {
-			let model = try await client.processClaim(userFID: inputFID.description, wallet: "0xc41B192Df74fe564108110Fe854b2bEE70bB0B3A")
-			try await fetchStats(filter: MoxieFilter(rawValue: filterSelection) ?? .today)
+//			let model = try await client.processClaim(userFID: inputFID.description, wallet: "0xc41B192Df74fe564108110Fe854b2bEE70bB0B3A")
 			isClaimAlertShowing.toggle()
 		} catch {
 			dump(error)
@@ -93,6 +93,30 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 		$error
 			.sink { _ in }
+			.store(in: &subscriptions)
+		
+		$willPlayAnimationNumbers
+			.removeDuplicates()
+			.filter({ $0 })
+			.debounce(for: .seconds(3), scheduler: RunLoop.main)
+			.sink { [weak self] _ in
+				self?.willPlayAnimationNumbers = false
+			}
+			.store(in: &subscriptions)
+
+		$isClaimAlertShowing
+			.removeDuplicates()
+			.filter({ !$0 })
+			.sink { [weak self] _ in
+				guard let self = self else {
+					return
+				}
+				self.willPlayAnimationNumbers = true
+				
+//				Task {
+//					try await self.fetchStats(filter: MoxieFilter(rawValue: self.filterSelection) ?? .today)
+//				}
+			}
 			.store(in: &subscriptions)
 		
 		$filterSelection

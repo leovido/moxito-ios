@@ -13,14 +13,55 @@ struct ProfileOptions: Hashable, Identifiable {
 	}
 }
 
+struct ProfileOptionRow: View {
+	var option: ProfileOptions
+	
+	var body: some View {
+		HStack {
+			Image(systemName: option.imageName)
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.padding(10)
+				.foregroundColor(.white)
+				.background(
+					RoundedRectangle(cornerRadius: 10)
+						.fill(Color(uiColor: MoxieColor.green))
+				)
+				.frame(width: 40, height: 40)
+				.padding(.trailing, 12)
+			
+			Text(option.name)
+				.foregroundColor(.black)
+				.fontWeight(.medium)
+			
+			Spacer()
+			
+			Image(systemName: "chevron.right")
+				.padding(.trailing, 30)
+				.foregroundColor(.gray)
+		}
+		.padding([.top, .leading], 12)
+	}
+}
+
 struct AccountView: View {
 	@ObservedObject var viewModel: MoxieViewModel
 	
-	let profileOptions: [ProfileOptions] = [
-		.init(name: "My account", imageName: "person"),
-		.init(name: "Settings", imageName: "gearshape.fill"),
-		.init(name: "Help", imageName: "questionmark.circle.fill")
+	@State private var profileOptions: [ProfileOptions] = [
+		ProfileOptions(name: "Profile", imageName: "person.circle"),
+		ProfileOptions(name: "Settings", imageName: "gearshape"),
+		ProfileOptions(name: "Help", imageName: "questionmark.circle.fill")
+		// Add more options here...
 	]
+	
+	@ViewBuilder
+	private func destinationView(for option: ProfileOptions) -> some View {
+		if option.name == "Settings" {
+			SettingsView(viewModel: viewModel) // Your settings view
+		} else {
+			Text(option.name)
+		}
+	}
 	
 	var body: some View {
 		NavigationStack {
@@ -32,53 +73,25 @@ struct AccountView: View {
 					
 					ScrollView {
 						ForEach(profileOptions, id: \.self) { option in
-							NavigationLink(value: option) {
-								HStack {
-									VStack {
-										Image(systemName: option.imageName)
-											.resizable()
-											.renderingMode(.template)
-											.aspectRatio(contentMode: .fit)
-											.padding(10)
-											.foregroundColor(.white)
-											.background(
-												RoundedRectangle(cornerRadius: 10)
-													.fill(Color(uiColor: MoxieColor.green))
-											)
-									}
-									.frame(width: 40, height: 40)
-									.padding(.trailing, 12)
-									
-									Text(option.name)
-										.foregroundStyle(Color.black)
-										.fontWeight(.medium)
-									
-									Spacer()
-									
-									Image(systemName: "chevron.right")
-										.padding(.trailing, 30)
-
-								}
+							NavigationLink(destination: destinationView(for: option)) {
+								ProfileOptionRow(option: option)
 							}
-							.padding([.top, .leading], 32)
-						}
-						.navigationDestination(for: ProfileOptions.self) { option in
-							Text(option.name)
+							.padding([.top, .leading], 16)
 						}
 					}
 					.background(Color.white)
 					.clipShape(UnevenRoundedRectangle(topLeadingRadius: 32, topTrailingRadius: 32))
-						Spacer()
-					}
-					.navigationTitle("Profile")
+					Spacer()
 				}
-			}
-			.tabItem {
-				Label("Profile", systemImage: "person")
+				.navigationTitle("Profile")
 			}
 		}
+		.tabItem {
+			Label("Profile", systemImage: "person")
+		}
 	}
-	
-	#Preview {
-		AccountView(viewModel: .init(client: MockMoxieClient()))
-	}
+}
+
+#Preview {
+	AccountView(viewModel: .init(client: MockMoxieClient()))
+}
