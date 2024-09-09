@@ -88,7 +88,7 @@ struct AccountView: View {
 			}
 		}
 		.tabItem {
-			Label("Profile", systemImage: "person")
+			Image(systemName: "person")
 		}
 	}
 }

@@ -61,7 +61,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.input = input
 		self.inputFID = Int(input) ?? 0
 		
-		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0")!
+		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0") ?? 0
 
 		setupListeners()
 	}

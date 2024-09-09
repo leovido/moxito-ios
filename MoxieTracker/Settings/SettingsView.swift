@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 import MoxieLib
 
 struct SettingsView: View {
@@ -24,7 +25,10 @@ struct SettingsView: View {
 					Spacer()
 					
 					Button(action: {
-						// Your action here
+						viewModel.model = .noop
+						viewModel.inputFID = 0
+						
+						WidgetCenter.shared.reloadAllTimelines()
 					}) {
 						Text("Logout")
 							.foregroundColor(Color(uiColor: .primary))
@@ -40,13 +44,13 @@ struct SettingsView: View {
 							.stroke(Color(uiColor: .primary.withAlphaComponent(0.5)), lineWidth: 1)
 					)
 					.padding(.bottom)
+					.padding(.horizontal)
 					
 					Text("Moxito © 2024 v1.0")
 						.background(Color.clear)
 						.foregroundStyle(Color(uiColor: .systemGray4))
 						.padding(.bottom, 8)
 				}
-				.padding(.horizontal)
 				.background(Color(uiColor: .systemGray6))
 				.navigationTitle("Settings")
 			}

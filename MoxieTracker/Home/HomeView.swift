@@ -282,7 +282,7 @@ struct HomeView: View {
 			}
 		}
 		.tabItem {
-			Label("Home", systemImage: "house.fill")
+			Image(systemName: "house.fill")
 		}
 	}
 	

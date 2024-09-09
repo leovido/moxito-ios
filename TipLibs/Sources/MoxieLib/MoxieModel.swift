@@ -120,7 +120,7 @@ extension MoxieModel {
 		startTimestamp: .now,
 		timeframe: "TODAY",
 		socials: [.init(profileImage: "", profileDisplayName: "Anon", profileHandle: "")],
-		entityID: "0",
+		entityID: "",
 		moxieClaimTotals: [
 			.init(
 				availableClaimAmount: 0,
