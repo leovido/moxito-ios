@@ -7,10 +7,6 @@ struct MoxieTrackerApp: App {
 	@StateObject var mainViewModel = MoxieViewModel.shared
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
-	init() {
-		UITabBar.setAppearance() // Apply the custom tab bar appearance
-	}
-	
 	var body: some Scene {
 		WindowGroup {
 			Group {
@@ -25,20 +21,5 @@ struct MoxieTrackerApp: App {
 			.defaultAppStorage(.group ?? .standard)
 			
 		}
-	}
-}
-
-extension UITabBar {
-	static func setAppearance() {
-		let appearance = UITabBarAppearance()
-		appearance.configureWithOpaqueBackground() // Choose the desired configuration
-		
-		appearance.backgroundColor = UIColor.primary // Set the background color
-		
-		UITabBar.appearance().standardAppearance = appearance
-		UITabBar.appearance().scrollEdgeAppearance = appearance
-		
-		UITabBar.appearance().tintColor = UIColor.systemGreen // Change the active tab icon and text color
-		UITabBar.appearance().unselectedItemTintColor = UIColor.systemGray // Change the inactive tab icon and text color
 	}
 }

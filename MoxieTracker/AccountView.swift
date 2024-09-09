@@ -51,12 +51,69 @@ struct AccountView: View {
 		ProfileOptions(name: "Profile", imageName: "person.circle"),
 		ProfileOptions(name: "Settings", imageName: "gearshape"),
 		ProfileOptions(name: "Help", imageName: "questionmark.circle.fill")
-		// Add more options here...
 	]
+	
+	let text = """
+	Moxito is in BETA stage for testing! 🌱
+
+	Get early access if you hold @leovido.eth's Fan Token
+
+	You'll get a widget plus app that will show you your everyday rewards
+
+	Soon you'll be able to claim from the app!
+	"""
 	
 	@ViewBuilder
 	private func destinationView(for option: ProfileOptions) -> some View {
-		if option.name == "Settings" {
+		if option.name == "Help" {
+			VStack {
+				Link(destination: URL(string: "https://moxie.xyz")!) {
+						HStack {
+								Image(systemName: "link")
+								Text("Moxie Website")
+						}
+						.padding()
+						.background(Color(uiColor: MoxieColor.primary))
+						.foregroundColor(.white)
+						.cornerRadius(8)
+				}
+				Link(destination: URL(string: "https://warpcast.com/leovido.eth/0xe0424dd4")!) {
+						HStack {
+								Image(systemName: "link")
+								Text("Widget instructions")
+						}
+						.padding()
+						.background(Color(uiColor: MoxieColor.primary))
+						.foregroundColor(.white)
+						.cornerRadius(8)
+				}
+				
+				Link(destination: URL(string: "https://moxiescout.xyz")!) {
+						HStack {
+								Image(systemName: "link")
+								Text("Moxiescout by @zeni.eth")
+						}
+						.padding()
+						.background(Color(uiColor: MoxieColor.primary))
+						.foregroundColor(.white)
+						.cornerRadius(8)
+				}
+				
+				Link(destination: URL(string: "https://warpcast.com/~/compose?text=\(text) &embeds[]=https://moxito-allowlist.vercel.app/api")!) {
+						HStack {
+								Image(systemName: "link")
+								Text("Share on Warpcast")
+						}
+						.padding()
+						.background(Color(uiColor: MoxieColor.primary))
+						.foregroundColor(.white)
+						.cornerRadius(8)
+				}
+				
+				Spacer()
+			}
+			.navigationTitle("Help")
+		} else if option.name == "Settings" {
 			SettingsView(viewModel: viewModel)
 				.toolbar(.hidden, for: .tabBar)
 
