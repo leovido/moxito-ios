@@ -158,8 +158,9 @@ public final actor MoxieClient: MoxieProvider {
 			let decoder = JSONDecoder()
 			decoder.dateDecodingStrategy = .iso8601
 			let model = try decoder.decode(MoxiePrice.self, from: data)
+			let price = try? Decimal(model.pair.priceUsd, format: .number.precision(.fractionLength(2)))
 			
-			return try! Decimal(model.pair.priceUsd, format: .number.precision(.fractionLength(2)))
+			return price ?? 0
 		} catch {
 			throw error
 		}

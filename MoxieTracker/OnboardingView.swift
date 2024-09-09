@@ -1,12 +1,16 @@
 import SwiftUI
 import MoxieLib
+import Combine
 
 final class OnboardingViewModel: ObservableObject {
 	@Published var isAlertShowing: Bool = false
 	@Published var inputTextFID: String = ""
+	
+	private(set) var subscriptions: Set<AnyCancellable> = []
 
 	init(isAlertShowing: Bool) {
 		self.isAlertShowing = isAlertShowing
+		self.inputTextFID = ""
 	}
 }
 
@@ -80,9 +84,23 @@ struct LoginView: View {
 				}
 			})
 			.alert("Sign in", isPresented: $viewModelOnboarding.isAlertShowing) {
-				TextField("Your Farcaster ID, e.g. 203666", text: $viewModel.input)
+				TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
+					.keyboardType(.numberPad)
+					.padding()
+					.toolbar {
+						ToolbarItemGroup(placement: .keyboard) {
+							Spacer()
+							Button("Done") {
+								UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+							}
+						}
+					}
+				Button {
+					viewModel.input = viewModelOnboarding.inputTextFID
+				} label: {
+					Text("Sign in")
+				}
 
-				Text("Sign in")
 			} message: {
 				Text("Sign in with Farcaster will be available in the future. In the meantime input your FID to fetch your Moxie data")
 			}
