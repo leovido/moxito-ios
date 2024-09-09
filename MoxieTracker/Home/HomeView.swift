@@ -18,7 +18,7 @@ struct HomeView: View {
 		self.viewModel = viewModel
 
 		UISegmentedControl.appearance().selectedSegmentTintColor = MoxieColor.green
-			UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+		UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
 		UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
 		UISegmentedControl.appearance().backgroundColor = .white
 	}
@@ -59,6 +59,7 @@ struct HomeView: View {
 								.foregroundStyle(.white)
 								.padding(16)
 						})
+						.frame(minWidth: 102)
 						.frame(height: 38)
 						.font(.callout)
 						.background(Color(uiColor: MoxieColor.green))
@@ -208,7 +209,7 @@ struct HomeView: View {
 						userInputNotificationsString = newValue.formatted(.number.precision(.fractionLength(2)))
 					}
 				})
-				.onChange(of: viewModel.selectedNotificationOptions, initial: false, { oldValue, newValue in
+				.onChange(of: viewModel.selectedNotificationOptions, initial: true, { oldValue, newValue in
 					if oldValue != newValue {
 						do {
 							selectedNotificationOptionsData = try CustomDecoderAndEncoder.encoder.encode(viewModel.selectedNotificationOptions)
@@ -217,6 +218,15 @@ struct HomeView: View {
 						}
 					}
 				})
+				.onAppear() {
+					do {
+						let currentSelectedNotificationOptions = try CustomDecoderAndEncoder.decoder.decode([NotificationOption].self, from: selectedNotificationOptionsData)
+						
+						viewModel.selectedNotificationOptions = currentSelectedNotificationOptions
+					} catch {
+						dump(error)
+					}
+				}
 				.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
 					Button {
 						

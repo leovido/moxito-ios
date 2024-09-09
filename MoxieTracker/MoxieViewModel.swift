@@ -61,6 +61,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.input = input
 		self.inputFID = Int(input) ?? 0
 		
+		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0")!
+
 		setupListeners()
 	}
 	
@@ -87,6 +89,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		$selectedNotificationOptions
 			.removeDuplicates()
 			.sink { [weak self] options in
+				self?.removeAllScheduledNotifications()
 				self?.notify()
 			}
 			.store(in: &subscriptions)
@@ -133,6 +136,13 @@ final class MoxieViewModel: ObservableObject, Observable {
 				inFlightTask = Task {
 					try await self.fetchStats(filter: MoxieFilter(rawValue: value) ?? .today)
 				}
+			}
+			.store(in: &subscriptions)
+		
+		$input
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] newValue in
+				self?.inputFID = Int(newValue) ?? 0
 			}
 			.store(in: &subscriptions)
 		
@@ -202,10 +212,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 	
 	func saveCustomMoxieInput() {
-		guard let group = UserDefaults.group else {
-			return
-		}
-		group.setValue(moxieChangeText, forKey: "userInputNotifications")
 		userInputNotifications = Decimal(string: moxieChangeText) ?? 0
 	}
 	
@@ -254,6 +260,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			if inputFID != 0 {
 				let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: MoxieFilter(rawValue: filterSelection) ?? .today)
 				self.model = newModel
+				self.input = model.entityID
 				checkAndNotify(newModel: newModel, userInput: userInputNotifications)
 				
 				WidgetCenter.shared.reloadAllTimelines()

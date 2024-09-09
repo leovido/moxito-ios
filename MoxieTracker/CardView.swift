@@ -13,10 +13,10 @@ struct CardView: View {
 	var dollarValue: Decimal {
 		do {
 			let am = try Decimal(amount,
-									format: .currency(code: locale.currency?.identifier ?? "USD"))
+													 format: .currency(code: "USD"))
 			
 			return price * am
-
+			
 		} catch {
 			dump(error)
 		}

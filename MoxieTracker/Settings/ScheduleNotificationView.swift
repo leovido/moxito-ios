@@ -32,7 +32,7 @@ struct ScheduleNotificationView: View {
 							Image(systemName: viewModel.selectedNotificationOptions.contains(NotificationOption.week) ? "checkmark.circle" : "circle")
 						}
 					}
-					
+
 					Button {
 						viewModel.updateNotificationOption(.month)
 					} label: {
@@ -53,9 +53,11 @@ struct ScheduleNotificationView: View {
 						viewModel.isNotificationSheetPresented = true
 					} label: {
 						HStack {
-							Text("Custom")
+							Text("Custom (every \(viewModel.userInputNotifications.formatted()) $MOXIE)")
 							
 							Spacer()
+							
+							Image(systemName: viewModel.userInputNotifications > 0 ? "checkmark.circle" : "circle")
 						}
 					}
 				}
@@ -71,6 +73,7 @@ struct ScheduleNotificationView: View {
 							Spacer()
 						}
 					}
+//					.sensoryFeedback(.success, trigger: viewModel.selectedNotificationOptions)
 				} header: {
 					Text("Delete all scheduled notifications")
 				}			}
@@ -88,6 +91,12 @@ struct ScheduleNotificationView: View {
 //				}
 //			}
 		}
+		.sensoryFeedback(.selection, trigger: viewModel.selectedNotificationOptions, condition: { _, _ in
+			return !viewModel.selectedNotificationOptions.isEmpty
+		})
+		.sensoryFeedback(.success, trigger: viewModel.selectedNotificationOptions, condition: { _, _ in
+			return viewModel.selectedNotificationOptions.isEmpty
+		})
 		.sheet(isPresented: $viewModel.isNotificationSheetPresented, content: {
 			VStack(alignment: .leading) {
 				Section {

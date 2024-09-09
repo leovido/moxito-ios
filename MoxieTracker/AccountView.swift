@@ -57,7 +57,9 @@ struct AccountView: View {
 	@ViewBuilder
 	private func destinationView(for option: ProfileOptions) -> some View {
 		if option.name == "Settings" {
-			SettingsView(viewModel: viewModel) // Your settings view
+			SettingsView(viewModel: viewModel)
+				.toolbar(.hidden, for: .tabBar)
+
 		} else {
 			Text(option.name)
 		}
@@ -83,7 +85,6 @@ struct AccountView: View {
 					.clipShape(UnevenRoundedRectangle(topLeadingRadius: 32, topTrailingRadius: 32))
 					Spacer()
 				}
-				.navigationTitle("Profile")
 			}
 		}
 		.tabItem {

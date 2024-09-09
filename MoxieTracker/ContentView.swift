@@ -14,16 +14,20 @@ struct ContentView: View {
 						.onSubmit(of: .search) {
 							viewModel.onSubmitSearch()
 						}
-
+						.onAppear() {
+							let searchBarAppearance = UISearchBar.appearance()
+							searchBarAppearance.searchTextField.textColor = .white
+							searchBarAppearance.tintColor = .white
+						}
+					
 				} else {
 					HomeView(viewModel: viewModel)
 				}
 				
 				AccountView(viewModel: viewModel)
+					.toolbarBackground(Color.red, for: .tabBar)
 			}
 			.toolbar(.visible, for: .tabBar)
-			.toolbarBackground(Color.yellow, for: .tabBar)
-			
 		}
 	}
 }

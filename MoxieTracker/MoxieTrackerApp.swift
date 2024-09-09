@@ -4,15 +4,19 @@ import BackgroundTasks
 
 @main
 struct MoxieTrackerApp: App {
-	let mainViewModel = MoxieViewModel.shared
+	@StateObject var mainViewModel = MoxieViewModel.shared
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
-				.environment(mainViewModel)
-				.preferredColorScheme(.light)
-				.defaultAppStorage(.group ?? .standard)
+			if mainViewModel.model.entityID == "" {
+				OnboardingView(viewModel: mainViewModel)
+			} else {
+				ContentView()
+					.environment(mainViewModel)
+					.preferredColorScheme(.light)
+					.defaultAppStorage(.group ?? .standard)
+			}
 		}
 	}
 }

@@ -61,6 +61,7 @@
 		47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54822C8CC4F6006C2820 /* AccountView.swift */; };
 		47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */; };
 		47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47EC54872C8F0582006C2820 /* Launch Screen.storyboard */; };
+		47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54892C8F22FA006C2820 /* OnboardingView.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -213,6 +214,7 @@
 		47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		47EC54822C8CC4F6006C2820 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		47EC54872C8F0582006C2820 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		47EC54892C8F22FA006C2820 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
 				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
+				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
@@ -846,6 +849,7 @@
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
+				47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */,
 				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
 				471FE9762C7F808C00D20F4C /* MoxieTrackerApp.swift in Sources */,
 			);

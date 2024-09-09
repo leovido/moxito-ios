@@ -22,7 +22,32 @@ struct SettingsView: View {
 					.listStyle(GroupedListStyle())
 					
 					Spacer()
+					
+					Button(action: {
+						// Your action here
+					}) {
+						Text("Logout")
+							.foregroundColor(Color(uiColor: .primary))
+							.frame(maxWidth: .infinity)
+							.frame(height: 64)
+						
+					}
+					.clipShape(RoundedRectangle(cornerRadius: 32))
+					.foregroundColor(Color(uiColor: .primary))
+					.frame(maxWidth: .infinity)
+					.overlay(
+						RoundedRectangle(cornerRadius: 32)
+							.stroke(Color(uiColor: .primary.withAlphaComponent(0.5)), lineWidth: 1)
+					)
+					.padding(.bottom)
+					
+					Text("Moxito © 2024 v1.0")
+						.background(Color.clear)
+						.foregroundStyle(Color(uiColor: .systemGray4))
+						.padding(.bottom, 8)
 				}
+				.padding(.horizontal)
+				.background(Color(uiColor: .systemGray6))
 				.navigationTitle("Settings")
 			}
 		}
