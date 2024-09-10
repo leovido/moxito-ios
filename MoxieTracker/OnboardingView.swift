@@ -21,6 +21,7 @@ struct OnboardingView: View {
 }
 
 struct LoginView: View {
+	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
 	
@@ -86,6 +87,7 @@ struct LoginView: View {
 			.alert("Sign in", isPresented: $viewModelOnboarding.isAlertShowing) {
 				TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
 					.keyboardType(.numberPad)
+					.foregroundColor(Color(.textField))
 					.padding()
 					.toolbar {
 						ToolbarItemGroup(placement: .keyboard) {
@@ -103,7 +105,7 @@ struct LoginView: View {
 				}
 
 			} message: {
-				Text("Sign in with Farcaster will be available in the future. In the meantime input your FID to fetch your Moxie data")
+				Text("Sign in with Farcaster will be available in the future.\n\nIn the meantime input your FID to fetch your Moxie data")
 			}
 		}
 	}
