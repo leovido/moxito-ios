@@ -2,6 +2,7 @@ import SwiftUI
 import WidgetKit
 import MoxieLib
 import ConfettiSwiftUI
+import Sentry
 
 struct HomeView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
@@ -200,7 +201,7 @@ struct HomeView: View {
 							moxieData = try CustomDecoderAndEncoder.encoder.encode(newValue)
 							number = newValue.moxieClaimTotals.first?.availableClaimAmount ?? 0
 						} catch {
-							dump(error)
+							SentrySDK.capture(error: error)
 						}
 					}
 				})
@@ -214,7 +215,7 @@ struct HomeView: View {
 						do {
 							selectedNotificationOptionsData = try CustomDecoderAndEncoder.encoder.encode(viewModel.selectedNotificationOptions)
 						} catch {
-							dump(error)
+							SentrySDK.capture(error: error)
 						}
 					}
 				})
@@ -224,7 +225,7 @@ struct HomeView: View {
 						
 						viewModel.selectedNotificationOptions = currentSelectedNotificationOptions
 					} catch {
-						dump(error)
+						SentrySDK.capture(error: error)
 					}
 				}
 				.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
@@ -265,7 +266,7 @@ struct HomeView: View {
 					do {
 						viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
 					} catch {
-						dump(error)
+						SentrySDK.capture(error: error)
 					}
 				}
 				.overlay(alignment: .top) {

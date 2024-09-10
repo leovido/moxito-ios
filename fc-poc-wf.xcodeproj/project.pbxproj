@@ -47,6 +47,7 @@
 		47C324442C6E57D500BE03C2 /* FCWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47E4CBDE2C9057AF00BE77E8 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CBDD2C9057AF00BE77E8 /* Fastfile */; };
 		47E4CBDF2C9091D000BE77E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 471FE9642C7E59A600D20F4C /* Assets.xcassets */; };
+		47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CBE12C90AFC100BE77E8 /* Sentry */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -235,6 +236,7 @@
 			files = (
 				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
 				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
+				47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,24 +313,24 @@
 		471FE9742C7F808C00D20F4C /* MoxieTracker */ = {
 			isa = PBXGroup;
 			children = (
+				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
+				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
+				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
-				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
-				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
-				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
+				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
-				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
+				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
 				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
 				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
+				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
 				47EC54712C822B23006C2820 /* Home */,
 				471FE97B2C7F808D00D20F4C /* Preview Content */,
 				47EC54722C822B2D006C2820 /* Settings */,
-				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
-				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 			);
 			path = MoxieTracker;
 			sourceTree = "<group>";
@@ -515,6 +517,7 @@
 				471FE9702C7F808C00D20F4C /* Frameworks */,
 				471FE9712C7F808C00D20F4C /* Resources */,
 				471FE9BC2C7F821500D20F4C /* Embed Foundation Extensions */,
+				8CA6C22ED7344468AA1179F4 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -525,6 +528,7 @@
 			packageProductDependencies = (
 				47EC54632C808080006C2820 /* MoxieLib */,
 				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
+				47E4CBE12C90AFC100BE77E8 /* Sentry */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -743,6 +747,7 @@
 			packageReferences = (
 				B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */,
 				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -836,6 +841,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8CA6C22ED7344468AA1179F4 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script is responsable to upload debug symbols and source context for Sentry.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=toth-e0\nexport SENTRY_PROJECT=moxito-ios\nERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		471FE96F2C7F808C00D20F4C /* Sources */ = {
@@ -993,9 +1016,11 @@
 				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Moxito-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Moxito;
@@ -1029,9 +1054,11 @@
 				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Moxito-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Moxito;
@@ -1657,6 +1684,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.36.0;
+			};
+		};
 		47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
@@ -1687,6 +1722,11 @@
 		471FE9C42C7F82E400D20F4C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
+		};
+		47E4CBE12C90AFC100BE77E8 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 		47EC54632C808080006C2820 /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
