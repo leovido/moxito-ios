@@ -195,7 +195,7 @@ struct HomeView: View {
 						print("Background")
 					}
 				}
-				.onChange(of: viewModel.model, initial: false, { oldValue, newValue in
+				.onChange(of: viewModel.model, initial: true, { oldValue, newValue in
 					if oldValue != newValue {
 						do {
 							moxieData = try CustomDecoderAndEncoder.encoder.encode(newValue)

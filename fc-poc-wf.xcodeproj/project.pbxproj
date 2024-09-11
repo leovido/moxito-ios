@@ -48,6 +48,7 @@
 		47E4CBDE2C9057AF00BE77E8 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CBDD2C9057AF00BE77E8 /* Fastfile */; };
 		47E4CBDF2C9091D000BE77E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 471FE9642C7E59A600D20F4C /* Assets.xcassets */; };
 		47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CBE12C90AFC100BE77E8 /* Sentry */; };
+		47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -201,6 +202,7 @@
 		47C3243F2C6E57D500BE03C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47C324412C6E57D500BE03C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47E4CBDD2C9057AF00BE77E8 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
+		47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxitoWebView.swift; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
 				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
 				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
+				47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */,
 				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
 				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
@@ -878,6 +881,7 @@
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
+				47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */,
 				47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */,
 				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
 				471FE9762C7F808C00D20F4C /* MoxieTrackerApp.swift in Sources */,

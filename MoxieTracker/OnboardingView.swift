@@ -21,6 +21,8 @@ struct OnboardingView: View {
 }
 
 struct LoginView: View {
+	@State private var showWebView = false
+	
 	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
@@ -57,11 +59,18 @@ struct LoginView: View {
 					
 					
 					Button(action: {
+//						showWebView = true
 						viewModelOnboarding.isAlertShowing = true
 					}) {
 						Image("SignInWarpcast", bundle: .main)
 					}
 					.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
+//					.sheet(isPresented: $showWebView) {
+//						WebView(neynarLoginUrl: "https://app.neynar.com/login", clientId: "13f73c6f-f90f-40c6-bb70-b4946129cd7c", redirectUri: "") { data in
+//							print("Authentication successful with data: \(data)")
+//							showWebView = false
+//						}
+//					}
 
 					Button(action: {
 						

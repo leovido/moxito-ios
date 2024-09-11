@@ -3,11 +3,12 @@ import WidgetKit
 import MoxieLib
 import Combine
 
-enum NotificationOption: Codable, Hashable {
+enum NotificationOption: Codable, Hashable, CaseIterable {
+	static let allCases: [NotificationOption] = [.hour, .week, .month]
+	
 	case hour
 	case week
 	case month
-	case custom(String)
 }
 
 @MainActor
@@ -273,10 +274,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 		
 		let delta = newAmount - currentEarnings
 		
-		guard delta > 0 && userInput > 0 else {
-			return
-		}
-		
 		if delta >= userInput {
 			let content = UNMutableNotificationContent()
 			content.title = "$MOXIE earnings"
@@ -308,7 +305,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 		content.body = "\(model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))))"
 		content.sound = .default
 		
-		selectedNotificationOptions.forEach { option in
+		selectedNotificationOptions
+			.forEach { option in
 			let interval: TimeInterval
 			switch option {
 			case .hour:
@@ -317,27 +315,14 @@ final class MoxieViewModel: ObservableObject, Observable {
 				interval = 3600 * 24 * 7
 			case .month:
 				interval = 3600 * 24 * 7 * 30
-			default:
-				interval = 0
 			}
 			
-			if interval > 0 {
-				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: true)
-				let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-				
-				UNUserNotificationCenter.current().add(request) { error in
-					if let error = error {
-						print("Failed to schedule notification: \(error.localizedDescription)")
-					}
-				}
-			} else {
-				let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
-				let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-				
-				UNUserNotificationCenter.current().add(request) { error in
-					if let error = error {
-						print("Failed to schedule notification: \(error.localizedDescription)")
-					}
+			let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: true)
+			let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+			
+			UNUserNotificationCenter.current().add(request) { error in
+				if let error = error {
+					print("Failed to schedule notification: \(error.localizedDescription)")
 				}
 			}
 		}
