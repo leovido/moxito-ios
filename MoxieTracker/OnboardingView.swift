@@ -31,13 +31,11 @@ struct LoginView: View {
 		ZStack {
 			Image("Onboarding-BG", bundle: .main)
 				.resizable() // Makes the image resizable
-				.scaledToFill() // Ensures the image scales to fill the available space
+				.imageScale(.small)
 				.ignoresSafeArea() // Extends the image beyond the safe area
-				.frame(maxWidth: .infinity, maxHeight: .infinity) // Ensures the image takes all available space
 			
 			VStack {
 				Spacer()
-
 				VStack {
 					VStack {
 						Text("Sign in to your profile")
@@ -83,7 +81,6 @@ struct LoginView: View {
 				}
 				.background(Color.white)
 				.clipShape(RoundedRectangle(cornerSize: CGSize(width: 50, height: 50)))
-				.frame(maxWidth: .infinity)
 				.padding(.bottom, 54)
 				.padding(.horizontal, 21)
 				.shadow(color: .black.opacity(0.1), radius: 24, y: 16)
@@ -122,4 +119,5 @@ struct LoginView: View {
 
 #Preview {
 	OnboardingView()
+		.environmentObject(MoxieViewModel.init())
 }

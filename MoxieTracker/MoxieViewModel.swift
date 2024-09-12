@@ -182,21 +182,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 		
-		$model
-			.receive(on: DispatchQueue.main)
-			.tryMap { model in
-				let encoder = CustomDecoderAndEncoder.encoder
-				let encodedData = try encoder.encode(model)
-				return encodedData
-			}
-			.catch { error -> Just<Data?> in
-				return Just(nil) // You can choose how to handle errors, here we're returning nil
-			}
-			.compactMap { $0 }
-			.sink { _ in
-			}
-			.store(in: &subscriptions)
-		
 		$price
 			.removeDuplicates()
 			.sink { [weak self] in
