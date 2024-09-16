@@ -102,8 +102,8 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(profileImage: "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/883cecce-71a6-4f84-68da-426bedf00e00/rectcrop3", profileDisplayName: "Leovido🎩", profileHandle: "@test")],
-		entityID: "203666",
+		socials: [.init(profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png", profileDisplayName: "Tester", profileHandle: "@test")],
+		entityID: "0",
 		moxieClaimTotals: [
 			.init(
 				availableClaimAmount: .init(.random(in: 0...10000)),

@@ -49,6 +49,25 @@
 		47E4CBDF2C9091D000BE77E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 471FE9642C7E59A600D20F4C /* Assets.xcassets */; };
 		47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CBE12C90AFC100BE77E8 /* Sentry */; };
 		47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */; };
+		47E4CBF02C93927100BE77E8 /* MoxitinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CBEF2C93927100BE77E8 /* MoxitinApp.swift */; };
+		47E4CBF22C93927100BE77E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CBF12C93927100BE77E8 /* ContentView.swift */; };
+		47E4CBF42C93927200BE77E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CBF32C93927200BE77E8 /* Assets.xcassets */; };
+		47E4CBF72C93927200BE77E8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CBF62C93927200BE77E8 /* Preview Assets.xcassets */; };
+		47E4CC012C93927200BE77E8 /* Moxitin_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC002C93927200BE77E8 /* Moxitin_Watch_AppTests.swift */; };
+		47E4CC0B2C93927200BE77E8 /* Moxitin_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC0A2C93927200BE77E8 /* Moxitin_Watch_AppUITests.swift */; };
+		47E4CC0D2C93927200BE77E8 /* Moxitin_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC0C2C93927200BE77E8 /* Moxitin_Watch_AppUITestsLaunchTests.swift */; };
+		47E4CC102C93927200BE77E8 /* Moxitin Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 47E4CBED2C93927100BE77E8 /* Moxitin Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47E4CC1D2C94AD6600BE77E8 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CC1C2C94AD6600BE77E8 /* MoxieLib */; };
+		47E4CC202C94BB6300BE77E8 /* Privy in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CC1F2C94BB6300BE77E8 /* Privy */; };
+		47E4CC222C94BD1F00BE77E8 /* PrivySignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CC212C94BD1F00BE77E8 /* PrivySignIn */; };
+		47E4CC282C98563600BE77E8 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
+		47E4CC292C98563600BE77E8 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
+		47E4CC2C2C98563600BE77E8 /* MoxitoHariosWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC2B2C98563600BE77E8 /* MoxitoHariosWidgetBundle.swift */; };
+		47E4CC2E2C98563600BE77E8 /* MoxitoHariosWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC2D2C98563600BE77E8 /* MoxitoHariosWidget.swift */; };
+		47E4CC302C98563600BE77E8 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC2F2C98563600BE77E8 /* AppIntent.swift */; };
+		47E4CC322C98563800BE77E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC312C98563800BE77E8 /* Assets.xcassets */; };
+		47E4CC362C98563800BE77E8 /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47E4CC3C2C98565B00BE77E8 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CC3B2C98565B00BE77E8 /* MoxieLib */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -122,6 +141,34 @@
 			remoteGlobalIDString = 47C3242F2C6E57D400BE03C2;
 			remoteInfo = FCWidgetsExtension;
 		};
+		47E4CBFD2C93927200BE77E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47E4CBEC2C93927100BE77E8;
+			remoteInfo = "Moxitin Watch App";
+		};
+		47E4CC072C93927200BE77E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47E4CBEC2C93927100BE77E8;
+			remoteInfo = "Moxitin Watch App";
+		};
+		47E4CC0E2C93927200BE77E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47E4CBEC2C93927100BE77E8;
+			remoteInfo = "Moxitin Watch App";
+		};
+		47E4CC342C98563800BE77E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47E4CC262C98563600BE77E8;
+			remoteInfo = MoxitoHariosWidgetExtension;
+		};
 		B9DF7F692C73B1000073D772 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
@@ -138,6 +185,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				47E4CC362C98563800BE77E8 /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */,
 				471FE9B82C7F821400D20F4C /* MoxieWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -153,6 +201,17 @@
 				B9DF7F6B2C73B1000073D772 /* FartherWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC142C93927200BE77E8 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				47E4CC102C93927200BE77E8 /* Moxitin Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -203,6 +262,24 @@
 		47C324412C6E57D500BE03C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47E4CBDD2C9057AF00BE77E8 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
 		47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxitoWebView.swift; sourceTree = "<group>"; };
+		47E4CBED2C93927100BE77E8 /* Moxitin Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moxitin Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47E4CBEF2C93927100BE77E8 /* MoxitinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxitinApp.swift; sourceTree = "<group>"; };
+		47E4CBF12C93927100BE77E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		47E4CBF32C93927200BE77E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		47E4CBF62C93927200BE77E8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		47E4CBFC2C93927200BE77E8 /* Moxitin Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moxitin Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47E4CC002C93927200BE77E8 /* Moxitin_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moxitin_Watch_AppTests.swift; sourceTree = "<group>"; };
+		47E4CC062C93927200BE77E8 /* Moxitin Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moxitin Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47E4CC0A2C93927200BE77E8 /* Moxitin_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moxitin_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		47E4CC0C2C93927200BE77E8 /* Moxitin_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moxitin_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		47E4CC1B2C94AC5B00BE77E8 /* Moxitin Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Moxitin Watch App.entitlements"; sourceTree = "<group>"; };
+		47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxitoHariosWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		47E4CC2B2C98563600BE77E8 /* MoxitoHariosWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxitoHariosWidgetBundle.swift; sourceTree = "<group>"; };
+		47E4CC2D2C98563600BE77E8 /* MoxitoHariosWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxitoHariosWidget.swift; sourceTree = "<group>"; };
+		47E4CC2F2C98563600BE77E8 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		47E4CC312C98563800BE77E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		47E4CC332C98563800BE77E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47E4CC3A2C98563F00BE77E8 /* MoxitoHariosWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxitoHariosWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -239,6 +316,8 @@
 				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
 				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
 				47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */,
+				47E4CC222C94BD1F00BE77E8 /* PrivySignIn in Frameworks */,
+				47E4CC202C94BB6300BE77E8 /* Privy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +375,38 @@
 				47C324352C6E57D500BE03C2 /* SwiftUI.framework in Frameworks */,
 				47C324332C6E57D500BE03C2 /* WidgetKit.framework in Frameworks */,
 				B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CBEA2C93927100BE77E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CC1D2C94AD6600BE77E8 /* MoxieLib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CBF92C93927200BE77E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC032C93927200BE77E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC242C98563600BE77E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CC292C98563600BE77E8 /* SwiftUI.framework in Frameworks */,
+				47E4CC3C2C98565B00BE77E8 /* MoxieLib in Frameworks */,
+				47E4CC282C98563600BE77E8 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +490,7 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
+				47E4CC3A2C98563F00BE77E8 /* MoxitoHariosWidgetExtension.entitlements */,
 				47EC547F2C8B019F006C2820 /* Moxito.entitlements */,
 				47EC547E2C8B0121006C2820 /* MoxieWidgetExtension.entitlements */,
 				47EC54752C8479D2006C2820 /* Moxito-Info.plist */,
@@ -391,6 +503,10 @@
 				471FE9852C7F808D00D20F4C /* MoxieTrackerTests */,
 				471FE98F2C7F808D00D20F4C /* MoxieTrackerUITests */,
 				471FE9AA2C7F821400D20F4C /* MoxieWidget */,
+				47E4CBEE2C93927100BE77E8 /* Moxitin Watch App */,
+				47E4CBFF2C93927200BE77E8 /* Moxitin Watch AppTests */,
+				47E4CC092C93927200BE77E8 /* Moxitin Watch AppUITests */,
+				47E4CC2A2C98563600BE77E8 /* MoxitoHariosWidget */,
 				47C324312C6E57D400BE03C2 /* Frameworks */,
 				47C324002C6E578300BE03C2 /* Products */,
 			);
@@ -408,6 +524,10 @@
 				471FE9822C7F808D00D20F4C /* MoxieTrackerTests.xctest */,
 				471FE98C2C7F808D00D20F4C /* MoxieTrackerUITests.xctest */,
 				471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */,
+				47E4CBED2C93927100BE77E8 /* Moxitin Watch App.app */,
+				47E4CBFC2C93927200BE77E8 /* Moxitin Watch AppTests.xctest */,
+				47E4CC062C93927200BE77E8 /* Moxitin Watch AppUITests.xctest */,
+				47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -477,6 +597,55 @@
 			path = FCWidgets;
 			sourceTree = "<group>";
 		};
+		47E4CBEE2C93927100BE77E8 /* Moxitin Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				47E4CC1B2C94AC5B00BE77E8 /* Moxitin Watch App.entitlements */,
+				47E4CBEF2C93927100BE77E8 /* MoxitinApp.swift */,
+				47E4CBF12C93927100BE77E8 /* ContentView.swift */,
+				47E4CBF32C93927200BE77E8 /* Assets.xcassets */,
+				47E4CBF52C93927200BE77E8 /* Preview Content */,
+			);
+			path = "Moxitin Watch App";
+			sourceTree = "<group>";
+		};
+		47E4CBF52C93927200BE77E8 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				47E4CBF62C93927200BE77E8 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		47E4CBFF2C93927200BE77E8 /* Moxitin Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				47E4CC002C93927200BE77E8 /* Moxitin_Watch_AppTests.swift */,
+			);
+			path = "Moxitin Watch AppTests";
+			sourceTree = "<group>";
+		};
+		47E4CC092C93927200BE77E8 /* Moxitin Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				47E4CC0A2C93927200BE77E8 /* Moxitin_Watch_AppUITests.swift */,
+				47E4CC0C2C93927200BE77E8 /* Moxitin_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "Moxitin Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		47E4CC2A2C98563600BE77E8 /* MoxitoHariosWidget */ = {
+			isa = PBXGroup;
+			children = (
+				47E4CC2B2C98563600BE77E8 /* MoxitoHariosWidgetBundle.swift */,
+				47E4CC2D2C98563600BE77E8 /* MoxitoHariosWidget.swift */,
+				47E4CC2F2C98563600BE77E8 /* AppIntent.swift */,
+				47E4CC312C98563800BE77E8 /* Assets.xcassets */,
+				47E4CC332C98563800BE77E8 /* Info.plist */,
+			);
+			path = MoxitoHariosWidget;
+			sourceTree = "<group>";
+		};
 		47EC54712C822B23006C2820 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,12 +695,15 @@
 			);
 			dependencies = (
 				471FE9B72C7F821400D20F4C /* PBXTargetDependency */,
+				47E4CC352C98563800BE77E8 /* PBXTargetDependency */,
 			);
 			name = Moxito;
 			packageProductDependencies = (
 				47EC54632C808080006C2820 /* MoxieLib */,
 				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
 				47E4CBE12C90AFC100BE77E8 /* Sentry */,
+				47E4CC1F2C94BB6300BE77E8 /* Privy */,
+				47E4CC212C94BD1F00BE77E8 /* PrivySignIn */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -604,12 +776,14 @@
 				47C323FC2C6E578300BE03C2 /* Frameworks */,
 				47C323FD2C6E578300BE03C2 /* Resources */,
 				47C324482C6E57D500BE03C2 /* Embed Foundation Extensions */,
+				47E4CC142C93927200BE77E8 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				47C324432C6E57D500BE03C2 /* PBXTargetDependency */,
 				B9DF7F6A2C73B1000073D772 /* PBXTargetDependency */,
+				47E4CC0F2C93927200BE77E8 /* PBXTargetDependency */,
 			);
 			name = "fc-poc-wf";
 			packageProductDependencies = (
@@ -675,6 +849,82 @@
 			productReference = 47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		47E4CBEC2C93927100BE77E8 /* Moxitin Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47E4CC112C93927200BE77E8 /* Build configuration list for PBXNativeTarget "Moxitin Watch App" */;
+			buildPhases = (
+				47E4CBE92C93927100BE77E8 /* Sources */,
+				47E4CBEA2C93927100BE77E8 /* Frameworks */,
+				47E4CBEB2C93927100BE77E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Moxitin Watch App";
+			packageProductDependencies = (
+				47E4CC1C2C94AD6600BE77E8 /* MoxieLib */,
+			);
+			productName = "Moxitin Watch App";
+			productReference = 47E4CBED2C93927100BE77E8 /* Moxitin Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47E4CBFB2C93927200BE77E8 /* Moxitin Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47E4CC152C93927200BE77E8 /* Build configuration list for PBXNativeTarget "Moxitin Watch AppTests" */;
+			buildPhases = (
+				47E4CBF82C93927200BE77E8 /* Sources */,
+				47E4CBF92C93927200BE77E8 /* Frameworks */,
+				47E4CBFA2C93927200BE77E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47E4CBFE2C93927200BE77E8 /* PBXTargetDependency */,
+			);
+			name = "Moxitin Watch AppTests";
+			productName = "Moxitin Watch AppTests";
+			productReference = 47E4CBFC2C93927200BE77E8 /* Moxitin Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		47E4CC052C93927200BE77E8 /* Moxitin Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47E4CC182C93927200BE77E8 /* Build configuration list for PBXNativeTarget "Moxitin Watch AppUITests" */;
+			buildPhases = (
+				47E4CC022C93927200BE77E8 /* Sources */,
+				47E4CC032C93927200BE77E8 /* Frameworks */,
+				47E4CC042C93927200BE77E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47E4CC082C93927200BE77E8 /* PBXTargetDependency */,
+			);
+			name = "Moxitin Watch AppUITests";
+			productName = "Moxitin Watch AppUITests";
+			productReference = 47E4CC062C93927200BE77E8 /* Moxitin Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		47E4CC262C98563600BE77E8 /* MoxitoHariosWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47E4CC372C98563800BE77E8 /* Build configuration list for PBXNativeTarget "MoxitoHariosWidgetExtension" */;
+			buildPhases = (
+				47E4CC232C98563600BE77E8 /* Sources */,
+				47E4CC242C98563600BE77E8 /* Frameworks */,
+				47E4CC252C98563600BE77E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MoxitoHariosWidgetExtension;
+			packageProductDependencies = (
+				47E4CC3B2C98565B00BE77E8 /* MoxieLib */,
+			);
+			productName = MoxitoHariosWidgetExtension;
+			productReference = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B9DF7F592C73B0FD0073D772 /* FartherWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9DF7F6C2C73B1000073D772 /* Build configuration list for PBXNativeTarget "FartherWidgetExtension" */;
@@ -733,6 +983,20 @@
 					47C3242F2C6E57D400BE03C2 = {
 						CreatedOnToolsVersion = 15.1;
 					};
+					47E4CBEC2C93927100BE77E8 = {
+						CreatedOnToolsVersion = 15.1;
+					};
+					47E4CBFB2C93927200BE77E8 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 47E4CBEC2C93927100BE77E8;
+					};
+					47E4CC052C93927200BE77E8 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 47E4CBEC2C93927100BE77E8;
+					};
+					47E4CC262C98563600BE77E8 = {
+						CreatedOnToolsVersion = 15.1;
+					};
 					B9DF7F592C73B0FD0073D772 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -751,6 +1015,7 @@
 				B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */,
 				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				47E4CC1E2C94BB6300BE77E8 /* XCRemoteSwiftPackageReference "privy-ios" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -765,6 +1030,10 @@
 				471FE9812C7F808D00D20F4C /* MoxieTrackerTests */,
 				471FE98B2C7F808D00D20F4C /* MoxieTrackerUITests */,
 				471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */,
+				47E4CBEC2C93927100BE77E8 /* Moxitin Watch App */,
+				47E4CBFB2C93927200BE77E8 /* Moxitin Watch AppTests */,
+				47E4CC052C93927200BE77E8 /* Moxitin Watch AppUITests */,
+				47E4CC262C98563600BE77E8 /* MoxitoHariosWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -832,6 +1101,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C324402C6E57D500BE03C2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CBEB2C93927100BE77E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CBF72C93927200BE77E8 /* Preview Assets.xcassets in Resources */,
+				47E4CBF42C93927200BE77E8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CBFA2C93927200BE77E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC042C93927200BE77E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC252C98563600BE77E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CC322C98563800BE77E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +1258,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47E4CBE92C93927100BE77E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CBF22C93927100BE77E8 /* ContentView.swift in Sources */,
+				47E4CBF02C93927100BE77E8 /* MoxitinApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CBF82C93927200BE77E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CC012C93927200BE77E8 /* Moxitin_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC022C93927200BE77E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CC0B2C93927200BE77E8 /* Moxitin_Watch_AppUITests.swift in Sources */,
+				47E4CC0D2C93927200BE77E8 /* Moxitin_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47E4CC232C98563600BE77E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47E4CC2C2C98563600BE77E8 /* MoxitoHariosWidgetBundle.swift in Sources */,
+				47E4CC2E2C98563600BE77E8 /* MoxitoHariosWidget.swift in Sources */,
+				47E4CC302C98563600BE77E8 /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9DF7F562C73B0FD0073D772 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1002,6 +1338,26 @@
 			isa = PBXTargetDependency;
 			target = 47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */;
 			targetProxy = 47C324422C6E57D500BE03C2 /* PBXContainerItemProxy */;
+		};
+		47E4CBFE2C93927200BE77E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47E4CBEC2C93927100BE77E8 /* Moxitin Watch App */;
+			targetProxy = 47E4CBFD2C93927200BE77E8 /* PBXContainerItemProxy */;
+		};
+		47E4CC082C93927200BE77E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47E4CBEC2C93927100BE77E8 /* Moxitin Watch App */;
+			targetProxy = 47E4CC072C93927200BE77E8 /* PBXContainerItemProxy */;
+		};
+		47E4CC0F2C93927200BE77E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47E4CBEC2C93927100BE77E8 /* Moxitin Watch App */;
+			targetProxy = 47E4CC0E2C93927200BE77E8 /* PBXContainerItemProxy */;
+		};
+		47E4CC352C98563800BE77E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47E4CC262C98563600BE77E8 /* MoxitoHariosWidgetExtension */;
+			targetProxy = 47E4CC342C98563800BE77E8 /* PBXContainerItemProxy */;
 		};
 		B9DF7F6A2C73B1000073D772 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1544,6 +1900,208 @@
 			};
 			name = Release;
 		};
+		47E4CC122C93927200BE77E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Moxitin Watch App/Moxitin Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Moxitin Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moxitin;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.christianleovido.fc-poc-wf";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		47E4CC132C93927200BE77E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Moxitin Watch App/Moxitin Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Moxitin Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moxitin;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.christianleovido.fc-poc-wf";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		47E4CC162C93927200BE77E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.Moxitin-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moxitin Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Moxitin Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		47E4CC172C93927200BE77E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.Moxitin-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moxitin Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Moxitin Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		47E4CC192C93927200BE77E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.Moxitin-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "Moxitin Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		47E4CC1A2C93927200BE77E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.Moxitin-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "Moxitin Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		47E4CC382C98563800BE77E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoxitoHariosWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoxitoHariosWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoxitoHariosWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.MoxitoHariosWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47E4CC392C98563800BE77E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoxitoHariosWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoxitoHariosWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoxitoHariosWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.MoxitoHariosWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B9DF7F6D2C73B1000073D772 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1682,6 +2240,42 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		47E4CC112C93927200BE77E8 /* Build configuration list for PBXNativeTarget "Moxitin Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47E4CC122C93927200BE77E8 /* Debug */,
+				47E4CC132C93927200BE77E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47E4CC152C93927200BE77E8 /* Build configuration list for PBXNativeTarget "Moxitin Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47E4CC162C93927200BE77E8 /* Debug */,
+				47E4CC172C93927200BE77E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47E4CC182C93927200BE77E8 /* Build configuration list for PBXNativeTarget "Moxitin Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47E4CC192C93927200BE77E8 /* Debug */,
+				47E4CC1A2C93927200BE77E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47E4CC372C98563800BE77E8 /* Build configuration list for PBXNativeTarget "MoxitoHariosWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47E4CC382C98563800BE77E8 /* Debug */,
+				47E4CC392C98563800BE77E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B9DF7F6C2C73B1000073D772 /* Build configuration list for PBXNativeTarget "FartherWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1700,6 +2294,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 8.36.0;
+			};
+		};
+		47E4CC1E2C94BB6300BE77E8 /* XCRemoteSwiftPackageReference "privy-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/privy-io/privy-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
 			};
 		};
 		47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
@@ -1737,6 +2339,23 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
+		};
+		47E4CC1C2C94AD6600BE77E8 /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
+		};
+		47E4CC1F2C94BB6300BE77E8 /* Privy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47E4CC1E2C94BB6300BE77E8 /* XCRemoteSwiftPackageReference "privy-ios" */;
+			productName = Privy;
+		};
+		47E4CC212C94BD1F00BE77E8 /* PrivySignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PrivySignIn;
+		};
+		47E4CC3B2C98565B00BE77E8 /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
 		};
 		47EC54632C808080006C2820 /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;

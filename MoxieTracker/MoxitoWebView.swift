@@ -33,41 +33,41 @@ struct WebView: UIViewRepresentable {
 				
 				func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 						// Save the reference to the web view
-						self.authWindow = webView
-						
-						// Inject JavaScript to listen for post messages
-						injectJavaScript(webView)
+//						self.authWindow = webView
+//						
+//						// Inject JavaScript to listen for post messages
+//						injectJavaScript(webView)
 				}
 
 				func injectJavaScript(_ webView: WKWebView) {
-						let scriptString = """
-						window.addEventListener('message', function(event) {
-								if (event.data.is_authenticated) {
-										window.webkit.messageHandlers.authHandler.postMessage(event.data);
-								}
-						}, false);
-						"""
-						
-						webView.evaluateJavaScript(scriptString) { (result, error) in
-								if let error = error {
-										print("JavaScript injection error: \(error)")
-								}
-						}
+//						let scriptString = """
+//						window.addEventListener('message', function(event) {
+//								if (event.data.is_authenticated) {
+//										window.webkit.messageHandlers.authHandler.postMessage(event.data);
+//								}
+//						}, false);
+//						"""
+//						
+//						webView.evaluateJavaScript(scriptString) { (result, error) in
+//								if let error = error {
+//										print("JavaScript injection error: \(error)")
+//								}
+//						}
 				}
 
 				func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-						if message.name == "authHandler",
-							 let data = message.body as? [String: Any],
-							 let isAuthenticated = data["is_authenticated"] as? Bool,
-							 isAuthenticated {
-								parent.successCallback?(data) // Call the Swift success callback
-								
-								// Close the web view
-								if let webView = authWindow {
-										webView.stopLoading()
-										webView.removeFromSuperview()
-								}
-						}
+//						if message.name == "authHandler",
+//							 let data = message.body as? [String: Any],
+//							 let isAuthenticated = data["is_authenticated"] as? Bool,
+//							 isAuthenticated {
+//								parent.successCallback?(data) // Call the Swift success callback
+//								
+//								// Close the web view
+//								if let webView = authWindow {
+//										webView.stopLoading()
+//										webView.removeFromSuperview()
+//								}
+//						}
 				}
 		}
 
@@ -78,9 +78,9 @@ struct WebView: UIViewRepresentable {
 		func makeUIView(context: Context) -> WKWebView {
 				let webView = WKWebView()
 				webView.navigationDelegate = context.coordinator
-
-				let contentController = webView.configuration.userContentController
-				contentController.add(context.coordinator, name: "authHandler")
+			webView.isInspectable = true
+//				let contentController = webView.configuration.userContentController
+//				contentController.add(context.coordinator, name: "authHandler")
 
 				let url = URL(string: neynarLoginUrl)!
 				var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!

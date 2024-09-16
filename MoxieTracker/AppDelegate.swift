@@ -29,13 +29,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 	}
 	
 	func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-			// Handle the deep link here
-			if url.scheme == "your-app-scheme" && url.host == "login-success" {
-					// Extract any query parameters if needed
-					// Notify the appropriate controller or update your state here
-				NotificationCenter.default.post(name: .init("didReceiveAuth"), object: nil, userInfo: ["url": url])
-			}
-			return true
+		return true
 	}
 	
 	func userNotificationCenter(_ center: UNUserNotificationCenter,

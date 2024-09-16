@@ -32,12 +32,27 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>Moxitin Watch App (Notification).xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>Moxitin Watch App.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>Moxito.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
 			<true/>
 			<key>orderHint</key>
 			<integer>6</integer>
+		</dict>
+		<key>MoxitoHariosWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
 		</dict>
 		<key>fc-poc-wf.xcscheme_^#shared#^_</key>
 		<dict>

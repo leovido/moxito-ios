@@ -14,10 +14,22 @@ let package = Package(
 				.library(
 						name: "MoxieLib",
 						targets: ["MoxieLib"]),
+				.library(
+					name: "PrivySignIn",
+					targets: ["PrivySignIn"]
+				)
     ],
+		dependencies: [
+			.package(url: "https://github.com/privy-io/privy-ios", branch: "main"),
+		],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
+				.target(
+						name: "PrivySignIn",
+						dependencies: [.product(name: "Privy", package: "privy-ios")]
+				),
+				.testTarget(
+						name: "PrivySignInTests",
+						dependencies: ["PrivySignIn"]),
         .target(
             name: "TipLibs"),
 				.testTarget(

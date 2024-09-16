@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "privy-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/privy-io/privy-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ebe2c41a9775a34b6c39ec2a22008ba477b4ea70"
+      }
+    },
+    {
       "identity" : "sentry-cocoa",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
