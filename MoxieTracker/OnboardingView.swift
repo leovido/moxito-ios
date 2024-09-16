@@ -61,21 +61,21 @@ struct LoginView: View {
 					
 					
 					Button(action: {
-						Task {
-							let signature = try! await siweCreateSignature()
-							dump(signature)
-						}
-//						viewModelOnboarding.isAlertShowing = true
+//						Task {
+//							let signature = try! await siweCreateSignature()
+//							dump(signature)
+//						}
+						viewModelOnboarding.isAlertShowing = true
 					}) {
 						Image("SignInWarpcast", bundle: .main)
 					}
 					.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
-					.fullScreenCover(isPresented: $showWebView, content: {
-						WebView(neynarLoginUrl: "https://toth-frame.vercel.app/", clientId: "13f73c6f-f90f-40c6-bb70-b4946129cd7c", redirectUri: "") { data in
-							print("Authentication successful with data: \(data)")
-							showWebView = false
-						}
-					})
+//					.fullScreenCover(isPresented: $showWebView, content: {
+//						WebView(neynarLoginUrl: "https://toth-frame.vercel.app/", clientId: "13f73c6f-f90f-40c6-bb70-b4946129cd7c", redirectUri: "") { data in
+//							print("Authentication successful with data: \(data)")
+//							showWebView = false
+//						}
+//					})
 
 					Button(action: {
 						viewModel.model = .placeholder
