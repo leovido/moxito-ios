@@ -9,7 +9,7 @@ struct ContentView: View {
 		TabView {
 			Group {
 				if viewModel.isSearchMode {
-					HomeView(viewModel: viewModel)
+					HomeView.init()
 						.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
 						.onSubmit(of: .search) {
 							viewModel.onSubmitSearch()
@@ -21,7 +21,7 @@ struct ContentView: View {
 						}
 					
 				} else {
-					HomeView(viewModel: viewModel)
+					HomeView()
 				}
 				
 				AccountView(viewModel: viewModel)

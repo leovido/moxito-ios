@@ -45,13 +45,13 @@ struct CardView: View {
 			VStack(alignment: .leading, spacing: 0) {
 				Text(title)
 					.font(.headline)
-					.fontDesign(.rounded)
+					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color.white)
 				
 				HStack(spacing: 1) {
 					Text(amount)
 						.font(.title)
-						.fontDesign(.rounded)
+						.font(.custom("Inter", size: 20))
 						.foregroundStyle(Color.white)
 						.fontWeight(.heavy)
 						.padding(.trailing, -4)
@@ -65,7 +65,7 @@ struct CardView: View {
 				
 				Text("~$\(dollarValue.formatted(.number.precision(.fractionLength(2))))")
 					.font(.caption)
-					.fontDesign(.rounded)
+					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color.white)
 					.fontWeight(.light)
 			}

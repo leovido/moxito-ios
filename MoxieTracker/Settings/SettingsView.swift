@@ -2,8 +2,25 @@ import SwiftUI
 import WidgetKit
 import MoxieLib
 
+extension Bundle {
+	var releaseVersionNumber: String? {
+		return infoDictionary?["CFBundleShortVersionString"] as? String
+	}
+	var buildVersionNumber: String? {
+		return infoDictionary?["CFBundleVersion"] as? String
+	}
+}
+
 struct SettingsView: View {
 	@ObservedObject var viewModel: MoxieViewModel
+	
+	var version: String {
+		Bundle.main.releaseVersionNumber ?? "1.0.0"
+	}
+	
+	var buildVersionNumber: String {
+		Bundle.main.buildVersionNumber ?? "1"
+	}
 	
 	var body: some View {
 		NavigationStack {
@@ -46,7 +63,7 @@ struct SettingsView: View {
 					.padding(.bottom)
 					.padding(.horizontal)
 					
-					Text("Moxito © 2024 v1.0")
+					Text("Moxito © 2024 v\(version) (\(buildVersionNumber))")
 						.background(Color.clear)
 						.foregroundStyle(Color(uiColor: .systemGray4))
 						.padding(.bottom, 8)

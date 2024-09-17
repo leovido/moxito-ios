@@ -23,15 +23,21 @@ struct ProfileCardView: View {
 						.font(.body)
 						.fontWeight(.medium)
 						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 16))
+
 					Text("@\(model?.socials.first?.profileHandle ?? "")")
 						.font(.caption)
 						.fontWeight(.light)
 						.opacity(0.8)
 						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 16))
+
 					Text("FID: \(model?.entityID ?? "")")
 						.font(.caption)
 						.fontWeight(.light)
 						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 16))
+
 				}
 			}
 		}
@@ -42,4 +48,5 @@ struct ProfileCardView: View {
 #Preview {
 	ProfileCardView(model: .placeholder)
 		.fixedSize()
+		.background(.red)
 }

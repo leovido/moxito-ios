@@ -11,7 +11,7 @@ struct MoxieTrackerApp: App {
 	@StateObject var privyClient = PrivyClient()
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
-	@State private var isPrivySdkReady = false
+	@State private var isPrivySdkReady = true
 	
 	var body: some Scene {
 		WindowGroup {
@@ -29,13 +29,13 @@ struct MoxieTrackerApp: App {
 			.environment(privyClient)
 			.environment(mainViewModel)
 			.preferredColorScheme(.light)
-			.onAppear() {
-				privyClient.privy.setAuthStateChangeCallback { state in
-					if !isPrivySdkReady && state != .notReady {
-								isPrivySdkReady = true
-					}
-				}
-			}
+//			.onAppear() {
+//				privyClient.privy.setAuthStateChangeCallback { state in
+//					if !isPrivySdkReady && state != .notReady {
+//								isPrivySdkReady = true
+//					}
+//				}
+//			}
 			.defaultAppStorage(.group ?? .standard)
 			.onOpenURL { url in
 				print(url.absoluteString)

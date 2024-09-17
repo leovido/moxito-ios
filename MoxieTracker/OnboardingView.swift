@@ -3,6 +3,7 @@ import PrivySignIn
 import PrivySDK
 import MoxieLib
 import Combine
+import Sentry
 
 final class OnboardingViewModel: ObservableObject {
 	@Published var isAlertShowing: Bool = false
@@ -17,8 +18,20 @@ final class OnboardingViewModel: ObservableObject {
 }
 
 struct OnboardingView: View {
+	@EnvironmentObject var viewModel: MoxieViewModel
+	@AppStorage("moxieData") var moxieData: Data = .init()
+
 	var body: some View {
 		LoginView()
+			.onAppear() {
+				do {
+					viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
+					
+					dump(viewModel.model)
+				} catch {
+					SentrySDK.capture(error: error)
+				}
+			}
 	}
 }
 
@@ -48,17 +61,17 @@ struct LoginView: View {
 					.multilineTextAlignment(.center) // Align text to the left (or choose .center / .trailing)
 					.frame(maxWidth: .infinity, alignment: .center) // Adjust width as needed
 					.foregroundStyle(Color(uiColor: .primary))
-					.font(.system(size: 24))
+					.font(.custom("Inter", size: 24))
 					.fontWeight(.bold)
 					.padding(.top, 24)
 					.padding()
 
 					Text("Sign in to the apps to display your profile or skip this step. If you skip this step you will only have access to the FID search.")
-						.padding([.horizontal, .bottom], 16)
+						.padding([.horizontal, .bottom], 25)
 						.foregroundStyle(Color("OnboardingText"))
-						.font(.system(size: 14))
+						.font(.custom("Inter", size: 14))
 						.multilineTextAlignment(.center)
-					
+						
 					
 					Button(action: {
 //						Task {
@@ -82,13 +95,12 @@ struct LoginView: View {
 					}) {
 						Text("Skip this step")
 							.foregroundStyle(Color("SkipText"))
-							.font(.system(size: 16))
+							.font(.custom("Inter", size: 16))
 							.padding(.vertical)
 					}
 				}
 				.background(Color.white)
 				.clipShape(RoundedRectangle(cornerSize: CGSize(width: 50, height: 50)))
-//				.padding(.bottom, 54)
 				.padding(.horizontal, 21)
 				.shadow(color: .black.opacity(0.1), radius: 24, y: 16)
 			}
@@ -101,6 +113,7 @@ struct LoginView: View {
 				TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
 					.keyboardType(.numberPad)
 					.foregroundColor(Color(.textField))
+					.font(.custom("Inter", size: 16))
 					.padding()
 					.toolbar {
 						ToolbarItemGroup(placement: .keyboard) {
@@ -115,10 +128,12 @@ struct LoginView: View {
 					viewModel.inputFID = Int(viewModelOnboarding.inputTextFID) ?? 0
 				} label: {
 					Text("Sign in")
+						.font(.custom("Inter", size: 16))
 				}
 
 			} message: {
 				Text("Sign in with Farcaster will be available in the future.\n\nIn the meantime input your FID to fetch your Moxie data")
+					.font(.custom("Inter", size: 16))
 			}
 		}
 	}

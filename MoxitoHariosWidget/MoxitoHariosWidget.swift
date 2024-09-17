@@ -78,9 +78,9 @@ struct MoxieWidgetSimpleEntryView : View {
 		ZStack {
 			Image("MoxitoBG", bundle: .main)
 			VStack {
-				MiniCard(title: "Daily earnings:", moxieValue: entry.dailyMoxie, moxieUSD: entry.dailyUSD, imgSystem: "square.grid.2x2.fill")
+				MiniCard(title: "Daily:", moxieValue: entry.dailyMoxie, moxieUSD: entry.dailyUSD)
 					.padding(.top)
-				MiniCard(title: "Claimable:", moxieValue: entry.claimedMoxie, moxieUSD: entry.claimableUSD, imgSystem: "square.grid.3x3.fill")
+				MiniCard(title: "Claimable:", moxieValue: entry.claimedMoxie, moxieUSD: entry.claimableUSD)
 			}
 		}
 			
@@ -91,65 +91,47 @@ struct MiniCard: View {
 	let title: String
 	let moxieValue: Decimal
 	let moxieUSD: Decimal
-	let imgSystem: String
 	
-	init(title: String, moxieValue: Decimal, moxieUSD: Decimal, imgSystem: String) {
+	init(title: String, moxieValue: Decimal, moxieUSD: Decimal) {
 		self.title = title
 		self.moxieValue = moxieValue
 		self.moxieUSD = moxieUSD
-		self.imgSystem = imgSystem
 	}
 	
 	var body: some View {
 		HStack {
-			VStack {
-				Image(systemName: imgSystem)
-					.resizable()
-					.renderingMode(.template) // Use .template to apply the foreground color
-					.aspectRatio(contentMode: .fit)
-					.frame(width: 10, height: 10)
-					.foregroundColor(.white) // Set the SF Symbol color to white
-					
-			}
-			.frame(width: 22, height: 22)
-			.background(
-				RoundedRectangle(cornerRadius: 3)
-					.fill(Color(uiColor: MoxieColor.green))
-			)
-			.padding(.leading, 8)
+			Image("CoinMoxie", bundle: .main)
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.frame(height: 30)
+				.padding(.trailing, -4)
+				.padding(.leading, 4)
 			
-			VStack(alignment: .leading, spacing: 0) {
-				Text(title)
-					.font(.system(size: 8))
+			VStack(alignment: .leading) {
+				Text("\(title)")
 					.fontWeight(.bold)
-					.fontDesign(.rounded)
+					.font(.custom("Inter", size: 10))
 					.foregroundStyle(Color.white)
-				
-				HStack(spacing: 1) {
+					.padding(.top, 4)
+
 					Text(moxieValue.formatted(.number.precision(.fractionLength(2))))
-						.font(.system(size: 15))
+						.font(.custom("Inter", size: 15))
 						.textScale(.secondary)
-						.fontDesign(.rounded)
 						.foregroundStyle(Color.white)
 						.fontWeight(.bold)
-					
-					Image("CoinMoxie", bundle: .main)
-						.resizable()
-						.aspectRatio(contentMode: .fit)
-						.frame(height: 20)
-				}
 				
 				Text("~$\(moxieUSD.formatted(.number.precision(.fractionLength(2))))")
-					.font(.system(size: 7))
+					.font(.custom("Inter", size: 10))
 					.fontDesign(.rounded)
 					.foregroundStyle(Color.white)
 					.fontWeight(.light)
+					.padding(.bottom, 4)
 			}
-			.padding(.all, 0)
+			.padding(.vertical, 2)
 			
 			Spacer()
 		}
-		.frame(width: 140, height: 48)
+		.frame(width: 140)
 		.background(Color(uiColor: MoxieColor.primary))
 		.clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
 	}

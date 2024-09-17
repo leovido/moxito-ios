@@ -99,13 +99,7 @@ public struct SearchListView: View {
 							}
 						}
 						.navigationDestination(for: Int.self, destination: { userFID in
-							HomeView(
-								viewModel: MoxieViewModel(
-									input: userFID.description,
-									client: MoxieClient(),
-									isSearchMode: true
-								)
-							)
+							HomeView()
 							.navigationBarTitleDisplayMode(.inline)
 						})
 					}

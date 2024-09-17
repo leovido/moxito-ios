@@ -33,6 +33,7 @@ struct ProfileOptionRow: View {
 			Text(option.name)
 				.foregroundColor(.black)
 				.fontWeight(.medium)
+				.font(.custom("Inter", size: 16))
 			
 			Spacer()
 			

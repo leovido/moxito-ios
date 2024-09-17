@@ -68,6 +68,12 @@
 		47E4CC322C98563800BE77E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC312C98563800BE77E8 /* Assets.xcassets */; };
 		47E4CC362C98563800BE77E8 /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47E4CC3C2C98565B00BE77E8 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47E4CC3B2C98565B00BE77E8 /* MoxieLib */; };
+		47E4CC402C9990C600BE77E8 /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3E2C9990C600BE77E8 /* Inter.ttf */; };
+		47E4CC412C9990C600BE77E8 /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3E2C9990C600BE77E8 /* Inter.ttf */; };
+		47E4CC422C9990C600BE77E8 /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3E2C9990C600BE77E8 /* Inter.ttf */; };
+		47E4CC432C9990C600BE77E8 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */; };
+		47E4CC442C9990C600BE77E8 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */; };
+		47E4CC452C9990C600BE77E8 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -280,6 +286,8 @@
 		47E4CC312C98563800BE77E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47E4CC332C98563800BE77E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47E4CC3A2C98563F00BE77E8 /* MoxitoHariosWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxitoHariosWidgetExtension.entitlements; sourceTree = "<group>"; };
+		47E4CC3E2C9990C600BE77E8 /* Inter.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inter.ttf; sourceTree = "<group>"; };
+		47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Italic.ttf"; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -426,6 +434,7 @@
 		471FE9742C7F808C00D20F4C /* MoxieTracker */ = {
 			isa = PBXGroup;
 			children = (
+				47E4CC3D2C9990AF00BE77E8 /* fonts */,
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
@@ -644,6 +653,15 @@
 				47E4CC332C98563800BE77E8 /* Info.plist */,
 			);
 			path = MoxitoHariosWidget;
+			sourceTree = "<group>";
+		};
+		47E4CC3D2C9990AF00BE77E8 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */,
+				47E4CC3E2C9990C600BE77E8 /* Inter.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		47EC54712C822B23006C2820 /* Home */ = {
@@ -1044,8 +1062,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */,
+				47E4CC432C9990C600BE77E8 /* Inter-Italic.ttf in Resources */,
 				471FE97D2C7F808D00D20F4C /* Preview Assets.xcassets in Resources */,
 				47E4CBDE2C9057AF00BE77E8 /* Fastfile in Resources */,
+				47E4CC402C9990C600BE77E8 /* Inter.ttf in Resources */,
 				471FE97A2C7F808D00D20F4C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1068,6 +1088,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E4CC412C9990C600BE77E8 /* Inter.ttf in Resources */,
+				47E4CC442C9990C600BE77E8 /* Inter-Italic.ttf in Resources */,
 				47E4CBDF2C9091D000BE77E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1131,6 +1153,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E4CC422C9990C600BE77E8 /* Inter.ttf in Resources */,
+				47E4CC452C9990C600BE77E8 /* Inter-Italic.ttf in Resources */,
 				47E4CC322C98563800BE77E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
