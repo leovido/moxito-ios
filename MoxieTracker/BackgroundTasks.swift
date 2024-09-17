@@ -1,4 +1,5 @@
 import BackgroundTasks
+import Sentry
 
 extension AppDelegate {
 	// Register the background task with a unique identifier
@@ -10,7 +11,6 @@ extension AppDelegate {
 
 	// Handle the background app refresh task
 	func handleAppRefresh(task: BGAppRefreshTask) {
-		print("Background app refresh task started.")
 		
 		scheduleAppRefresh() // Reschedule the next background fetch
 		
@@ -18,17 +18,17 @@ extension AppDelegate {
 		Task {
 			do {
 				try await MoxieViewModel.shared.fetchStats(filter: .today)
-				print("Background fetch completed successfully.")
+				MoxieViewModel.shared.checkAndNotify(newModel: MoxieViewModel.shared.model, userInput: MoxieViewModel.shared.userInputNotifications)
+				
 				task.setTaskCompleted(success: true) // Indicate the task was successful
 			} catch {
-				print("Background fetch failed with error: \(error.localizedDescription)")
+				SentrySDK.capture(error: error)
 				task.setTaskCompleted(success: false) // Indicate the task failed
 			}
 		}
 		
 		// Provide an expiration handler if the task is taking too long
 		task.expirationHandler = {
-			print("Background fetch expired.")
 			task.setTaskCompleted(success: false) // Indicate the task failed due to timeout
 		}
 	}
