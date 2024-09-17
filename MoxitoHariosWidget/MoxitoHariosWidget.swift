@@ -148,6 +148,7 @@ struct MoxitoHariosWidget: Widget {
 		}
 		.configurationDisplayName("Moxito widget by @harios")
 		.description("Shows daily $MOXIE rewards.")
+		.supportedFamilies([.systemSmall])
 	}
 }
 

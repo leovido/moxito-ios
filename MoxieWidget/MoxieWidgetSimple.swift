@@ -158,6 +158,7 @@ struct MoxieWidgetSimple: Widget {
 		}
 		.configurationDisplayName("Moxito widget")
 		.description("Shows daily $MOXIE rewards.")
+		.supportedFamilies([.systemSmall])
 	}
 }
 
