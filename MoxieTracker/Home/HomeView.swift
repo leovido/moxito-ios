@@ -15,13 +15,6 @@ struct HomeView: View {
 	
 	@EnvironmentObject var viewModel: MoxieViewModel
 	
-	init() {
-		UISegmentedControl.appearance().selectedSegmentTintColor = MoxieColor.green
-		UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-		UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
-		UISegmentedControl.appearance().backgroundColor = .white
-	}
-	
 	var body: some View {
 		NavigationStack {
 			GeometryReader { geo in

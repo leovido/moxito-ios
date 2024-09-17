@@ -27,7 +27,8 @@ struct OnboardingView: View {
 				do {
 					viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
 					
-					dump(viewModel.model)
+					viewModel.input = viewModel.model.entityID
+					viewModel.inputFID = Int(viewModel.model.entityID) ?? 0
 				} catch {
 					SentrySDK.capture(error: error)
 				}
@@ -138,43 +139,43 @@ struct LoginView: View {
 		}
 	}
 	
-	func siweCreateSignature() async throws -> String {
-		do {
-			let params = SiweMessageParams(
-				appDomain: "com.christianleovido.Moxito",
-				appUri: "https://moxito.xyz",
-				chainId: "5453",
-				walletAddress: "0xdd3b3A67C66A5276aaCC499ec2abD5241721e008"
-			)
-			
-			let metadata = WalletLoginMetadata(
-				walletClientType: WalletClientType.metamask,
-				connectorType: "wallet_connect"
-			)
-			
-			let siweMessage = try await privyClient.privy.siwe.generateSiweMessage(params: params, metadata: metadata)
-			
-			return siweMessage
-		} catch let error {
-			dump(error)
-			// An error can be thrown if the network call to generate the message fails,
-			// or if invalid metadata was passed in.
-		}
-		
-		return ""
-	}
-	
-	func siweLink(signature: String) async throws -> AuthState {
-		do {
-			let authState = try await privyClient.privy.siwe.loginWithSiwe(signature)
-			
-			return authState
-		} catch let error {
-			dump(error)
-		}
-		
-		return .notReady
-	}
+//	func siweCreateSignature() async throws -> String {
+//		do {
+//			let params = SiweMessageParams(
+//				appDomain: "com.christianleovido.Moxito",
+//				appUri: "https://moxito.xyz",
+//				chainId: "5453",
+//				walletAddress: "0xdd3b3A67C66A5276aaCC499ec2abD5241721e008"
+//			)
+//			
+//			let metadata = WalletLoginMetadata(
+//				walletClientType: WalletClientType.metamask,
+//				connectorType: "wallet_connect"
+//			)
+//			
+//			let siweMessage = try await privyClient.privy.siwe.generateSiweMessage(params: params, metadata: metadata)
+//			
+//			return siweMessage
+//		} catch let error {
+//			dump(error)
+//			// An error can be thrown if the network call to generate the message fails,
+//			// or if invalid metadata was passed in.
+//		}
+//		
+//		return ""
+//	}
+//	
+//	func siweLink(signature: String) async throws -> AuthState {
+//		do {
+//			let authState = try await privyClient.privy.siwe.loginWithSiwe(signature)
+//			
+//			return authState
+//		} catch let error {
+//			dump(error)
+//		}
+//		
+//		return .notReady
+//	}
 }
 
 #Preview {

@@ -76,7 +76,7 @@ struct CardView: View {
 			Menu {
 				Text(info)
 			} label: {
-				Image(systemName: "info.circle")
+				Image(systemName: "info.circle.fill")
 					.resizable()
 					.aspectRatio(contentMode: .fit)
 					.frame(width: 25)
