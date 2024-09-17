@@ -5,29 +5,43 @@ import Combine
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	
+	init() {
+		UITabBar.appearance().isHidden = true
+	}
+	
+	@State private var selectedTab: Tab = Tab.home
+	
 	var body: some View {
-		TabView {
-			Group {
-				if viewModel.isSearchMode {
-					HomeView.init()
-						.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
-						.onSubmit(of: .search) {
-							viewModel.onSubmitSearch()
-						}
-						.onAppear() {
-							let searchBarAppearance = UISearchBar.appearance()
-							searchBarAppearance.searchTextField.textColor = .white
-							searchBarAppearance.tintColor = .white
-						}
+		ZStack(alignment: .bottom) {
+			TabView(selection: $selectedTab) {
+				Group {
+					if viewModel.isSearchMode {
+						HomeView()
+							.tag(Tab.home)
+							.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
+							.onSubmit(of: .search) {
+								viewModel.onSubmitSearch()
+							}
+							.onAppear() {
+								let searchBarAppearance = UISearchBar.appearance()
+								searchBarAppearance.searchTextField.textColor = .white
+								searchBarAppearance.tintColor = .white
+							}
+						
+					} else {
+						HomeView()
+							.tag(Tab.home)
+					}
 					
-				} else {
-					HomeView()
+					AccountView(viewModel: viewModel)
+						.tag(Tab.profile)
 				}
-				
-				AccountView(viewModel: viewModel)
-					.toolbarBackground(Color.red, for: .tabBar)
+				.toolbar(.visible, for: .tabBar)
+				.toolbarColorScheme(.light, for: .tabBar)
 			}
-			.toolbar(.visible, for: .tabBar)
+			
+			CustomBottomTabBarView(currentTab: $selectedTab)
+				.ignoresSafeArea()
 		}
 	}
 }

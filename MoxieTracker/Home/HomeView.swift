@@ -73,6 +73,8 @@ struct HomeView: View {
 							.background(Color.white)
 							.clipShape(Circle())
 						}
+						.padding(.bottom, 20)
+
 						ScrollView(showsIndicators: false) {
 							HStack {
 								VStack(alignment: .center) {
@@ -87,6 +89,7 @@ struct HomeView: View {
 											ProgressView()
 										})
 										.frame(width: 100, height: 100)
+										.padding(.top, -8)
 									}
 									
 									Text("Your claimable balance is")
@@ -175,7 +178,7 @@ struct HomeView: View {
 							.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
 							.frame(maxWidth: .infinity)
 							.frame(height: 40)
-							.padding(.vertical)
+							.padding(.vertical, 6)
 							
 							VStack(alignment: .leading) {
 								if viewModel.inputFID == -1 {

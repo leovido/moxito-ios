@@ -6,7 +6,6 @@ public enum MoxieColor {
 	public static let otherColor = UIColor(red: 0.91, green: 0.87, blue: 1.00, alpha: 1.00)
 	public static let dark = UIColor(red: 0.37, green: 0.16, blue: 0.79, alpha: 1.00)
 	public static let green = UIColor(red: 0.00, green: 0.81, blue: 0.00, alpha: 1.00)
-	public static let primary = UIColor(red: 0.50, green: 0.30, blue: 1.00, alpha: 1.00)
+	public static let primary = UIColor(red: 0.44, green: 0.29, blue: 1.00, alpha: 1.00)
 	public static let grayPickerText = UIColor(red: 0.43, green: 0.46, blue: 0.57, alpha: 1.00)
-	
 }

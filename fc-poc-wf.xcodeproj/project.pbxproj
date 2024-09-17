@@ -74,6 +74,9 @@
 		47E4CC432C9990C600BE77E8 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */; };
 		47E4CC442C9990C600BE77E8 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */; };
 		47E4CC452C9990C600BE77E8 /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */; };
+		47E4CC472C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
+		47E4CC482C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
+		47E4CC492C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -288,6 +291,7 @@
 		47E4CC3A2C98563F00BE77E8 /* MoxitoHariosWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxitoHariosWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47E4CC3E2C9990C600BE77E8 /* Inter.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inter.ttf; sourceTree = "<group>"; };
 		47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Italic.ttf"; sourceTree = "<group>"; };
+		47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
+				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				47EC547C2C88324E006C2820 /* Haptics.swift */,
@@ -1196,6 +1201,7 @@
 				47EC546E2C822A69006C2820 /* CardView.swift in Sources */,
 				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
+				47E4CC472C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
@@ -1234,6 +1240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				471FE9BF2C7F823400D20F4C /* MoxieWidgetSimpleBundle.swift in Sources */,
+				47E4CC482C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
 				471FE9BE2C7F823400D20F4C /* MoxieWidgetSimple.swift in Sources */,
 				471FE9BD2C7F823400D20F4C /* MoxieWidgetSimpleLiveActivity.swift in Sources */,
 				471FE9C02C7F823400D20F4C /* AppIntent.swift in Sources */,
@@ -1312,6 +1319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E4CC492C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
 				47E4CC2C2C98563600BE77E8 /* MoxitoHariosWidgetBundle.swift in Sources */,
 				47E4CC2E2C98563600BE77E8 /* MoxitoHariosWidget.swift in Sources */,
 				47E4CC302C98563600BE77E8 /* AppIntent.swift in Sources */,
@@ -1413,6 +1421,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -1451,6 +1460,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
