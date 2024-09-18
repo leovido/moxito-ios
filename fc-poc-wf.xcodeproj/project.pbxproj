@@ -1407,7 +1407,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
@@ -1446,7 +1446,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
@@ -1562,7 +1562,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxieWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxieWidget/Info.plist;
@@ -1594,7 +1594,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxieWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxieWidget/Info.plist;
@@ -1954,7 +1954,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1985,7 +1985,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.christianleovido.fc-poc-wf.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -2085,7 +2085,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxitoHariosWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxitoHariosWidget/Info.plist;
@@ -2114,7 +2114,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxitoHariosWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxitoHariosWidget/Info.plist;
