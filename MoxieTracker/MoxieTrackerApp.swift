@@ -28,7 +28,6 @@ struct MoxieTrackerApp: App {
 			}
 			.environment(privyClient)
 			.environment(mainViewModel)
-			.preferredColorScheme(.dark)
 //			.onAppear() {
 //				privyClient.privy.setAuthStateChangeCallback { state in
 //					if !isPrivySdkReady && state != .notReady {
