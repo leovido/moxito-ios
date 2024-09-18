@@ -2,6 +2,7 @@ import WidgetKit
 import SwiftUI
 import MoxieLib
 import AppIntents
+import Sentry
 
 enum FeatureFlag {
 	static let claimButton = false
@@ -95,36 +96,80 @@ struct SimpleEntry: TimelineEntry {
 struct MoxieWidgetSimpleEntryView : View {
 	var entry: Provider.Entry
 	
+	var dollarValueDaily: Decimal {
+		do {
+			let am = try Decimal(entry.dailyUSD
+				.formatted(.number.precision(.fractionLength(2))),
+													 format: .currency(code: "USD"))
+			
+			return am
+		} catch {
+			SentrySDK.capture(error: error)
+		}
+		
+		return 0
+	}
+	
+	var dollarValueClaimable: Decimal {
+		do {
+			let am = try Decimal(entry.claimableUSD
+				.formatted(.number.precision(.fractionLength(2))),
+													 format: .currency(code: "USD"))
+			
+			return am
+		} catch {
+			dump(error)
+		}
+		
+		return 0
+	}
+	
 	var body: some View {
 			VStack(alignment: .leading) {
 				HStack {
 					VStack(alignment: .leading) {
-						Text("Daily Ⓜ️")
-							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-							.fontDesign(.rounded)
-							.fontWeight(.black)
+						HStack {
+							Text("Daily")
+								.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+								.fontDesign(.rounded)
+								.fontWeight(.black)
+							
+							Image("CoinMoxiePurple", bundle: .main)
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+								.frame(width: 15)
+						}
+						.padding(.bottom, -6)
 						
 						Text(entry.dailyMoxie.formatted(.number.precision(.fractionLength(2))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
 							.fontDesign(.rounded)
-						Text("$\(entry.dailyUSD.formatted(.number.precision(.fractionLength(2))))")
+						Text("$\(dollarValueDaily.formatted())")
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.font(.caption)
 							.fontWeight(.light)
 							.fontDesign(.rounded)
 							.padding(.bottom, 4)
 
-						Text("Claimable Ⓜ️")
-							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-							.fontDesign(.rounded)
-							.fontWeight(.black)
+						HStack {
+							Text("Claimable")
+								.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+								.fontDesign(.rounded)
+								.fontWeight(.black)
+							
+							Image("CoinMoxiePurple", bundle: .main)
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+								.frame(width: 15)
+						}
+						.padding(.bottom, -6)
 						
 						Text(entry.claimableMoxie.formatted(.number.precision(.fractionLength(2))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
 							.fontDesign(.rounded)
-						Text("$\(entry.claimableUSD.formatted(.number.precision(.fractionLength(2))))")
+						Text("$\(dollarValueClaimable.formatted())")
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.font(.caption)
 							.fontWeight(.light)

@@ -2,6 +2,7 @@ import WidgetKit
 import SwiftUI
 import MoxieLib
 import AppIntents
+import Sentry
 
 enum FeatureFlag {
 	static let claimButton = false
@@ -80,10 +81,9 @@ struct MoxieWidgetSimpleEntryView : View {
 			VStack {
 				MiniCard(title: "Daily:", moxieValue: entry.dailyMoxie, moxieUSD: entry.dailyUSD)
 					.padding(.top)
-				MiniCard(title: "Claimable:", moxieValue: entry.claimedMoxie, moxieUSD: entry.claimableUSD)
+				MiniCard(title: "Claimable:", moxieValue: entry.claimableMoxie, moxieUSD: entry.claimableUSD)
 			}
 		}
-			
 	}
 }
 
@@ -91,6 +91,20 @@ struct MiniCard: View {
 	let title: String
 	let moxieValue: Decimal
 	let moxieUSD: Decimal
+	
+	var dollarValue: Decimal {
+		do {
+			let am = try Decimal(moxieUSD
+				.formatted(.number.precision(.fractionLength(2))),
+													 format: .currency(code: "USD"))
+			
+			return am
+		} catch {
+			SentrySDK.capture(error: error)
+		}
+		
+		return 0
+	}
 	
 	init(title: String, moxieValue: Decimal, moxieUSD: Decimal) {
 		self.title = title
@@ -114,13 +128,13 @@ struct MiniCard: View {
 					.foregroundStyle(Color.white)
 					.padding(.top, 4)
 
-					Text(moxieValue.formatted(.number.precision(.fractionLength(2))))
+				Text(moxieValue.formatted(.number.precision(.fractionLength(2))))
 						.font(.custom("Inter", size: 15))
 						.textScale(.secondary)
 						.foregroundStyle(Color.white)
 						.fontWeight(.bold)
 				
-				Text("~$\(moxieUSD.formatted(.number.precision(.fractionLength(2))))")
+				Text("~$\(dollarValue.formatted())")
 					.font(.custom("Inter", size: 10))
 					.fontDesign(.rounded)
 					.foregroundStyle(Color.white)
