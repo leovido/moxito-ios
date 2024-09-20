@@ -184,6 +184,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		
 		$price
 			.removeDuplicates()
+			.print()
 			.sink { [weak self] in
 				self?.dollarValueMoxie = $0 * (self?.model.moxieClaimTotals.first?.availableClaimAmount ?? 0)
 			}
@@ -262,7 +263,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		if delta >= userInput {
 			let content = UNMutableNotificationContent()
 			content.title = "$MOXIE earnings"
-			content.body = "Congrats! Your Moxie earnings have now reached \(newAmount.formatted(.number.precision(.fractionLength(2)))). Check out your latest gains and keep the momentum going! 🚀"
+			content.body = "Congrats! Your Moxie earnings have now reached \(newAmount.formatted(.number.precision(.fractionLength(0)))). Check out your latest gains and keep the momentum going! 🚀"
 			content.sound = .default
 			
 			let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
@@ -287,7 +288,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	func notify() {
 		let content = UNMutableNotificationContent()
 		content.title = "$MOXIE earnings"
-		content.body = "\(model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))))"
+		content.body = "\(model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))))"
 		content.sound = .default
 		
 		selectedNotificationOptions

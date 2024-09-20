@@ -92,18 +92,8 @@ struct MiniCard: View {
 	let moxieValue: Decimal
 	let moxieUSD: Decimal
 	
-	var dollarValue: Decimal {
-		do {
-			let am = try Decimal(moxieUSD
-				.formatted(.number.precision(.fractionLength(2))),
-													 format: .currency(code: "USD"))
-			
-			return am
-		} catch {
-			SentrySDK.capture(error: error)
-		}
-		
-		return 0
+	var dollarValue: String {
+		formattedDollarValue(dollarValue: moxieUSD)
 	}
 	
 	init(title: String, moxieValue: Decimal, moxieUSD: Decimal) {
@@ -128,13 +118,14 @@ struct MiniCard: View {
 					.foregroundStyle(Color.white)
 					.padding(.top, 4)
 
-				Text(moxieValue.formatted(.number.precision(.fractionLength(2))))
+				Text(moxieValue.formatted(.number.precision(.fractionLength(0))))
 						.font(.custom("Inter", size: 15))
 						.textScale(.secondary)
 						.foregroundStyle(Color.white)
 						.fontWeight(.bold)
 				
-				Text("~$\(dollarValue.formatted())")
+				Text("~\(dollarValue)")
+				
 					.font(.custom("Inter", size: 10))
 					.fontDesign(.rounded)
 					.foregroundStyle(Color.white)

@@ -98,7 +98,7 @@ struct HomeView: View {
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
 									
 									HStack {
-										Text("\(viewModel.willPlayAnimationNumbers ? number.formatted(.number.precision(.fractionLength(2))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(2))) ?? "0 $MOXIE")")
+										Text("\(viewModel.willPlayAnimationNumbers ? number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
 											.font(.largeTitle)
 											.font(.custom("Inter", size: 20))
 											.foregroundStyle(Color(uiColor: MoxieColor.primary))
@@ -116,7 +116,7 @@ struct HomeView: View {
 											.aspectRatio(contentMode: .fit)
 											.frame(width: 20, height: 20)
 									}
-									Text("~$\(viewModel.dollarValueMoxie.formatted(.number.precision(.fractionLength(2))))")
+									Text("~$\(viewModel.dollarValueMoxie.formatted(.number.precision(.fractionLength(0))))")
 										.font(.caption)
 										.font(.custom("Inter", size: 12))
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
@@ -194,7 +194,7 @@ struct HomeView: View {
 									VStack {
 										CardView(imageSystemName: "square.grid.2x2.fill",
 														 title: "Cast earnings",
-														 amount: viewModel.model.castEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+														 amount: viewModel.model.castEarningsAmount,
 														 price: viewModel.price,
 														 info: "Earnings from casts. Likes, recasts/quoteCasts and replies all earn you $MOXIE"
 										)
@@ -202,14 +202,14 @@ struct HomeView: View {
 										
 										CardView(imageSystemName: "rectangle.grid.1x2.fill",
 														 title: "Frame earnings",
-														 amount: viewModel.model.frameDevEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+														 amount: viewModel.model.frameDevEarningsAmount,
 														 price: viewModel.price,
 														 info: "Earnings from frames that you build when you use Airstack frame validator"
 										)
 										
 										CardView(imageSystemName: "circle.hexagongrid.fill",
 														 title: "All earnings",
-														 amount: viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(2))),
+														 amount: viewModel.model.allEarningsAmount,
 														 price: viewModel.price,
 														 info: "All earnings from casts and frames"
 										)
@@ -246,7 +246,7 @@ struct HomeView: View {
 					})
 					.onChange(of: viewModel.userInputNotifications, initial: false, { oldValue, newValue in
 						if oldValue != newValue {
-							userInputNotificationsString = newValue.formatted(.number.precision(.fractionLength(2)))
+							userInputNotificationsString = newValue.formatted(.number.precision(.fractionLength(0)))
 						}
 					})
 					.onChange(of: viewModel.selectedNotificationOptions, initial: true, { oldValue, newValue in
@@ -349,7 +349,8 @@ struct HomeView: View {
 
 #Preview {
 	HomeView()
-		.environment(MoxieViewModel.init())
+		.environment(MoxieViewModel.init(model: .placeholder))
+		.environment(\.locale, .init(components: .init(identifier: "es_ES")))
 }
 
 //#Preview {

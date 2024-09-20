@@ -1,27 +1,35 @@
 import SwiftUI
 import MoxieLib
+import Sentry
 
 struct CardView: View {
 	@Environment(\.locale) var locale
 
 	let imageSystemName: String
 	let title: String
-	let amount: String
+	let amount: Decimal
 	let price: Decimal
 	let info: String
 	
-	var dollarValue: Decimal {
-		do {
-			let am = try Decimal(amount,
-													 format: .currency(code: "USD"))
-			
-			return price * am
-			
-		} catch {
-			dump(error)
-		}
+	var amountFormatted: String {
+		let numberFormatter = NumberFormatter()
+		numberFormatter.numberStyle = .currency
+		numberFormatter.currencySymbol = ""
 		
-		return 0
+		// Make sure to use the current locale
+		numberFormatter.locale = .current
+		
+		if let formattedValue = numberFormatter.string(from: amount as NSDecimalNumber) {
+			return formattedValue
+		} else {
+			return "$0.00"
+		}
+	}
+	
+	var dollarValue: Decimal {
+		let am = price * amount
+		
+		return am
 	}
 	
 	var body: some View {
@@ -49,7 +57,7 @@ struct CardView: View {
 					.foregroundStyle(Color.white)
 				
 				HStack(spacing: 1) {
-					Text(amount)
+					Text(amountFormatted)
 						.font(.title)
 						.font(.custom("Inter", size: 20))
 						.foregroundStyle(Color.white)
@@ -63,7 +71,7 @@ struct CardView: View {
 				}
 				.frame(maxHeight: .infinity)
 				
-				Text("~$\(dollarValue.formatted(.number.precision(.fractionLength(2))))")
+				Text("~\(formattedDollarValue(dollarValue: dollarValue))")
 					.font(.caption)
 					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color.white)
@@ -92,8 +100,8 @@ struct CardView: View {
 
 #Preview {
 	Group {
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023, info: "Earnings from casts")
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023, info: "Earnings from casts")
-		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: "2034.34", price: 0.0023, info: "Earnings from casts")
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: 2034.34, price: 0.0023, info: "Earnings from casts")
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: 2034.34, price: 0.0023, info: "Earnings from casts")
+		CardView(imageSystemName: "laptop.computer", title: "Cast earnings", amount: 2034.34, price: 0.0023, info: "Earnings from casts")
 	}
 }

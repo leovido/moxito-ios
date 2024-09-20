@@ -13,23 +13,11 @@ let package = Package(
             targets: ["TipLibs"]),
 				.library(
 						name: "MoxieLib",
-						targets: ["MoxieLib"]),
-				.library(
-					name: "PrivySignIn",
-					targets: ["PrivySignIn"]
-				)
+						targets: ["MoxieLib"])
     ],
 		dependencies: [
-			.package(url: "https://github.com/privy-io/privy-ios", branch: "main"),
 		],
-    targets: [
-				.target(
-						name: "PrivySignIn",
-						dependencies: [.product(name: "Privy", package: "privy-ios")]
-				),
-				.testTarget(
-						name: "PrivySignInTests",
-						dependencies: ["PrivySignIn"]),
+		targets: [
         .target(
             name: "TipLibs"),
 				.testTarget(

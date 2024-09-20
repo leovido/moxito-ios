@@ -19,21 +19,21 @@
       }
     },
     {
-      "identity" : "privy-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/privy-io/privy-ios",
-      "state" : {
-        "branch" : "main",
-        "revision" : "ebe2c41a9775a34b6c39ec2a22008ba477b4ea70"
-      }
-    },
-    {
       "identity" : "sentry-cocoa",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
       "state" : {
         "revision" : "5575af93efb776414f243e93d6af9f6258dc539a",
         "version" : "8.36.0"
+      }
+    },
+    {
+      "identity" : "wallet-mobile-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:MobileWalletProtocol/wallet-mobile-sdk.git",
+      "state" : {
+        "revision" : "4293df51d3500b8e876ca4bf0d7548adf097569a",
+        "version" : "1.1.2"
       }
     }
   ],

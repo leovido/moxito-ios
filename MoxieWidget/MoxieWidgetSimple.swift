@@ -96,32 +96,12 @@ struct SimpleEntry: TimelineEntry {
 struct MoxieWidgetSimpleEntryView : View {
 	var entry: Provider.Entry
 	
-	var dollarValueDaily: Decimal {
-		do {
-			let am = try Decimal(entry.dailyUSD
-				.formatted(.number.precision(.fractionLength(2))),
-													 format: .currency(code: "USD"))
-			
-			return am
-		} catch {
-			SentrySDK.capture(error: error)
-		}
-		
-		return 0
+	var dollarValueDaily: String {
+		return formattedDollarValue(dollarValue: entry.dailyUSD)
 	}
 	
-	var dollarValueClaimable: Decimal {
-		do {
-			let am = try Decimal(entry.claimableUSD
-				.formatted(.number.precision(.fractionLength(2))),
-													 format: .currency(code: "USD"))
-			
-			return am
-		} catch {
-			dump(error)
-		}
-		
-		return 0
+	var dollarValueClaimable: String {
+		return formattedDollarValue(dollarValue: entry.claimableUSD)
 	}
 	
 	var body: some View {
@@ -141,11 +121,11 @@ struct MoxieWidgetSimpleEntryView : View {
 						}
 						.padding(.bottom, -6)
 						
-						Text(entry.dailyMoxie.formatted(.number.precision(.fractionLength(2))))
+						Text(entry.dailyMoxie.formatted(.number.precision(.fractionLength(0))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
 							.fontDesign(.rounded)
-						Text("$\(dollarValueDaily.formatted())")
+						Text("~\(dollarValueDaily)")
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.font(.caption)
 							.fontWeight(.light)
@@ -165,11 +145,11 @@ struct MoxieWidgetSimpleEntryView : View {
 						}
 						.padding(.bottom, -6)
 						
-						Text(entry.claimableMoxie.formatted(.number.precision(.fractionLength(2))))
+						Text(entry.claimableMoxie.formatted(.number.precision(.fractionLength(0))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
 							.fontDesign(.rounded)
-						Text("$\(dollarValueClaimable.formatted())")
+						Text("~\(dollarValueClaimable)")
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.font(.caption)
 							.fontWeight(.light)

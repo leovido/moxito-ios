@@ -41,7 +41,7 @@ struct GenericTipView: View {
 			return "0"
 		}
 		let percentage = Float(model.given) / Float(model.allowance)
-		let formattedPercentage = percentage.formatted(.percent.precision(.fractionLength(2)))
+		let formattedPercentage = percentage.formatted(.percent.precision(.fractionLength(0)))
 		
 		return formattedPercentage
 	}

@@ -1,7 +1,7 @@
 import UIKit
 import Sentry
 
-class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 	func application(
 		_ application: UIApplication,
 		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -18,9 +18,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 			
 			// Sample rate for profiling, applied on top of TracesSampleRate.
 			// We recommend adjusting this value in production.
-			options.profilesSampleRate = 1.0
-			options.environment = "dev"
-			
+			options.profilesSampleRate = 0.6
+			options.environment = "production"
 		}
 		
 		registerBackgroundTasks()
