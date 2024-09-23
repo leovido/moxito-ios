@@ -19,7 +19,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 			// Sample rate for profiling, applied on top of TracesSampleRate.
 			// We recommend adjusting this value in production.
 			options.profilesSampleRate = 0.6
-			options.environment = "production"
+			options.environment = "dev"
 		}
 		
 		registerBackgroundTasks()

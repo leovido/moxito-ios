@@ -1,100 +1,148 @@
 import SwiftUI
 import WebKit
 
-struct WebView: UIViewRepresentable {
-		var neynarLoginUrl: String
-		var clientId: String
-		var redirectUri: String?
-		var successCallback: (([String: Any]) -> Void)?
-
+struct WebViewWrapper: UIViewRepresentable {
+		
 		class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
-				var parent: WebView
-				var authWindow: WKWebView?
+				var parent: WebViewWrapper
 				
-				init(parent: WebView) {
+				init(parent: WebViewWrapper) {
 						self.parent = parent
-						super.init()
-						
-						// Observe when the app comes back to foreground
-						NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
 				}
-
-				// Called when the app returns to the foreground
-				@objc func appDidBecomeActive() {
-						// Re-inject JavaScript when the app returns to the foreground
-						if let webView = authWindow {
-								injectJavaScript(webView)
+				
+				// Handle messages from JavaScript to Swift
+				func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+						if message.name == "onSignInSuccess", let authData = message.body as? [String: Any] {
+							// Call the onSignInSuccess handler with the auth data
+							parent.onSignInSuccess(authData)
 						}
 				}
-
-				deinit {
-						NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-				}
-				
-				func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-						// Save the reference to the web view
-//						self.authWindow = webView
-//						
-//						// Inject JavaScript to listen for post messages
-//						injectJavaScript(webView)
-				}
-
-				func injectJavaScript(_ webView: WKWebView) {
-//						let scriptString = """
-//						window.addEventListener('message', function(event) {
-//								if (event.data.is_authenticated) {
-//										window.webkit.messageHandlers.authHandler.postMessage(event.data);
-//								}
-//						}, false);
-//						"""
-//						
-//						webView.evaluateJavaScript(scriptString) { (result, error) in
-//								if let error = error {
-//										print("JavaScript injection error: \(error)")
-//								}
-//						}
-				}
-
-				func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-//						if message.name == "authHandler",
-//							 let data = message.body as? [String: Any],
-//							 let isAuthenticated = data["is_authenticated"] as? Bool,
-//							 isAuthenticated {
-//								parent.successCallback?(data) // Call the Swift success callback
-//								
-//								// Close the web view
-//								if let webView = authWindow {
-//										webView.stopLoading()
-//										webView.removeFromSuperview()
-//								}
-//						}
-				}
+			
+			// Called when the web content starts loading
+			func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+				print("WebView didStartProvisionalNavigation: \(webView.url?.absoluteString ?? "Unknown URL")")
+			}
+			
+			// Called when the web content has finished loading
+			func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+				print("WebView didFinish: \(webView.url?.absoluteString ?? "Unknown URL")")
+			}
+			
+			// Called when the web content failed to load
+			func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+				print("WebView didFail: \(error.localizedDescription)")
+			}
 		}
-
-		func makeCoordinator() -> Coordinator {
-				Coordinator(parent: self)
-		}
-
+	
+	var url: URL
+	var onSignInSuccess: (Dictionary<String, Any>) -> Void
+	
+	// Make WKWebView instance and configure it
 		func makeUIView(context: Context) -> WKWebView {
-				let webView = WKWebView()
+				let contentController = WKUserContentController()
+				contentController.add(context.coordinator, name: "onSignInSuccess")
+				
+				let config = WKWebViewConfiguration()
+				config.userContentController = contentController
+				
+				let webView = WKWebView(frame: .zero, configuration: config)
 				webView.navigationDelegate = context.coordinator
-			webView.isInspectable = true
-//				let contentController = webView.configuration.userContentController
-//				contentController.add(context.coordinator, name: "authHandler")
-
-				let url = URL(string: neynarLoginUrl)!
-				var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-				components.queryItems = [URLQueryItem(name: "client_id", value: clientId)]
-				if let redirectUri = redirectUri {
-						components.queryItems?.append(URLQueryItem(name: "redirect_uri", value: redirectUri))
-				}
-
-				webView.load(URLRequest(url: components.url!))
+				
+				// Inject your custom JavaScript for Neynar authentication
+				injectJavaScript(into: webView)
+				
 				return webView
 		}
-
+		
+		// Update the WKWebView when necessary
 		func updateUIView(_ webView: WKWebView, context: Context) {
-				// Re-inject JavaScript every time the view is updated to ensure it listens for messages again
-				context.coordinator.injectJavaScript(webView)
+				let request = URLRequest(url: url)
+				webView.load(request)
+		}
+		
+		// Create the Coordinator for handling events between Swift and JavaScript
+		func makeCoordinator() -> Coordinator {
+				return Coordinator(parent: self)
+		}
+		
+		// Inject the JavaScript that handles Neynar authentication
+		private func injectJavaScript(into webView: WKWebView) {
+				let injectedJavaScript = """
+				(function () {
+					var authWindow;
+
+					async function getLogo(logoUrl, button, text) {
+						try {
+							const response = await fetch(logoUrl);
+							if (!response.ok) throw new Error("Failed to load the logo.");
+							const svgData = await response.text();
+							button.innerHTML = svgData + `<span>${text}</span>`;
+						} catch (error) {
+							console.error("Error loading logo:", error);
+						}
+					}
+
+					function handleMessage(event, authOrigin, successCallback) {
+						if (event.origin === authOrigin && event.data.is_authenticated) {
+							if (typeof window[successCallback] === "function") {
+								window[successCallback](event.data);
+							}
+							if (authWindow) authWindow.close();
+							window.removeEventListener("message", handleMessage);
+						}
+					}
+
+					function handleSignIn(neynarLoginUrl, clientId, redirectUri, successCallback) {
+						var authUrl = new URL(neynarLoginUrl);
+						authUrl.searchParams.append("client_id", clientId);
+						if (redirectUri) {
+							authUrl.searchParams.append("redirect_uri", redirectUri);
+						}
+						var authOrigin = new URL(neynarLoginUrl).origin;
+						var isDesktop = window.matchMedia("(min-width: 800px)").matches;
+						var width = 600, height = 700;
+						var left = window.screen.width / 2 - width / 2;
+						var top = window.screen.height / 2 - height / 2;
+						var windowFeatures = `width=${width},height=${height},top=${top},left=${left}`;
+						var windowOptions = isDesktop ? windowFeatures : "fullscreen=yes";
+						authWindow = window.open(authUrl.toString(), "_blank", windowOptions);
+						window.addEventListener(
+							"message",
+							function (event) {
+								handleMessage(event, authOrigin, successCallback);
+							},
+							false
+						);
+					}
+
+					function createSignInButton(element) {
+						var clientId = element.getAttribute("data-client_id");
+						var neynarLoginUrl = element.getAttribute("data-neynar_login_url") ?? "https://app.neynar.com/login";
+						var redirectUri = element.getAttribute("data-redirect_uri");
+						var successCallback = element.getAttribute("data-success_callback") ?? element.getAttribute("data-success-callback");
+
+						var button = document.createElement("button");
+						button.innerHTML = "<span>Sign in with Neynar</span>";
+						button.onclick = function () {
+							handleSignIn(neynarLoginUrl, clientId, redirectUri, successCallback);
+						};
+						element.appendChild(button);
+					}
+
+					function init() {
+						var signinElements = document.querySelectorAll(".neynar_signin");
+						signinElements.forEach(createSignInButton);
+					}
+
+					if (document.readyState === "loading") {
+						document.addEventListener("DOMContentLoaded", init);
+					} else {
+						init();
+					}
+				})();
+				"""
+				
+				let script = WKUserScript(source: injectedJavaScript, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+				webView.configuration.userContentController.addUserScript(script)
 		}
 }
