@@ -12,6 +12,7 @@ extension Bundle {
 }
 
 struct SettingsView: View {
+	@AppStorage("moxieData") var moxieData: Data = .init()
 	@ObservedObject var viewModel: MoxieViewModel
 	
 	var version: String {
@@ -45,6 +46,7 @@ struct SettingsView: View {
 						viewModel.model = .noop
 						viewModel.inputFID = 0
 						
+						moxieData = Data()
 						WidgetCenter.shared.reloadAllTimelines()
 					}) {
 						Text("Logout")

@@ -31,6 +31,7 @@
 		471FE9C02C7F823400D20F4C /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9622C7E59A500D20F4C /* AppIntent.swift */; };
 		471FE9C52C7F82E400D20F4C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9C42C7F82E400D20F4C /* MoxieLib */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
 		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
 		47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324062C6E578400BE03C2 /* Assets.xcassets */; };
@@ -217,6 +218,7 @@
 		471FE9922C7F808D00D20F4C /* MoxieTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxieWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		471FE9C22C7F829C00D20F4C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
 		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				47E4CC3D2C9990AF00BE77E8 /* fonts */,
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
+				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
@@ -1001,6 +1004,7 @@
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
 				47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */,
+				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,

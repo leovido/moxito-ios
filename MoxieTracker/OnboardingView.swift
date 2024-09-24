@@ -3,42 +3,21 @@ import MoxieLib
 import Combine
 import Sentry
 
-final class OnboardingViewModel: ObservableObject {
-	@Published var isAlertShowing: Bool = false
-	@Published var inputTextFID: String = ""
-		
-	private(set) var subscriptions: Set<AnyCancellable> = []
-
-	init(isAlertShowing: Bool) {
-		self.isAlertShowing = isAlertShowing
-		self.inputTextFID = ""
-	}
-}
-
 struct OnboardingView: View {
-	@EnvironmentObject var viewModel: MoxieViewModel
-	@State private var showWebView = false
+	@AppStorage("moxieData") var moxieData: Data = .init()
 
-	var body: some View {
-		LoginView()
-	}
-}
-
-struct LoginView: View {
-	@State private var showWebView = false
 	@Environment(\.openURL) var openURL
-
+	@Environment(\.scenePhase) var scenePhase
 	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var viewModel: MoxieViewModel
-	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
 
 	var body: some View {
 		NavigationView {
 			ZStack {
 				Image("Onboarding-BG", bundle: .main)
-					.resizable() // Makes the image resizable
+					.resizable()
 					.imageScale(.small)
-					.ignoresSafeArea() // Extends the image beyond the safe area
+					.ignoresSafeArea()
 				
 				VStack {
 					Spacer()
@@ -88,31 +67,21 @@ struct LoginView: View {
 						ProgressView()
 					}
 				})
-				.alert("Sign in", isPresented: $viewModelOnboarding.isAlertShowing) {
-					TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
-						.keyboardType(.numberPad)
-						.foregroundColor(Color(.textField))
-						.font(.custom("Inter", size: 16))
-						.padding()
-						.toolbar {
-							ToolbarItemGroup(placement: .keyboard) {
-								Spacer()
-								Button("Done") {
-									UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-								}
-							}
-						}
-					Button {
-						viewModel.input = viewModelOnboarding.inputTextFID
-						viewModel.inputFID = Int(viewModelOnboarding.inputTextFID) ?? 0
-					} label: {
-						Text("Sign in")
-							.font(.custom("Inter", size: 16))
+			}
+			.onChange(of: viewModel.model, initial: false, { oldValue, newValue in
+				if oldValue != newValue {
+					do {
+						moxieData = try CustomDecoderAndEncoder.encoder.encode(newValue)
+					} catch {
+						SentrySDK.capture(error: error)
 					}
-
-				} message: {
-					Text("Sign in with Farcaster will be available in the future.\n\nIn the meantime input your FID to fetch your Moxie data")
-						.font(.custom("Inter", size: 16))
+				}
+			})
+			.onAppear() {
+				do {
+					viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
+				} catch {
+					SentrySDK.capture(error: error)
 				}
 			}
 		}

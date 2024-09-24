@@ -161,7 +161,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 						try await self.fetchStats(filter: MoxieFilter(rawValue: newFilter) ?? .today)
 					}
 				}
-				
 			}
 			.store(in: &subscriptions)
 				
@@ -219,7 +218,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		do {
 			isLoading = true
 			
-			let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: filter)
+			let newModel = try await client.fetchMoxieStats(userFID: Int(model.entityID) ?? inputFID, filter: filter)
 			self.model = newModel
 			self.error = nil
 			self.inFlightTask = nil
@@ -235,6 +234,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 				} else {
 					self.error = MoxieError.message(error.localizedDescription)
 				}
+			} else {
+				self.error = MoxieError.message(error.localizedDescription)
 			}
 		}
 	}

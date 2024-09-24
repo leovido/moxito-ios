@@ -301,13 +301,6 @@ struct HomeView: View {
 							viewModel.timeAgoDisplay()
 						}
 					}
-					.onAppear() {
-						do {
-							viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
-						} catch {
-							SentrySDK.capture(error: error)
-						}
-					}
 					.overlay(alignment: .top) {
 						if viewModel.error != nil {
 							ErrorView(error: $viewModel.error)

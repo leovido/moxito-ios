@@ -42,6 +42,7 @@ struct ContentView: View {
 			
 			CustomBottomTabBarView(currentTab: $selectedTab)
 				.ignoresSafeArea()
+				.sensoryFeedback(.selection, trigger: selectedTab)
 		}
 	}
 }
