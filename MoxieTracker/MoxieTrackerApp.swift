@@ -3,6 +3,7 @@ import Sentry
 import MoxieLib
 import BackgroundTasks
 import Security
+import CryptoKit
 
 @main
 struct MoxieTrackerApp: App {
@@ -34,14 +35,23 @@ struct MoxieTrackerApp: App {
 					let queryItems = components.queryItems else {
 			return
 		}
-		let signer = queryItems.first(where: { $0.name == "signerUUID" })?.value
-		let fid = queryItems.first(where: { $0.name == "fid" })?.value
+		let signer64 = queryItems.first(where: { $0.name == "id" })?.value
+		let fid64 = queryItems.first(where: { $0.name == "fid" })?.value
 		
-		if let signer = signer, let fid = fid {
-			saveToKeychain(token: signer, for: fid, service: "com.christianleovido.Moxito")
+		if let signer = signer64, let fid = fid64 {
+			if let decodedSigner = Data(base64Encoded: signer),
+				 let decodedSignerString = String(data: decodedSigner, encoding: .utf8),
+				 let decodedFID = Data(base64Encoded: fid),
+				 let decodedFIDString = String(data: decodedFID, encoding: .utf8) {
+
+				saveToKeychain(token: signer, for: fid, service: "com.christianleovido.Moxito")
+				
+				mainViewModel.input = decodedFIDString
+				mainViewModel.inputFID = Int(decodedFIDString) ?? 0
+			} else {
+				print("Failed to decode Base64 data")
+			}
 			
-			mainViewModel.input = fid
-			mainViewModel.inputFID = Int(fid) ?? 0
 		}
 	}
 }

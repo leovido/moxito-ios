@@ -8,11 +8,11 @@ struct HomeView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
 	@AppStorage("selectedNotificationOptionsData") var selectedNotificationOptionsData: Data = .init()
 	@AppStorage("userInputNotificationsData") var userInputNotificationsString: String = ""
+	
 	@State private var timer: Timer?
 	@State private var number: Decimal = 0
 
 	@Environment(\.scenePhase) var scenePhase
-	
 	@EnvironmentObject var viewModel: MoxieViewModel
 	
 	var body: some View {
@@ -45,7 +45,7 @@ struct HomeView: View {
 							Button(action: {
 								Haptics.shared.play(.medium)
 								Task {
-									try await viewModel.claimMoxie()
+									viewModel.initiateClaim()
 								}
 							}, label: {
 								Text("Claim")
@@ -267,26 +267,29 @@ struct HomeView: View {
 							SentrySDK.capture(error: error)
 						}
 					}
-					.alert("Moxie claim", isPresented: $viewModel.isClaimAlertShowing, actions: {
+					.confirmationDialog("Moxie claim",
+															isPresented: $viewModel.isClaimAlertShowing,
+															titleVisibility: .visible) {
+						ForEach(viewModel.wallets, id: \.self) { wallet in
+							Button(wallet) {
+								Task {
+									try await viewModel.claimMoxie(selectedWallet: wallet)
+								}
+							}
+						}
+					} message: {
+						Text("Choose wallet for claiming Moxie")
+					}
+					.alert("Moxie claim success", isPresented: $viewModel.isClaimSuccess, actions: {
 						Button {
-							
+							viewModel.confettiCounter += 1
 						} label: {
-							Text("Ok")
+							Text("Let's go!🚀")
 						}
 						
 					}, message: {
-						Text("Claim will be soon available")
+						Text("You successfully claimed $MOXIE!")
 					})
-					//				.alert("Moxie claim success", isPresented: $viewModel.isClaimAlertShowing, actions: {
-					//					Button {
-					//						viewModel.confettiCounter += 1
-					//					} label: {
-					//						Text("Let's go!🚀")
-					//					}
-					//
-					//				}, message: {
-					//					Text("You successfully claimed $MOXIE!")
-					//				})
 					.sensoryFeedback(.success, trigger: viewModel.isClaimAlertShowing, condition: { oldValue, newValue in
 						return !newValue
 					})
@@ -301,6 +304,9 @@ struct HomeView: View {
 							viewModel.timeAgoDisplay()
 						}
 					}
+					.sheet(isPresented: $viewModel.isSearchMode, content: {
+						SearchListView(viewModel: .init(client: .init(), query: "", items: [], currentFID: viewModel.inputFID))
+					})
 					.overlay(alignment: .top) {
 						if viewModel.error != nil {
 							ErrorView(error: $viewModel.error)

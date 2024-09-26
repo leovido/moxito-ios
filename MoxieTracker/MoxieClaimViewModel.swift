@@ -1,47 +1,11 @@
 import SwiftUI
-import WidgetKit
 import MoxieLib
 import Combine
 import Sentry
 
-enum NotificationOption: Codable, Hashable, CaseIterable {
-	static let allCases: [NotificationOption] = [.hour, .week, .month]
-	
-	case hour
-	case week
-	case month
-}
-
 @MainActor
-final class MoxieViewModel: ObservableObject, Observable {
-	static let shared = MoxieViewModel()
-	
+final class MoxieClaimViewModel: ObservableObject, Observable {
 	var inFlightTask: Task<Void, Error>?
-	
-	@Published var persistence: UserDefaults
-	@Published var wallets: [String] = []
-	@Published var isClaimSuccess: Bool = false
-
-	@Published var input: String
-	@Published var confettiCounter: Int = 0
-	@Published var model: MoxieModel
-	
-	@Published var isLoading: Bool = false
-	@Published var price: Decimal = 0
-	@Published var timeAgo: String = ""
-	@Published var userInputNotifications: Decimal
-	@Published var isSearchMode: Bool
-	@Published var moxieChangeText: String = ""
-	@Published var isNotificationSheetPresented: Bool = false
-	@Published var isClaimAlertShowing: Bool = false
-	@Published var willPlayAnimationNumbers: Bool = false
-
-	@Published var selectedNotificationOptions: [NotificationOption] = []
-	
-	@Published var filterSelection: Int
-	@Published var error: Error?
-
-	@Published var dollarValueMoxie: Decimal = 0
 	
 	@Published var inputFID: Int
 
@@ -49,24 +13,9 @@ final class MoxieViewModel: ObservableObject, Observable {
 	
 	private(set) var subscriptions: Set<AnyCancellable> = []
 	
-	init(input: String = "",
-			 model: MoxieModel = .noop,
-			 isLoading: Bool = false,
-			 client: MoxieProvider = MoxieClient(),
-			 isSearchMode: Bool = false,
-			 filterSelection: Int = 0,
-			 userInputNotifications: Decimal = 0) {
+	init(moxieClaimStatus: MoxieClaimStatus?,
+			 client: MoxieProvider = MoxieClient()) {
 		self.client = client
-		self.isSearchMode = isSearchMode
-		self.filterSelection = filterSelection
-		self.userInputNotifications = userInputNotifications
-		self.persistence = UserDefaults.group ?? UserDefaults.standard
-		self.model = model
-		self.input = input
-		self.inputFID = Int(input) ?? 0
-		
-		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0") ?? 0
-
 		setupListeners()
 	}
 	

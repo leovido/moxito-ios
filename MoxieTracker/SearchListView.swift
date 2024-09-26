@@ -6,6 +6,7 @@ import Combine
 public final class SearchViewModel: ObservableObject {
 	public let client: FarcasterClient
 	
+	@Published var currentFID: Int = 3
 	@Published var query: String = ""
 	@Published var items: [User]
 	@Published var isLoading: Bool = false
@@ -14,10 +15,12 @@ public final class SearchViewModel: ObservableObject {
 	
 	public init(client: FarcasterClient,
 							query: String,
-							items: [User]) {
+							items: [User],
+							currentFID: Int) {
 		self.client = client
 		self.query = query
 		self.items = items
+		self.currentFID = currentFID
 		
 		setupListeners()
 	}
@@ -50,7 +53,6 @@ public final class SearchViewModel: ObservableObject {
 				
 				isLoading = false
 			} catch {
-				dump(error)
 				isLoading = false
 			}
 		}
@@ -63,7 +65,7 @@ public struct SearchListView: View {
 	public var body: some View {
 		NavigationStack {
 			ZStack {
-				Color(uiColor: MoxieColor.backgroundColor)
+				Color(uiColor: .systemGray6)
 					.ignoresSafeArea(.all)
 				Group {
 					if viewModel.items.isEmpty {
@@ -79,12 +81,13 @@ public struct SearchListView: View {
 														 content: { image in
 										image
 											.resizable()
-											.aspectRatio(contentMode: .fit)
+											.aspectRatio(contentMode: .fill)
 											.clipShape(Circle())
-											.frame(width: 50, height: 50)
+											.frame(width: 65, height: 65)
 									}, placeholder: {
 										ProgressView()
 									})
+									.padding(.trailing, 8)
 									
 									VStack(alignment: .leading) {
 										Text(item.displayName ?? "")
@@ -99,13 +102,16 @@ public struct SearchListView: View {
 							}
 						}
 						.navigationDestination(for: Int.self, destination: { userFID in
-							HomeView()
+							MiniSearchView(viewModel: .init(
+								input: userFID.description,
+								isSearchMode: true))
 							.navigationBarTitleDisplayMode(.inline)
 						})
 					}
 				}
 				.redacted(reason: viewModel.isLoading ? .placeholder : [])
 				.navigationTitle("Search")
+				.navigationBarTitleDisplayMode(.inline)
 				.refreshable {
 					viewModel.searchUser()
 				}
@@ -113,6 +119,7 @@ public struct SearchListView: View {
 				.autocorrectionDisabled()
 			}
 		}
+		.tint(Color.primary)
 		.tabItem {
 			Label("Search", systemImage: "magnifyingglass")
 		}
@@ -120,5 +127,8 @@ public struct SearchListView: View {
 }
 
 #Preview {
-	SearchListView(viewModel: .init(client: FarcasterClient(), query: "leovido", items: []))
+	Text("Moxito")
+		.sheet(isPresented: .constant(true)) {
+			SearchListView(viewModel: .init(client: FarcasterClient(), query: "leovido", items: [], currentFID: 3))
+		}
 }

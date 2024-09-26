@@ -32,6 +32,11 @@
 		471FE9C52C7F82E400D20F4C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9C42C7F82E400D20F4C /* MoxieLib */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
+		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
+		475F73A82CA30AFB00E0CFEA /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 475F73A72CA30AFB00E0CFEA /* CryptoSwift */; };
+		475F73AA2CA600D800E0CFEA /* claim.json in Resources */ = {isa = PBXBuildFile; fileRef = 475F73A92CA600CE00E0CFEA /* claim.json */; };
+		475F73AC2CA6037400E0CFEA /* ClaimTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AB2CA6037000E0CFEA /* ClaimTests.swift */; };
+		475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
 		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
 		47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324062C6E578400BE03C2 /* Assets.xcassets */; };
@@ -219,6 +224,10 @@
 		471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxieWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		471FE9C22C7F829C00D20F4C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
+		475F73A92CA600CE00E0CFEA /* claim.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = claim.json; sourceTree = "<group>"; };
+		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
+		475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieClaimViewModel.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
 		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -284,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
+				475F73A82CA30AFB00E0CFEA /* CryptoSwift in Frameworks */,
 				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
 				47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */,
 			);
@@ -372,12 +382,14 @@
 		471FE9742C7F808C00D20F4C /* MoxieTracker */ = {
 			isa = PBXGroup;
 			children = (
+				475F73A92CA600CE00E0CFEA /* claim.json */,
 				47E4CC3D2C9990AF00BE77E8 /* fonts */,
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
 				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
+				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
@@ -385,6 +397,7 @@
 				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
+				475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */,
 				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
 				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
 				47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */,
@@ -410,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				471FE9862C7F808D00D20F4C /* MoxieTrackerTests.swift */,
+				475F73AB2CA6037000E0CFEA /* ClaimTests.swift */,
 			);
 			path = MoxieTrackerTests;
 			sourceTree = "<group>";
@@ -617,6 +631,7 @@
 				47EC54632C808080006C2820 /* MoxieLib */,
 				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
 				47E4CBE12C90AFC100BE77E8 /* Sentry */,
+				475F73A72CA30AFB00E0CFEA /* CryptoSwift */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -861,6 +876,7 @@
 				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				47E4CC4F2C9D8BBC00BE77E8 /* XCRemoteSwiftPackageReference "wallet-mobile-sdk" */,
+				475F73A62CA30AFB00E0CFEA /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -887,6 +903,7 @@
 			files = (
 				47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */,
 				47E4CC432C9990C600BE77E8 /* Inter-Italic.ttf in Resources */,
+				475F73AA2CA600D800E0CFEA /* claim.json in Resources */,
 				471FE97D2C7F808D00D20F4C /* Preview Assets.xcassets in Resources */,
 				47E4CBDE2C9057AF00BE77E8 /* Fastfile in Resources */,
 				47E4CC402C9990C600BE77E8 /* Inter.ttf in Resources */,
@@ -994,7 +1011,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				47EC54792C87143E006C2820 /* AppDelegate.swift in Sources */,
+				475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */,
 				47EC546E2C822A69006C2820 /* CardView.swift in Sources */,
+				475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */,
 				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
 				47E4CC472C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
@@ -1019,6 +1038,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				475F73AC2CA6037400E0CFEA /* ClaimTests.swift in Sources */,
 				471FE9872C7F808D00D20F4C /* MoxieTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1911,6 +1931,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		475F73A62CA30AFB00E0CFEA /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.3;
+			};
+		};
 		47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
@@ -1957,6 +1985,11 @@
 		471FE9C42C7F82E400D20F4C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
+		};
+		475F73A72CA30AFB00E0CFEA /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 475F73A62CA30AFB00E0CFEA /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
 		};
 		47E4CBE12C90AFC100BE77E8 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;

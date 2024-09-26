@@ -1,10 +1,3 @@
-//
-//  MoxieTrackerTests.swift
-//  MoxieTrackerTests
-//
-//  Created by Christian Ray Leovido on 28/08/2024.
-//
-
 import XCTest
 @testable import Moxito
 import MoxieLib
@@ -60,12 +53,4 @@ final class MoxieTrackerTests: XCTestCase {
 		
 		XCTAssertEqual(current, expected)
 	}
-	
-	func testPerformanceExample() throws {
-		// This is an example of a performance test case.
-		self.measure {
-			// Put the code you want to measure the time of here.
-		}
-	}
-	
 }

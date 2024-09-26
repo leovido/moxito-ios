@@ -1,24 +1,41 @@
 import Foundation
 
-public struct MoxieClaimModel: Codable {
-		public let fid: String?
-		public let availableClaimAmount: Int?
-		public let minimumClaimableAmountInWei, availableClaimAmountInWei: String?
-		public let claimedAmount: Int?
-		public let claimedAmountInWei: String?
-		public let processingAmount: Double?
-		public let processingAmountInWei, tokenAddress: String?
-		public let chainID: Int?
-		public let transactionID, transactionHash, transactionStatus: String?
-		public let transactionAmount: Double?
-		public let transactionAmountInWei, rewardsLastEarnedTimestamp: String?
+// MARK: - MoxieClaimStatus
+public struct MoxieClaimStatus: Codable, Hashable {
+	public let transactionID: String?
+	public let transactionStatus: String?
+	public let transactionHash: String?
+	public let transactionAmount: Int?
+	public let transactionAmountInWei: String?
+	public let rewardsLastEarnedTimestamp: Date?
+	
+	public enum CodingKeys: String, CodingKey {
+		case transactionID = "transactionId"
+		case transactionStatus, transactionHash, transactionAmount, transactionAmountInWei, rewardsLastEarnedTimestamp
+	}
+}
 
-		public enum CodingKeys: String, CodingKey {
-				case fid, availableClaimAmount, minimumClaimableAmountInWei, availableClaimAmountInWei, claimedAmount, claimedAmountInWei, processingAmount, processingAmountInWei, tokenAddress
-				case chainID = "chainId"
-				case transactionID = "transactionId"
-				case transactionHash, transactionStatus, transactionAmount, transactionAmountInWei, rewardsLastEarnedTimestamp
-		}
+// MARK: - MoxieClaimModel
+public struct MoxieClaimModel: Codable, Hashable {
+	public let fid: String?
+	public let availableClaimAmount: Int?
+	public let minimumClaimableAmountInWei, availableClaimAmountInWei: String?
+	public let claimedAmount: Int?
+	public let claimedAmountInWei: String?
+	public let processingAmount: Double?
+	public let processingAmountInWei, tokenAddress: String?
+	public let chainID: Int?
+	public let transactionID, transactionHash, transactionStatus: String?
+	public let transactionAmount: Double?
+	public let transactionAmountInWei: String?
+	public let rewardsLastEarnedTimestamp: Date?
+	
+	public enum CodingKeys: String, CodingKey {
+		case fid, availableClaimAmount, minimumClaimableAmountInWei, availableClaimAmountInWei, claimedAmount, claimedAmountInWei, processingAmount, processingAmountInWei, tokenAddress
+		case chainID = "chainId"
+		case transactionID = "transactionId"
+		case transactionHash, transactionStatus, transactionAmount, transactionAmountInWei, rewardsLastEarnedTimestamp
+	}
 }
 
 extension MoxieClaimModel {
@@ -26,7 +43,7 @@ extension MoxieClaimModel {
 																			 availableClaimAmount: 1,
 																			 minimumClaimableAmountInWei: "1",
 																			 availableClaimAmountInWei: "",
-																			 claimedAmount: 123, 
+																			 claimedAmount: 123,
 																			 claimedAmountInWei: "",
 																			 processingAmount: 1,
 																			 processingAmountInWei: "",
@@ -37,7 +54,7 @@ extension MoxieClaimModel {
 																			 transactionStatus: "",
 																			 transactionAmount: 0,
 																			 transactionAmountInWei: "",
-																			 rewardsLastEarnedTimestamp: "")
+																			 rewardsLastEarnedTimestamp: .now)
 }
 
 
@@ -81,15 +98,39 @@ public struct MoxieClaimTotal: Codable, Hashable {
 	}
 }
 
+public struct ConnectedAddress: Codable, Hashable {
+	public let address: String
+	public let blockchain: String
+	
+	public init(address: String, blockchain: String) {
+		self.address = address
+		self.blockchain = blockchain
+	}
+}
+
 // MARK: - Social
 public struct Social: Codable, Hashable {
 	public let profileImage: String
-	public let profileDisplayName, profileHandle: String
+	public let profileDisplayName: String
+	public let profileHandle: String
+	public let connectedAddresses: [ConnectedAddress]
 	
-	public init(profileImage: String, profileDisplayName: String, profileHandle: String) {
+	public init(profileImage: String,
+							profileDisplayName: String,
+							profileHandle: String,
+							connectedAddresses: [ConnectedAddress]) {
 		self.profileImage = profileImage
 		self.profileDisplayName = profileDisplayName
 		self.profileHandle = profileHandle
+		self.connectedAddresses = connectedAddresses
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		profileImage = try values.decodeIfPresent(String.self, forKey: .profileImage) ?? ""
+		profileDisplayName = try values.decodeIfPresent(String.self, forKey: .profileDisplayName) ?? ""
+		profileHandle = try values.decodeIfPresent(String.self, forKey: .profileHandle) ?? ""
+		connectedAddresses = try values.decodeIfPresent([ConnectedAddress].self, forKey: .connectedAddresses) ?? []
 	}
 }
 
@@ -102,7 +143,7 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png", profileDisplayName: "Tester", profileHandle: "@test")],
+		socials: [.init(profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png", profileDisplayName: "Tester", profileHandle: "@test", connectedAddresses: [])],
 		entityID: "0",
 		moxieClaimTotals: [
 			.init(
@@ -119,7 +160,7 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(profileImage: "", profileDisplayName: "Anon", profileHandle: "")],
+		socials: [.init(profileImage: "", profileDisplayName: "Anon", profileHandle: "", connectedAddresses: [])],
 		entityID: "",
 		moxieClaimTotals: [
 			.init(

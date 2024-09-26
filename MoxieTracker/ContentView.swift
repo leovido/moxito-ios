@@ -15,23 +15,17 @@ struct ContentView: View {
 		ZStack(alignment: .bottom) {
 			TabView(selection: $selectedTab) {
 				Group {
-					if viewModel.isSearchMode {
-						HomeView()
-							.tag(Tab.home)
-							.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
-							.onSubmit(of: .search) {
-								viewModel.onSubmitSearch()
-							}
-							.onAppear() {
-								let searchBarAppearance = UISearchBar.appearance()
-								searchBarAppearance.searchTextField.textColor = .white
-								searchBarAppearance.tintColor = .white
-							}
-						
-					} else {
-						HomeView()
-							.tag(Tab.home)
-					}
+					HomeView()
+						.tag(Tab.home)
+//						.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
+//						.onSubmit(of: .search) {
+//							viewModel.onSubmitSearch()
+//						}
+//						.onAppear() {
+//							let searchBarAppearance = UISearchBar.appearance()
+//							searchBarAppearance.searchTextField.textColor = .white
+//							searchBarAppearance.tintColor = .white
+//						}
 					
 					AccountView(viewModel: viewModel)
 						.tag(Tab.profile)
