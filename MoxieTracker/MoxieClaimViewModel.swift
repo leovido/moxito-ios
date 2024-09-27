@@ -5,11 +5,10 @@ import Sentry
 
 enum ClaimAction: Hashable {
 	case initiateClaim
-	case claimRewards(String)
-	case checkClaimStatus(transactionId: String)
+	case claimRewards(fid: String, wallet: String)
+	case checkClaimStatus(fid: String, transactionId: String)
 	case selectedWallet(String)
 	case dismissClaimAlert
-	case setWillPlayAnimationNumbers(Bool)
 }
 
 enum RequestType: String, Hashable {
@@ -24,9 +23,8 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 
 	public let actions: PassthroughSubject<ClaimAction, Never>
 
-	@Published var willPlayAnimationNumbers: Bool = true
+	@Published var willPlayAnimationNumbers: Bool = false
 
-	@Published var fid: String = ""
 	@Published var moxieClaimModel: MoxieClaimModel?
 	@Published var moxieClaimStatus: MoxieClaimStatus?
 	@Published var isClaimSuccess: Bool = false
@@ -45,7 +43,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 	
 	init(moxieClaimStatus: MoxieClaimStatus? = nil,
 			 moxieClaimModel: MoxieClaimModel? = nil,
-			 client: MoxieProvider = MockMoxieClient()) {
+			 client: MoxieProvider = MoxieClient()) {
 		self.client = client
 		self.moxieClaimModel = moxieClaimModel
 		self.moxieClaimStatus = moxieClaimStatus
@@ -56,19 +54,21 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 	}
 	
 	func setupListeners() {
-		$willPlayAnimationNumbers
+		let sharedWillPlayPub = $willPlayAnimationNumbers
 			.filter({ $0 })
+		
+		sharedWillPlayPub
 			.debounce(for: .seconds(5), scheduler: RunLoop.main)
 			.sink { [weak self] _ in
 				self?.willPlayAnimationNumbers = false
 			}
 			.store(in: &subscriptions)
 		
-		
 		$moxieClaimModel
 			.filter({ $0 != nil })
+			.debounce(for: .seconds(1), scheduler: RunLoop.main)
 			.sink { [weak self] claimModel in
-				self?.actions.send(.checkClaimStatus(transactionId: claimModel?.transactionID ?? ""))
+				self?.actions.send(.checkClaimStatus(fid: claimModel?.fid ?? "0", transactionId: claimModel?.transactionID ?? ""))
 			}
 			.store(in: &subscriptions)
 		
@@ -80,20 +80,18 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 					return
 				}
 				switch newAction {
-				case .setWillPlayAnimationNumbers(let newValue):
-					willPlayAnimationNumbers = newValue
 				case .selectedWallet(let wallet):
 					isClaimDialogShowing = false
 					isClaimAlertShowing = true
 					selectedWallet = wallet
-				case .checkClaimStatus(let transactionId):
+				case .checkClaimStatus(let fid, let transactionId):
 					inFlightTasks[RequestType.checkClaimStatus.rawValue] = Task {
-						await self.requestClaimStatus(transactionId: transactionId)
+						await self.requestClaimStatus(fid: fid, transactionId: transactionId)
 					}
 					break
-				case .claimRewards(let wallet):
+				case .claimRewards(let fid, let wallet):
 					inFlightTasks[RequestType.claimRewards.rawValue] = Task {
-						await self.claimMoxie(selectedWallet: wallet)
+						await self.claimMoxie(fid: fid, selectedWallet: wallet)
 					}
 					break
 				case .initiateClaim:
@@ -129,27 +127,12 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 				self?.isLoading = false
 			}
 			.store(in: &subscriptions)
-		
-		$isClaimAlertShowing
-			.removeDuplicates()
-			.filter({ !$0 })
-			.sink { [weak self] _ in
-				guard let self = self else {
-					return
-				}
-//				self.willPlayAnimationNumbers = true
-				
-//				Task {
-//					try await self.fetchStats(filter: MoxieFilter(rawValue: self.filterSelection) ?? .today)
-//				}
-			}
-			.store(in: &subscriptions)
 	}
 	
-	private func claimMoxie(selectedWallet: String) async {
+	private func claimMoxie(fid: String, selectedWallet: String) async {
 		do {
 			isLoading = true
-			moxieClaimModel = try await client.processClaim(userFID: fid.description,
+			moxieClaimModel = try await client.processClaim(userFID: fid,
 																				wallet: selectedWallet)
 			isLoading = false
 			inFlightTasks[RequestType.claimRewards.rawValue] = nil
@@ -161,10 +144,10 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 		}
 	}
 	
-	private func requestClaimStatus(transactionId: String) async {
+	private func requestClaimStatus(fid: String, transactionId: String) async {
 		do {
 			isLoading = true
-			moxieClaimStatus = try await self.client.fetchClaimStatus(fid: self.fid, transactionId: transactionId)
+			moxieClaimStatus = try await self.client.fetchClaimStatus(fid: fid, transactionId: transactionId)
 			inFlightTasks[RequestType.checkClaimStatus.rawValue] = nil
 		} catch {
 			isLoading = false

@@ -45,7 +45,8 @@ public struct MoxieClaimModel: Codable, Hashable {
 	public let processingAmount: Double?
 	public let processingAmountInWei, tokenAddress: String?
 	public let chainID: Int?
-	public let transactionID, transactionHash, transactionStatus: String?
+	public let transactionID, transactionHash: String?
+	public let transactionStatus: MoxieTransactionStatus?
 	public let transactionAmount: Double?
 	public let transactionAmountInWei: String?
 	public let rewardsLastEarnedTimestamp: Date?
@@ -60,21 +61,21 @@ public struct MoxieClaimModel: Codable, Hashable {
 
 extension MoxieClaimModel {
 	public static let placeholder: Self = .init(fid: "0",
-																			 availableClaimAmount: 1,
-																			 minimumClaimableAmountInWei: "1",
-																			 availableClaimAmountInWei: "",
-																			 claimedAmount: 123,
-																			 claimedAmountInWei: "",
-																			 processingAmount: 1,
-																			 processingAmountInWei: "",
-																			 tokenAddress: "",
-																			 chainID: 5453,
-																			 transactionID: "",
-																			 transactionHash: "",
-																			 transactionStatus: "REQUESTED",
-																			 transactionAmount: 0,
-																			 transactionAmountInWei: "",
-																			 rewardsLastEarnedTimestamp: .now)
+																							availableClaimAmount: 1,
+																							minimumClaimableAmountInWei: "1",
+																							availableClaimAmountInWei: "",
+																							claimedAmount: 123,
+																							claimedAmountInWei: "",
+																							processingAmount: 1,
+																							processingAmountInWei: "",
+																							tokenAddress: "",
+																							chainID: 5453,
+																							transactionID: "",
+																							transactionHash: "",
+																							transactionStatus: .REQUESTED,
+																							transactionAmount: 0,
+																							transactionAmountInWei: "",
+																							rewardsLastEarnedTimestamp: .now)
 }
 
 
@@ -183,7 +184,7 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(profileImage: "", profileDisplayName: "Anon", profileHandle: "", connectedAddresses: [])],
+		socials: [.init(profileImage: "", profileDisplayName: "No user", profileHandle: "", connectedAddresses: [])],
 		entityID: "",
 		moxieClaimTotals: [
 			.init(

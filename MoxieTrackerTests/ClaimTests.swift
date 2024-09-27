@@ -66,13 +66,13 @@ final class ClaimTests: XCTestCase {
 		
 		
 		let model = try CustomDecoderAndEncoder.decoder.decode(MoxieClaimModel.self, from: data)
-		XCTAssertEqual(model.transactionStatus, "SUCCESS")
+		XCTAssertEqual(model.transactionStatus, .SUCCESS)
 	}
 	
 	func testClaimSuccess() async throws {
 		vm = .init(moxieClaimStatus: nil, client: MockMoxieClient())
 
-		vm.actions.send(.claimRewards(""))
+		vm.actions.send(.claimRewards(fid: "123", wallet: "0xdeadbeef"))
 		
 		await vm.inFlightTasks[RequestType.claimRewards.rawValue]?.value
 
@@ -85,8 +85,8 @@ final class ClaimTests: XCTestCase {
 	func testClaimError() async throws {
 		vm = .init(moxieClaimStatus: nil, client: MockFailMoxieClient())
 
-		vm.actions.send(.claimRewards(""))
-		
+		vm.actions.send(.claimRewards(fid: "123", wallet: "0xdeadbeef"))
+
 		await vm.inFlightTasks[RequestType.claimRewards.rawValue]?.value
 
 		XCTAssertEqual(vm.moxieClaimStatus?.transactionStatus, nil)
@@ -99,7 +99,7 @@ final class ClaimTests: XCTestCase {
 	func testClaimStatusSuccess() async throws {
 		vm = .init(moxieClaimStatus: nil, client: MockMoxieClient())
 
-		vm.actions.send(.checkClaimStatus(transactionId: UUID().uuidString))
+		vm.actions.send(.checkClaimStatus(fid: "1234", transactionId: UUID().uuidString))
 		
 		await vm.inFlightTasks[RequestType.checkClaimStatus.rawValue]?.value
 		
@@ -112,7 +112,7 @@ final class ClaimTests: XCTestCase {
 	func testClaimStatusError() async throws {
 		vm = .init(moxieClaimStatus: nil, client: MockFailMoxieClient())
 
-		vm.actions.send(.checkClaimStatus(transactionId: UUID().uuidString))
+		vm.actions.send(.checkClaimStatus(fid: "1234", transactionId: UUID().uuidString))
 
 		await vm.inFlightTasks[RequestType.checkClaimStatus.rawValue]?.value
 		
@@ -133,7 +133,7 @@ final class ClaimTests: XCTestCase {
 
 		vm.actions.send(.initiateClaim)
 		
-		XCTAssertTrue(vm.isClaimAlertShowing)
+		XCTAssertTrue(vm.isClaimDialogShowing)
 	}
 	
 	func testDismissClaimAlert() async throws {
@@ -142,7 +142,9 @@ final class ClaimTests: XCTestCase {
 		vm.isClaimAlertShowing = true
 		vm.actions.send(.dismissClaimAlert)
 		
-		XCTAssertFalse(vm.isClaimAlertShowing)
+		XCTAssertFalse(vm.isClaimDialogShowing)
+		XCTAssertNil(vm.moxieClaimModel)
+		XCTAssertNil(vm.moxieClaimStatus)
 	}
 }
 

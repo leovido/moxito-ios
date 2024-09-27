@@ -43,7 +43,6 @@ struct MoxieTrackerApp: App {
 				 let decodedSignerString = String(data: decodedSigner, encoding: .utf8),
 				 let decodedFID = Data(base64Encoded: fid),
 				 let decodedFIDString = String(data: decodedFID, encoding: .utf8) {
-
 				saveToKeychain(token: signer, for: fid, service: "com.christianleovido.Moxito")
 				
 				mainViewModel.input = decodedFIDString

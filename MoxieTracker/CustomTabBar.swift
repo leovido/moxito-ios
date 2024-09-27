@@ -32,7 +32,7 @@ struct CustomBottomTabBarView: View {
 				}
 				.frame(maxWidth: geo.size.width)
 				.tint(Color.white)
-				.padding(.vertical, 8)
+				.padding(.vertical, 12)
 				.padding(.bottom, 10)
 				.background(Color(uiColor: MoxieColor.primary))
 				.clipShape(UnevenRoundedRectangle(cornerRadii: .init(topLeading: 24, topTrailing: 24)))

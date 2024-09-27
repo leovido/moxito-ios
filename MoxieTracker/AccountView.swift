@@ -18,14 +18,15 @@ struct ProfileOptionRow: View {
 	
 	var body: some View {
 		HStack {
-			Image(systemName: option.imageName)
+			Image(option.imageName, bundle: .main)
 				.resizable()
+				.renderingMode(.original)
 				.aspectRatio(contentMode: .fit)
 				.padding(10)
 				.foregroundColor(.white)
 				.background(
 					RoundedRectangle(cornerRadius: 10)
-						.fill(Color(uiColor: MoxieColor.green))
+						.fill(Color(uiColor: MoxieColor.altGreen))
 				)
 				.frame(width: 40, height: 40)
 				.padding(.trailing, 12)
@@ -49,9 +50,10 @@ struct AccountView: View {
 	@ObservedObject var viewModel: MoxieViewModel
 	
 	@State private var profileOptions: [ProfileOptions] = [
-		ProfileOptions(name: "Profile", imageName: "person.circle"),
-		ProfileOptions(name: "Settings", imageName: "gearshape"),
-		ProfileOptions(name: "Help", imageName: "questionmark.circle.fill")
+		ProfileOptions(name: "Profile", imageName: "profile"),
+		ProfileOptions(name: "Settings", imageName: "settings"),
+		ProfileOptions(name: "Help", imageName: "help"),
+//		ProfileOptions(name: "Logout", imageName: "door")
 	]
 	
 	let text = """

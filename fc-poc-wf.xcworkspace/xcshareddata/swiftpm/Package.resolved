@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "cryptoswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzyzanowskim/CryptoSwift",
-      "state" : {
-        "revision" : "678d442c6f7828def400a70ae15968aef67ef52d",
-        "version" : "1.8.3"
-      }
-    },
-    {
       "identity" : "opengraph",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/satoshi-takano/OpenGraph",
@@ -34,15 +25,6 @@
       "state" : {
         "revision" : "5575af93efb776414f243e93d6af9f6258dc539a",
         "version" : "8.36.0"
-      }
-    },
-    {
-      "identity" : "wallet-mobile-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "git@github.com:MobileWalletProtocol/wallet-mobile-sdk.git",
-      "state" : {
-        "revision" : "4293df51d3500b8e876ca4bf0d7548adf097569a",
-        "version" : "1.1.2"
       }
     }
   ],

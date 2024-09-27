@@ -122,7 +122,7 @@ struct HomeView: View {
 											.aspectRatio(contentMode: .fit)
 											.frame(width: 20, height: 20)
 									}
-									Text("~$\(viewModel.dollarValueMoxie.formatted(.number.precision(.fractionLength(0))))")
+									Text("~$\(viewModel.dollarValueMoxie.formatted(.number.precision(.fractionLength(2))))")
 										.font(.caption)
 										.font(.custom("Inter", size: 12))
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
@@ -240,6 +240,13 @@ struct HomeView: View {
 							print("Background")
 						}
 					}
+					.onChange(of: claimViewModel.willPlayAnimationNumbers, { oldValue, newValue in
+						if newValue {
+							Task {
+								try await viewModel.fetchStats(filter: MoxieFilter(rawValue: viewModel.filterSelection) ?? .today)
+							}
+						}
+					})
 					.onChange(of: viewModel.model, initial: true, { oldValue, newValue in
 						if oldValue != newValue {
 							do {
@@ -249,19 +256,6 @@ struct HomeView: View {
 							}
 						}
 					})
-//					.onChange(of: claimViewModel.moxieClaimStatus, initial: true, { oldValue, newValue in
-//						if oldValue != newValue {
-//							do {
-//								if newValue == nil {
-//									moxieClaimStatus = Data()
-//								} else {
-//									moxieClaimStatus = try CustomDecoderAndEncoder.encoder.encode(newValue)
-//								}
-//							} catch {
-//								SentrySDK.capture(error: error)
-//							}
-//						}
-//					})
 					.onChange(of: viewModel.userInputNotifications, initial: false, { oldValue, newValue in
 						if oldValue != newValue {
 							userInputNotificationsString = newValue.formatted(.number.precision(.fractionLength(0)))
@@ -286,7 +280,7 @@ struct HomeView: View {
 						}
 					}
 					.overlay(alignment: .center, content: {
-						if claimViewModel.moxieClaimStatus?.transactionStatus == .REQUESTED {
+						if claimViewModel.moxieClaimModel != nil {
 							VStack {
 								ProgressView(value: progress, total: 1.0)
 									.progressViewStyle(LinearProgressViewStyle())
@@ -310,7 +304,7 @@ struct HomeView: View {
 											claimViewModel.actions.send(.dismissClaimAlert)
 										} else {
 											let transactionId = claimViewModel.moxieClaimModel?.transactionID ?? ""
-											claimViewModel.actions.send(.checkClaimStatus(transactionId: transactionId))
+											claimViewModel.actions.send(.checkClaimStatus(fid: viewModel.model.entityID, transactionId: transactionId))
 										}
 									}
 								} label: {
@@ -328,8 +322,6 @@ struct HomeView: View {
 							.frame(height: geo.size.height)
 							.background(Color.primary.opacity(0.8))
 							.transition(.opacity)
-						} else {
-							
 						}
 					})
 					.confirmationDialog("Moxie claim",
@@ -345,7 +337,7 @@ struct HomeView: View {
 					}
 					.alert("Wallet confirmation", isPresented: $claimViewModel.isClaimAlertShowing, actions: {
 						Button {
-							claimViewModel.actions.send(.claimRewards(claimViewModel.selectedWallet))
+							claimViewModel.actions.send(.claimRewards(fid: viewModel.model.entityID, wallet: claimViewModel.selectedWallet))
 						} label: {
 							Text("Yes")
 						}
@@ -403,7 +395,7 @@ struct HomeView: View {
 	}
 	
 	func startProgressTimer() {
-		let totalDuration: TimeInterval = 15.0 // Total time for progress to complete (15 seconds)
+		let totalDuration: TimeInterval = 5.0 // Total time for progress to complete (15 seconds)
 		let updateInterval: TimeInterval = 0.1 // Interval at which to update the progress
 		
 		let progressIncrement: CGFloat = CGFloat(updateInterval / totalDuration)

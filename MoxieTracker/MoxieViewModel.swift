@@ -14,7 +14,7 @@ enum NotificationOption: Codable, Hashable, CaseIterable {
 
 @MainActor
 final class MoxieViewModel: ObservableObject, Observable {
-	static let shared = MoxieViewModel(client: MockMoxieClient())
+	static let shared = MoxieViewModel()
 	
 	var inFlightTask: Task<Void, Error>?
 	
@@ -49,7 +49,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	init(input: String = "",
 			 model: MoxieModel = .noop,
 			 isLoading: Bool = false,
-			 client: MoxieProvider = MockMoxieClient(),
+			 client: MoxieProvider = MoxieClient(),
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
 			 userInputNotifications: Decimal = 0) {
@@ -160,7 +160,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				
 		$model
 			.receive(on: DispatchQueue.main)
-//			.filter({ Int($0.entityID) ?? 0 > 0 })
+			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID
 				self.wallets = $0.socials[0].connectedAddresses
@@ -227,7 +227,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			
 			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
 				if error.localizedDescription == "The data couldn’t be read because it is missing." {
-					self.error = MoxieError.message("User does not have Moxie pass")
+//					self.error = MoxieError.message("User does not have Moxie pass")
 				} else {
 					self.error = MoxieError.message(error.localizedDescription)
 				}
