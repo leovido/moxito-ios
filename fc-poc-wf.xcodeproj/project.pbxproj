@@ -34,7 +34,6 @@
 		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
 		475F73A82CA30AFB00E0CFEA /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 475F73A72CA30AFB00E0CFEA /* CryptoSwift */; };
-		475F73AA2CA600D800E0CFEA /* claim.json in Resources */ = {isa = PBXBuildFile; fileRef = 475F73A92CA600CE00E0CFEA /* claim.json */; };
 		475F73AC2CA6037400E0CFEA /* ClaimTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AB2CA6037000E0CFEA /* ClaimTests.swift */; };
 		475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
@@ -225,7 +224,6 @@
 		471FE9C22C7F829C00D20F4C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
-		475F73A92CA600CE00E0CFEA /* claim.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = claim.json; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
 		475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieClaimViewModel.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -382,28 +380,27 @@
 		471FE9742C7F808C00D20F4C /* MoxieTracker */ = {
 			isa = PBXGroup;
 			children = (
-				475F73A92CA600CE00E0CFEA /* claim.json */,
-				47E4CC3D2C9990AF00BE77E8 /* fonts */,
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
-				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
-				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
-				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
+				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
 				47EC547C2C88324E006C2820 /* Haptics.swift */,
+				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
+				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
+				475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
 				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
-				475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */,
+				47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */,
 				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
 				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
-				47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */,
 				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
 				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
+				47E4CC3D2C9990AF00BE77E8 /* fonts */,
 				47EC54712C822B23006C2820 /* Home */,
 				471FE97B2C7F808D00D20F4C /* Preview Content */,
 				47EC54722C822B2D006C2820 /* Settings */,
@@ -903,7 +900,6 @@
 			files = (
 				47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */,
 				47E4CC432C9990C600BE77E8 /* Inter-Italic.ttf in Resources */,
-				475F73AA2CA600D800E0CFEA /* claim.json in Resources */,
 				471FE97D2C7F808D00D20F4C /* Preview Assets.xcassets in Resources */,
 				47E4CBDE2C9057AF00BE77E8 /* Fastfile in Resources */,
 				47E4CC402C9990C600BE77E8 /* Inter.ttf in Resources */,

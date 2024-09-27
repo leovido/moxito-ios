@@ -14,7 +14,7 @@ enum NotificationOption: Codable, Hashable, CaseIterable {
 
 @MainActor
 final class MoxieViewModel: ObservableObject, Observable {
-	static let shared = MoxieViewModel()
+	static let shared = MoxieViewModel(client: MockMoxieClient())
 	
 	var inFlightTask: Task<Void, Error>?
 	
@@ -32,7 +32,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var isSearchMode: Bool
 	@Published var moxieChangeText: String = ""
 	@Published var isNotificationSheetPresented: Bool = false
-	@Published var willPlayAnimationNumbers: Bool = false
 
 	@Published var selectedNotificationOptions: [NotificationOption] = []
 	
@@ -50,7 +49,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	init(input: String = "",
 			 model: MoxieModel = .noop,
 			 isLoading: Bool = false,
-			 client: MoxieProvider = MoxieClient(),
+			 client: MoxieProvider = MockMoxieClient(),
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
 			 userInputNotifications: Decimal = 0) {
@@ -92,16 +91,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 		$error
 			.sink { _ in }
 			.store(in: &subscriptions)
-		
-		$willPlayAnimationNumbers
-			.removeDuplicates()
-			.filter({ $0 })
-			.debounce(for: .seconds(3), scheduler: RunLoop.main)
-			.sink { [weak self] _ in
-				self?.willPlayAnimationNumbers = false
-			}
-			.store(in: &subscriptions)
-
 		
 		$filterSelection
 			.dropFirst()
@@ -171,7 +160,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				
 		$model
 			.receive(on: DispatchQueue.main)
-			.filter({ Int($0.entityID) ?? 0 > 0 })
+//			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID
 				self.wallets = $0.socials[0].connectedAddresses

@@ -12,7 +12,7 @@ struct HomeView: View {
 	
 	@State private var timer: Timer?
 	@State private var timerProgress: Timer?
-	@State private var number: Decimal = 0
+	@State private var number: Decimal = 10000
 	@State private var progress: Double = 0
 
 	@Environment(\.scenePhase) var scenePhase
@@ -47,9 +47,13 @@ struct HomeView: View {
 							Spacer()
 							
 							Button(action: {
-								Haptics.shared.play(.medium)
-								Task {
-									claimViewModel.actions.send(.initiateClaim)
+								withAnimation {
+									number = viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0
+									progress = 0
+									Haptics.shared.play(.medium)
+									Task {
+										claimViewModel.actions.send(.initiateClaim)
+									}
 								}
 							}, label: {
 								Text("Claim")
@@ -102,16 +106,14 @@ struct HomeView: View {
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
 									
 									HStack {
-										Text("\(viewModel.willPlayAnimationNumbers ? number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
+										Text("\(claimViewModel.willPlayAnimationNumbers ? number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
 											.font(.largeTitle)
 											.font(.custom("Inter", size: 20))
 											.foregroundStyle(Color(uiColor: MoxieColor.primary))
 											.fontWeight(.heavy)
-											.onChange(of: viewModel.willPlayAnimationNumbers) { oldValue, newValue in
+											.onChange(of: claimViewModel.willPlayAnimationNumbers, initial: true) { oldValue, newValue in
 												if newValue {
-													if false {
-														startCountdown()
-													}
+													startCountdown()
 												}
 											}
 										
@@ -242,7 +244,6 @@ struct HomeView: View {
 						if oldValue != newValue {
 							do {
 								moxieData = try CustomDecoderAndEncoder.encoder.encode(newValue)
-								number = newValue.moxieClaimTotals.first?.availableClaimAmount ?? 0
 							} catch {
 								SentrySDK.capture(error: error)
 							}
@@ -304,11 +305,13 @@ struct HomeView: View {
 									.foregroundStyle(Color.white)
 								
 								Button {
-									if Int(progress * 100) == 100 {
-										let transactionId = claimViewModel.moxieClaimModel?.transactionID ?? ""
-										claimViewModel.actions.send(.checkClaimStatus(transactionId: transactionId))
-									} else {
-										claimViewModel.actions.send(.dismissClaimAlert)
+									withAnimation {
+										if Int(progress * 100) == 100 {
+											claimViewModel.actions.send(.dismissClaimAlert)
+										} else {
+											let transactionId = claimViewModel.moxieClaimModel?.transactionID ?? ""
+											claimViewModel.actions.send(.checkClaimStatus(transactionId: transactionId))
+										}
 									}
 								} label: {
 									Text(Int(progress * 100) == 100 ? "Done" : "Refresh")
@@ -324,6 +327,7 @@ struct HomeView: View {
 							}
 							.frame(height: geo.size.height)
 							.background(Color.primary.opacity(0.8))
+							.transition(.opacity)
 						} else {
 							
 						}
@@ -334,7 +338,6 @@ struct HomeView: View {
 						ForEach(viewModel.wallets, id: \.self) { wallet in
 							Button(wallet) {
 								claimViewModel.actions.send(.selectedWallet(wallet))
-
 							}
 						}
 					} message: {
@@ -362,18 +365,15 @@ struct HomeView: View {
 						} label: {
 							Text("Let's go!🚀")
 						}
-						
 					}, message: {
-						Text("You successfully claimed $MOXIE!")
+						Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0) $MOXIE successfully claimed 🌱")
 					})
 					.sensoryFeedback(.success, trigger: claimViewModel.isClaimAlertShowing, condition: { oldValue, newValue in
 						return !newValue
 					})
-					.confettiCannon(counter: $viewModel.confettiCounter, num:1,
-													confettis: [.text("💵"), .text("💶"), .text("💷"), .text("💴")],
+					.confettiCannon(counter: $viewModel.confettiCounter, num: 1,
+													confettis: [.text("🍃")],
 													confettiSize: 30, repetitions: 50, repetitionInterval: 0.1)
-					//				.confettiCannon(counter: $viewModel.confettiCounter,
-					//												num: 50, confettis: [.text("Ⓜ️"), .text("🍃"), .text("💜"), .text("🎉")], openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200)
 					.onAppear() {
 						Task {
 							try await viewModel.fetchPrice()
@@ -432,11 +432,11 @@ struct HomeView: View {
 		timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
 			if number > 0 {
 				withAnimation(.linear(duration: interval)) {
-					number -= decrementAmount // Decrement the number smoothly
+					number -= decrementAmount
 				}
 			} else {
-				timer?.invalidate() // Stop the timer when the number reaches 0
-				number = 0 // Ensure it stops exactly at 0
+				timer?.invalidate()
+				number = 0
 			}
 		}
 	}

@@ -163,7 +163,10 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [.init(profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png", profileDisplayName: "Tester", profileHandle: "@test", connectedAddresses: [])],
+		socials: [.init(profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png", profileDisplayName: "Tester", profileHandle: "@test", connectedAddresses: [
+			.init(address: "0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF", blockchain: "ethereum"),
+			.init(address: "0xDEADBEEF00000000000000000000000000000000", blockchain: "ethereum")
+		])],
 		entityID: "0",
 		moxieClaimTotals: [
 			.init(
