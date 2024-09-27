@@ -1,9 +1,14 @@
 import Foundation
 
+public enum MoxieTransactionStatus: String, Codable, Hashable {
+	case REQUESTED
+	case SUCCESS
+}
+
 // MARK: - MoxieClaimStatus
 public struct MoxieClaimStatus: Codable, Hashable {
 	public let transactionID: String?
-	public let transactionStatus: String?
+	public let transactionStatus: MoxieTransactionStatus?
 	public let transactionHash: String?
 	public let transactionAmount: Int?
 	public let transactionAmountInWei: String?
@@ -13,6 +18,21 @@ public struct MoxieClaimStatus: Codable, Hashable {
 		case transactionID = "transactionId"
 		case transactionStatus, transactionHash, transactionAmount, transactionAmountInWei, rewardsLastEarnedTimestamp
 	}
+	
+	public init(transactionID: String?, transactionStatus: MoxieTransactionStatus?, transactionHash: String?, transactionAmount: Int?, transactionAmountInWei: String?, rewardsLastEarnedTimestamp: Date?) {
+		self.transactionID = transactionID
+		self.transactionStatus = transactionStatus
+		self.transactionHash = transactionHash
+		self.transactionAmount = transactionAmount
+		self.transactionAmountInWei = transactionAmountInWei
+		self.rewardsLastEarnedTimestamp = rewardsLastEarnedTimestamp
+	}
+}
+
+extension MoxieClaimStatus {
+	public static let placeholderNil: Self = .init(transactionID: "", transactionStatus: nil, transactionHash: nil, transactionAmount: 0, transactionAmountInWei: nil, rewardsLastEarnedTimestamp: .now)
+	
+	public static let placeholderRequested: Self = .init(transactionID: "", transactionStatus: .REQUESTED, transactionHash: nil, transactionAmount: 0, transactionAmountInWei: nil, rewardsLastEarnedTimestamp: .now)
 }
 
 // MARK: - MoxieClaimModel
@@ -39,7 +59,7 @@ public struct MoxieClaimModel: Codable, Hashable {
 }
 
 extension MoxieClaimModel {
-	static let placeholder: Self = .init(fid: "0",
+	public static let placeholder: Self = .init(fid: "0",
 																			 availableClaimAmount: 1,
 																			 minimumClaimableAmountInWei: "1",
 																			 availableClaimAmountInWei: "",
@@ -51,7 +71,7 @@ extension MoxieClaimModel {
 																			 chainID: 5453,
 																			 transactionID: "",
 																			 transactionHash: "",
-																			 transactionStatus: "",
+																			 transactionStatus: "REQUESTED",
 																			 transactionAmount: 0,
 																			 transactionAmountInWei: "",
 																			 rewardsLastEarnedTimestamp: .now)

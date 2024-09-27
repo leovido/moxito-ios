@@ -6,15 +6,19 @@ import Sentry
 
 struct HomeView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
+	@AppStorage("moxieClaimStatus") var moxieClaimStatus: Data = .init()
 	@AppStorage("selectedNotificationOptionsData") var selectedNotificationOptionsData: Data = .init()
 	@AppStorage("userInputNotificationsData") var userInputNotificationsString: String = ""
 	
 	@State private var timer: Timer?
+	@State private var timerProgress: Timer?
 	@State private var number: Decimal = 0
+	@State private var progress: Double = 0
 
 	@Environment(\.scenePhase) var scenePhase
 	@EnvironmentObject var viewModel: MoxieViewModel
-	
+	@StateObject var claimViewModel: MoxieClaimViewModel = .init(moxieClaimStatus: nil)
+
 	var body: some View {
 		NavigationStack {
 			GeometryReader { geo in
@@ -45,7 +49,7 @@ struct HomeView: View {
 							Button(action: {
 								Haptics.shared.play(.medium)
 								Task {
-									viewModel.initiateClaim()
+									claimViewModel.actions.send(.initiateClaim)
 								}
 							}, label: {
 								Text("Claim")
@@ -244,6 +248,19 @@ struct HomeView: View {
 							}
 						}
 					})
+//					.onChange(of: claimViewModel.moxieClaimStatus, initial: true, { oldValue, newValue in
+//						if oldValue != newValue {
+//							do {
+//								if newValue == nil {
+//									moxieClaimStatus = Data()
+//								} else {
+//									moxieClaimStatus = try CustomDecoderAndEncoder.encoder.encode(newValue)
+//								}
+//							} catch {
+//								SentrySDK.capture(error: error)
+//							}
+//						}
+//					})
 					.onChange(of: viewModel.userInputNotifications, initial: false, { oldValue, newValue in
 						if oldValue != newValue {
 							userInputNotificationsString = newValue.formatted(.number.precision(.fractionLength(0)))
@@ -267,20 +284,79 @@ struct HomeView: View {
 							SentrySDK.capture(error: error)
 						}
 					}
+					.overlay(alignment: .center, content: {
+						if claimViewModel.moxieClaimStatus?.transactionStatus == .REQUESTED {
+							VStack {
+								ProgressView(value: progress, total: 1.0)
+									.progressViewStyle(LinearProgressViewStyle())
+									.tint(Color(uiColor: MoxieColor.green))
+									.padding()
+									.onAppear {
+										startProgressTimer()
+									}
+									.onDisappear {
+										stopProgressTimer()
+									}
+								
+								Text("Claiming... \(Int(progress * 100))%")
+									.font(.custom("Inter", size: 23))
+									.padding()
+									.foregroundStyle(Color.white)
+								
+								Button {
+									if Int(progress * 100) == 100 {
+										let transactionId = claimViewModel.moxieClaimModel?.transactionID ?? ""
+										claimViewModel.actions.send(.checkClaimStatus(transactionId: transactionId))
+									} else {
+										claimViewModel.actions.send(.dismissClaimAlert)
+									}
+								} label: {
+									Text(Int(progress * 100) == 100 ? "Done" : "Refresh")
+										.font(.custom("Inter", size: 18))
+										.padding()
+										.foregroundStyle(Color.white)
+								}
+								.frame(minWidth: 102)
+								.frame(height: 38)
+								.background(Int(progress * 100) == 100 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.primary))
+								.clipShape(Capsule())
+								
+							}
+							.frame(height: geo.size.height)
+							.background(Color.primary.opacity(0.8))
+						} else {
+							
+						}
+					})
 					.confirmationDialog("Moxie claim",
-															isPresented: $viewModel.isClaimAlertShowing,
+															isPresented: $claimViewModel.isClaimDialogShowing,
 															titleVisibility: .visible) {
 						ForEach(viewModel.wallets, id: \.self) { wallet in
 							Button(wallet) {
-								Task {
-									try await viewModel.claimMoxie(selectedWallet: wallet)
-								}
+								claimViewModel.actions.send(.selectedWallet(wallet))
+
 							}
 						}
 					} message: {
 						Text("Choose wallet for claiming Moxie")
 					}
-					.alert("Moxie claim success", isPresented: $viewModel.isClaimSuccess, actions: {
+					.alert("Wallet confirmation", isPresented: $claimViewModel.isClaimAlertShowing, actions: {
+						Button {
+							claimViewModel.actions.send(.claimRewards(claimViewModel.selectedWallet))
+						} label: {
+							Text("Yes")
+						}
+						
+						Button {
+							claimViewModel.actions.send(.initiateClaim)
+						} label: {
+							Text("No")
+						}
+						
+					}, message: {
+						Text("Do you want to use \(claimViewModel.selectedWalletDisplay) to claim?")
+					})
+					.alert("Moxie claim success", isPresented: $claimViewModel.isClaimSuccess, actions: {
 						Button {
 							viewModel.confettiCounter += 1
 						} label: {
@@ -290,7 +366,7 @@ struct HomeView: View {
 					}, message: {
 						Text("You successfully claimed $MOXIE!")
 					})
-					.sensoryFeedback(.success, trigger: viewModel.isClaimAlertShowing, condition: { oldValue, newValue in
+					.sensoryFeedback(.success, trigger: claimViewModel.isClaimAlertShowing, condition: { oldValue, newValue in
 						return !newValue
 					})
 					.confettiCannon(counter: $viewModel.confettiCounter, num:1,
@@ -324,6 +400,26 @@ struct HomeView: View {
 		.tabItem {
 			Image(systemName: "house.fill")
 		}
+	}
+	
+	func startProgressTimer() {
+		let totalDuration: TimeInterval = 15.0 // Total time for progress to complete (15 seconds)
+		let updateInterval: TimeInterval = 0.1 // Interval at which to update the progress
+		
+		let progressIncrement: CGFloat = CGFloat(updateInterval / totalDuration)
+		timerProgress = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
+			if self.progress < 1.0 {
+				self.progress += Double(progressIncrement)
+			} else {
+				self.timerProgress?.invalidate()
+			}
+		}
+	}
+	
+	// Stop the timer if the view disappears
+	func stopProgressTimer() {
+		timerProgress?.invalidate()
+		timerProgress = nil
 	}
 	
 	private func startCountdown() {

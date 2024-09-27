@@ -20,7 +20,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 	
 	@Published var persistence: UserDefaults
 	@Published var wallets: [String] = []
-	@Published var isClaimSuccess: Bool = false
 
 	@Published var input: String
 	@Published var confettiCounter: Int = 0
@@ -33,7 +32,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var isSearchMode: Bool
 	@Published var moxieChangeText: String = ""
 	@Published var isNotificationSheetPresented: Bool = false
-	@Published var isClaimAlertShowing: Bool = false
 	@Published var willPlayAnimationNumbers: Bool = false
 
 	@Published var selectedNotificationOptions: [NotificationOption] = []
@@ -70,18 +68,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		setupListeners()
 	}
 	
-	func initiateClaim() {
-		isClaimAlertShowing.toggle()
-	}
 	
-	func claimMoxie(selectedWallet: String) async throws {
-		do {
-			_ = try await client.processClaim(userFID: inputFID.description,
-																				wallet: selectedWallet)
-		} catch {
-			SentrySDK.capture(error: error)
-		}
-	}
 	
 	func updateNotificationOption(_ option: NotificationOption) {
 		if selectedNotificationOptions.contains(option)  {
@@ -115,20 +102,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 
-		$isClaimAlertShowing
-			.removeDuplicates()
-			.filter({ !$0 })
-			.sink { [weak self] _ in
-				guard let self = self else {
-					return
-				}
-//				self.willPlayAnimationNumbers = true
-				
-//				Task {
-//					try await self.fetchStats(filter: MoxieFilter(rawValue: self.filterSelection) ?? .today)
-//				}
-			}
-			.store(in: &subscriptions)
 		
 		$filterSelection
 			.dropFirst()

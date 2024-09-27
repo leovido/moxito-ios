@@ -3,67 +3,106 @@ import MoxieLib
 import Combine
 import Sentry
 
+enum ClaimAction: Hashable {
+	case initiateClaim
+	case claimRewards(String)
+	case checkClaimStatus(transactionId: String)
+	case selectedWallet(String)
+	case dismissClaimAlert
+}
+
+enum RequestType: String, Hashable {
+	case checkClaimStatus
+	case claimRewards
+}
+
 @MainActor
 final class MoxieClaimViewModel: ObservableObject, Observable {
-	var inFlightTask: Task<Void, Error>?
+	@Published var inFlightTasks: [String: Task<Void, Never>] = [:]
+	private var timerCancellable: AnyCancellable?
+
+	public let actions: PassthroughSubject<ClaimAction, Never>
+
+	@Published var fid: String = ""
+	@Published var moxieClaimModel: MoxieClaimModel?
+	@Published var moxieClaimStatus: MoxieClaimStatus?
+	@Published var isClaimSuccess: Bool = false
+	@Published var isClaimAlertShowing: Bool = false
+	@Published var isClaimDialogShowing: Bool = false
 	
-	@Published var inputFID: Int
+	@Published var selectedWallet: String = ""
+	@Published var selectedWalletDisplay: String = ""
+
+	@Published var isLoading: Bool = false
+	@Published var isError: Error?
 
 	private let client: MoxieProvider
 	
 	private(set) var subscriptions: Set<AnyCancellable> = []
 	
-	init(moxieClaimStatus: MoxieClaimStatus?,
+	init(moxieClaimStatus: MoxieClaimStatus? = nil,
+			 moxieClaimModel: MoxieClaimModel? = nil,
 			 client: MoxieProvider = MoxieClient()) {
 		self.client = client
+		self.moxieClaimModel = moxieClaimModel
+		self.moxieClaimStatus = moxieClaimStatus
+		
+		self.actions = PassthroughSubject()
+
 		setupListeners()
 	}
 	
-	func initiateClaim() {
-		isClaimAlertShowing.toggle()
-	}
-	
-	func claimMoxie(selectedWallet: String) async throws {
-		do {
-			_ = try await client.processClaim(userFID: inputFID.description,
-																				wallet: selectedWallet)
-		} catch {
-			SentrySDK.capture(error: error)
-		}
-	}
-	
-	func updateNotificationOption(_ option: NotificationOption) {
-		if selectedNotificationOptions.contains(option)  {
-			selectedNotificationOptions.removeAll(where: {
-				$0 == option
-			})
-		} else {
-			selectedNotificationOptions.append(option)
-		}
-	}
-	
 	func setupListeners() {
-		$selectedNotificationOptions
-			.removeDuplicates()
-			.sink { [weak self] options in
-				self?.removeAllScheduledNotifications()
-				self?.notify()
-			}
-			.store(in: &subscriptions)
+		let sharedActionsPublisher = actions.share()
 
-		$error
-			.sink { _ in }
+		sharedActionsPublisher
+			.sink { [weak self] newAction in
+				guard let self = self else {
+					return
+				}
+				switch newAction {
+				case .selectedWallet(let wallet):
+					isClaimDialogShowing = false
+					isClaimAlertShowing = true
+					selectedWallet = wallet
+				case .checkClaimStatus:
+					inFlightTasks[RequestType.checkClaimStatus.rawValue] = Task {
+						await self.requestClaimStatus()
+					}
+					break
+				case .claimRewards(let wallet):
+					inFlightTasks[RequestType.claimRewards.rawValue] = Task {
+						await self.claimMoxie(selectedWallet: wallet)
+					}
+					break
+				case .initiateClaim:
+					isClaimDialogShowing.toggle()
+					break
+				case .dismissClaimAlert:
+					self.isClaimAlertShowing = false
+					break
+				}
+			}
 			.store(in: &subscriptions)
 		
-		$willPlayAnimationNumbers
+		$selectedWallet
 			.removeDuplicates()
-			.filter({ $0 })
-			.debounce(for: .seconds(3), scheduler: RunLoop.main)
-			.sink { [weak self] _ in
-				self?.willPlayAnimationNumbers = false
+			.sink { [weak self] wallet in
+				self?.selectedWalletDisplay = "\(wallet.prefix(4))...\(wallet.suffix(4))"
 			}
 			.store(in: &subscriptions)
-
+		
+		let sharedPub = $moxieClaimStatus
+			.removeDuplicates()
+			.share()
+	
+		sharedPub
+			.filter({ $0?.transactionStatus == nil || $0?.transactionStatus == .SUCCESS })
+			.sink { [weak self] value in
+				self?.isLoading = false
+			}
+			.store(in: &subscriptions)
+		
 		$isClaimAlertShowing
 			.removeDuplicates()
 			.filter({ !$0 })
@@ -78,234 +117,33 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 //				}
 			}
 			.store(in: &subscriptions)
-		
-		$filterSelection
-			.dropFirst()
-			.receive(on: DispatchQueue.main)
-			.handleEvents(receiveRequest: { _ in
-				self.inFlightTask?.cancel()
-			})
-			.debounce(for: .seconds(0.25), scheduler: RunLoop.main)
-			.sink { [weak self] value in
-				guard let self = self else {
-					return
-				}
-				inFlightTask = Task {
-					try await self.fetchStats(filter: MoxieFilter(rawValue: value) ?? .today)
-				}
-			}
-			.store(in: &subscriptions)
-		
-		if isSearchMode {
-			Publishers.CombineLatest3($inputFID, $filterSelection, $model)
-				.removeDuplicates { (previous, current) in
-					return previous.0 == current.0 &&
-					previous.1 == current.1 &&
-					previous.2 == current.2
-				}
-				.receive(on: DispatchQueue.main)
-				.handleEvents(receiveRequest: { _ in
-					self.inFlightTask?.cancel()
-				})
-				.debounce(for: .seconds(0.25), scheduler: RunLoop.main)
-				.sink { [weak self] newInput, newFilter, newModel in
-					guard let self = self, newInput > 0 else {
-						return
-					}
-					if newInput.description != newModel.entityID {
-						inFlightTask = Task {
-							try await self.fetchStats(filter: MoxieFilter(rawValue: newFilter) ?? .today)
-						}
-					}
-				}
-				.store(in: &subscriptions)
-		} else {
-			Publishers.CombineLatest3($inputFID, $filterSelection, $model)
-				.dropFirst()
-				.removeDuplicates { (previous, current) in
-					return previous.0 == current.0 &&
-					previous.1 == current.1 &&
-					previous.2 == current.2
-				}
-				.receive(on: DispatchQueue.main)
-				.handleEvents(receiveRequest: { _ in
-					self.inFlightTask?.cancel()
-				})
-				.debounce(for: .seconds(0.25), scheduler: RunLoop.main)
-				.sink { [weak self] newInput, newFilter, newModel in
-					guard let self = self, newInput > 0 else {
-						return
-					}
-					if newInput.description != newModel.entityID {
-						inFlightTask = Task {
-							try await self.fetchStats(filter: MoxieFilter(rawValue: newFilter) ?? .today)
-						}
-					}
-				}
-				.store(in: &subscriptions)
-		}
-				
-		$model
-			.receive(on: DispatchQueue.main)
-			.filter({ Int($0.entityID) ?? 0 > 0 })
-			.sink {
-				self.input = $0.entityID
-				self.wallets = $0.socials[0].connectedAddresses
-					.filter({$0.blockchain == "ethereum"})
-					.map({ $0.address })
-			}
-			.store(in: &subscriptions)
-		
-		$model
-			.receive(on: DispatchQueue.main)
-			.compactMap({ $0.moxieClaimTotals.first })
-			.map({ $0.availableClaimAmount * self.price })
-			.sink { [weak self] in
-				self?.dollarValueMoxie = $0
-			}
-			.store(in: &subscriptions)
-		
-		$price
-			.removeDuplicates()
-			.print()
-			.sink { [weak self] in
-				self?.dollarValueMoxie = $0 * (self?.model.moxieClaimTotals.first?.availableClaimAmount ?? 0)
-			}
-			.store(in: &subscriptions)
 	}
 	
-	func saveCustomMoxieInput() {
-		userInputNotifications = Decimal(string: moxieChangeText) ?? 0
-	}
-	
-	func onSubmitSearch() {
-		let decimalCharacters = CharacterSet.decimalDigits
-		let isNumber = input.rangeOfCharacter(from: decimalCharacters)
-		
-		if isNumber != nil {
-			self.inputFID = Int(input)!
-			self.isSearchMode = false
-		} else {
-			self.error = MoxieError.message("Please enter a number")
-		}
-	}
-	
-	func fetchPrice() async throws {
-		do {
-			price = try await client.fetchPrice()
-		} catch {
-			price = 0
-		}
-	}
-	
-	func fetchStats(filter: MoxieFilter) async throws {
+	private func claimMoxie(selectedWallet: String) async {
 		do {
 			isLoading = true
-			
-			let newModel = try await client.fetchMoxieStats(userFID: Int(model.entityID) ?? inputFID, filter: filter)
-			self.model = newModel
-			self.error = nil
-			self.inFlightTask = nil
-			
-			self.isLoading = false
+			moxieClaimModel = try await client.processClaim(userFID: fid.description,
+																				wallet: selectedWallet)
+			isLoading = false
+			inFlightTasks[RequestType.claimRewards.rawValue] = nil
 		} catch {
-			self.isLoading = false
-			self.inFlightTask = nil
-			
-			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
-				if error.localizedDescription == "The data couldn’t be read because it is missing." {
-					self.error = MoxieError.message("User does not have Moxie pass")
-				} else {
-					self.error = MoxieError.message(error.localizedDescription)
-				}
-			} else {
-				self.error = MoxieError.message(error.localizedDescription)
-			}
+			isLoading = false
+			isError = MoxieError.message(error.localizedDescription)
+			inFlightTasks[RequestType.claimRewards.rawValue] = nil
+			SentrySDK.capture(error: error)
 		}
 	}
 	
-	func onAppear() async {
+	private func requestClaimStatus() async {
 		do {
-			if inputFID != 0 {
-				let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: MoxieFilter(rawValue: filterSelection) ?? .today)
-				self.model = newModel
-				self.input = model.entityID
-				checkAndNotify(newModel: newModel, userInput: userInputNotifications)
-				
-				WidgetCenter.shared.reloadAllTimelines()
-			}
+			isLoading = true
+			moxieClaimStatus = try await self.client.fetchClaimStatus(fid: self.fid, transactionId: moxieClaimStatus?.transactionID ?? "")
+			inFlightTasks[RequestType.checkClaimStatus.rawValue] = nil
 		} catch {
-			self.error = error
+			isLoading = false
+			isError = MoxieError.message(error.localizedDescription)
+			inFlightTasks[RequestType.checkClaimStatus.rawValue] = nil
+			SentrySDK.capture(error: error)
 		}
-	}
-	
-	func checkAndNotify(newModel: MoxieModel, userInput: Decimal) {
-		let currentEarnings = model.allEarningsAmount
-		let newAmount = newModel.allEarningsAmount
-		
-		let delta = newAmount - currentEarnings
-		
-		if delta >= userInput {
-			let content = UNMutableNotificationContent()
-			content.title = "$MOXIE earnings"
-			content.body = "Congrats! Your Moxie earnings have now reached \(newAmount.formatted(.number.precision(.fractionLength(0)))). Check out your latest gains and keep the momentum going! 🚀"
-			content.sound = .default
-			
-			let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-			let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-			
-			UNUserNotificationCenter.current().add(request) { error in
-				if let error = error {
-					print("Failed to schedule notification: \(error.localizedDescription)")
-				}
-			}
-		}
-	}
-	
-	func removeAllScheduledNotifications() {
-		persistence.removeObject(forKey: "notificationOptions")
-		selectedNotificationOptions.removeAll()
-
-		UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-		UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-	}
-	
-	func notify() {
-		let content = UNMutableNotificationContent()
-		content.title = "$MOXIE earnings"
-		content.body = "\(model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))))"
-		content.sound = .default
-		
-		selectedNotificationOptions
-			.forEach { option in
-			let interval: TimeInterval
-			switch option {
-			case .hour:
-				interval = 3600
-			case .week:
-				interval = 3600 * 24 * 7
-			case .month:
-				interval = 3600 * 24 * 7 * 30
-			}
-			
-			let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: true)
-			let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-			
-			UNUserNotificationCenter.current().add(request) { error in
-				if let error = error {
-					print("Failed to schedule notification: \(error.localizedDescription)")
-				}
-			}
-		}
-	}
-}
-
-extension MoxieViewModel {
-	func timeAgoDisplay() {
-		let formatter = RelativeDateTimeFormatter()
-		formatter.unitsStyle = .full
-		let string = formatter.localizedString(for: model.endTimestamp, relativeTo: .now)
-		
-		self.timeAgo = string
 	}
 }
