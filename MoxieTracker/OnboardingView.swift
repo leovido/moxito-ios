@@ -12,6 +12,7 @@ struct OnboardingView: View {
 	@SwiftUI.Environment(\.openURL) var openURL
 	@SwiftUI.Environment(\.scenePhase) var scenePhase
 	@SwiftUI.Environment(\.colorScheme) var colorScheme
+
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@StateObject var featureFlagManager: FeatureFlagManager
 	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
@@ -45,7 +46,7 @@ struct OnboardingView: View {
 							.font(.custom("Inter", size: 14))
 							.multilineTextAlignment(.center)
 						
-						if featureFlagManager.isSIWNAvailable() {
+						if featureFlagManager.isSignInWithNeynarEnabled {
 							Button {
 								openURL(URL(string: "https://app.moxito.xyz")!)
 							} label: {
@@ -81,6 +82,15 @@ struct OnboardingView: View {
 					}
 				})
 			}
+			.onChange(of: scenePhase) { oldPhase, newPhase in
+				if newPhase == .active {
+					featureFlagManager.isSignInWithNeynarEnabled = featureFlagManager.isSIWNAvailable()
+				} else if newPhase == .inactive {
+					print("Inactive")
+				} else if newPhase == .background {
+					print("Background")
+				}
+			}
 			.alert("Sign in", isPresented: $viewModelOnboarding.isAlertShowing) {
 				TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
 					.keyboardType(.numberPad)
@@ -100,6 +110,13 @@ struct OnboardingView: View {
 					viewModel.inputFID = Int(viewModelOnboarding.inputTextFID) ?? 0
 				} label: {
 					Text("Sign in")
+						.font(.custom("Inter", size: 16))
+				}
+				
+				Button {
+					viewModelOnboarding.isAlertShowing = false
+				} label: {
+					Text("Cancel")
 						.font(.custom("Inter", size: 16))
 				}
 			} message: {

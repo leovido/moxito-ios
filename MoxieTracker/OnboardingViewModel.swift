@@ -1,9 +1,13 @@
 import SwiftUI
 import DevCycle
 import Combine
+import Sentry
 
 final class FeatureFlagManager: ObservableObject {
 	@Published var devcycleClient: DevCycleClient?
+	@Published var isSignInWithNeynarEnabled: Bool = false
+	
+	private(set) var subscriptions: Set<AnyCancellable> = []
 	
 	init(devcycleClient: DevCycleClient? = nil) {
 		do {
@@ -16,10 +20,20 @@ final class FeatureFlagManager: ObservableObject {
 					if let error = err {
 						return print("Error initializing DevCycle: \(error)")
 					}
+					
+					self.isSignInWithNeynarEnabled = self.isSIWNAvailable()
 				}
 		} catch {
+			SentrySDK.capture(error: error)
 			print("Error initializing DevCycle: \(error)")
 		}
+		
+		$isSignInWithNeynarEnabled
+			.print()
+			.sink { _ in
+				
+			}
+			.store(in: &subscriptions)
 	}
 	
 	func isSIWNAvailable() -> Bool {
@@ -27,7 +41,6 @@ final class FeatureFlagManager: ObservableObject {
 			return false
 		}
 		
-		// Initialize the variable value with a key and default value
 		let siwnValue = devcycleClient.variableValue(
 			key: "siwn",
 			defaultValue: false
