@@ -2,15 +2,20 @@ import SwiftUI
 import MoxieLib
 import Combine
 import Sentry
+import DevCycle
 
 struct OnboardingView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
-
-	@Environment(\.openURL) var openURL
-	@Environment(\.scenePhase) var scenePhase
-	@Environment(\.colorScheme) var colorScheme
+	
+	var devcycleClient: DevCycleClient? = nil
+	
+	@SwiftUI.Environment(\.openURL) var openURL
+	@SwiftUI.Environment(\.scenePhase) var scenePhase
+	@SwiftUI.Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var viewModel: MoxieViewModel
-
+	@StateObject var featureFlagManager: FeatureFlagManager
+	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
+	
 	var body: some View {
 		NavigationView {
 			ZStack {
@@ -33,21 +38,29 @@ struct OnboardingView: View {
 						.fontWeight(.bold)
 						.padding(.top, 24)
 						.padding()
-
+						
 						Text("Sign in to the apps to display your profile or skip this step. If you skip this step you will only have access to the FID search.")
 							.padding([.horizontal, .bottom], 25)
 							.foregroundStyle(Color("OnboardingText"))
 							.font(.custom("Inter", size: 14))
 							.multilineTextAlignment(.center)
-							
-						Button {
-							openURL(URL(string: "https://moxito.xyz")!)
-						} label: {
-							Image("SignInWarpcast", bundle: .main)
+						
+						if featureFlagManager.isSIWNAvailable() {
+							Button {
+								openURL(URL(string: "https://app.moxito.xyz")!)
+							} label: {
+								Image("SignInWarpcast", bundle: .main)
+							}
+							.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
+						} else {
+							Button(action: {
+								viewModelOnboarding.isAlertShowing = true
+							}) {
+								Image("SignInWarpcast", bundle: .main)
+							}
+							.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
 						}
-
-						.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
-
+						
 						Button(action: {
 							viewModel.model = .placeholder
 						}) {
@@ -68,6 +81,31 @@ struct OnboardingView: View {
 					}
 				})
 			}
+			.alert("Sign in", isPresented: $viewModelOnboarding.isAlertShowing) {
+				TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
+					.keyboardType(.numberPad)
+					.foregroundColor(Color(.textField))
+					.font(.custom("Inter", size: 16))
+					.padding()
+					.toolbar {
+						ToolbarItemGroup(placement: .keyboard) {
+							Spacer()
+							Button("Done") {
+								UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+							}
+						}
+					}
+				Button {
+					viewModel.input = viewModelOnboarding.inputTextFID
+					viewModel.inputFID = Int(viewModelOnboarding.inputTextFID) ?? 0
+				} label: {
+					Text("Sign in")
+						.font(.custom("Inter", size: 16))
+				}
+			} message: {
+				Text("Sign in with Farcaster will be available in the future.\n\nIn the meantime input your FID to fetch your Moxie data")
+			}
+			.font(.custom("Inter", size: 16))
 			.onChange(of: viewModel.model, initial: false, { oldValue, newValue in
 				if oldValue != newValue {
 					do {
@@ -86,9 +124,11 @@ struct OnboardingView: View {
 			}
 		}
 	}
+	
+	
 }
 
 #Preview {
-	OnboardingView()
+	OnboardingView(featureFlagManager: .init())
 		.environmentObject(MoxieViewModel())
 }

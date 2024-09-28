@@ -1,21 +1,19 @@
 import SwiftUI
 import Sentry
 import MoxieLib
-import BackgroundTasks
 import Security
-import CryptoKit
 
 @main
 struct MoxieTrackerApp: App {
 	@StateObject var mainViewModel = MoxieViewModel.shared
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	@AppStorage("moxieData") var moxieData: Data = .init()
-
+	
 	var body: some Scene {
 		WindowGroup {
 			Group {
 				if mainViewModel.model.entityID == "" {
-					OnboardingView()
+					OnboardingView(featureFlagManager: .init())
 				} else {
 					ContentView()
 				}

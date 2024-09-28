@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
@@ -20,9 +22,9 @@
 		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
-	 <array>
-			 <string>moxito</string>
-	 </array>
+	<array>
+		<string>moxito</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter.ttf</string>

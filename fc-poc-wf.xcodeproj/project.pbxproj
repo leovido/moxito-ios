@@ -35,6 +35,10 @@
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
 		475F73AC2CA6037400E0CFEA /* ClaimTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AB2CA6037000E0CFEA /* ClaimTests.swift */; };
 		475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */; };
+		475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */; };
+		475F73B12CA814A200E0CFEA /* MoxieActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */; };
+		475F73B52CA884AD00E0CFEA /* DevCycle in Frameworks */ = {isa = PBXBuildFile; productRef = 475F73B42CA884AD00E0CFEA /* DevCycle */; };
+		475F73B72CA888D200E0CFEA /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
 		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
 		47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324062C6E578400BE03C2 /* Assets.xcassets */; };
@@ -225,6 +229,8 @@
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
 		475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieClaimViewModel.swift; sourceTree = "<group>"; };
+		475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieActivityAttributes.swift; sourceTree = "<group>"; };
+		475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
 		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -292,6 +298,7 @@
 				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
 				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
 				47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */,
+				475F73B52CA884AD00E0CFEA /* DevCycle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +392,9 @@
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
+				475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */,
 				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
+				475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */,
 				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
 				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
@@ -626,6 +635,7 @@
 				47EC54632C808080006C2820 /* MoxieLib */,
 				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
 				47E4CBE12C90AFC100BE77E8 /* Sentry */,
+				475F73B42CA884AD00E0CFEA /* DevCycle */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -869,6 +879,7 @@
 				B9DF7F522C73611B0073D772 /* XCRemoteSwiftPackageReference "OpenGraph" */,
 				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -1011,9 +1022,11 @@
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
+				475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */,
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
 				47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */,
+				475F73B72CA888D200E0CFEA /* OnboardingViewModel.swift in Sources */,
 				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
@@ -1051,6 +1064,7 @@
 				47E4CC482C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
 				471FE9BE2C7F823400D20F4C /* MoxieWidgetSimple.swift in Sources */,
 				471FE9BD2C7F823400D20F4C /* MoxieWidgetSimpleLiveActivity.swift in Sources */,
+				475F73B12CA814A200E0CFEA /* MoxieActivityAttributes.swift in Sources */,
 				471FE9C02C7F823400D20F4C /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1922,6 +1936,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DevCycleHQ/ios-client-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.14.0;
+			};
+		};
 		47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
@@ -1960,6 +1982,11 @@
 		471FE9C42C7F82E400D20F4C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
+		};
+		475F73B42CA884AD00E0CFEA /* DevCycle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */;
+			productName = DevCycle;
 		};
 		47E4CBE12C90AFC100BE77E8 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;

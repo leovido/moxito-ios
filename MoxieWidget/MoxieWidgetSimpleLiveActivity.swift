@@ -1,54 +1,112 @@
-//
-//  MoxieWidgetSimpleLiveActivity.swift
-//  MoxieWidgetSimple
-//
-//  Created by Christian Ray Leovido on 27/08/2024.
-//
-
 import ActivityKit
 import WidgetKit
 import SwiftUI
+import MoxieLib
 
-struct MoxieWidgetSimpleAttributes: ActivityAttributes {
-	public struct ContentState: Codable, Hashable {
-		// Dynamic stateful properties about your activity go here!
-		var emoji: String
-	}
+struct LiveActivityView: View {
+	let context: ActivityViewContext<MoxieActivityAttributes>
 	
-	// Fixed non-changing properties about your activity go here!
-	var name: String
+	var body: some View {
+		VStack {
+			HStack {
+				AsyncImage(url: URL(string: context.state.imageURL),
+									 content: { image in
+					image
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+						.clipShape(Circle())
+				}, placeholder: {
+					ProgressView()
+				})
+				.frame(width: 50, height: 50)
+				.padding(.leading, 8)
+				
+				VStack(alignment: .leading) {
+					Text("@\(context.state.username)")
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.fontWeight(.medium)
+						.fontDesign(.rounded)
+					
+					Text(context.state.fid)
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.fontWeight(.light)
+						.fontDesign(.rounded)
+				}
+				
+				Spacer()
+				
+				VStack {
+					Text("Daily")
+						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+						.fontDesign(.rounded)
+						.fontWeight(.black)
+					Text(context.state.dailyMoxie)
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.fontWeight(.heavy)
+						.fontDesign(.rounded)
+					Text("~\(context.state.dailyUSD)")
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.font(.caption)
+						.fontWeight(.light)
+						.fontDesign(.rounded)
+				}
+				
+				VStack {
+					Text("Claimable")
+						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+						.fontDesign(.rounded)
+						.fontWeight(.black)
+					
+					Text(context.state.claimableMoxie)
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.fontWeight(.heavy)
+						.fontDesign(.rounded)
+					Text(context.state.claimableUSD)
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.font(.caption)
+						.fontWeight(.light)
+						.fontDesign(.rounded)
+				}
+				Spacer()
+			}
+		}
+	}
 }
 
 struct MoxieWidgetSimpleLiveActivity: Widget {
 	var body: some WidgetConfiguration {
-		ActivityConfiguration(for: MoxieWidgetSimpleAttributes.self) { context in
-			// Lock screen/banner UI goes here
-			VStack {
-				Text("Hello \(context.state.emoji)")
-			}
-			.activityBackgroundTint(Color.cyan)
+		ActivityConfiguration(for: MoxieActivityAttributes.self) { context in
+			LiveActivityView(context: context)
+			.activityBackgroundTint(Color(uiColor: MoxieColor.backgroundColor))
 			.activitySystemActionForegroundColor(Color.black)
 			
 		} dynamicIsland: { context in
 			DynamicIsland {
-				// Expanded UI goes here.  Compose the expanded UI through
-				// various regions, like leading/trailing/center/bottom
-				DynamicIslandExpandedRegion(.leading) {
-					Text("Leading")
+				DynamicIslandExpandedRegion(.leading, priority: 1) {
+					LiveActivityView(context: context)
+						.dynamicIsland(verticalPlacement: .belowIfTooWide)
+
 				}
 				DynamicIslandExpandedRegion(.trailing) {
 					Text("Trailing")
 				}
 				DynamicIslandExpandedRegion(.bottom) {
-					Text("Bottom \(context.state.emoji)")
-					// more content
+					Text("Claimable: \(context.state.claimableMoxie)")
+						.foregroundStyle(Color(uiColor: MoxieColor.primary))
+						.fontWeight(.black)
 				}
 			} compactLeading: {
-				Text("L")
+				HStack {
+					Image(systemName: "repeat")
+					Text(context.state.dailyMoxie)
+				}
 			} compactTrailing: {
-				Text("T \(context.state.emoji)")
+				HStack {
+					Image(systemName: "gift")
+					Text(context.state.claimableMoxie)
+				}
 			} minimal: {
-				Text(context.state.emoji)
+				Text(context.state.dailyUSD)
 			}
 			.widgetURL(URL(string: "http://www.apple.com"))
 			.keylineTint(Color.red)
@@ -56,25 +114,36 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 	}
 }
 
-extension MoxieWidgetSimpleAttributes {
-	fileprivate static var preview: MoxieWidgetSimpleAttributes {
-		MoxieWidgetSimpleAttributes(name: "World")
+extension MoxieActivityAttributes {
+	fileprivate static var preview: MoxieActivityAttributes {
+		MoxieActivityAttributes()
 	}
 }
 
-extension MoxieWidgetSimpleAttributes.ContentState {
-	fileprivate static var smiley: MoxieWidgetSimpleAttributes.ContentState {
-		MoxieWidgetSimpleAttributes.ContentState(emoji: "😀")
-	}
-	
-	fileprivate static var starEyes: MoxieWidgetSimpleAttributes.ContentState {
-		MoxieWidgetSimpleAttributes.ContentState(emoji: "🤩")
-	}
-}
-
-#Preview("Notification", as: .content, using: MoxieWidgetSimpleAttributes.preview) {
+#Preview("Notification", as: .content, using: MoxieActivityAttributes.preview) {
 	MoxieWidgetSimpleLiveActivity()
 } contentStates: {
-	MoxieWidgetSimpleAttributes.ContentState.smiley
-	MoxieWidgetSimpleAttributes.ContentState.starEyes
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+}
+
+#Preview("Dynamic island compact", as: .dynamicIsland(.compact), using: MoxieActivityAttributes.preview) {
+	MoxieWidgetSimpleLiveActivity()
+} contentStates: {
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+}
+
+#Preview("Dynamic island expanded", as: .dynamicIsland(.expanded), using: MoxieActivityAttributes.preview) {
+	MoxieWidgetSimpleLiveActivity()
+} contentStates: {
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+}
+
+#Preview("Dynamic island minimal", as: .dynamicIsland(.minimal), using: MoxieActivityAttributes.preview) {
+	MoxieWidgetSimpleLiveActivity()
+} contentStates: {
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
 }

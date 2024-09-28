@@ -3,6 +3,7 @@ import WidgetKit
 import MoxieLib
 import Combine
 import Sentry
+import ActivityKit
 
 enum NotificationOption: Codable, Hashable, CaseIterable {
 	static let allCases: [NotificationOption] = [.hour, .week, .month]
@@ -15,7 +16,8 @@ enum NotificationOption: Codable, Hashable, CaseIterable {
 @MainActor
 final class MoxieViewModel: ObservableObject, Observable {
 	static let shared = MoxieViewModel()
-	
+	private var currentActivity: Activity<MoxieActivityAttributes>? = nil
+
 	var inFlightTask: Task<Void, Error>?
 	
 	@Published var persistence: UserDefaults
@@ -65,9 +67,34 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0") ?? 0
 
 		setupListeners()
+		
+		startMoxieActivity()
 	}
 	
 	
+	func startMoxieActivity() {
+		if ActivityAuthorizationInfo().areActivitiesEnabled {
+			let attributes = MoxieActivityAttributes()
+			let contentState = MoxieActivityAttributes.ContentState(
+				dailyMoxie: model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
+				dailyUSD: formattedDollarValue(dollarValue: model.allEarningsAmount * price),
+				claimableMoxie: model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
+				claimableUSD: formattedDollarValue(dollarValue: model.moxieClaimTotals[0].availableClaimAmount * price),
+				username: model.socials[0].profileDisplayName,
+				fid: model.entityID,
+				imageURL: model.socials[0].profileImage)
+			do {
+				let activity = try Activity<MoxieActivityAttributes>.request(
+					attributes: attributes,
+					content: .init(state: contentState, staleDate: nil),
+					pushType: nil
+				)
+				currentActivity = activity
+			} catch {
+				print("Error starting activity: \(error.localizedDescription)")
+			}
+		}
+	}
 	
 	func updateNotificationOption(_ option: NotificationOption) {
 		if selectedNotificationOptions.contains(option)  {
@@ -178,13 +205,44 @@ final class MoxieViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 		
-		$price
-			.removeDuplicates()
-			.print()
-			.sink { [weak self] in
-				self?.dollarValueMoxie = $0 * (self?.model.moxieClaimTotals.first?.availableClaimAmount ?? 0)
+		$model
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] newModel in
+				guard let self = self else {
+					return
+				}
+				updateDeliveryActivity(newModel: newModel)
 			}
 			.store(in: &subscriptions)
+		
+		$price
+			.removeDuplicates()
+			.sink { [weak self] in
+				guard let self = self else {
+					return
+				}
+				self.dollarValueMoxie = $0 * (self.model.moxieClaimTotals.first?.availableClaimAmount ?? 0)
+				self.updateDeliveryActivity(newModel: self.model)
+			}
+			.store(in: &subscriptions)
+	}
+	
+	func updateDeliveryActivity(newModel: MoxieModel) {
+		Task {
+			for activity in Activity<MoxieActivityAttributes>.activities {
+				let updatedContentState = MoxieActivityAttributes.ContentState(
+					dailyMoxie: newModel.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
+					dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
+					claimableMoxie: newModel.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
+					claimableUSD: formattedDollarValue(dollarValue: newModel.moxieClaimTotals[0].availableClaimAmount * self.price),
+					username: model.socials[0].profileDisplayName,
+					fid: model.entityID,
+					imageURL: model.socials[0].profileImage
+				)
+				
+				await activity.update(using: updatedContentState)
+			}
+		}
 	}
 	
 	func saveCustomMoxieInput() {
@@ -258,7 +316,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		
 		let delta = newAmount - currentEarnings
 		
-		if delta >= userInput {
+		if delta > userInput {
 			let content = UNMutableNotificationContent()
 			content.title = "$MOXIE earnings"
 			content.body = "Congrats! Your Moxie earnings have now reached \(newAmount.formatted(.number.precision(.fractionLength(0)))). Check out your latest gains and keep the momentum going! 🚀"
