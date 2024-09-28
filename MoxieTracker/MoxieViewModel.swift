@@ -3,7 +3,9 @@ import WidgetKit
 import MoxieLib
 import Combine
 import Sentry
+#if canImport(ActivityKit)
 import ActivityKit
+#endif
 
 enum NotificationOption: Codable, Hashable, CaseIterable {
 	static let allCases: [NotificationOption] = [.hour, .week, .month]

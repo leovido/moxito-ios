@@ -9,33 +9,7 @@ struct LiveActivityView: View {
 	var body: some View {
 		VStack {
 			HStack {
-				AsyncImage(url: URL(string: context.state.imageURL),
-									 content: { image in
-					image
-						.resizable()
-						.aspectRatio(contentMode: .fit)
-						.clipShape(Circle())
-				}, placeholder: {
-					ProgressView()
-				})
-				.frame(width: 50, height: 50)
-				.padding(.leading, 8)
-				
-				VStack(alignment: .leading) {
-					Text("@\(context.state.username)")
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-						.fontWeight(.medium)
-						.fontDesign(.rounded)
-					
-					Text(context.state.fid)
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-						.fontWeight(.light)
-						.fontDesign(.rounded)
-				}
-				
-				Spacer()
-				
-				VStack {
+				VStack(alignment: .center) {
 					Text("Daily")
 						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
 						.fontDesign(.rounded)
@@ -67,8 +41,8 @@ struct LiveActivityView: View {
 						.fontWeight(.light)
 						.fontDesign(.rounded)
 				}
-				Spacer()
 			}
+			.padding(.vertical)
 		}
 	}
 }
@@ -83,15 +57,33 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 		} dynamicIsland: { context in
 			DynamicIsland {
 				DynamicIslandExpandedRegion(.leading, priority: 1) {
-					LiveActivityView(context: context)
+					VStack(alignment: .center) {
+						Text("Daily")
+							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+							.fontDesign(.rounded)
+							.fontWeight(.black)
+						Text(context.state.dailyMoxie)
+							.foregroundStyle(Color(uiColor: MoxieColor.dark))
+							.fontWeight(.heavy)
+							.fontDesign(.rounded)
+						Text("~\(context.state.dailyUSD)")
+							.foregroundStyle(Color(uiColor: MoxieColor.dark))
+							.font(.caption)
+							.fontWeight(.light)
+							.fontDesign(.rounded)
+					}
 						.dynamicIsland(verticalPlacement: .belowIfTooWide)
-
 				}
-				DynamicIslandExpandedRegion(.trailing) {
-					Text("Trailing")
-				}
+//				DynamicIslandExpandedRegion(.trailing) {
+//					
+//				}
 				DynamicIslandExpandedRegion(.bottom) {
 					Text("Claimable: \(context.state.claimableMoxie)")
+						.foregroundStyle(Color(uiColor: MoxieColor.primary))
+						.fontWeight(.black)
+						.padding(.top, 8)
+					
+					Text("\(context.state.claimableUSD)")
 						.foregroundStyle(Color(uiColor: MoxieColor.primary))
 						.fontWeight(.black)
 				}
@@ -106,7 +98,7 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 					Text(context.state.claimableMoxie)
 				}
 			} minimal: {
-				Text(context.state.dailyUSD)
+//				Text(context.state.dailyUSD)
 			}
 			.widgetURL(URL(string: "http://www.apple.com"))
 			.keylineTint(Color.red)
