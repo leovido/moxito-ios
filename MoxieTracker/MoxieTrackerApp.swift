@@ -13,7 +13,7 @@ struct MoxieTrackerApp: App {
 		WindowGroup {
 			Group {
 				if mainViewModel.model.entityID == "" {
-					OnboardingView(featureFlagManager: .init())
+					OnboardingView()
 				} else {
 					ContentView()
 				}

@@ -8,14 +8,12 @@ struct OnboardingView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
 	@StateObject var authViewModel = AuthViewModel()
 
-	var devcycleClient: DevCycleClient? = nil
-	
 	@SwiftUI.Environment(\.openURL) var openURL
 	@SwiftUI.Environment(\.scenePhase) var scenePhase
 	@SwiftUI.Environment(\.colorScheme) var colorScheme
 
 	@EnvironmentObject var viewModel: MoxieViewModel
-	@StateObject var featureFlagManager: FeatureFlagManager
+//	@StateObject var featureFlagManager: FeatureFlagManager
 	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
 	
 	var body: some View {
@@ -47,21 +45,12 @@ struct OnboardingView: View {
 							.font(.custom("Inter", size: 14))
 							.multilineTextAlignment(.center)
 						
-						if featureFlagManager.isSignInWithNeynarEnabled {
-							Button {
-								openURL(URL(string: "https://app.moxito.xyz")!)
-							} label: {
-								Image("SignInWarpcast", bundle: .main)
-							}
-							.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
-						} else {
-							Button(action: {
-								authViewModel.startLogin()
-							}) {
-								Image("SignInWarpcast", bundle: .main)
-							}
-							.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
+						Button(action: {
+							authViewModel.startLogin()
+						}) {
+							Image("SignInWarpcast", bundle: .main)
 						}
+						.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
 						
 						Button(action: {
 							viewModel.model = .placeholder
@@ -82,15 +71,6 @@ struct OnboardingView: View {
 						ProgressView()
 					}
 				})
-			}
-			.onChange(of: scenePhase) { oldPhase, newPhase in
-				if newPhase == .active {
-					featureFlagManager.isSignInWithNeynarEnabled = featureFlagManager.isSIWNAvailable()
-				} else if newPhase == .inactive {
-					print("Inactive")
-				} else if newPhase == .background {
-					print("Background")
-				}
 			}
 			.alert("Sign in", isPresented: $viewModelOnboarding.isAlertShowing) {
 				TextField("Your Farcaster ID, e.g. 203666", text: $viewModelOnboarding.inputTextFID)
@@ -178,6 +158,6 @@ struct OnboardingView: View {
 }
 
 #Preview {
-	OnboardingView(featureFlagManager: .init())
+	OnboardingView()
 		.environmentObject(MoxieViewModel())
 }
