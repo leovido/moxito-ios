@@ -280,7 +280,7 @@ struct HomeView: View {
 						}
 					}
 					.overlay(alignment: .center, content: {
-						if claimViewModel.moxieClaimModel != nil {
+						if claimViewModel.isClaimRequested {
 							VStack {
 								ProgressView(value: progress, total: 1.0)
 									.progressViewStyle(LinearProgressViewStyle())

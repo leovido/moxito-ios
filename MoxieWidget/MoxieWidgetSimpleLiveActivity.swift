@@ -72,7 +72,7 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 							.fontWeight(.light)
 							.fontDesign(.rounded)
 					}
-						.dynamicIsland(verticalPlacement: .belowIfTooWide)
+					.dynamicIsland(verticalPlacement: .belowIfTooWide)
 				}
 //				DynamicIslandExpandedRegion(.trailing) {
 //					
@@ -85,7 +85,7 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 					
 					Text("\(context.state.claimableUSD)")
 						.foregroundStyle(Color(uiColor: MoxieColor.primary))
-						.fontWeight(.black)
+						.fontWeight(.medium)
 				}
 			} compactLeading: {
 				HStack {
@@ -99,6 +99,7 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 				}
 			} minimal: {
 //				Text(context.state.dailyUSD)
+//					.font(.caption2)
 			}
 			.widgetURL(URL(string: "http://www.apple.com"))
 			.keylineTint(Color.red)
@@ -123,7 +124,7 @@ extension MoxieActivityAttributes {
 	MoxieWidgetSimpleLiveActivity()
 } contentStates: {
 	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
-	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "100", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
 }
 
 #Preview("Dynamic island expanded", as: .dynamicIsland(.expanded), using: MoxieActivityAttributes.preview) {
@@ -137,5 +138,5 @@ extension MoxieActivityAttributes {
 	MoxieWidgetSimpleLiveActivity()
 } contentStates: {
 	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
-	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "10290412", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
+	MoxieActivityAttributes.ContentState.init(dailyMoxie: "1231", dailyUSD: "$324.23", claimableMoxie: "100", claimableUSD: "$324938", username: "tester", fid: "123", imageURL: "")
 }

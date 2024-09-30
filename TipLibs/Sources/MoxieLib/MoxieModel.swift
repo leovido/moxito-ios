@@ -49,7 +49,7 @@ public struct MoxieClaimModel: Codable, Hashable {
 	public let transactionStatus: MoxieTransactionStatus?
 	public let transactionAmount: Double?
 	public let transactionAmountInWei: String?
-	public let rewardsLastEarnedTimestamp: Date?
+	public let rewardsLastEarnedTimestamp: String?
 	
 	public enum CodingKeys: String, CodingKey {
 		case fid, availableClaimAmount, minimumClaimableAmountInWei, availableClaimAmountInWei, claimedAmount, claimedAmountInWei, processingAmount, processingAmountInWei, tokenAddress
@@ -75,7 +75,7 @@ extension MoxieClaimModel {
 																							transactionStatus: .REQUESTED,
 																							transactionAmount: 0,
 																							transactionAmountInWei: "",
-																							rewardsLastEarnedTimestamp: .now)
+																							rewardsLastEarnedTimestamp: "")
 }
 
 

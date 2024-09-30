@@ -25,6 +25,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 
 	@Published var willPlayAnimationNumbers: Bool = false
 
+	@Published var isClaimRequested: Bool = false
 	@Published var moxieClaimModel: MoxieClaimModel?
 	@Published var moxieClaimStatus: MoxieClaimStatus?
 	@Published var isClaimSuccess: Bool = false
@@ -100,7 +101,8 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 				case .dismissClaimAlert:
 					moxieClaimModel = nil
 					moxieClaimStatus = nil
-					
+					isClaimRequested = false
+
 					willPlayAnimationNumbers = true
 					
 					isClaimSuccess = true
@@ -116,21 +118,11 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 				self?.selectedWalletDisplay = "\(wallet.prefix(4))...\(wallet.suffix(4))"
 			}
 			.store(in: &subscriptions)
-		
-		let sharedPub = $moxieClaimStatus
-			.removeDuplicates()
-			.share()
-	
-		sharedPub
-			.filter({ $0?.transactionStatus == nil || $0?.transactionStatus == .SUCCESS })
-			.sink { [weak self] value in
-				self?.isLoading = false
-			}
-			.store(in: &subscriptions)
 	}
 	
 	private func claimMoxie(fid: String, selectedWallet: String) async {
 		do {
+			isClaimRequested = true
 			isLoading = true
 			moxieClaimModel = try await client.processClaim(userFID: fid,
 																				wallet: selectedWallet)
