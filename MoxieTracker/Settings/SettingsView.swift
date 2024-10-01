@@ -45,7 +45,7 @@ struct SettingsView: View {
 					Button(action: {
 						viewModel.model = .noop
 						viewModel.inputFID = 0
-						
+
 						moxieData = Data()
 						WidgetCenter.shared.reloadAllTimelines()
 					}) {
@@ -53,7 +53,6 @@ struct SettingsView: View {
 							.foregroundColor(Color(uiColor: .primary))
 							.frame(maxWidth: .infinity)
 							.frame(height: 64)
-						
 					}
 					.clipShape(RoundedRectangle(cornerRadius: 32))
 					.foregroundColor(Color(uiColor: .primary))

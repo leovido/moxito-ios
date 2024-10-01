@@ -25,7 +25,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 
 	@Published var willPlayAnimationNumbers: Bool = false
 
-	@Published var isClaimRequested: Bool = false
+	@Published var isClaimRequested: Bool = true
 	@Published var moxieClaimModel: MoxieClaimModel?
 	@Published var moxieClaimStatus: MoxieClaimStatus?
 	@Published var isClaimSuccess: Bool = false

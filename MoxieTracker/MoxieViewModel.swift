@@ -36,6 +36,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var isSearchMode: Bool
 	@Published var moxieChangeText: String = ""
 	@Published var isNotificationSheetPresented: Bool = false
+	@Published var moxieSplits: MoxieSplits = .placeholder
 
 	@Published var selectedNotificationOptions: [NotificationOption] = []
 	
@@ -163,6 +164,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				.store(in: &subscriptions)
 		} else {
 			Publishers.CombineLatest3($inputFID, $filterSelection, $model)
+				.print()
 				.dropFirst()
 				.removeDuplicates { (previous, current) in
 					return previous.0 == current.0 &&
@@ -237,9 +239,9 @@ final class MoxieViewModel: ObservableObject, Observable {
 					dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
 					claimableMoxie: newModel.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
 					claimableUSD: formattedDollarValue(dollarValue: newModel.moxieClaimTotals[0].availableClaimAmount * self.price),
-					username: model.socials[0].profileDisplayName,
+					username: model.socials.first?.profileDisplayName ?? "",
 					fid: model.entityID,
-					imageURL: model.socials[0].profileImage
+					imageURL: model.socials.first?.profileImage ?? ""
 				)
 				
 				await activity.update(using: updatedContentState)
@@ -275,7 +277,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		do {
 			isLoading = true
 			
-			let newModel = try await client.fetchMoxieStats(userFID: Int(model.entityID) ?? inputFID, filter: filter)
+			let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: filter)
 			self.model = newModel
 			self.error = nil
 			self.inFlightTask = nil

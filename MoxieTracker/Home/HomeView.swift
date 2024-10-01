@@ -317,10 +317,9 @@ struct HomeView: View {
 								.frame(height: 38)
 								.background(Int(progress * 100) == 100 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.primary))
 								.clipShape(Capsule())
-								
 							}
 							.frame(height: geo.size.height)
-							.background(Color.primary.opacity(0.8))
+							.background(Color(uiColor: MoxieColor.primary).opacity(0.8))
 							.transition(.opacity)
 						}
 					})
@@ -434,15 +433,16 @@ struct HomeView: View {
 	}
 }
 
+//#Preview {
+//	HomeView()
+//		.environment(MoxieViewModel.init(model: .placeholder))
+//		.environment(\.locale, .init(components: .init(identifier: "es_ES")))
+//}
+
 #Preview {
 	HomeView()
-		.environment(MoxieViewModel.init(model: .placeholder))
-		.environment(\.locale, .init(components: .init(identifier: "es_ES")))
+		.environment(MoxieViewModel(model: .placeholder, client: MockMoxieClient()))
 }
-
-//#Preview {
-//	HomeView(viewModel: MoxieViewModel(isLoading: true, client: MockMoxieClient()))
-//}
 
 struct CountdownView: View {
 		@State private var number: Decimal = 1000.0 // Start value as Decimal

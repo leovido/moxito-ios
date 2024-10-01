@@ -1,5 +1,6 @@
 import SwiftUI
 import AuthenticationServices
+import Sentry
 
 final class AuthViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
 	
@@ -15,6 +16,7 @@ final class AuthViewModel: NSObject, ObservableObject, ASWebAuthenticationPresen
 		
 		let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: callbackScheme) { callbackURL, error in
 			if let error = error {
+				SentrySDK.capture(error: error)
 				DispatchQueue.main.async {
 					self.authError = error.localizedDescription
 				}

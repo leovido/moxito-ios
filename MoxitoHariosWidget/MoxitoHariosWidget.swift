@@ -46,11 +46,11 @@ struct Provider: AppIntentTimelineProvider {
 			
 			let entries: [SimpleEntry] = [
 				SimpleEntry.init(date: .now,
-												 dailyMoxie: moxieModel.allEarningsAmount,
-												 dailyUSD: price * moxieModel.allEarningsAmount,
-												 claimableMoxie: moxieModel.moxieClaimTotals.first!.availableClaimAmount,
-												 claimableUSD: price * moxieModel.moxieClaimTotals.first!.availableClaimAmount,
-												 claimedMoxie: moxieModel.moxieClaimTotals.first!.claimedAmount,
+												 dailyMoxie: moxieModel.allEarningsAmount ?? 0,
+												 dailyUSD: price * (moxieModel.allEarningsAmount ?? 0),
+												 claimableMoxie: moxieModel.moxieClaimTotals.first?.availableClaimAmount ?? 0,
+												 claimableUSD: price * (moxieModel.moxieClaimTotals.first?.availableClaimAmount ?? 0),
+												 claimedMoxie: moxieModel.moxieClaimTotals.first?.claimedAmount ?? 0,
 												 configuration: .init())
 			]
 			

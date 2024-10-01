@@ -116,6 +116,8 @@ struct OnboardingView: View {
 			.onAppear() {
 				do {
 					viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
+					viewModel.input = viewModel.model.entityID
+					viewModel.inputFID = Int(viewModel.model.entityID) ?? 0
 				} catch {
 					SentrySDK.capture(error: error)
 				}
@@ -127,6 +129,9 @@ struct OnboardingView: View {
 					}
 					handleDeepLink(url: url)
 				}
+			}
+			.onOpenURL { incomingURL in
+				handleDeepLink(url: incomingURL)
 			}
 		}
 	}
@@ -146,15 +151,19 @@ struct OnboardingView: View {
 				 let decodedSignerString = String(data: decodedSigner, encoding: .utf8),
 				 let decodedFID = Data(base64Encoded: fid),
 				 let decodedFIDString = String(data: decodedFID, encoding: .utf8) {
-				saveToKeychain(token: signer, for: fid, service: "com.christianleovido.Moxito")
+				saveToKeychain(token: decodedSignerString, for: decodedFIDString, service: "com.christianleovido.Moxito")
 				
 				viewModel.input = decodedFIDString
 				viewModel.inputFID = Int(decodedFIDString) ?? 0
+				
 			} else {
-				print("Failed to decode Base64 data")
+				SentrySDK.capture(error: MoxieError.message("Failed to decode Base64 data"))
 			}
+		} else {
+			print("Required query items missing: signer or fid.")
 		}
 	}
+
 }
 
 #Preview {
