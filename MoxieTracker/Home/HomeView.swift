@@ -65,6 +65,17 @@ struct HomeView: View {
 							.font(.callout)
 							.background(Color(uiColor: MoxieColor.green))
 							.clipShape(Capsule())
+							.confirmationDialog("Moxie claim",
+																	isPresented: $claimViewModel.isClaimDialogShowing,
+																	titleVisibility: .visible) {
+								ForEach(viewModel.wallets, id: \.self) { wallet in
+									Button(wallet) {
+										claimViewModel.actions.send(.selectedWallet(wallet))
+									}
+								}
+							} message: {
+								Text("Choose wallet for claiming Moxie")
+							}
 							
 							Button(action: {
 								viewModel.isSearchMode.toggle()
@@ -321,17 +332,6 @@ struct HomeView: View {
 							.transition(.opacity)
 						}
 					})
-					.confirmationDialog("Moxie claim",
-															isPresented: $claimViewModel.isClaimDialogShowing,
-															titleVisibility: .visible) {
-						ForEach(viewModel.wallets, id: \.self) { wallet in
-							Button(wallet) {
-								claimViewModel.actions.send(.selectedWallet(wallet))
-							}
-						}
-					} message: {
-						Text("Choose wallet for claiming Moxie")
-					}
 					.alert("Wallet confirmation", isPresented: $claimViewModel.isClaimAlertShowing, actions: {
 						Button {
 							claimViewModel.actions.send(.claimRewards(fid: viewModel.model.entityID, wallet: claimViewModel.selectedWallet))

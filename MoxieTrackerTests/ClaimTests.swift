@@ -16,6 +16,12 @@ final class ClaimTests: XCTestCase {
 		XCTAssertEqual(vm.selectedWalletDisplay, "\(vm.selectedWallet.prefix(4))...\(vm.selectedWallet.suffix(4))")
 	}
 	
+	func testRequestFalse() throws {
+		vm = .init()
+
+		XCTAssertEqual(vm.isClaimRequested, false)
+	}
+	
 	func testLoading() async throws {
 		vm = .init(moxieClaimStatus: nil, moxieClaimModel: .placeholder, client: MockMoxieClient())
 
