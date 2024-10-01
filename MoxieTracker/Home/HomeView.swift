@@ -222,9 +222,7 @@ struct HomeView: View {
 									}
 								}
 							}
-							
 						}
-						
 						Spacer()
 					}
 					.padding()
