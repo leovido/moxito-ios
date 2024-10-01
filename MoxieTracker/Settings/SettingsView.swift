@@ -1,6 +1,7 @@
 import SwiftUI
 import WidgetKit
 import MoxieLib
+import Sentry
 
 extension Bundle {
 	var releaseVersionNumber: String? {
@@ -47,6 +48,8 @@ struct SettingsView: View {
 						viewModel.inputFID = 0
 
 						moxieData = Data()
+						SentrySDK.setUser(.init(userId: ""))
+
 						WidgetCenter.shared.reloadAllTimelines()
 					}) {
 						Text("Logout")

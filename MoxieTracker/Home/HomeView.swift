@@ -369,6 +369,9 @@ struct HomeView: View {
 							viewModel.timeAgoDisplay()
 						}
 					}
+					.onAppear() {
+						SentrySDK.setUser(.init(userId: viewModel.model.entityID))
+					}
 					.sheet(isPresented: $viewModel.isSearchMode, content: {
 						SearchListView(viewModel: .init(client: .init(), query: "", items: [], currentFID: viewModel.inputFID))
 					})
