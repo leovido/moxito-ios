@@ -237,6 +237,7 @@
 		475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		475F73BA2CA95AF800E0CFEA /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
+		475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Moxito.xctestplan; path = MoxieTrackerTests/Moxito.xctestplan; sourceTree = SOURCE_ROOT; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
 		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -404,6 +405,7 @@
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */,
 				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
+				475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */,
 				475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */,
 				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
@@ -1200,7 +1202,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
@@ -1241,7 +1243,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Moxito.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
@@ -1359,7 +1361,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxieWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxieWidget/Info.plist;
@@ -1391,7 +1393,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxieWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxieWidget/Info.plist;
@@ -1738,7 +1740,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxitoHariosWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxitoHariosWidget/Info.plist;
@@ -1767,7 +1769,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MoxitoHariosWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoxitoHariosWidget/Info.plist;

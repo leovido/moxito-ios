@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "545AB221-3809-4108-97C7-F2507DD5FB90",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "DEVCYCLE_API_KEY_PROD",
+        "value" : "dvc_mobile_99d8bb82_24c3_4405_bcb7_df5bf630ac1a_84d4341"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:fc-poc-wf.xcodeproj",
+      "identifier" : "471FE9722C7F808C00D20F4C",
+      "name" : "Moxito"
+    },
+    "testExecutionOrdering" : "random",
+    "threadSanitizerEnabled" : true,
+    "undefinedBehaviorSanitizerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:fc-poc-wf.xcodeproj",
+        "identifier" : "471FE9812C7F808D00D20F4C",
+        "name" : "MoxieTrackerTests"
+      }
+    }
+  ],
+  "version" : 1
+}
