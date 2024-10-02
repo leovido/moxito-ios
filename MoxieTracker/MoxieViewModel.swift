@@ -194,9 +194,9 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID
-				self.wallets = $0.socials[0].connectedAddresses
+				self.wallets = $0.socials.first?.connectedAddresses
 					.filter({$0.blockchain == "ethereum"})
-					.map({ $0.address })
+					.map({ $0.address }) ?? []
 			}
 			.store(in: &subscriptions)
 		
