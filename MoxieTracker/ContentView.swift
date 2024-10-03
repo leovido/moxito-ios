@@ -17,17 +17,9 @@ struct ContentView: View {
 				Group {
 					HomeView()
 						.tag(Tab.home)
-//						.searchable(text: $viewModel.input, isPresented: $viewModel.isSearchMode)
-//						.onSubmit(of: .search) {
-//							viewModel.onSubmitSearch()
-//						}
-//						.onAppear() {
-//							let searchBarAppearance = UISearchBar.appearance()
-//							searchBarAppearance.searchTextField.textColor = .white
-//							searchBarAppearance.tintColor = .white
-//						}
-
-					AccountView(viewModel: viewModel)
+					AccountView()
+						.tag(Tab.settings)
+					ProfileView()
 						.tag(Tab.profile)
 				}
 				.toolbar(.visible, for: .tabBar)

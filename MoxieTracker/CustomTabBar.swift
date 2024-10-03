@@ -4,6 +4,7 @@ import MoxieLib
 enum Tab: String, Hashable, CaseIterable {
 	case home = "Home"
 	case profile = "Person"
+	case settings = "Gear"
 }
 
 private let buttonDimen: CGFloat = 55
@@ -21,14 +22,21 @@ struct CustomBottomTabBarView: View {
 						.onTapGesture {
 							currentTab = .home
 						}
-						.frame(maxWidth: geo.size.width * 0.5)
+						.frame(maxWidth: geo.size.width * 0.33)
+
+					TabBarButton(imageName: Tab.settings.rawValue, tabName: .settings, selectedTab: $currentTab)
+						.frame(width: buttonDimen, height: buttonDimen)
+						.onTapGesture {
+							currentTab = .settings
+						}
+						.frame(maxWidth: geo.size.width * 0.33)
 
 					TabBarButton(imageName: Tab.profile.rawValue, tabName: .profile, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
 							currentTab = .profile
 						}
-						.frame(maxWidth: geo.size.width * 0.5)
+						.frame(maxWidth: geo.size.width * 0.33)
 				}
 				.frame(maxWidth: geo.size.width)
 				.tint(Color.white)

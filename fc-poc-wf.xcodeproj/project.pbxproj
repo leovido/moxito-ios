@@ -44,6 +44,8 @@
 		475F73BD2CA95B3800E0CFEA /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475F73BA2CA95AF800E0CFEA /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		475F73BE2CA95B4100E0CFEA /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475F73BA2CA95AF800E0CFEA /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C02CADAA0C00E0CFEA /* ProfileView.swift */; };
+		475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */; };
+		475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
 		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
 		47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324062C6E578400BE03C2 /* Assets.xcassets */; };
@@ -240,6 +242,8 @@
 		475F73BA2CA95AF800E0CFEA /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
 		475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Moxito.xctestplan; path = MoxieTrackerTests/Moxito.xctestplan; sourceTree = SOURCE_ROOT; };
 		475F73C02CADAA0C00E0CFEA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionMoxieStatView.swift; sourceTree = "<group>"; };
+		475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
 		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -402,6 +406,8 @@
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
 				475F73C02CADAA0C00E0CFEA /* ProfileView.swift */,
+				475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */,
+				475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
 				475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */,
@@ -1052,6 +1058,7 @@
 				475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */,
 				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
+				475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */,
 				47E4CC472C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
 				475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
@@ -1069,6 +1076,7 @@
 				47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */,
 				475F73B92CA94F8F00E0CFEA /* AuthViewModel.swift in Sources */,
 				47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */,
+				475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */,
 				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
 				471FE9762C7F808C00D20F4C /* MoxieTrackerApp.swift in Sources */,
 			);

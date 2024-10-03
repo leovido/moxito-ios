@@ -50,13 +50,13 @@ struct ProfileCardAlternativeView: View {
 	let rank: Decimal
 
 	var body: some View {
-		VStack {
+		VStack(spacing: 0) {
 			ZStack {
 				AsyncImage(url: URL(string: model?.socials.first?.profileImage ?? ""),
 									 content: { image in
 					image
 						.resizable()
-						.aspectRatio(contentMode: .fit)
+						.aspectRatio(contentMode: .fill)
 						.clipShape(Circle())
 				}, placeholder: {
 					ProgressView()
@@ -89,9 +89,10 @@ struct ProfileCardAlternativeView: View {
 
 				Text("FID: \(model?.entityID ?? "")")
 					.fontWeight(.light)
-					.foregroundStyle(Color(uiColor: MoxieColor.primary))
+					.foregroundStyle(Color.white)
 					.font(.custom("Inter", size: 12))
 			}
+			.padding(.bottom, 16)
 		}
 	}
 }

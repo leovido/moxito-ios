@@ -52,6 +52,11 @@
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
+		<key>Moxito-DEBUG.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
 		<key>Moxito.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
@@ -103,6 +108,11 @@
 			<true/>
 		</dict>
 		<key>47C3242F2C6E57D400BE03C2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47E4CC262C98563600BE77E8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

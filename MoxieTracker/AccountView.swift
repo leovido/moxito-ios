@@ -46,10 +46,9 @@ struct ProfileOptionRow: View {
 }
 
 struct AccountView: View {
-	@ObservedObject var viewModel: MoxieViewModel
+	@EnvironmentObject var viewModel: MoxieViewModel
 
 	@State private var profileOptions: [ProfileOptions] = [
-		ProfileOptions(name: "Profile", imageName: "profile"),
 		ProfileOptions(name: "Settings", imageName: "settings"),
 		ProfileOptions(name: "Help", imageName: "help")
 //		ProfileOptions(name: "Logout", imageName: "door")
@@ -119,6 +118,8 @@ struct AccountView: View {
 			SettingsView(viewModel: viewModel)
 				.toolbar(.hidden, for: .tabBar)
 
+		} else if option.name == "Profile" {
+			ProfileView()
 		} else {
 			Text(option.name)
 		}
@@ -153,5 +154,5 @@ struct AccountView: View {
 }
 
 #Preview {
-	AccountView(viewModel: .init(client: MockMoxieClient()))
+	AccountView()
 }

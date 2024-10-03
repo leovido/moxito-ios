@@ -24,6 +24,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 	@Published var persistence: UserDefaults
 	@Published var wallets: [String] = []
+	@Published var fansCount: String = ""
 
 	@Published var input: String
 	@Published var confettiCounter: Int = 0
@@ -263,6 +264,16 @@ final class MoxieViewModel: ObservableObject, Observable {
 		}
 	}
 
+	func fetchFansCount() async throws {
+		do {
+			let fansCountLocal = try await client.fetchFansCount(fid: input)
+
+			fansCount = fansCountLocal.description
+		} catch {
+			fansCount = "0"
+		}
+	}
+
 	func fetchPrice() async throws {
 		do {
 			price = try await client.fetchPrice()
@@ -305,6 +316,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				self.input = model.entityID
 				checkAndNotify(newModel: newModel, userInput: userInputNotifications)
 
+				try await fetchFansCount()
 				WidgetCenter.shared.reloadAllTimelines()
 			}
 		} catch {

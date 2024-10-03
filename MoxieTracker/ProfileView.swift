@@ -2,103 +2,82 @@ import SwiftUI
 import MoxieLib
 
 struct ProfileView: View {
+
 	let columns = [
 		GridItem(.flexible()),
-		GridItem(.flexible())
+		GridItem(.flexible(minimum: 100, maximum: 200))
 	]
 
 	@EnvironmentObject var viewModel: MoxieViewModel
 
+	var tvlText: String {
+		guard let fcScore = viewModel.model.socials.first?.farcasterScore else {
+			return ""
+		}
+		let d = Decimal(string: fcScore.tvl) ?? 0
+		let value = d / pow(10, 18)
+		return value.formatted(.number.precision(.fractionLength(2)))
+	}
+
+	var farScore: String {
+		guard let fcScore = viewModel.model.socials.first?.farcasterScore?.farScore else {
+			return ""
+		}
+		return fcScore.formatted(.number.precision(.fractionLength(0)))
+	}
+
 	var body: some View {
-		ZStack {
-			Color(uiColor: MoxieColor.primary)
-				.ignoresSafeArea(.all)
-			VStack {
-//				ProfileCardAlternativeView(model: viewModel.model, rank: viewModel.model.socials.first?.farcasterScore?.farRank ?? 0)
-				LazyVGrid(columns: columns, spacing: 16) {
-					GridItemView(title: "Moxie", value: "49", subtitle: "Fans", icon: "person.2.fill")
+		NavigationStack {
+			ZStack {
+				Color(uiColor: MoxieColor.primary)
+					.ignoresSafeArea(.all)
+				VStack {
+					ProfileCardAlternativeView(model: viewModel.model, rank: viewModel.model.socials.first?.farcasterScore?.farRank ?? 0)
 
-					GridItemView(title: "Like", value: "22.50 M", subtitle: "", icon: "heart.fill")
+					ScrollView {
+						LazyVGrid(columns: columns, spacing: 16) {
+							VStack {
+								GridItemView(title: "Moxie", value: viewModel.fansCount, subtitle: "Fans", icon: "person.2.fill")
+								GridItemView(title: "Farscore", value: farScore, subtitle: "", icon: "chart.bar.fill")
+								GridItemView(title: "TVL", value: tvlText, subtitle: "Staked", icon: "lock.fill")
+//								GridItemView(title: "TVL", value: "-", subtitle: "Unstaked", icon: "lock.open.fill")
 
-					GridItemBigView(farScore: 3423.43, icon: "heart")
+							}
 
-					GridItemView(title: "TVL", value: "$100.5 k", subtitle: "$Moxie token", icon: "lock.fill")
+							VStack {
+								GridItemBigView(farScore: 51)
 
-					GridItemView(title: "Recast", value: "22.50 M", subtitle: "", icon: "arrowshape.turn.up.right.fill")
+								Spacer()
+							}
 
-					GridItemView(title: "Replying", value: "22.50 M", subtitle: "", icon: "message.fill")
+						}
+						.padding()
+
+						Link(destination: URL(string: "farcaster://home")!, label: {
+							Label(title: {
+								Text("Cast on Warpcast")
+
+							}, icon: {
+								Image("fc-logo", bundle: .main)
+									.resizable()
+									.aspectRatio(contentMode: .fit)
+									.foregroundStyle(Color.white)
+									.frame(width: 20, height: 20)
+							})
+							.padding()
+							.frame(maxWidth: .infinity)
+							.background(Color(uiColor: MoxieColor.farcasterPurple))
+							.clipShape(Capsule())
+							.fontWeight(.bold)
+							.foregroundStyle(Color.white)
+							.font(.custom("Inter", size: 16))
+							.padding(.horizontal)
+						})
+					}
+					.background(Color.white)
+					.clipShape(UnevenRoundedRectangle(topLeadingRadius: 32, topTrailingRadius: 32))
 				}
-				.padding()
-				//				ScrollView {
-				//					VStack(alignment: .leading) {
-				//						HStack {
-				//							Text("Moxie")
-				//								.font(.custom("Inter", size: 14))
-				//								.bold()
-				//								.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//
-				//							Image(systemName: "person.fill")
-				//								.resizable()
-				//								.aspectRatio(contentMode: .fit)
-				//								.frame(width: 20)
-				//								.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//						}
-				//						Text("\(viewModel.model.socials.first?.farcasterScore?.farRank ?? 0)")
-				//
-				//						Text("Fans")
-				//							.font(.custom("Inter", size: 14))
-				//							.foregroundStyle(Color.gray)
-				//					}
-				//					.padding()
-				//					.overlay(
-				//						RoundedRectangle(cornerRadius: 24)
-				//							.stroke(.gray, lineWidth: 1)
-				//					)
-				//
-				//					VStack(alignment: .leading) {
-				//						HStack {
-				//							Text("Like/Farscore")
-				//								.font(.custom("Inter", size: 14))
-				//								.bold()
-				//								.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//
-				//							Spacer()
-				//
-				//							Image(systemName: "person.fill")
-				//								.resizable()
-				//								.aspectRatio(contentMode: .fit)
-				//								.frame(width: 20)
-				//								.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//						}
-				//						Text("\(viewModel.model.socials.first?.farcasterScore?.farScore ?? 0)")
-				//					}
-				//					.padding()
-				//					.overlay(
-				//						RoundedRectangle(cornerRadius: 24)
-				//							.stroke(.gray, lineWidth: 1)
-				//					)
-				//
-				//					Text("Far Score")
-				//						.font(.custom("Inter", size: 14))
-				//						.bold()
-				//						.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//					Text("\(viewModel.model.socials.first?.farcasterScore?.farScore ?? 0)")
-				//					Text("Liquidity")
-				//						.font(.custom("Inter", size: 14))
-				//						.bold()
-				//						.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//					Text("\(viewModel.model.socials.first?.farcasterScore?.liquidityBoost ?? 0)")
-				//					Text("TVL")
-				//						.font(.custom("Inter", size: 14))
-				//						.bold()
-				//						.foregroundStyle(Color(uiColor: MoxieColor.primary))
-				//					Text(viewModel.model.socials.first?.farcasterScore?.tvl ?? "0")
-				//				}
-				//				.background(Color.white)
-				//				.clipShape(UnevenRoundedRectangle(topLeadingRadius: 32, topTrailingRadius: 32))
-				//				}
 			}
-
 		}
 	}
 }
@@ -110,160 +89,101 @@ struct GridItemView: View {
 	let icon: String
 
 	var body: some View {
-		VStack(alignment: .leading, spacing: 4) {
-			HStack {
-				Text(title)
-					.font(.headline)
-					.foregroundColor(Color.purple)
+		VStack {
+			VStack(alignment: .leading, spacing: 4) {
+				HStack {
+					Text(title)
+						.foregroundColor(Color(uiColor: MoxieColor.primary))
+						.bold()
+						.scaledFont(name: "Inter", size: 18)
 
-				Spacer()
+					Spacer()
 
-				Image(systemName: icon)
-					.foregroundColor(Color.purple)
+					Image(systemName: icon)
+						.foregroundColor(Color(uiColor: MoxieColor.primary))
+				}
+
+				HStack {
+					Text(value)
+						.fontWeight(.bold)
+						.foregroundColor(.black)
+						.scaledFont(name: "Inter", size: 21)
+						.minimumScaleFactor(0.8)
+				}
+
+				if !subtitle.isEmpty {
+					Text(subtitle)
+						.font(.footnote)
+						.foregroundColor(.gray)
+				}
 			}
-			HStack {
-				Text(value)
-					.font(.title)
-					.fontWeight(.bold)
-					.foregroundColor(.black)
+			.padding()
+			.background(RoundedRectangle(cornerRadius: 16)
+				.stroke(Color.gray.opacity(0.2), lineWidth: 1))
+			.background(Color.white)
 
-				Image("CoinMoxiePurple", bundle: .main)
-			}
-
-			if !subtitle.isEmpty {
-				Text(subtitle)
-					.font(.footnote)
-					.foregroundColor(.gray)
-			}
+			Spacer()
 		}
-		.padding()
-		.background(RoundedRectangle(cornerRadius: 16)
-			.stroke(Color.gray.opacity(0.2), lineWidth: 1))
-		.background(Color.white) // Optional: to match the card look in your design
 	}
 }
 
 struct GridItemBigView: View {
 	let farScore: Decimal
-	let icon: String
 
 	var like: String {
-		farScore.formatted(.number.precision(.fractionLength(0)))
+		let d = farScore * 0.5
+
+		return d.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var reply: String {
-		let d = farScore * 3
+		let d = farScore * 2
 
 		return d.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var recast: String {
-		let d = farScore * 6
+		let d = farScore * 4
 
 		return d.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var replyke: String {
-		let d = farScore * 10
+		let d = farScore * 6.5
 
 		return d.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var body: some View {
-		VStack(alignment: .leading, spacing: 4) {
-			VStack {
-				HStack {
-					Text("Like/Farscore")
-						.foregroundColor(Color(uiColor: MoxieColor.primary))
-						.bold()
-						.font(.custom("Inter", size: 14))
+		VStack(alignment: .leading, spacing: 11) {
+			ProfileSectionMoxieStatView(moxieStat: .init(title: "Like",
+																									 value: like,
+																									 icon: "heart.fill"))
 
-					Spacer()
+			ProfileSectionMoxieStatView(moxieStat: .init(title: "Reply",
+																									 value: reply,
+																									 icon: "text.bubble.fill"))
 
-					Image(systemName: icon)
-						.foregroundColor(Color(uiColor: MoxieColor.primary))
-				}
-				HStack {
-					Text(like)
-						.fontWeight(.bold)
-						.foregroundColor(.black)
-						.font(.custom("Inter", size: 18))
+			ProfileSectionMoxieStatView(moxieStat: .init(title: "Recast",
+																									 value: recast,
+																									 icon: "arrowshape.turn.up.backward.fill"))
 
-					Image("CoinMoxiePurple", bundle: .main)
-				}
-			}
+			ProfileSectionMoxieStatView(moxieStat: .init(title: "Replyke",
+																									 value: replyke,
+																									 icon: "square.stack.fill"))
 
-			VStack {
-				HStack {
-					Text("Reply")
-						.font(.headline)
-						.foregroundColor(Color.purple)
-
-					Spacer()
-
-					Image(systemName: icon)
-						.foregroundColor(Color.purple)
-				}
-				HStack {
-					Text(reply)
-						.font(.title)
-						.fontWeight(.bold)
-						.foregroundColor(.black)
-
-					Image("CoinMoxiePurple", bundle: .main)
-				}
-			}
-
-			VStack {
-				HStack {
-					Text("Recast")
-						.font(.headline)
-						.foregroundColor(Color.purple)
-
-					Spacer()
-
-					Image(systemName: icon)
-						.foregroundColor(Color.purple)
-				}
-				HStack {
-					Text(recast)
-						.font(.title)
-						.fontWeight(.bold)
-						.foregroundColor(.black)
-
-					Image("CoinMoxiePurple", bundle: .main)
-				}
-			}
-
-			VStack {
-				HStack {
-					Text("REPLYKE")
-						.font(.headline)
-						.foregroundColor(Color.purple)
-
-					Spacer()
-
-					Image(systemName: icon)
-						.foregroundColor(Color.purple)
-				}
-				HStack {
-					Text(replyke)
-						.font(.title)
-						.fontWeight(.bold)
-						.foregroundColor(.black)
-
-					Image("CoinMoxiePurple", bundle: .main)
-				}
-			}
+//			Spacer()
 		}
 		.padding()
 		.background(RoundedRectangle(cornerRadius: 16)
 			.stroke(Color.gray.opacity(0.2), lineWidth: 1))
-		.background(Color.white) // Optional: to match the card look in your design
+		.background(Color.white)
 	}
 }
 
 #Preview {
-	ProfileView()
-		.environmentObject(MoxieViewModel(model: .placeholder))
+	NavigationStack {
+		ProfileView()
+			.environmentObject(MoxieViewModel(model: .placeholder))
+	}
 }
