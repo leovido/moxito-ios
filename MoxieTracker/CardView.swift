@@ -10,28 +10,28 @@ struct CardView: View {
 	let amount: Decimal
 	let price: Decimal
 	let info: String
-	
+
 	var amountFormatted: String {
 		let numberFormatter = NumberFormatter()
 		numberFormatter.numberStyle = .currency
 		numberFormatter.currencySymbol = ""
-		
+
 		// Make sure to use the current locale
 		numberFormatter.locale = .current
-		
+
 		if let formattedValue = numberFormatter.string(from: amount as NSDecimalNumber) {
 			return formattedValue
 		} else {
 			return "$0.00"
 		}
 	}
-	
+
 	var dollarValue: Decimal {
 		let am = price * amount
-		
+
 		return am
 	}
-	
+
 	var body: some View {
 		HStack {
 			VStack {
@@ -49,13 +49,13 @@ struct CardView: View {
 			.frame(width: 40, height: 40)
 			.padding(.leading)
 			.padding(.trailing, 12)
-			
+
 			VStack(alignment: .leading, spacing: 0) {
 				Text(title)
 					.font(.headline)
 					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color.white)
-				
+
 				HStack(spacing: 1) {
 					Text(amountFormatted)
 						.font(.title)
@@ -63,14 +63,14 @@ struct CardView: View {
 						.foregroundStyle(Color.white)
 						.fontWeight(.heavy)
 						.padding(.trailing, -4)
-					
+
 					Image("CoinMoxie", bundle: .main)
 						.resizable()
 						.aspectRatio(contentMode: .fit)
 						.frame(height: 35)
 				}
 				.frame(maxHeight: .infinity)
-				
+
 				Text("~\(formattedDollarValue(dollarValue: dollarValue))")
 					.font(.caption)
 					.font(.custom("Inter", size: 20))
@@ -78,9 +78,9 @@ struct CardView: View {
 					.fontWeight(.light)
 			}
 			.padding(.all, 0)
-			
+
 			Spacer()
-			
+
 			Menu {
 				Text(info)
 			} label: {

@@ -15,15 +15,15 @@ extension Bundle {
 struct SettingsView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
 	@ObservedObject var viewModel: MoxieViewModel
-	
+
 	var version: String {
 		Bundle.main.releaseVersionNumber ?? "1.0.0"
 	}
-	
+
 	var buildVersionNumber: String {
 		Bundle.main.buildVersionNumber ?? "1"
 	}
-	
+
 	var body: some View {
 		NavigationStack {
 			ZStack {
@@ -40,9 +40,9 @@ struct SettingsView: View {
 						}
 					}
 					.listStyle(GroupedListStyle())
-					
+
 					Spacer()
-					
+
 					Button(action: {
 						viewModel.model = .noop
 						viewModel.inputFID = 0
@@ -66,7 +66,7 @@ struct SettingsView: View {
 					)
 					.padding(.bottom)
 					.padding(.horizontal)
-					
+
 					Text("Moxito © 2024 v\(version) (\(buildVersionNumber))")
 						.background(Color.clear)
 						.foregroundStyle(Color(uiColor: .systemGray4))

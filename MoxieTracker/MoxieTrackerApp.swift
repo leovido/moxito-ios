@@ -8,7 +8,7 @@ struct MoxieTrackerApp: App {
 	@StateObject var mainViewModel = MoxieViewModel.shared
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	@AppStorage("moxieData") var moxieData: Data = .init()
-	
+
 	var body: some Scene {
 		WindowGroup {
 			Group {

@@ -4,13 +4,13 @@ import Combine
 
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
-	
+
 	init() {
 		UITabBar.appearance().isHidden = true
 	}
-	
+
 	@State private var selectedTab: Tab = Tab.home
-	
+
 	var body: some View {
 		ZStack(alignment: .bottom) {
 			TabView(selection: $selectedTab) {
@@ -26,14 +26,14 @@ struct ContentView: View {
 //							searchBarAppearance.searchTextField.textColor = .white
 //							searchBarAppearance.tintColor = .white
 //						}
-					
+
 					AccountView(viewModel: viewModel)
 						.tag(Tab.profile)
 				}
 				.toolbar(.visible, for: .tabBar)
 				.toolbarColorScheme(.light, for: .tabBar)
 			}
-			
+
 			CustomBottomTabBarView(currentTab: $selectedTab)
 				.ignoresSafeArea()
 				.sensoryFeedback(.selection, trigger: selectedTab)

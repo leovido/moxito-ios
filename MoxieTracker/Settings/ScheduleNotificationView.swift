@@ -4,7 +4,7 @@ import UserNotifications
 
 struct ScheduleNotificationView: View {
 	@ObservedObject var viewModel: MoxieViewModel
-	
+
 	var body: some View {
 		Group {
 			List {
@@ -14,21 +14,21 @@ struct ScheduleNotificationView: View {
 					} label: {
 						HStack {
 							Text("Every hour")
-							
+
 							Spacer()
-							
+
 							Image(systemName: viewModel.selectedNotificationOptions.contains(NotificationOption.hour) ? "checkmark.circle" : "circle")
 						}
 					}
-					
+
 					Button {
 						viewModel.updateNotificationOption(.week)
 					} label: {
 						HStack {
 							Text("Every week")
-							
+
 							Spacer()
-							
+
 							Image(systemName: viewModel.selectedNotificationOptions.contains(NotificationOption.week) ? "checkmark.circle" : "circle")
 						}
 					}
@@ -38,30 +38,30 @@ struct ScheduleNotificationView: View {
 					} label: {
 						HStack {
 							Text("Every month")
-							
+
 							Spacer()
-							
+
 							Image(systemName: viewModel.selectedNotificationOptions.contains(NotificationOption.month) ? "checkmark.circle" : "circle")
 						}
 					}
 				} header: {
 					Text("Frequency")
 				}
-				
+
 				Section {
 					Button {
 						viewModel.isNotificationSheetPresented = true
 					} label: {
 						HStack {
 							Text("Custom (every \(viewModel.userInputNotifications.formatted()) $MOXIE)")
-							
+
 							Spacer()
-							
+
 							Image(systemName: viewModel.userInputNotifications > 0 ? "checkmark.circle" : "circle")
 						}
 					}
 				}
-				
+
 				Section {
 					Button {
 						viewModel.removeAllScheduledNotifications()
@@ -69,7 +69,7 @@ struct ScheduleNotificationView: View {
 						HStack {
 							Text("Delete")
 								.foregroundStyle(Color.red)
-							
+
 							Spacer()
 						}
 					}
@@ -112,7 +112,7 @@ struct ScheduleNotificationView: View {
 					.fontDesign(.rounded)
 					.autocorrectionDisabled()
 					.textFieldStyle(RoundedBorderTextFieldStyle())
-					
+
 					Button("Save") {
 						viewModel.isNotificationSheetPresented = false
 						viewModel.saveCustomMoxieInput()
@@ -129,7 +129,7 @@ struct ScheduleNotificationView: View {
 						.foregroundStyle(Color(uiColor: MoxieColor.dark))
 						.fontDesign(.rounded)
 				}
-				
+
 				Spacer()
 			}
 			.padding()
@@ -138,8 +138,8 @@ struct ScheduleNotificationView: View {
 		})
 		.toolbar(.hidden, for: .tabBar)
 		.navigationTitle("Notifications")
-		.onAppear() {
-			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+		.onAppear {
+			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
 					if granted {
 							print("Permission granted")
 					} else {

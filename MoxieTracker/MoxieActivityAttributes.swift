@@ -8,7 +8,7 @@ struct MoxieActivityAttributes: ActivityAttributes {
 		var dailyUSD: String
 		var claimableMoxie: String
 		var claimableUSD: String
-		
+
 		var username: String
 		var fid: String
 		var imageURL: String

@@ -3,17 +3,17 @@ import AuthenticationServices
 import Sentry
 
 final class AuthViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
-	
+
 	@EnvironmentObject var viewModel: MoxieViewModel
-	
+
 	@Published var isAuthenticated = false
 	@Published var url: URL?
 	@Published var authError: String?
-	
+
 	func startLogin() {
 		let authURL = URL(string: "https://app.moxito.xyz")!
 		let callbackScheme = "moxito"
-		
+
 		let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: callbackScheme) { callbackURL, error in
 			if let error = error {
 				SentrySDK.capture(error: error)
@@ -22,7 +22,7 @@ final class AuthViewModel: NSObject, ObservableObject, ASWebAuthenticationPresen
 				}
 				return
 			}
-			
+
 			if let callbackURL = callbackURL {
 				DispatchQueue.main.async {
 					self.url = callbackURL
@@ -30,11 +30,11 @@ final class AuthViewModel: NSObject, ObservableObject, ASWebAuthenticationPresen
 				}
 			}
 		}
-		
+
 		session.presentationContextProvider = self
 		session.start()
 	}
-	
+
 	func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
 		return UIApplication.shared.windows.first ?? ASPresentationAnchor()
 	}

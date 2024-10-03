@@ -10,7 +10,7 @@ private let buttonDimen: CGFloat = 55
 
 struct CustomBottomTabBarView: View {
 	@Binding var currentTab: Tab
-	
+
 	var body: some View {
 		GeometryReader { geo in
 			VStack {
@@ -22,7 +22,7 @@ struct CustomBottomTabBarView: View {
 							currentTab = .home
 						}
 						.frame(maxWidth: geo.size.width * 0.5)
-					
+
 					TabBarButton(imageName: Tab.profile.rawValue, tabName: .profile, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
@@ -45,9 +45,9 @@ struct CustomBottomTabBarView: View {
 private struct TabBarButton: View {
 	let imageName: String
 	let tabName: Tab
-	
+
 	@Binding var selectedTab: Tab
-	
+
 	var body: some View {
 		Image(tabName == selectedTab ? "\(imageName)Selected" : "\(imageName)Unselected")
 			.renderingMode(.original)

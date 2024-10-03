@@ -20,7 +20,9 @@ struct Provider: AppIntentTimelineProvider {
 	func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
 		var entries: [SimpleEntry] = []
 		
-		let result = try! await client.fetchFartherTips(forceRemote: false)
+		guard let result = try? await client.fetchFartherTips(forceRemote: false) else {
+			return Timeline(entries: entries, policy: .atEnd)
+		}
 		
 		// Generate a timeline consisting of five entries an hour apart, starting from the current date.
 		let currentDate = Date()

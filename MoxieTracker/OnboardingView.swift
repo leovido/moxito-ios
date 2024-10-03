@@ -15,14 +15,14 @@ struct OnboardingView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 //	@StateObject var featureFlagManager: FeatureFlagManager
 	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
-	
+
 	var body: some View {
 		ZStack {
 			Image("Onboarding-BG", bundle: .main)
 				.resizable()
 				.imageScale(.small)
 				.ignoresSafeArea()
-			
+
 			VStack {
 				Spacer()
 				VStack {
@@ -37,20 +37,20 @@ struct OnboardingView: View {
 					.fontWeight(.bold)
 					.padding(.top, 24)
 					.padding()
-					
+
 					Text("Sign in to the apps to display your profile or skip this step. If you skip this step you will only have access to the FID search.")
 						.padding([.horizontal, .bottom], 25)
 						.foregroundStyle(Color("OnboardingText"))
 						.font(.custom("Inter", size: 14))
 						.multilineTextAlignment(.center)
-					
+
 					Button(action: {
 						authViewModel.startLogin()
 					}) {
 						Image("SignInWarpcast", bundle: .main)
 					}
 					.shadow(color: Color("SignInShadow"), radius: 24, y: 8)
-					
+
 					Button(action: {
 						viewModel.model = .placeholder
 					}) {
@@ -93,7 +93,7 @@ struct OnboardingView: View {
 				Text("Sign in")
 					.font(.custom("Inter", size: 16))
 			}
-			
+
 			Button {
 				viewModelOnboarding.isAlertShowing = false
 			} label: {
@@ -113,7 +113,7 @@ struct OnboardingView: View {
 				}
 			}
 		})
-		.onAppear() {
+		.onAppear {
 			do {
 				viewModel.model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: moxieData)
 				viewModel.input = viewModel.model.entityID
@@ -122,7 +122,7 @@ struct OnboardingView: View {
 				SentrySDK.capture(error: error)
 			}
 		}
-		.onChange(of: authViewModel.isAuthenticated, initial: true) { oldValue, newValue in
+		.onChange(of: authViewModel.isAuthenticated, initial: true) { _, newValue in
 			if newValue {
 				guard let url = authViewModel.url else {
 					return
@@ -134,7 +134,7 @@ struct OnboardingView: View {
 			handleDeepLink(url: incomingURL)
 		}
 	}
-	
+
 	func handleDeepLink(url: URL) {
 		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
 					components.scheme == "moxito",
@@ -144,17 +144,17 @@ struct OnboardingView: View {
 		}
 		let signer64 = queryItems.first(where: { $0.name == "id" })?.value
 		let fid64 = queryItems.first(where: { $0.name == "fid" })?.value
-		
+
 		if let signer = signer64, let fid = fid64 {
 			if let decodedSigner = Data(base64Encoded: signer),
 				 let decodedSignerString = String(data: decodedSigner, encoding: .utf8),
 				 let decodedFID = Data(base64Encoded: fid),
 				 let decodedFIDString = String(data: decodedFID, encoding: .utf8) {
 				saveToKeychain(token: decodedSignerString, for: decodedFIDString, service: "com.christianleovido.Moxito")
-				
+
 				viewModel.input = decodedFIDString
 				viewModel.inputFID = Int(decodedFIDString) ?? 0
-				
+
 			} else {
 				SentrySDK.capture(error: MoxieError.message("Failed to decode Base64 data"))
 			}

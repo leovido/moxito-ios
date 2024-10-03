@@ -6,7 +6,7 @@ import Sentry
 
 struct MiniSearchView: View {
 	@StateObject var viewModel: MoxieViewModel
-	
+
 	var body: some View {
 		GeometryReader { geo in
 			ZStack {
@@ -32,14 +32,14 @@ struct MiniSearchView: View {
 								.multilineTextAlignment(.leading)
 						}
 						Spacer()
-						
+
 					}
 					.padding(.bottom, 20)
 
 					ScrollView(showsIndicators: false) {
 						HStack {
 							VStack(alignment: .center) {
-								if (viewModel.model.socials.first?.profileImage != nil) {
+								if viewModel.model.socials.first?.profileImage != nil {
 									AsyncImage(url: URL(string: viewModel.model.socials.first!.profileImage),
 														 content: { image in
 										image
@@ -52,19 +52,19 @@ struct MiniSearchView: View {
 									.frame(width: 100, height: 100)
 									.padding(.top, -8)
 								}
-								
+
 								Text("Their claimable balance is")
 									.font(.footnote)
 									.font(.custom("Inter", size: 13))
 									.foregroundStyle(Color(uiColor: MoxieColor.primary))
-								
+
 								HStack {
 									Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
 										.font(.largeTitle)
 										.font(.custom("Inter", size: 20))
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
 										.fontWeight(.heavy)
-									
+
 									Image("CoinMoxiePurple", bundle: .main)
 										.resizable()
 										.aspectRatio(contentMode: .fit)
@@ -80,10 +80,10 @@ struct MiniSearchView: View {
 						.padding(.vertical, 20)
 						.background(Color.white)
 						.clipShape(RoundedRectangle(cornerRadius: 24))
-						
+
 						HStack {
 							Spacer()
-							
+
 							Button {
 								viewModel.filterSelection = 0
 							} label: {
@@ -95,9 +95,9 @@ struct MiniSearchView: View {
 							.padding(4)
 							.background(viewModel.filterSelection == 0 ? Color(uiColor: MoxieColor.green) : .clear)
 							.clipShape(Capsule())
-							
+
 							Spacer()
-							
+
 							Button {
 								viewModel.filterSelection = 1
 							} label: {
@@ -109,9 +109,9 @@ struct MiniSearchView: View {
 							.padding(4)
 							.background(viewModel.filterSelection == 1 ? Color(uiColor: MoxieColor.green) : .clear)
 							.clipShape(Capsule())
-							
+
 							Spacer()
-							
+
 							Button {
 								viewModel.filterSelection = 2
 							} label: {
@@ -123,7 +123,7 @@ struct MiniSearchView: View {
 							.padding(4)
 							.background(viewModel.filterSelection == 2 ? Color(uiColor: MoxieColor.green) : .clear)
 							.clipShape(Capsule())
-							
+
 							Spacer()
 						}
 						.padding(.vertical, 6)
@@ -133,7 +133,7 @@ struct MiniSearchView: View {
 						.frame(maxWidth: .infinity)
 						.frame(height: 40)
 						.padding(.vertical, 6)
-						
+
 						VStack(alignment: .leading) {
 							if viewModel.inputFID == -1 {
 								ContentUnavailableView {
@@ -153,14 +153,14 @@ struct MiniSearchView: View {
 													 info: "Earnings from casts. Likes, recasts/quoteCasts and replies all earn you $MOXIE"
 									)
 									.help("Just do something")
-									
+
 									CardView(imageSystemName: "rectangle.grid.1x2.fill",
 													 title: "Frame earnings",
 													 amount: viewModel.model.frameDevEarningsAmount,
 													 price: viewModel.price,
 													 info: "Earnings from frames that you build when you use Airstack frame validator"
 									)
-									
+
 									CardView(imageSystemName: "circle.hexagongrid.fill",
 													 title: "All earnings",
 													 amount: viewModel.model.allEarningsAmount,
@@ -170,14 +170,14 @@ struct MiniSearchView: View {
 								}
 							}
 						}
-						
+
 					}
-					
+
 					Spacer()
 				}
 				.padding()
 				.redacted(reason: viewModel.isLoading ? .placeholder : [])
-				.onAppear() {
+				.onAppear {
 					Task {
 						try await viewModel.fetchPrice()
 						viewModel.timeAgoDisplay()

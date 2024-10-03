@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ErrorView: View {
 	@Binding var error: Error?
-	
+
 	var body: some View {
 		if let error = error {
 			VStack {

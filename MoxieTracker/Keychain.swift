@@ -25,10 +25,10 @@ func retrieveFromKeychain(account: String, service: String) -> String? {
 		kSecReturnData: true,
 		kSecMatchLimit: kSecMatchLimitOne
 	] as CFDictionary
-	
+
 	var dataTypeRef: AnyObject?
 	let status = SecItemCopyMatching(query, &dataTypeRef)
-	
+
 	if status == errSecSuccess, let retrievedData = dataTypeRef as? Data {
 		return String(data: retrievedData, encoding: .utf8)
 	}
@@ -41,16 +41,16 @@ func deleteKeychainItem(service: String, account: String) -> Bool {
 		kSecAttrService as String: service,
 		kSecAttrAccount as String: account
 	]
-	
+
 	let status = SecItemDelete(query as CFDictionary)
-	
+
 	if status == errSecSuccess {
 		SentrySDK.capture(error: KeychainError.message("Keychain item successfully deleted"))
 
 		return true
 	} else if status == errSecItemNotFound {
 		SentrySDK.capture(error: KeychainError.message("Keychain item not found"))
-		
+
 		return false
 	} else {
 		SentrySDK.capture(error: KeychainError.message("Error deleting keychain item: \(status)"))

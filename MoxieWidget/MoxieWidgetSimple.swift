@@ -37,6 +37,7 @@ struct Provider: AppIntentTimelineProvider {
 								claimableMoxie: 0,
 								claimableUSD: 0,
 								claimedMoxie: 0,
+								fid: "",
 								configuration: ConfigurationAppIntent())
 	}
 	
@@ -47,6 +48,7 @@ struct Provider: AppIntentTimelineProvider {
 								claimableMoxie: 0,
 								claimableUSD: 0,
 								claimedMoxie: 0,
+								fid: "",
 								configuration: configuration)
 	}
 	
@@ -66,13 +68,14 @@ struct Provider: AppIntentTimelineProvider {
 			let price = try await configuration.client.fetchPrice()
 			
 			let entries: [SimpleEntry] = [
-				SimpleEntry.init(date: .now,
-												 dailyMoxie: moxieModel.allEarningsAmount,
-												 dailyUSD: price * moxieModel.allEarningsAmount,
-												 claimableMoxie: moxieModel.moxieClaimTotals.first!.availableClaimAmount,
-												 claimableUSD: price * moxieModel.moxieClaimTotals.first!.availableClaimAmount,
-												 claimedMoxie: moxieModel.moxieClaimTotals.first!.claimedAmount,
-												 configuration: .init())
+				SimpleEntry(date: .now,
+										dailyMoxie: moxieModel.allEarningsAmount,
+										dailyUSD: price * moxieModel.allEarningsAmount,
+										claimableMoxie: moxieModel.moxieClaimTotals.first?.availableClaimAmount ?? 0,
+										claimableUSD: price * (moxieModel.moxieClaimTotals.first?.availableClaimAmount ?? 0),
+										claimedMoxie: moxieModel.moxieClaimTotals.first?.claimedAmount ?? 0,
+										fid: moxieModel.entityID,
+										configuration: .init())
 			]
 			
 			return Timeline(entries: entries, policy: .atEnd)
@@ -89,6 +92,7 @@ struct SimpleEntry: TimelineEntry {
 	var claimableMoxie: Decimal
 	var claimableUSD: Decimal
 	var claimedMoxie: Decimal
+	var fid: String
 	
 	let configuration: ConfigurationAppIntent
 }
@@ -105,6 +109,19 @@ struct MoxieWidgetSimpleEntryView : View {
 	}
 	
 	var body: some View {
+		if entry.fid == "" || entry.fid == "0" {
+			VStack {
+				Image("CoinMoxiePurple", bundle: .main)
+					.resizable()
+					.aspectRatio(contentMode: .fit)
+					.frame(width: 50)
+					.padding(.bottom)
+				Text("Sign in to Moxito")
+					.foregroundStyle(Color(uiColor: MoxieColor.dark))
+					.fontWeight(.black)
+					.multilineTextAlignment(.center)
+			}
+		} else {
 			VStack(alignment: .leading) {
 				HStack {
 					VStack(alignment: .leading) {
@@ -165,10 +182,10 @@ struct MoxieWidgetSimpleEntryView : View {
 							}
 						}
 					}
-					
 					Spacer()
 				}
 			}
+		}
 	}
 }
 
@@ -209,11 +226,12 @@ extension ConfigurationAppIntent {
 	MoxieWidgetSimple()
 } timeline: {
 	SimpleEntry(date: .now,
-							dailyMoxie: 0,
+							dailyMoxie: 1000000,
 							dailyUSD: 4.32,
-							claimableMoxie: 0,
+							claimableMoxie: 1231,
 							claimableUSD: 32.32,
 							claimedMoxie: 0,
+							fid: "123",
 							configuration: .smallNumber)
 	SimpleEntry(date: .now,
 							dailyMoxie: 0,
@@ -221,6 +239,15 @@ extension ConfigurationAppIntent {
 							claimableMoxie: 0,
 							claimableUSD: 32.32,
 							claimedMoxie: 0,
+							fid: "123",
+							configuration: .bigNumber)
+	SimpleEntry(date: .now,
+							dailyMoxie: 0,
+							dailyUSD: 0,
+							claimableMoxie: 0,
+							claimableUSD: 0,
+							claimedMoxie: 0,
+							fid: "",
 							configuration: .bigNumber)
 }
 

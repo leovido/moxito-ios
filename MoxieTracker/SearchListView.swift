@@ -5,14 +5,14 @@ import Combine
 @MainActor
 public final class SearchViewModel: ObservableObject {
 	public let client: FarcasterClient
-	
+
 	@Published var currentFID: Int = 3
 	@Published var query: String = ""
 	@Published var items: [User]
 	@Published var isLoading: Bool = false
-	
+
 	private(set) var subscriptions: [AnyCancellable] = []
-	
+
 	public init(client: FarcasterClient,
 							query: String,
 							items: [User],
@@ -21,10 +21,10 @@ public final class SearchViewModel: ObservableObject {
 		self.query = query
 		self.items = items
 		self.currentFID = currentFID
-		
+
 		setupListeners()
 	}
-	
+
 	public func setupListeners() {
 		$query
 			.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
@@ -35,7 +35,7 @@ public final class SearchViewModel: ObservableObject {
 				self.searchUser()
 			}
 			.store(in: &subscriptions)
-		
+
 		$query
 			.sink { queryValue in
 				if queryValue.isEmpty {
@@ -44,13 +44,13 @@ public final class SearchViewModel: ObservableObject {
 			}
 			.store(in: &subscriptions)
 	}
-	
+
 	public func searchUser() {
 		isLoading = true
 		Task {
 			do {
 				items = try await client.searchUsername(username: query, viewerFid: 203666, limit: 10).result.users
-				
+
 				isLoading = false
 			} catch {
 				isLoading = false
@@ -61,7 +61,7 @@ public final class SearchViewModel: ObservableObject {
 
 public struct SearchListView: View {
 	@StateObject var viewModel: SearchViewModel
-	
+
 	public var body: some View {
 		NavigationStack {
 			ZStack {
@@ -88,7 +88,7 @@ public struct SearchListView: View {
 										ProgressView()
 									})
 									.padding(.trailing, 8)
-									
+
 									VStack(alignment: .leading) {
 										Text(item.displayName ?? "")
 											.font(.headline)

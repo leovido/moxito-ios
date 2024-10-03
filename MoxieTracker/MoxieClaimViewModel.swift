@@ -31,7 +31,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 	@Published var isClaimSuccess: Bool = false
 	@Published var isClaimAlertShowing: Bool = false
 	@Published var isClaimDialogShowing: Bool = false
-	
+
 	@Published var selectedWallet: String = ""
 	@Published var selectedWalletDisplay: String = ""
 
@@ -39,32 +39,32 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 	@Published var isError: Error?
 
 	private let client: MoxieProvider
-	
+
 	private(set) var subscriptions: Set<AnyCancellable> = []
-	
+
 	init(moxieClaimStatus: MoxieClaimStatus? = nil,
 			 moxieClaimModel: MoxieClaimModel? = nil,
 			 client: MoxieProvider = MoxieClient()) {
 		self.client = client
 		self.moxieClaimModel = moxieClaimModel
 		self.moxieClaimStatus = moxieClaimStatus
-		
+
 		self.actions = PassthroughSubject()
 
 		setupListeners()
 	}
-	
+
 	func setupListeners() {
 		let sharedWillPlayPub = $willPlayAnimationNumbers
 			.filter({ $0 })
-		
+
 		sharedWillPlayPub
 			.debounce(for: .seconds(5), scheduler: RunLoop.main)
 			.sink { [weak self] _ in
 				self?.willPlayAnimationNumbers = false
 			}
 			.store(in: &subscriptions)
-		
+
 		$moxieClaimModel
 			.filter({ $0 != nil })
 			.debounce(for: .seconds(1), scheduler: RunLoop.main)
@@ -72,7 +72,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 				self?.actions.send(.checkClaimStatus(fid: claimModel?.fid ?? "0", transactionId: claimModel?.transactionID ?? ""))
 			}
 			.store(in: &subscriptions)
-		
+
 		let sharedActionsPublisher = actions.share()
 
 		sharedActionsPublisher
@@ -104,14 +104,14 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 					isClaimRequested = false
 
 					willPlayAnimationNumbers = true
-					
+
 					isClaimSuccess = true
-					
+
 					break
 				}
 			}
 			.store(in: &subscriptions)
-		
+
 		$selectedWallet
 			.removeDuplicates()
 			.sink { [weak self] wallet in
@@ -119,7 +119,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 	}
-	
+
 	private func claimMoxie(fid: String, selectedWallet: String) async {
 		do {
 			isClaimRequested = true
@@ -135,7 +135,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 			SentrySDK.capture(error: error)
 		}
 	}
-	
+
 	private func requestClaimStatus(fid: String, transactionId: String) async {
 		do {
 			isLoading = true

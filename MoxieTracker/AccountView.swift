@@ -5,7 +5,7 @@ struct ProfileOptions: Hashable, Identifiable {
 	let id: UUID
 	let name: String
 	let imageName: String
-	
+
 	init(id: UUID = .init(), name: String, imageName: String) {
 		self.id = id
 		self.name = name
@@ -15,7 +15,7 @@ struct ProfileOptions: Hashable, Identifiable {
 
 struct ProfileOptionRow: View {
 	var option: ProfileOptions
-	
+
 	var body: some View {
 		HStack {
 			Image(option.imageName, bundle: .main)
@@ -23,21 +23,20 @@ struct ProfileOptionRow: View {
 				.renderingMode(.original)
 				.aspectRatio(contentMode: .fit)
 				.padding(10)
-				.foregroundColor(.white)
 				.background(
 					RoundedRectangle(cornerRadius: 10)
 						.fill(Color(uiColor: MoxieColor.altGreen))
 				)
 				.frame(width: 40, height: 40)
 				.padding(.trailing, 12)
-			
+
 			Text(option.name)
 				.foregroundColor(.black)
 				.fontWeight(.medium)
 				.font(.custom("Inter", size: 16))
-			
+
 			Spacer()
-			
+
 			Image(systemName: "chevron.right")
 				.padding(.trailing, 30)
 				.foregroundColor(.gray)
@@ -48,14 +47,14 @@ struct ProfileOptionRow: View {
 
 struct AccountView: View {
 	@ObservedObject var viewModel: MoxieViewModel
-	
+
 	@State private var profileOptions: [ProfileOptions] = [
 		ProfileOptions(name: "Profile", imageName: "profile"),
 		ProfileOptions(name: "Settings", imageName: "settings"),
-		ProfileOptions(name: "Help", imageName: "help"),
+		ProfileOptions(name: "Help", imageName: "help")
 //		ProfileOptions(name: "Logout", imageName: "door")
 	]
-	
+
 	let text = """
 	Moxito is in BETA stage for testing! 🌱
 
@@ -65,7 +64,7 @@ struct AccountView: View {
 
 	Soon you'll be able to claim from the app!
 	"""
-	
+
 	@ViewBuilder
 	private func destinationView(for option: ProfileOptions) -> some View {
 		if option.name == "Help" {
@@ -90,7 +89,7 @@ struct AccountView: View {
 						.foregroundColor(.white)
 						.cornerRadius(8)
 				}
-				
+
 				Link(destination: URL(string: "https://moxiescout.xyz")!) {
 						HStack {
 								Image(systemName: "link")
@@ -101,7 +100,7 @@ struct AccountView: View {
 						.foregroundColor(.white)
 						.cornerRadius(8)
 				}
-				
+
 				Link(destination: URL(string: "https://warpcast.com/~/compose?text=\(text) &embeds[]=https://moxito-allowlist.vercel.app/api")!) {
 						HStack {
 								Image(systemName: "link")
@@ -112,7 +111,7 @@ struct AccountView: View {
 						.foregroundColor(.white)
 						.cornerRadius(8)
 				}
-				
+
 				Spacer()
 			}
 			.navigationTitle("Help")
@@ -124,7 +123,7 @@ struct AccountView: View {
 			Text(option.name)
 		}
 	}
-	
+
 	var body: some View {
 		NavigationStack {
 			ZStack {
@@ -132,7 +131,7 @@ struct AccountView: View {
 					.ignoresSafeArea()
 				VStack(alignment: .leading) {
 					ProfileCardView(model: viewModel.model)
-					
+
 					ScrollView {
 						ForEach(profileOptions, id: \.self) { option in
 							NavigationLink(destination: destinationView(for: option)) {
