@@ -190,6 +190,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 		$model
 			.receive(on: DispatchQueue.main)
+			.print()
 			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID

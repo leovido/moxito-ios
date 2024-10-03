@@ -23,7 +23,7 @@ struct ProfileView: View {
 		guard let fcScore = viewModel.model.socials.first?.farcasterScore?.farScore else {
 			return ""
 		}
-		return fcScore.formatted(.number.precision(.fractionLength(0)))
+		return fcScore.formatted(.number.precision(.fractionLength(2)))
 	}
 
 	var body: some View {
@@ -45,7 +45,7 @@ struct ProfileView: View {
 							}
 
 							VStack {
-								GridItemBigView(farScore: 51)
+								GridItemBigView(farScore: viewModel.model.socials.first?.farcasterScore?.farScore ?? 0)
 
 								Spacer()
 							}
