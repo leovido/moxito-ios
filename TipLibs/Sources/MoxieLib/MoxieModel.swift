@@ -129,6 +129,34 @@ public struct MoxieFarcasterScore: Codable, Hashable {
 		self.tvlBoost = tvlBoost
 	}
 }
+
+public struct MoxieSplitDetail: Codable, Hashable {
+	public let castEarningsAmount: Decimal
+	public let frameDevEarningsAmount: Decimal
+	public let otherEarningsAmount: Decimal
+	public let entityType: String
+	
+	public enum CodingKeys: String, CodingKey {
+		case castEarningsAmount, frameDevEarningsAmount, otherEarningsAmount
+		case entityType
+	}
+	
+	public init(castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, entityType: String) {
+		self.castEarningsAmount = castEarningsAmount
+		self.frameDevEarningsAmount = frameDevEarningsAmount
+		self.otherEarningsAmount = otherEarningsAmount
+		self.entityType = entityType
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		castEarningsAmount = try values.decodeIfPresent(Decimal.self, forKey: .castEarningsAmount) ?? 0
+		frameDevEarningsAmount = try values.decodeIfPresent(Decimal.self, forKey: .frameDevEarningsAmount) ?? 0
+		otherEarningsAmount = try values.decodeIfPresent(Decimal.self, forKey: .otherEarningsAmount) ?? 0
+		entityType = try values.decodeIfPresent(String.self, forKey: .entityType) ?? ""
+	}
+}
+
 // MARK: - MoxieModel
 public struct MoxieModel: Codable, Hashable {
 	public let allEarningsAmount, castEarningsAmount: Decimal
@@ -138,11 +166,13 @@ public struct MoxieModel: Codable, Hashable {
 	public let socials: [Social]
 	public let entityID: String
 	public let moxieClaimTotals: [MoxieClaimTotal]
-	
+	public let splitDetails: [MoxieSplitDetail]
+
 	public enum CodingKeys: String, CodingKey {
 		case allEarningsAmount, castEarningsAmount, frameDevEarningsAmount, otherEarningsAmount, endTimestamp, startTimestamp, timeframe, socials
 		case entityID = "entityId"
 		case moxieClaimTotals
+		case splitDetails
 	}
 	
 	public init(from decoder: Decoder) throws {
@@ -157,9 +187,10 @@ public struct MoxieModel: Codable, Hashable {
 		socials = try values.decodeIfPresent([Social].self, forKey: .socials) ?? []
 		entityID = try values.decodeIfPresent(String.self, forKey: .entityID) ?? ""
 		moxieClaimTotals = try values.decodeIfPresent([MoxieClaimTotal].self, forKey: .moxieClaimTotals) ?? []
+		splitDetails = try values.decodeIfPresent([MoxieSplitDetail].self, forKey: .splitDetails) ?? []
 	}
 	
-	public init(allEarningsAmount: Decimal, castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, endTimestamp: Date, startTimestamp: Date, timeframe: String, socials: [Social], entityID: String, moxieClaimTotals: [MoxieClaimTotal]) {
+	public init(allEarningsAmount: Decimal, castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, endTimestamp: Date, startTimestamp: Date, timeframe: String, socials: [Social], entityID: String, moxieClaimTotals: [MoxieClaimTotal], splitDetails: [MoxieSplitDetail]) {
 		self.allEarningsAmount = allEarningsAmount
 		self.castEarningsAmount = castEarningsAmount
 		self.frameDevEarningsAmount = frameDevEarningsAmount
@@ -170,6 +201,7 @@ public struct MoxieModel: Codable, Hashable {
 		self.socials = socials
 		self.entityID = entityID
 		self.moxieClaimTotals = moxieClaimTotals
+		self.splitDetails = splitDetails
 	}
 }
 
@@ -256,6 +288,8 @@ extension MoxieModel {
 				availableClaimAmount: .init(.random(in: 0...10000)),
 				claimedAmount: .init(.random(in: 0...10000))
 			)
+		], splitDetails: [
+			.init(castEarningsAmount: 0, frameDevEarningsAmount: 0, otherEarningsAmount: 0, entityType: "CREATOR")
 		])
 	
 	public static let noop: MoxieModel = .init(
@@ -287,5 +321,5 @@ extension MoxieModel {
 				availableClaimAmount: 0,
 				claimedAmount: 0
 			)
-		])
+		], splitDetails: [])
 }

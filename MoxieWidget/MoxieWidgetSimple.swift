@@ -38,6 +38,8 @@ struct Provider: AppIntentTimelineProvider {
 								claimableUSD: 0,
 								claimedMoxie: 0,
 								fid: "",
+								rewardsPostSplit: 0,
+								rewardsPostSplitUSD: 0,
 								configuration: ConfigurationAppIntent())
 	}
 	
@@ -49,6 +51,8 @@ struct Provider: AppIntentTimelineProvider {
 								claimableUSD: 0,
 								claimedMoxie: 0,
 								fid: "",
+								rewardsPostSplit: 0,
+								rewardsPostSplitUSD: 0,
 								configuration: configuration)
 	}
 	
@@ -65,6 +69,13 @@ struct Provider: AppIntentTimelineProvider {
 				moxieModel = decodedModel
 			}
 			
+			let splitDetails = moxieModel.splitDetails
+				.filter({ $0.entityType == "CREATOR" })
+				.map({
+					$0.castEarningsAmount + $0.frameDevEarningsAmount + $0.otherEarningsAmount
+				})
+				.reduce(0, +)
+			
 			let price = try await configuration.client.fetchPrice()
 			
 			let entries: [SimpleEntry] = [
@@ -75,6 +86,8 @@ struct Provider: AppIntentTimelineProvider {
 										claimableUSD: price * (moxieModel.moxieClaimTotals.first?.availableClaimAmount ?? 0),
 										claimedMoxie: moxieModel.moxieClaimTotals.first?.claimedAmount ?? 0,
 										fid: moxieModel.entityID,
+										rewardsPostSplit: splitDetails,
+										rewardsPostSplitUSD: splitDetails * price,
 										configuration: .init())
 			]
 			
@@ -93,6 +106,8 @@ struct SimpleEntry: TimelineEntry {
 	var claimableUSD: Decimal
 	var claimedMoxie: Decimal
 	var fid: String
+	var rewardsPostSplit: Decimal
+	var rewardsPostSplitUSD: Decimal
 	
 	let configuration: ConfigurationAppIntent
 }
@@ -106,6 +121,10 @@ struct MoxieWidgetSimpleEntryView : View {
 	
 	var dollarValueClaimable: String {
 		return formattedDollarValue(dollarValue: entry.claimableUSD)
+	}
+	
+	var currentDailyPostSplitUSD: String {
+		return formattedDollarValue(dollarValue: entry.rewardsPostSplitUSD)
 	}
 	
 	var body: some View {
@@ -138,11 +157,18 @@ struct MoxieWidgetSimpleEntryView : View {
 						}
 						.padding(.bottom, -6)
 						
-						Text(entry.dailyMoxie.formatted(.number.precision(.fractionLength(0))))
+						Text(entry.rewardsPostSplit.formatted(.number.precision(.fractionLength(0))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.heavy)
 							.fontDesign(.rounded)
-						Text("~\(dollarValueDaily)")
+						Text(entry.dailyMoxie.formatted(.number.precision(.fractionLength(0))))
+							.foregroundStyle(Color(uiColor: MoxieColor.dark))
+							.fontWeight(.medium)
+							.opacity(0.7)
+							.fontDesign(.rounded)
+							.font(.caption)
+						
+						Text("~\(currentDailyPostSplitUSD)")
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.font(.caption)
 							.fontWeight(.light)
@@ -232,6 +258,8 @@ extension ConfigurationAppIntent {
 							claimableUSD: 32.32,
 							claimedMoxie: 0,
 							fid: "123",
+							rewardsPostSplit: 1234,
+							rewardsPostSplitUSD: 1.23,
 							configuration: .smallNumber)
 	SimpleEntry(date: .now,
 							dailyMoxie: 0,
@@ -240,6 +268,8 @@ extension ConfigurationAppIntent {
 							claimableUSD: 32.32,
 							claimedMoxie: 0,
 							fid: "123",
+							rewardsPostSplit: 1234,
+							rewardsPostSplitUSD: 1.23,
 							configuration: .bigNumber)
 	SimpleEntry(date: .now,
 							dailyMoxie: 0,
@@ -248,6 +278,8 @@ extension ConfigurationAppIntent {
 							claimableUSD: 0,
 							claimedMoxie: 0,
 							fid: "",
+							rewardsPostSplit: 1234,
+							rewardsPostSplitUSD: 1.23,
 							configuration: .bigNumber)
 }
 
