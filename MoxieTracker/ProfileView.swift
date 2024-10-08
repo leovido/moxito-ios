@@ -93,6 +93,7 @@ struct GridItemView: View {
 			VStack(alignment: .leading, spacing: 4) {
 				HStack {
 					Text(title)
+						.scaledToFit()
 						.foregroundColor(Color(uiColor: MoxieColor.primary))
 						.bold()
 						.scaledFont(name: "Inter", size: 18)
@@ -105,6 +106,7 @@ struct GridItemView: View {
 
 				HStack {
 					Text(value)
+						.scaledToFit()
 						.fontWeight(.bold)
 						.foregroundColor(.black)
 						.scaledFont(name: "Inter", size: 21)

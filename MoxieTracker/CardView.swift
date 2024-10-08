@@ -52,6 +52,7 @@ struct CardView: View {
 
 			VStack(alignment: .leading, spacing: 0) {
 				Text(title)
+					.scaledToFit()
 					.font(.headline)
 					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color.white)

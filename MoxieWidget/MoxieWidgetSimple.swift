@@ -224,7 +224,7 @@ struct MoxieWidgetSimple: Widget {
 				.environment(\.colorScheme, .light)
 				.containerBackground(Color("WidgetBackground"), for: .widget)
 		}
-		.configurationDisplayName("Moxito widget")
+		.configurationDisplayName("Moxito widget by @leovido.eth")
 		.description("Shows daily $MOXIE rewards.")
 		.supportedFamilies([.systemSmall])
 	}

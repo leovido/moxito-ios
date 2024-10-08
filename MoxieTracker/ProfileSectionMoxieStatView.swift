@@ -21,6 +21,7 @@ struct ProfileSectionMoxieStatView: View {
 		VStack(spacing: 4) {
 			HStack {
 				Text(moxieStat.title)
+					.scaledToFit()
 					.foregroundColor(Color(uiColor: MoxieColor.primary))
 					.bold()
 					.scaledFont(name: "Inter", size: 18)

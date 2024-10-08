@@ -19,6 +19,13 @@ struct HomeView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@StateObject var claimViewModel: MoxieClaimViewModel = .init(moxieClaimStatus: nil)
 
+	var availableClaimAmountFormatted: String {
+		guard let claim = viewModel.model.moxieClaimTotals.first else {
+			return ""
+		}
+		return claim.availableClaimAmount.formatted(.number.precision(.fractionLength(0)))
+	}
+
 	var body: some View {
 		NavigationStack {
 			GeometryReader { geo in
@@ -32,6 +39,7 @@ struct HomeView: View {
 						HStack {
 							VStack(alignment: .leading) {
 								Text("\(viewModel.isSearchMode ? viewModel.model.socials.first?.profileDisplayName ?? "Moxie" : "Hello, " + (viewModel.model.socials.first?.profileDisplayName ?? "Moxie"))")
+									.scaledToFit()
 									.font(.body)
 									.font(.custom("Inter", size: 20))
 									.foregroundStyle(Color.white)
@@ -51,19 +59,27 @@ struct HomeView: View {
 									number = viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0
 									progress = 0
 									Haptics.shared.play(.medium)
-									Task {
-										claimViewModel.actions.send(.initiateClaim)
+
+									print(number)
+									if number == 0 {
+										Task {
+											claimViewModel.actions.send(.initiateClaim)
+										}
+									} else {
+										Task {
+											claimViewModel.actions.send(.initiateClaim)
+										}
 									}
 								}
 							}, label: {
-								Text("Claim")
+								Text(viewModel.model.moxieClaimTotals.first?.availableClaimAmount == 0 ? "Claimed" : "Claim")
 									.foregroundStyle(.white)
 									.padding(16)
 							})
 							.frame(minWidth: 102)
 							.frame(height: 38)
 							.font(.callout)
-							.background(Color(uiColor: MoxieColor.green))
+							.background(viewModel.model.moxieClaimTotals.first?.availableClaimAmount != 0 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.claimButton))
 							.clipShape(Capsule())
 							.confirmationDialog("Moxie claim",
 																	isPresented: $claimViewModel.isClaimDialogShowing,
@@ -112,6 +128,7 @@ struct HomeView: View {
 									}
 
 									Text("Your claimable balance is")
+										.scaledToFit()
 										.font(.footnote)
 										.font(.custom("Inter", size: 13))
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
@@ -355,7 +372,7 @@ struct HomeView: View {
 							Text("Let's go!🚀")
 						}
 					}, message: {
-						Text("\(viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0) $MOXIE successfully claimed 🌱")
+						Text("\(availableClaimAmountFormatted) $MOXIE successfully claimed 🌱")
 					})
 					.sensoryFeedback(.success, trigger: claimViewModel.isClaimAlertShowing, condition: { _, newValue in
 						return !newValue

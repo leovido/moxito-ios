@@ -76,25 +76,27 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 
 	func startMoxieActivity() {
-		if ActivityAuthorizationInfo().areActivitiesEnabled {
-			let attributes = MoxieActivityAttributes()
-			let contentState = MoxieActivityAttributes.ContentState(
-				dailyMoxie: model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
-				dailyUSD: formattedDollarValue(dollarValue: model.allEarningsAmount * price),
-				claimableMoxie: model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
-				claimableUSD: formattedDollarValue(dollarValue: model.moxieClaimTotals[0].availableClaimAmount * price),
-				username: model.socials[0].profileDisplayName,
-				fid: model.entityID,
-				imageURL: model.socials[0].profileImage)
-			do {
-				let activity = try Activity<MoxieActivityAttributes>.request(
-					attributes: attributes,
-					content: .init(state: contentState, staleDate: nil),
-					pushType: nil
-				)
-				currentActivity = activity
-			} catch {
-				print("Error starting activity: \(error.localizedDescription)")
+		if model.entityID != "" {
+			if ActivityAuthorizationInfo().areActivitiesEnabled {
+				let attributes = MoxieActivityAttributes()
+				let contentState = MoxieActivityAttributes.ContentState(
+					dailyMoxie: model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
+					dailyUSD: formattedDollarValue(dollarValue: model.allEarningsAmount * price),
+					claimableMoxie: model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
+					claimableUSD: formattedDollarValue(dollarValue: model.moxieClaimTotals[0].availableClaimAmount * price),
+					username: model.socials[0].profileDisplayName,
+					fid: model.entityID,
+					imageURL: model.socials[0].profileImage)
+				do {
+					let activity = try Activity<MoxieActivityAttributes>.request(
+						attributes: attributes,
+						content: .init(state: contentState, staleDate: nil),
+						pushType: nil
+					)
+					currentActivity = activity
+				} catch {
+					print("Error starting activity: \(error.localizedDescription)")
+				}
 			}
 		}
 	}
@@ -232,19 +234,21 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 
 	func updateDeliveryActivity(newModel: MoxieModel) {
-		Task {
-			for activity in Activity<MoxieActivityAttributes>.activities {
-				let updatedContentState = MoxieActivityAttributes.ContentState(
-					dailyMoxie: newModel.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
-					dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
-					claimableMoxie: newModel.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
-					claimableUSD: formattedDollarValue(dollarValue: newModel.moxieClaimTotals[0].availableClaimAmount * self.price),
-					username: model.socials.first?.profileDisplayName ?? "",
-					fid: model.entityID,
-					imageURL: model.socials.first?.profileImage ?? ""
-				)
+		if newModel.entityID != "" {
+			Task {
+				for activity in Activity<MoxieActivityAttributes>.activities {
+					let updatedContentState = MoxieActivityAttributes.ContentState(
+						dailyMoxie: newModel.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
+						dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
+						claimableMoxie: newModel.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0",
+						claimableUSD: formattedDollarValue(dollarValue: newModel.moxieClaimTotals.first?.availableClaimAmount ?? 0 * self.price),
+						username: model.socials.first?.profileDisplayName ?? "",
+						fid: model.entityID,
+						imageURL: model.socials.first?.profileImage ?? ""
+					)
 
-				await activity.update(using: updatedContentState)
+					await activity.update(using: updatedContentState)
+				}
 			}
 		}
 	}

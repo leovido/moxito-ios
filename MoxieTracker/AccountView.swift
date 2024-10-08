@@ -41,7 +41,7 @@ struct ProfileOptionRow: View {
 				.padding(.trailing, 30)
 				.foregroundColor(.gray)
 		}
-		.padding([.top, .leading], 12)
+		.padding([.top], 12)
 	}
 }
 
@@ -78,16 +78,6 @@ struct AccountView: View {
 						.foregroundColor(.white)
 						.cornerRadius(8)
 				}
-				Link(destination: URL(string: "https://warpcast.com/leovido.eth/0xe0424dd4")!) {
-						HStack {
-								Image(systemName: "link")
-								Text("Widget instructions")
-						}
-						.padding()
-						.background(Color(uiColor: MoxieColor.primary))
-						.foregroundColor(.white)
-						.cornerRadius(8)
-				}
 
 				Link(destination: URL(string: "https://moxiescout.xyz")!) {
 						HStack {
@@ -111,6 +101,29 @@ struct AccountView: View {
 						.cornerRadius(8)
 				}
 
+				Section(content: {
+					HStack(spacing: 5) {
+						WidgetHarios()
+						MoxieSimpleWidget()
+					}
+					.frame(height: 200)
+				}, header: {
+						Text("Widgets")
+						.multilineTextAlignment(.leading)
+						.font(.custom("Inter", size: 28))
+						.bold()
+					})
+
+				Link(destination: URL(string: "https://warpcast.com/leovido.eth/0xe0424dd4")!) {
+						HStack {
+								Image(systemName: "link")
+								Text("Widget instructions")
+						}
+						.padding()
+						.background(Color(uiColor: MoxieColor.primary))
+						.foregroundColor(.white)
+						.cornerRadius(8)
+				}
 				Spacer()
 			}
 			.navigationTitle("Help")
@@ -153,6 +166,159 @@ struct AccountView: View {
 	}
 }
 
+struct MoxieSimpleWidget: View {
+	@EnvironmentObject var viewModel: MoxieViewModel
+
+	var dollarValueDaily: String {
+		let d = viewModel.price * viewModel.model.allEarningsAmount
+		return formattedDollarValue(dollarValue: d)
+	}
+
+	var dollarValueClaimable: String {
+		let d = viewModel.model.moxieClaimTotals[0].availableClaimAmount * viewModel.price
+		return formattedDollarValue(dollarValue: d)
+	}
+
+	var body: some View {
+		VStack(alignment: .leading) {
+			HStack {
+				VStack(alignment: .leading, spacing: 0) {
+					HStack {
+						Text("Daily")
+							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+							.fontDesign(.rounded)
+							.fontWeight(.black)
+
+						Image("CoinMoxiePurple", bundle: .main)
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.frame(width: 15)
+					}
+					.padding(.bottom, -6)
+
+					Text(viewModel.model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))))
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.fontWeight(.heavy)
+						.fontDesign(.rounded)
+
+					Text("~\(dollarValueDaily)")
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.font(.caption)
+						.fontWeight(.light)
+						.fontDesign(.rounded)
+						.padding(.bottom, 4)
+
+					HStack {
+						Text("Claimable")
+							.foregroundStyle(Color(uiColor: MoxieColor.textColor))
+							.fontDesign(.rounded)
+							.fontWeight(.black)
+
+						Image("CoinMoxiePurple", bundle: .main)
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.frame(width: 15)
+					}
+					.padding(.bottom, -6)
+
+					Text(viewModel.model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))))
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.fontWeight(.heavy)
+						.fontDesign(.rounded)
+					Text("~\(dollarValueClaimable)")
+						.foregroundStyle(Color(uiColor: MoxieColor.dark))
+						.font(.caption)
+						.fontWeight(.light)
+						.fontDesign(.rounded)
+
+					Spacer()
+				}
+
+			}
+		}
+		.padding(.top, 8)
+		.padding(.leading, -8)
+		.frame(width: 155, height: 155, alignment: .center)
+		.background(Color(uiColor: MoxieColor.backgroundColor))
+		.clipShape(RoundedRectangle.init(cornerRadius: 20))
+	}
+}
+
+struct WidgetHarios: View {
+	@EnvironmentObject var viewModel: MoxieViewModel
+
+	var body: some View {
+		ZStack {
+			Image("MoxitoBG", bundle: .main)
+			VStack {
+				MiniCard(title: "Daily:",
+								 moxieValue: viewModel.model.allEarningsAmount,
+								 moxieUSD: viewModel.model.allEarningsAmount * viewModel.price)
+				.padding(.top)
+				MiniCard(title: "Claimable:",
+								 moxieValue: viewModel.model.moxieClaimTotals[0].availableClaimAmount,
+								 moxieUSD: viewModel.model.moxieClaimTotals[0].availableClaimAmount * viewModel.price)
+			}
+		}
+	}
+}
+
+struct MiniCard: View {
+	let title: String
+	let moxieValue: Decimal
+	let moxieUSD: Decimal
+
+	var dollarValue: String {
+		formattedDollarValue(dollarValue: moxieUSD)
+	}
+
+	init(title: String, moxieValue: Decimal, moxieUSD: Decimal) {
+		self.title = title
+		self.moxieValue = moxieValue
+		self.moxieUSD = moxieUSD
+	}
+
+	var body: some View {
+		HStack {
+			Image("CoinMoxie", bundle: .main)
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.frame(height: 30)
+				.padding(.trailing, -4)
+				.padding(.leading, 4)
+
+			VStack(alignment: .leading) {
+				Text("\(title)")
+					.fontWeight(.bold)
+					.font(.custom("Inter", size: 10))
+					.foregroundStyle(Color.white)
+					.padding(.top, 4)
+
+				Text(moxieValue.formatted(.number.precision(.fractionLength(0))))
+						.font(.custom("Inter", size: 15))
+						.textScale(.secondary)
+						.foregroundStyle(Color.white)
+						.fontWeight(.bold)
+
+				Text("~\(dollarValue)")
+
+					.font(.custom("Inter", size: 10))
+					.fontDesign(.rounded)
+					.foregroundStyle(Color.white)
+					.fontWeight(.light)
+					.padding(.bottom, 4)
+			}
+			.padding(.vertical, 2)
+
+			Spacer()
+		}
+		.frame(width: 140)
+		.background(Color(uiColor: MoxieColor.primary))
+		.clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
+	}
+}
+
 #Preview {
 	AccountView()
+		.environmentObject(MoxieViewModel())
 }
