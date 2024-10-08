@@ -126,6 +126,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 		$filterSelection
 			.dropFirst()
+			.print()
 			.receive(on: DispatchQueue.main)
 			.handleEvents(receiveRequest: { _ in
 				self.inFlightTask?.cancel()
@@ -167,6 +168,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		} else {
 			Publishers.CombineLatest3($inputFID, $filterSelection, $model)
 				.dropFirst()
+				.print()
 				.removeDuplicates { (previous, current) in
 					return previous.0 == current.0 &&
 					previous.1 == current.1 &&
@@ -176,7 +178,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				.handleEvents(receiveRequest: { _ in
 					self.inFlightTask?.cancel()
 				})
-				.debounce(for: .seconds(0.25), scheduler: RunLoop.main)
+				.debounce(for: .seconds(0.25), scheduler: DispatchQueue.main)
 				.sink { [weak self] newInput, newFilter, newModel in
 					guard let self = self, newInput > 0 else {
 						return

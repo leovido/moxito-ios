@@ -54,7 +54,7 @@ extension MoxieFilter: CustomStringConvertible {
 }
 
 public enum MoxieEndpoint {
-	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily"
+	static let dailyRewards = "https://w8wn0nevnc.execute-api.eu-west-1.amazonaws.com/prod/moxie-daily"
 	static let claimRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-claim"
 	static let splits = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-splits"
 	static let fansCount = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-fans-count"
@@ -294,7 +294,7 @@ public final actor MoxieClient: MoxieProvider {
 			
 			let decoder = JSONDecoder()
 			decoder.dateDecodingStrategy = .iso8601
-			let model = try! decoder.decode(MoxieModel.self, from: data)
+			let model = try decoder.decode(MoxieModel.self, from: data)
 			
 			return model
 		} catch {
