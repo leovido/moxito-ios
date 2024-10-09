@@ -5,6 +5,7 @@ enum Tab: String, Hashable, CaseIterable {
 	case home = "Home"
 	case profile = "Person"
 	case settings = "Gear"
+	case fitness = "Fitness"
 }
 
 private let buttonDimen: CGFloat = 55
@@ -22,21 +23,30 @@ struct CustomBottomTabBarView: View {
 						.onTapGesture {
 							currentTab = .home
 						}
-						.frame(maxWidth: geo.size.width * 0.33)
+						.frame(maxWidth: geo.size.width * 0.25)
+
+					if ProcessInfo.processInfo.environment["env"] == "dev" {
+						TabBarButton(imageName: Tab.fitness.rawValue, tabName: .fitness, selectedTab: $currentTab)
+							.frame(width: buttonDimen, height: buttonDimen)
+							.onTapGesture {
+								currentTab = .fitness
+							}
+							.frame(maxWidth: geo.size.width * 0.25)
+					}
 
 					TabBarButton(imageName: Tab.settings.rawValue, tabName: .settings, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
 							currentTab = .settings
 						}
-						.frame(maxWidth: geo.size.width * 0.33)
+						.frame(maxWidth: geo.size.width * 0.25)
 
 					TabBarButton(imageName: Tab.profile.rawValue, tabName: .profile, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
 							currentTab = .profile
 						}
-						.frame(maxWidth: geo.size.width * 0.33)
+						.frame(maxWidth: geo.size.width * 0.25)
 				}
 				.frame(maxWidth: geo.size.width)
 				.tint(Color.white)

@@ -2,6 +2,18 @@ import SwiftUI
 import MoxieLib
 import Combine
 
+struct FitnessView: View {
+	@StateObject var viewModel: StepCountViewModel = .init()
+
+	var body: some View {
+		RewardsView()
+		.onAppear {
+			viewModel.requestHealthKitAccess()
+			viewModel.fetchSteps()
+		}
+	}
+}
+
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 
@@ -17,6 +29,8 @@ struct ContentView: View {
 				Group {
 					HomeView()
 						.tag(Tab.home)
+					FitnessView()
+						.tag(Tab.fitness)
 					AccountView()
 						.tag(Tab.settings)
 					ProfileView()

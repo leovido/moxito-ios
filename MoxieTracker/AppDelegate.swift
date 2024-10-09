@@ -10,7 +10,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 
 		SentrySDK.start { options in
 			options.dsn = "https://46fc916019d1fcbfdc9024e0205bfb91@o4507493157765120.ingest.de.sentry.io/4507929570443344"
-			options.debug = false // Enabled debug when first installing is always helpful
+			options.debug = ProcessInfo.processInfo.environment["env"] == "dev" ? true : false // Enabled debug when first installing is always helpful
 
 			// Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
 			// We recommend adjusting this value in production.
@@ -19,7 +19,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 			// Sample rate for profiling, applied on top of TracesSampleRate.
 			// We recommend adjusting this value in production.
 			options.profilesSampleRate = 1
-			options.environment = "production"
+			options.environment = ProcessInfo.processInfo.environment["env"] ?? "production"
 		}
 
 		registerBackgroundTasks()

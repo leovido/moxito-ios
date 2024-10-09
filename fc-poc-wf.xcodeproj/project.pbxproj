@@ -42,6 +42,12 @@
 		47434EB92CBDC92300C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
 		47434EC82CBDC92400C42C5C /* CherylDarkWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47434ECE2CBDCA0600C42C5C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47434ECD2CBDCA0600C42C5C /* MoxieLib */; };
+		473BA2042CB5D075000F5993 /* StepCountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BA2032CB5D070000F5993 /* StepCountViewModel.swift */; };
+		473BA2062CB66EE2000F5993 /* RewardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BA2052CB66EDE000F5993 /* RewardViewModel.swift */; };
+		473BA2082CB66EF5000F5993 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BA2072CB66EF3000F5993 /* RewardView.swift */; };
+		473BA20A2CB686E3000F5993 /* AltRewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BA2092CB686DF000F5993 /* AltRewardView.swift */; };
+		473BA20C2CB69173000F5993 /* RewardsCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BA20B2CB6916B000F5993 /* RewardsCalculatorTests.swift */; };
+		473BA20E2CB6AF1E000F5993 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BA20D2CB6AF1A000F5993 /* HeaderView.swift */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
@@ -275,6 +281,12 @@
 		47434E972CBD398000C42C5C /* CherylWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherylWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47434EB02CBDC1DF00C42C5C /* CherylDarkWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherylDarkWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CherylDarkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		473BA2032CB5D070000F5993 /* StepCountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountViewModel.swift; sourceTree = "<group>"; };
+		473BA2052CB66EDE000F5993 /* RewardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardViewModel.swift; sourceTree = "<group>"; };
+		473BA2072CB66EF3000F5993 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
+		473BA2092CB686DF000F5993 /* AltRewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltRewardView.swift; sourceTree = "<group>"; };
+		473BA20B2CB6916B000F5993 /* RewardsCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsCalculatorTests.swift; sourceTree = "<group>"; };
+		473BA20D2CB6AF1A000F5993 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
@@ -511,10 +523,15 @@
 				475F73C02CADAA0C00E0CFEA /* ProfileView.swift */,
 				475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */,
 				475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */,
+				473BA2052CB66EDE000F5993 /* RewardViewModel.swift */,
+				473BA2092CB686DF000F5993 /* AltRewardView.swift */,
+				473BA2072CB66EF3000F5993 /* RewardView.swift */,
 				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
 				47EC546D2C822A69006C2820 /* CardView.swift */,
 				475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */,
+				473BA20D2CB6AF1A000F5993 /* HeaderView.swift */,
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
+				473BA2032CB5D070000F5993 /* StepCountViewModel.swift */,
 				475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */,
 				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
 				475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */,
@@ -551,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				471FE9862C7F808D00D20F4C /* MoxieTrackerTests.swift */,
+				473BA20B2CB6916B000F5993 /* RewardsCalculatorTests.swift */,
 				475F73AB2CA6037000E0CFEA /* ClaimTests.swift */,
 			);
 			path = MoxieTrackerTests;
@@ -1281,7 +1299,11 @@
 				475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
+				473BA20A2CB686E3000F5993 /* AltRewardView.swift in Sources */,
+				473BA2062CB66EE2000F5993 /* RewardViewModel.swift in Sources */,
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
+				473BA2082CB66EF5000F5993 /* RewardView.swift in Sources */,
+				473BA20E2CB6AF1E000F5993 /* HeaderView.swift in Sources */,
 				475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */,
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
@@ -1290,6 +1312,7 @@
 				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
+				473BA2042CB5D075000F5993 /* StepCountViewModel.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
 				47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */,
 				475F73B92CA94F8F00E0CFEA /* AuthViewModel.swift in Sources */,
@@ -1305,6 +1328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				475F73AC2CA6037400E0CFEA /* ClaimTests.swift in Sources */,
+				473BA20C2CB69173000F5993 /* RewardsCalculatorTests.swift in Sources */,
 				471FE9872C7F808D00D20F4C /* MoxieTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
