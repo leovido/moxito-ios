@@ -25,6 +25,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>MoxieStatsWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>MoxieTrackerTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -68,6 +73,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>11</integer>
+		</dict>
+		<key>MoxitoStatsProfileWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>fc-poc-wf.xcscheme_^#shared#^_</key>
 		<dict>
@@ -113,6 +123,11 @@
 			<true/>
 		</dict>
 		<key>47E4CC262C98563600BE77E8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47F81DE42CB6D3B60040E7F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

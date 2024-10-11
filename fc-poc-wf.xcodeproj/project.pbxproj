@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,6 +30,10 @@
 		471FE9BF2C7F823400D20F4C /* MoxieWidgetSimpleBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE95C2C7E59A500D20F4C /* MoxieWidgetSimpleBundle.swift */; };
 		471FE9C02C7F823400D20F4C /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9622C7E59A500D20F4C /* AppIntent.swift */; };
 		471FE9C52C7F82E400D20F4C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9C42C7F82E400D20F4C /* MoxieLib */; };
+		47434E332CB6D87400C42C5C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
+		47434E342CB6D87400C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
+		47434E432CB6D87500C42C5C /* MoxitoStatsProfileWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47434E572CB6D89E00C42C5C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47434E562CB6D89E00C42C5C /* MoxieLib */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
@@ -133,6 +137,13 @@
 			remoteGlobalIDString = 471FE9A62C7F821400D20F4C;
 			remoteInfo = MoxieWidgetExtension;
 		};
+		47434E412CB6D87500C42C5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47434E312CB6D87400C42C5C;
+			remoteInfo = MoxitoStatsProfileWidgetExtension;
+		};
 		47553E252CA16864006064FB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
@@ -178,6 +189,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */,
+				47434E432CB6D87500C42C5C /* MoxitoStatsProfileWidgetExtension.appex in Embed Foundation Extensions */,
 				471FE9B82C7F821400D20F4C /* MoxieWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -232,6 +244,9 @@
 		471FE9922C7F808D00D20F4C /* MoxieTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxieWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		471FE9C22C7F829C00D20F4C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47434E292CB6D43A00C42C5C /* MoxieStatsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxieStatsWidgetExtension.entitlements; sourceTree = "<group>"; };
+		47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxitoStatsProfileWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		47434E5B2CB72CAE00C42C5C /* MoxitoStatsProfileWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxitoStatsProfileWidgetExtension.entitlements; sourceTree = "<group>"; };
 		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
@@ -303,6 +318,20 @@
 		B9DF7F712C73C5E90073D772 /* WaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		47434E5A2CB6D95100C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		47434E352CB6D87400C42C5C /* MoxitoStatsProfileWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (47434E5A2CB6D95100C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MoxitoStatsProfileWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		471FE9702C7F808C00D20F4C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -339,6 +368,16 @@
 				471FE9A92C7F821400D20F4C /* SwiftUI.framework in Frameworks */,
 				471FE9C52C7F82E400D20F4C /* MoxieLib in Frameworks */,
 				471FE9A82C7F821400D20F4C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434E2F2CB6D87400C42C5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47434E342CB6D87400C42C5C /* SwiftUI.framework in Frameworks */,
+				47434E572CB6D89E00C42C5C /* MoxieLib in Frameworks */,
+				47434E332CB6D87400C42C5C /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +517,8 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
+				47434E5B2CB72CAE00C42C5C /* MoxitoStatsProfileWidgetExtension.entitlements */,
+				47434E292CB6D43A00C42C5C /* MoxieStatsWidgetExtension.entitlements */,
 				47E4CC3A2C98563F00BE77E8 /* MoxitoHariosWidgetExtension.entitlements */,
 				47EC547F2C8B019F006C2820 /* Moxito.entitlements */,
 				47EC547E2C8B0121006C2820 /* MoxieWidgetExtension.entitlements */,
@@ -492,6 +533,7 @@
 				471FE98F2C7F808D00D20F4C /* MoxieTrackerUITests */,
 				471FE9AA2C7F821400D20F4C /* MoxieWidget */,
 				47E4CC2A2C98563600BE77E8 /* MoxitoHariosWidget */,
+				47434E352CB6D87400C42C5C /* MoxitoStatsProfileWidget */,
 				47C324312C6E57D400BE03C2 /* Frameworks */,
 				47C324002C6E578300BE03C2 /* Products */,
 			);
@@ -510,6 +552,7 @@
 				471FE98C2C7F808D00D20F4C /* MoxieTrackerUITests.xctest */,
 				471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */,
 				47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */,
+				47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -652,6 +695,7 @@
 			dependencies = (
 				471FE9B72C7F821400D20F4C /* PBXTargetDependency */,
 				47553E262CA16864006064FB /* PBXTargetDependency */,
+				47434E422CB6D87500C42C5C /* PBXTargetDependency */,
 			);
 			name = Moxito;
 			packageProductDependencies = (
@@ -721,6 +765,29 @@
 			);
 			productName = MoxieWidgetExtension;
 			productReference = 471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47434E452CB6D87500C42C5C /* Build configuration list for PBXNativeTarget "MoxitoStatsProfileWidgetExtension" */;
+			buildPhases = (
+				47434E2E2CB6D87400C42C5C /* Sources */,
+				47434E2F2CB6D87400C42C5C /* Frameworks */,
+				47434E302CB6D87400C42C5C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				47434E352CB6D87400C42C5C /* MoxitoStatsProfileWidget */,
+			);
+			name = MoxitoStatsProfileWidgetExtension;
+			packageProductDependencies = (
+				47434E562CB6D89E00C42C5C /* MoxieLib */,
+			);
+			productName = MoxitoStatsProfileWidgetExtension;
+			productReference = 47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		47C323FE2C6E578300BE03C2 /* fc-poc-wf */ = {
@@ -850,7 +917,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					471FE9722C7F808C00D20F4C = {
@@ -866,6 +933,9 @@
 					};
 					471FE9A62C7F821400D20F4C = {
 						CreatedOnToolsVersion = 15.1;
+					};
+					47434E312CB6D87400C42C5C = {
+						CreatedOnToolsVersion = 16.0;
 					};
 					47C323FE2C6E578300BE03C2 = {
 						CreatedOnToolsVersion = 15.1;
@@ -918,6 +988,7 @@
 				471FE98B2C7F808D00D20F4C /* MoxieTrackerUITests */,
 				471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */,
 				47E4CC262C98563600BE77E8 /* MoxitoHariosWidgetExtension */,
+				47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -957,6 +1028,13 @@
 				47E4CC412C9990C600BE77E8 /* Inter.ttf in Resources */,
 				47E4CC442C9990C600BE77E8 /* Inter-Italic.ttf in Resources */,
 				47E4CBDF2C9091D000BE77E8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434E302CB6D87400C42C5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,6 +1191,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47434E2E2CB6D87400C42C5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		47C323FB2C6E578300BE03C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1195,6 +1280,11 @@
 			isa = PBXTargetDependency;
 			target = 471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */;
 			targetProxy = 471FE9B62C7F821400D20F4C /* PBXContainerItemProxy */;
+		};
+		47434E422CB6D87500C42C5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */;
+			targetProxy = 47434E412CB6D87500C42C5C /* PBXContainerItemProxy */;
 		};
 		47553E262CA16864006064FB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1445,6 +1535,64 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		47434E462CB6D87500C42C5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoxitoStatsProfileWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoxitoStatsProfileWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoxitoStatsProfileWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.MoxitoStatsProfileWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47434E472CB6D87500C42C5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MoxitoStatsProfileWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoxitoStatsProfileWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoxitoStatsProfileWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.MoxitoStatsProfileWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1914,6 +2062,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		47434E452CB6D87500C42C5C /* Build configuration list for PBXNativeTarget "MoxitoStatsProfileWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47434E462CB6D87500C42C5C /* Debug */,
+				47434E472CB6D87500C42C5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		47C323FA2C6E578300BE03C2 /* Build configuration list for PBXProject "fc-poc-wf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2024,6 +2181,10 @@
 			productName = MoxieLib;
 		};
 		471FE9C42C7F82E400D20F4C /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
+		};
+		47434E562CB6D89E00C42C5C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
 		};

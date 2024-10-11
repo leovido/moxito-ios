@@ -2,7 +2,6 @@ import SwiftUI
 import MoxieLib
 
 struct ProfileView: View {
-
 	let columns = [
 		GridItem(.flexible()),
 		GridItem(.flexible(minimum: 100, maximum: 200))
@@ -139,19 +138,19 @@ struct GridItemBigView: View {
 	}
 
 	var reply: String {
-		let d = farScore * 2
+		let d = farScore * 1
 
 		return d.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var recast: String {
-		let d = farScore * 4
+		let d = farScore * 2
 
 		return d.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var replyke: String {
-		let d = farScore * 6.5
+		let d = farScore * 3.5
 
 		return d.formatted(.number.precision(.fractionLength(0)))
 	}

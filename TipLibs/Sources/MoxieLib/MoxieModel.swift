@@ -165,6 +165,7 @@ public struct MoxieModel: Codable, Hashable {
 	public let timeframe: String
 	public let socials: [Social]
 	public let entityID: String
+	public let fansCount: Int
 	public let moxieClaimTotals: [MoxieClaimTotal]
 	public let splitDetails: [MoxieSplitDetail]
 
@@ -173,6 +174,7 @@ public struct MoxieModel: Codable, Hashable {
 		case entityID = "entityId"
 		case moxieClaimTotals
 		case splitDetails
+		case fansCount
 	}
 	
 	public init(from decoder: Decoder) throws {
@@ -188,9 +190,10 @@ public struct MoxieModel: Codable, Hashable {
 		entityID = try values.decodeIfPresent(String.self, forKey: .entityID) ?? ""
 		moxieClaimTotals = try values.decodeIfPresent([MoxieClaimTotal].self, forKey: .moxieClaimTotals) ?? []
 		splitDetails = try values.decodeIfPresent([MoxieSplitDetail].self, forKey: .splitDetails) ?? []
+		fansCount = try values.decodeIfPresent(Int.self, forKey: .fansCount) ?? 0
 	}
 	
-	public init(allEarningsAmount: Decimal, castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, endTimestamp: Date, startTimestamp: Date, timeframe: String, socials: [Social], entityID: String, moxieClaimTotals: [MoxieClaimTotal], splitDetails: [MoxieSplitDetail]) {
+	public init(allEarningsAmount: Decimal, castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, endTimestamp: Date, startTimestamp: Date, timeframe: String, socials: [Social], entityID: String, moxieClaimTotals: [MoxieClaimTotal], splitDetails: [MoxieSplitDetail], fansCount: Int) {
 		self.allEarningsAmount = allEarningsAmount
 		self.castEarningsAmount = castEarningsAmount
 		self.frameDevEarningsAmount = frameDevEarningsAmount
@@ -202,6 +205,7 @@ public struct MoxieModel: Codable, Hashable {
 		self.entityID = entityID
 		self.moxieClaimTotals = moxieClaimTotals
 		self.splitDetails = splitDetails
+		self.fansCount = fansCount
 	}
 }
 
@@ -290,7 +294,7 @@ extension MoxieModel {
 			)
 		], splitDetails: [
 			.init(castEarningsAmount: 0, frameDevEarningsAmount: 0, otherEarningsAmount: 0, entityType: "CREATOR")
-		])
+		], fansCount: 0)
 	
 	public static let noop: MoxieModel = .init(
 		allEarningsAmount: 0,
@@ -321,5 +325,5 @@ extension MoxieModel {
 				availableClaimAmount: 0,
 				claimedAmount: 0
 			)
-		], splitDetails: [])
+		], splitDetails: [], fansCount: 0)
 }
