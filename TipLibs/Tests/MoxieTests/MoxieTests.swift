@@ -2,6 +2,10 @@ import XCTest
 @testable import MoxieLib
 
 final class MockClient: MoxieProvider {
+	func fetchFansCount(fid: String) async throws -> Int {
+		return 1000
+	}
+	
 	func processClaim(userFID: String, wallet: String) async throws -> MoxieLib.MoxieClaimModel {
 		.placeholder
 	}
@@ -46,6 +50,13 @@ final class MoxieClientTests: XCTestCase {
 		XCTAssertEqual(result, 0.0025)
 	}
 	
+	func testFans() async throws {
+		let data = mockModel.data(using: .utf8)!
+		let model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: data)
+		
+		XCTAssertEqual(model.fansCount, 1000)
+	}
+	
 	func testModel() async throws {
 		let data = mockModel.data(using: .utf8)!
 		let model = try CustomDecoderAndEncoder.decoder.decode(MoxieModel.self, from: data)
@@ -83,6 +94,7 @@ private let mockNil = """
 
 private let mockModel = """
 {
+	"fansCount": 1000,
 	"allEarningsAmount": 3618.8085597466693,
 	"castEarningsAmount": 2853.28884693608,
 	"frameDevEarningsAmount": 765.5197128105896,
