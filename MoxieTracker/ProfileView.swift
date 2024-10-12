@@ -15,6 +15,7 @@ struct ProfileView: View {
 		}
 		let d = Decimal(string: fcScore.tvl) ?? 0
 		let value = d / pow(10, 18)
+
 		return value.formatted(.number.precision(.fractionLength(2)))
 	}
 

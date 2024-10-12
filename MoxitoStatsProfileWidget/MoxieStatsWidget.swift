@@ -26,12 +26,12 @@ struct Provider: TimelineProvider {
 		
 		let entries: [SimpleEntry] = [
 			SimpleEntry(date: .now,
-									fcScore: .init(
+										fcScore: .init(
 										farRank: moxieModel.socials.first?.farcasterScore?.farRank ?? 0,
-										farScore: moxieModel.socials.first?.farcasterScore?.farScore ?? 0,
+										farScore:	 moxieModel.socials.first?.farcasterScore?.farScore ?? 0,
 										liquidityBoost: moxieModel.socials.first?.farcasterScore?.liquidityBoost ?? 0,
 										powerBoost: moxieModel.socials.first?.farcasterScore?.powerBoost ?? 0,
-										tvl: moxieModel.socials.first?.farcasterScore?.tvl ?? "",
+										tvl: moxieModel.socials.first?.farcasterScore?.tvl ?? "0",
 										tvlBoost: moxieModel.socials.first?.farcasterScore?.tvlBoost ?? 0),
 									fansCount: moxieModel.fansCount)
 		]
@@ -64,14 +64,15 @@ struct MoxieStatsWidgetEntryView : View {
 					GridItemView(title: "Score",
 											 value: entry.fcScore.farScore.formatted(.number.precision(.fractionLength(2))),
 											 subtitle: "",
-											 icon: "chart.bar.fill",
+											 icon: "gauge",
 											 isStat: false)
-					GridItemView(title: "TVL",
-											 value: String(format: "%.2f", entry.fcScore.tvl),
-											 subtitle: "Staked",
-											 icon: "lock.fill",
+					GridItemView(title: "Rank",
+											 value: "#\(entry.fcScore.farRank.formatted(.number.precision(.fractionLength(0))))",
+											 subtitle: "",
+											 icon: "medal.fill",
 											 isStat: false)
 				}
+				
 				HStack {
 					GridItemView(title: "LP", value: entry.fcScore.liquidityBoost.formatted(.number.precision(.fractionLength(2))), subtitle: "Boost", icon: "water.waves", isStat: false)
 					GridItemView(title: "TVL", value: entry.fcScore.tvlBoost.formatted(.number.precision(.fractionLength(2))), subtitle: "Boost", icon: "chart.bar.fill", isStat: false)
@@ -88,58 +89,68 @@ struct MoxieStatsWidgetEntryView : View {
 					GridItemView(title: "Recast", value: (entry.fcScore.farScore * 4).formatted(.number.precision(.fractionLength(0))), subtitle: "", icon: "arrowshape.turn.up.backward.fill", isStat: true)
 				}
 				
-				VStack {
-					VStack(alignment: .center, spacing: 4) {
-						Spacer()
-						HStack {
-							Spacer()
-							Text("Replyke")
-								.foregroundColor(Color(uiColor: MoxieColor.primary))
-								.fontDesign(.rounded)
-								.font(.system(size: 18))
-								.fontWeight(.black)
-
-							
-							Image(systemName: "square.stack.fill")
-								.resizable()
-								.aspectRatio(contentMode: .fit)
-								.frame(width: 15, height: 15)
-								.foregroundColor(Color(uiColor: MoxieColor.primary))
-							
-							Spacer()
-						}
-						
-						HStack {
-							Text((entry.fcScore.farScore * 3.5).formatted(.number.precision(.fractionLength(0))))
-								.fontWeight(.heavy)
-								.foregroundColor(.black)
-								.minimumScaleFactor(0.4)
-								.scaledToFill()
-							
-							Image("CoinMoxiePurple")
-								.resizable()
-								.aspectRatio(contentMode: .fit)
-								.frame(width: 15, height: 15)
-								.foregroundColor(Color(uiColor: MoxieColor.primary))
-							
-						}
-						
-							Text("")
-								.font(.custom("Inter", size: 10))
-								.foregroundColor(.gray)
-						
-					}
-					.frame(height: 40)
-
-					.padding()
-					.background(RoundedRectangle(cornerRadius: 16)
-						.stroke(Color.gray.opacity(0.2), lineWidth: 1))
-					
-					Spacer()
+				HStack {
+					GridItemView(title: "TVL",
+											 value: entry.fcScore.tvlDecimal.formatted(.number.precision(.fractionLength(2))),
+											 subtitle: "Staked",
+											 icon: "lock.fill",
+											 isStat: false)
+					GridItemView(title: "Replyke",
+											 value: (entry.fcScore.farScore * 3.5).formatted(.number.precision(.fractionLength(0))), subtitle: "",
+											 icon: "square.stack.fill", isStat: true)
 				}
+				
+//				VStack {
+//					VStack(alignment: .center, spacing: 4) {
+//						Spacer()
+//						HStack {
+//							Spacer()
+//							Text("Replyke")
+//								.foregroundColor(Color(uiColor: MoxieColor.primary))
+//								.fontDesign(.rounded)
+//								.font(.system(size: 18))
+//								.fontWeight(.black)
+//
+//							
+//							Image(systemName: "square.stack.fill")
+//								.resizable()
+//								.aspectRatio(contentMode: .fit)
+//								.frame(width: 15, height: 15)
+//								.foregroundColor(Color(uiColor: MoxieColor.primary))
+//							
+//							Spacer()
+//						}
+//						
+//						HStack {
+//							Text((entry.fcScore.farScore * 3.5).formatted(.number.precision(.fractionLength(0))))
+//								.fontWeight(.heavy)
+//								.foregroundColor(.black)
+//								.minimumScaleFactor(0.4)
+//								.scaledToFill()
+//							
+//							Image("CoinMoxiePurple")
+//								.resizable()
+//								.aspectRatio(contentMode: .fit)
+//								.frame(width: 15, height: 15)
+//								.foregroundColor(Color(uiColor: MoxieColor.primary))
+//							
+//						}
+//						
+//							Text("")
+//								.font(.custom("Inter", size: 10))
+//								.foregroundColor(.gray)
+//						
+//					}
+//					.frame(height: 40)
+//
+//					.padding()
+//					.background(RoundedRectangle(cornerRadius: 16)
+//						.stroke(Color.gray.opacity(0.2), lineWidth: 1))
+//					
+//					Spacer()
+//				}
 			}
 			.padding(.vertical, 4)
-			
 		}
 	}
 }
@@ -160,7 +171,7 @@ struct GridItemView: View {
 						.minimumScaleFactor(0.9)
 						.foregroundColor(Color(uiColor: MoxieColor.primary))
 						.fontDesign(.rounded)
-						.font(.system(size: 13))
+						.font(.system(size: 14))
 						.fontWeight(.black)
 
 					Spacer()

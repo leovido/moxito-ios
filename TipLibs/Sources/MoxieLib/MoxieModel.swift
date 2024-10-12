@@ -97,6 +97,7 @@ public struct MoxieFarcasterScore: Codable, Hashable {
 	public let liquidityBoost: Decimal
 	public let powerBoost: Decimal
 	public let tvl: String
+	public let tvlDecimal: Decimal
 	public let tvlBoost: Decimal
 	
 	public enum CodingKeys: String, CodingKey {
@@ -112,6 +113,11 @@ public struct MoxieFarcasterScore: Codable, Hashable {
 		powerBoost = try values.decodeIfPresent(Decimal.self, forKey: .powerBoost) ?? 0
 		tvl = try values.decodeIfPresent(String.self, forKey: .tvl) ?? ""
 		tvlBoost = try values.decodeIfPresent(Decimal.self, forKey: .tvlBoost) ?? 0
+		
+		let d = Decimal(string: tvl) ?? 0
+		let value = d / pow(10, 18)
+		
+		tvlDecimal = value
 	}
 	
 	public init(farRank: Decimal,
@@ -127,6 +133,11 @@ public struct MoxieFarcasterScore: Codable, Hashable {
 		self.powerBoost = powerBoost
 		self.tvl = tvl
 		self.tvlBoost = tvlBoost
+		
+		let d = Decimal(string: tvl) ?? 0
+		let value = d / pow(10, 18)
+		
+		self.tvlDecimal = value
 	}
 }
 
