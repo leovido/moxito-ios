@@ -19,7 +19,20 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     increment_build_number(xcodeproj: "fc-poc-wf.xcodeproj")
-    build_app(workspace: "fc-poc-wf.xcworkspace", scheme: "Moxito")
+
+    build_app(
+      workspace: "fc-poc-wf.xcworkspace",
+      scheme: "Moxito",
+      clean: true  # Clean the build directory
+    )
+
+    scan(
+      scheme: "Moxito",
+      workspace: "fc-poc-wf.xcworkspace", # or YourApp.xcodeproj
+      devices: ["iPhone 14"],           # You can change the device here
+      clean: true,
+      build_for_testing: true
+    )
     upload_to_testflight
   end
 end
