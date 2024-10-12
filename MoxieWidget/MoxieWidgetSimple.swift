@@ -157,10 +157,10 @@ struct MoxieWidgetSimpleEntryView : View {
 						}
 						.padding(.bottom, -6)
 						
-						Text(entry.rewardsPostSplit.formatted(.number.precision(.fractionLength(0))))
-							.foregroundStyle(Color(uiColor: MoxieColor.dark))
-							.fontWeight(.heavy)
-							.fontDesign(.rounded)
+//						Text(entry.rewardsPostSplit.formatted(.number.precision(.fractionLength(0))))
+//							.foregroundStyle(Color(uiColor: MoxieColor.dark))
+//							.fontWeight(.heavy)
+//							.fontDesign(.rounded)
 						Text(entry.dailyMoxie.formatted(.number.precision(.fractionLength(0))))
 							.foregroundStyle(Color(uiColor: MoxieColor.dark))
 							.fontWeight(.medium)
