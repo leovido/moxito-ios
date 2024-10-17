@@ -59,6 +59,7 @@ public enum MoxieEndpoint {
 	static let splits = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-splits"
 	static let fansCount = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-fans-count"
 	static let claimRewardsStatus = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-claim-status"
+	static let cherylWidgetEligible = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/check-cheryl-ft"
 	static let price = "https://api.dexscreener.com/latest/dex/pairs/base/0x493AD7E1c509dE7c89e1963fe9005EaD49FdD19c"
 	static let usersEndpoint = "https://api.neynar.com/v2/farcaster/user/search"
 }

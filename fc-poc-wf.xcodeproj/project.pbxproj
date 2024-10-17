@@ -34,6 +34,14 @@
 		47434E342CB6D87400C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
 		47434E432CB6D87500C42C5C /* MoxitoStatsProfileWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47434E572CB6D89E00C42C5C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47434E562CB6D89E00C42C5C /* MoxieLib */; };
+		47434E802CBD37AB00C42C5C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
+		47434E812CBD37AB00C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
+		47434E902CBD37AC00C42C5C /* CherylWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434E7F2CBD37AB00C42C5C /* CherylWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47434E962CBD397700C42C5C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47434E952CBD397700C42C5C /* MoxieLib */; };
+		47434EB82CBDC92300C42C5C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
+		47434EB92CBDC92300C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
+		47434EC82CBDC92400C42C5C /* CherylDarkWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		47434ECE2CBDCA0600C42C5C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47434ECD2CBDCA0600C42C5C /* MoxieLib */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
@@ -144,6 +152,20 @@
 			remoteGlobalIDString = 47434E312CB6D87400C42C5C;
 			remoteInfo = MoxitoStatsProfileWidgetExtension;
 		};
+		47434E8E2CBD37AC00C42C5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47434E7E2CBD37AB00C42C5C;
+			remoteInfo = CherylWidgetExtension;
+		};
+		47434EC62CBDC92400C42C5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47434EB62CBDC92300C42C5C;
+			remoteInfo = CherylDarkWidgetExtension;
+		};
 		47553E252CA16864006064FB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 47C323F72C6E578300BE03C2 /* Project object */;
@@ -190,7 +212,9 @@
 			files = (
 				47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */,
 				47434E432CB6D87500C42C5C /* MoxitoStatsProfileWidgetExtension.appex in Embed Foundation Extensions */,
+				47434EC82CBDC92400C42C5C /* CherylDarkWidgetExtension.appex in Embed Foundation Extensions */,
 				471FE9B82C7F821400D20F4C /* MoxieWidgetExtension.appex in Embed Foundation Extensions */,
+				47434E902CBD37AC00C42C5C /* CherylWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,6 +271,10 @@
 		47434E292CB6D43A00C42C5C /* MoxieStatsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxieStatsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxitoStatsProfileWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		47434E5B2CB72CAE00C42C5C /* MoxitoStatsProfileWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxitoStatsProfileWidgetExtension.entitlements; sourceTree = "<group>"; };
+		47434E7F2CBD37AB00C42C5C /* CherylWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CherylWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		47434E972CBD398000C42C5C /* CherylWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherylWidgetExtension.entitlements; sourceTree = "<group>"; };
+		47434EB02CBDC1DF00C42C5C /* CherylDarkWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherylDarkWidgetExtension.entitlements; sourceTree = "<group>"; };
+		47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CherylDarkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
@@ -326,10 +354,26 @@
 			);
 			target = 47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */;
 		};
+		47434E912CBD37AC00C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 47434E7E2CBD37AB00C42C5C /* CherylWidgetExtension */;
+		};
+		47434EC92CBDC92400C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 47434EB62CBDC92300C42C5C /* CherylDarkWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		47434E352CB6D87400C42C5C /* MoxitoStatsProfileWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (47434E6A2CB9C85900C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MoxitoStatsProfileWidget; sourceTree = "<group>"; };
+		47434E822CBD37AB00C42C5C /* CherylWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (47434E912CBD37AC00C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CherylWidget; sourceTree = "<group>"; };
+		47434EBA2CBDC92400C42C5C /* CherylDarkWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (47434EC92CBDC92400C42C5C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CherylDarkWidget; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +422,26 @@
 				47434E342CB6D87400C42C5C /* SwiftUI.framework in Frameworks */,
 				47434E572CB6D89E00C42C5C /* MoxieLib in Frameworks */,
 				47434E332CB6D87400C42C5C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434E7C2CBD37AB00C42C5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47434E812CBD37AB00C42C5C /* SwiftUI.framework in Frameworks */,
+				47434E962CBD397700C42C5C /* MoxieLib in Frameworks */,
+				47434E802CBD37AB00C42C5C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434EB42CBDC92300C42C5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47434EB92CBDC92300C42C5C /* SwiftUI.framework in Frameworks */,
+				47434ECE2CBDCA0600C42C5C /* MoxieLib in Frameworks */,
+				47434EB82CBDC92300C42C5C /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +581,8 @@
 		47C323F62C6E578300BE03C2 = {
 			isa = PBXGroup;
 			children = (
+				47434EB02CBDC1DF00C42C5C /* CherylDarkWidgetExtension.entitlements */,
+				47434E972CBD398000C42C5C /* CherylWidgetExtension.entitlements */,
 				47434E5B2CB72CAE00C42C5C /* MoxitoStatsProfileWidgetExtension.entitlements */,
 				47434E292CB6D43A00C42C5C /* MoxieStatsWidgetExtension.entitlements */,
 				47E4CC3A2C98563F00BE77E8 /* MoxitoHariosWidgetExtension.entitlements */,
@@ -534,6 +600,8 @@
 				471FE9AA2C7F821400D20F4C /* MoxieWidget */,
 				47E4CC2A2C98563600BE77E8 /* MoxitoHariosWidget */,
 				47434E352CB6D87400C42C5C /* MoxitoStatsProfileWidget */,
+				47434E822CBD37AB00C42C5C /* CherylWidget */,
+				47434EBA2CBDC92400C42C5C /* CherylDarkWidget */,
 				47C324312C6E57D400BE03C2 /* Frameworks */,
 				47C324002C6E578300BE03C2 /* Products */,
 			);
@@ -553,6 +621,8 @@
 				471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */,
 				47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */,
 				47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */,
+				47434E7F2CBD37AB00C42C5C /* CherylWidgetExtension.appex */,
+				47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -696,6 +766,8 @@
 				471FE9B72C7F821400D20F4C /* PBXTargetDependency */,
 				47553E262CA16864006064FB /* PBXTargetDependency */,
 				47434E422CB6D87500C42C5C /* PBXTargetDependency */,
+				47434E8F2CBD37AC00C42C5C /* PBXTargetDependency */,
+				47434EC72CBDC92400C42C5C /* PBXTargetDependency */,
 			);
 			name = Moxito;
 			packageProductDependencies = (
@@ -788,6 +860,52 @@
 			);
 			productName = MoxitoStatsProfileWidgetExtension;
 			productReference = 47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		47434E7E2CBD37AB00C42C5C /* CherylWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47434E922CBD37AC00C42C5C /* Build configuration list for PBXNativeTarget "CherylWidgetExtension" */;
+			buildPhases = (
+				47434E7B2CBD37AB00C42C5C /* Sources */,
+				47434E7C2CBD37AB00C42C5C /* Frameworks */,
+				47434E7D2CBD37AB00C42C5C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				47434E822CBD37AB00C42C5C /* CherylWidget */,
+			);
+			name = CherylWidgetExtension;
+			packageProductDependencies = (
+				47434E952CBD397700C42C5C /* MoxieLib */,
+			);
+			productName = CherylWidgetExtension;
+			productReference = 47434E7F2CBD37AB00C42C5C /* CherylWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		47434EB62CBDC92300C42C5C /* CherylDarkWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47434ECA2CBDC92400C42C5C /* Build configuration list for PBXNativeTarget "CherylDarkWidgetExtension" */;
+			buildPhases = (
+				47434EB32CBDC92300C42C5C /* Sources */,
+				47434EB42CBDC92300C42C5C /* Frameworks */,
+				47434EB52CBDC92300C42C5C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				47434EBA2CBDC92400C42C5C /* CherylDarkWidget */,
+			);
+			name = CherylDarkWidgetExtension;
+			packageProductDependencies = (
+				47434ECD2CBDCA0600C42C5C /* MoxieLib */,
+			);
+			productName = CherylDarkWidgetExtension;
+			productReference = 47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		47C323FE2C6E578300BE03C2 /* fc-poc-wf */ = {
@@ -937,6 +1055,12 @@
 					47434E312CB6D87400C42C5C = {
 						CreatedOnToolsVersion = 16.0;
 					};
+					47434E7E2CBD37AB00C42C5C = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					47434EB62CBDC92300C42C5C = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					47C323FE2C6E578300BE03C2 = {
 						CreatedOnToolsVersion = 15.1;
 					};
@@ -989,6 +1113,8 @@
 				471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */,
 				47E4CC262C98563600BE77E8 /* MoxitoHariosWidgetExtension */,
 				47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */,
+				47434E7E2CBD37AB00C42C5C /* CherylWidgetExtension */,
+				47434EB62CBDC92300C42C5C /* CherylDarkWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1032,6 +1158,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		47434E302CB6D87400C42C5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434E7D2CBD37AB00C42C5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434EB52CBDC92300C42C5C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1198,6 +1338,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47434E7B2CBD37AB00C42C5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47434EB32CBDC92300C42C5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		47C323FB2C6E578300BE03C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1285,6 +1439,16 @@
 			isa = PBXTargetDependency;
 			target = 47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */;
 			targetProxy = 47434E412CB6D87500C42C5C /* PBXContainerItemProxy */;
+		};
+		47434E8F2CBD37AC00C42C5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47434E7E2CBD37AB00C42C5C /* CherylWidgetExtension */;
+			targetProxy = 47434E8E2CBD37AC00C42C5C /* PBXContainerItemProxy */;
+		};
+		47434EC72CBDC92400C42C5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47434EB62CBDC92300C42C5C /* CherylDarkWidgetExtension */;
+			targetProxy = 47434EC62CBDC92400C42C5C /* PBXContainerItemProxy */;
 		};
 		47553E262CA16864006064FB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1582,6 +1746,122 @@
 				);
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.MoxitoStatsProfileWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		47434E932CBD37AC00C42C5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CherylWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CherylWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CherylWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.CherylWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47434E942CBD37AC00C42C5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CherylWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CherylWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CherylWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.CherylWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		47434ECB2CBDC92400C42C5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CherylDarkWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CherylDarkWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CherylDarkWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.CherylDarkWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47434ECC2CBDC92400C42C5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CherylDarkWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HL92L2PJSU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CherylDarkWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CherylDarkWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito.CherylDarkWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2059,6 +2339,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		47434E922CBD37AC00C42C5C /* Build configuration list for PBXNativeTarget "CherylWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47434E932CBD37AC00C42C5C /* Debug */,
+				47434E942CBD37AC00C42C5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47434ECA2CBDC92400C42C5C /* Build configuration list for PBXNativeTarget "CherylDarkWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47434ECB2CBDC92400C42C5C /* Debug */,
+				47434ECC2CBDC92400C42C5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		47C323FA2C6E578300BE03C2 /* Build configuration list for PBXProject "fc-poc-wf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2173,6 +2471,14 @@
 			productName = MoxieLib;
 		};
 		47434E562CB6D89E00C42C5C /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
+		};
+		47434E952CBD397700C42C5C /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
+		};
+		47434ECD2CBDCA0600C42C5C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
 		};

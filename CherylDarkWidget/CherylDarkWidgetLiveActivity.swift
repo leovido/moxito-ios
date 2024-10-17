@@ -1,16 +1,15 @@
 //
-//  MoxieStatsWidgetLiveActivity.swift
-//  MoxieStatsWidget
+//  CherylDarkWidgetLiveActivity.swift
+//  CherylDarkWidget
 //
-//  Created by Christian Ray Leovido on 09/10/2024.
+//  Created by Christian Ray Leovido on 14/10/2024.
 //
-#if os(iOS)
+
 import ActivityKit
-#endif
 import WidgetKit
 import SwiftUI
 
-struct MoxieStatsWidgetAttributes: ActivityAttributes {
+struct CherylDarkWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var emoji: String
@@ -20,9 +19,9 @@ struct MoxieStatsWidgetAttributes: ActivityAttributes {
     var name: String
 }
 
-struct MoxieStatsWidgetLiveActivity: Widget {
+struct CherylDarkWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: MoxieStatsWidgetAttributes.self) { context in
+        ActivityConfiguration(for: CherylDarkWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
                 Text("Hello \(context.state.emoji)")
@@ -57,25 +56,25 @@ struct MoxieStatsWidgetLiveActivity: Widget {
     }
 }
 
-extension MoxieStatsWidgetAttributes {
-    fileprivate static var preview: MoxieStatsWidgetAttributes {
-        MoxieStatsWidgetAttributes(name: "World")
+extension CherylDarkWidgetAttributes {
+    fileprivate static var preview: CherylDarkWidgetAttributes {
+        CherylDarkWidgetAttributes(name: "World")
     }
 }
 
-extension MoxieStatsWidgetAttributes.ContentState {
-    fileprivate static var smiley: MoxieStatsWidgetAttributes.ContentState {
-        MoxieStatsWidgetAttributes.ContentState(emoji: "😀")
+extension CherylDarkWidgetAttributes.ContentState {
+    fileprivate static var smiley: CherylDarkWidgetAttributes.ContentState {
+        CherylDarkWidgetAttributes.ContentState(emoji: "😀")
      }
      
-     fileprivate static var starEyes: MoxieStatsWidgetAttributes.ContentState {
-         MoxieStatsWidgetAttributes.ContentState(emoji: "🤩")
+     fileprivate static var starEyes: CherylDarkWidgetAttributes.ContentState {
+         CherylDarkWidgetAttributes.ContentState(emoji: "🤩")
      }
 }
 
-#Preview("Notification", as: .content, using: MoxieStatsWidgetAttributes.preview) {
-   MoxieStatsWidgetLiveActivity()
+#Preview("Notification", as: .content, using: CherylDarkWidgetAttributes.preview) {
+   CherylDarkWidgetLiveActivity()
 } contentStates: {
-    MoxieStatsWidgetAttributes.ContentState.smiley
-    MoxieStatsWidgetAttributes.ContentState.starEyes
+    CherylDarkWidgetAttributes.ContentState.smiley
+    CherylDarkWidgetAttributes.ContentState.starEyes
 }

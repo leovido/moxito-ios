@@ -11,6 +11,16 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>CherylDarkWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
+		<key>CherylWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>FCWidgetsExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
@@ -77,7 +87,7 @@
 		<key>MoxitoStatsProfileWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>15</integer>
 		</dict>
 		<key>fc-poc-wf.xcscheme_^#shared#^_</key>
 		<dict>

@@ -1,16 +1,15 @@
 //
-//  MoxieStatsWidgetLiveActivity.swift
-//  MoxieStatsWidget
+//  CherylWidgetLiveActivity.swift
+//  CherylWidget
 //
-//  Created by Christian Ray Leovido on 09/10/2024.
+//  Created by Christian Ray Leovido on 14/10/2024.
 //
-#if os(iOS)
+
 import ActivityKit
-#endif
 import WidgetKit
 import SwiftUI
 
-struct MoxieStatsWidgetAttributes: ActivityAttributes {
+struct CherylWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var emoji: String
@@ -20,9 +19,9 @@ struct MoxieStatsWidgetAttributes: ActivityAttributes {
     var name: String
 }
 
-struct MoxieStatsWidgetLiveActivity: Widget {
+struct CherylWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: MoxieStatsWidgetAttributes.self) { context in
+        ActivityConfiguration(for: CherylWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
                 Text("Hello \(context.state.emoji)")
@@ -57,25 +56,25 @@ struct MoxieStatsWidgetLiveActivity: Widget {
     }
 }
 
-extension MoxieStatsWidgetAttributes {
-    fileprivate static var preview: MoxieStatsWidgetAttributes {
-        MoxieStatsWidgetAttributes(name: "World")
+extension CherylWidgetAttributes {
+    fileprivate static var preview: CherylWidgetAttributes {
+        CherylWidgetAttributes(name: "World")
     }
 }
 
-extension MoxieStatsWidgetAttributes.ContentState {
-    fileprivate static var smiley: MoxieStatsWidgetAttributes.ContentState {
-        MoxieStatsWidgetAttributes.ContentState(emoji: "😀")
+extension CherylWidgetAttributes.ContentState {
+    fileprivate static var smiley: CherylWidgetAttributes.ContentState {
+        CherylWidgetAttributes.ContentState(emoji: "😀")
      }
      
-     fileprivate static var starEyes: MoxieStatsWidgetAttributes.ContentState {
-         MoxieStatsWidgetAttributes.ContentState(emoji: "🤩")
+     fileprivate static var starEyes: CherylWidgetAttributes.ContentState {
+         CherylWidgetAttributes.ContentState(emoji: "🤩")
      }
 }
 
-#Preview("Notification", as: .content, using: MoxieStatsWidgetAttributes.preview) {
-   MoxieStatsWidgetLiveActivity()
+#Preview("Notification", as: .content, using: CherylWidgetAttributes.preview) {
+   CherylWidgetLiveActivity()
 } contentStates: {
-    MoxieStatsWidgetAttributes.ContentState.smiley
-    MoxieStatsWidgetAttributes.ContentState.starEyes
+    CherylWidgetAttributes.ContentState.smiley
+    CherylWidgetAttributes.ContentState.starEyes
 }

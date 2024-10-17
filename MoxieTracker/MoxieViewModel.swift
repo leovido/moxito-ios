@@ -3,7 +3,7 @@ import WidgetKit
 import MoxieLib
 import Combine
 import Sentry
-#if canImport(ActivityKit)
+#if os(iOS)
 import ActivityKit
 #endif
 
@@ -18,7 +18,9 @@ enum NotificationOption: Codable, Hashable, CaseIterable {
 @MainActor
 final class MoxieViewModel: ObservableObject, Observable {
 	static let shared = MoxieViewModel()
+#if os(iOS)
 	private var currentActivity: Activity<MoxieActivityAttributes>?
+#endif
 
 	var inFlightTask: Task<Void, Error>?
 
@@ -352,7 +354,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 
 	func removeAllScheduledNotifications() {
-		persistence.removeObject(forKey: "notificationOptions")
+//		persistence.removeObject(forKey: "notificationOptions")
 		selectedNotificationOptions.removeAll()
 
 		UNUserNotificationCenter.current().removeAllDeliveredNotifications()

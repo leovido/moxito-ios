@@ -1,6 +1,6 @@
-import ActivityKit
+#if os(iOS)
 
-#if canImport(ActivityKit)
+import ActivityKit
 
 struct MoxieActivityAttributes: ActivityAttributes {
 	public struct ContentState: Codable, Hashable {
