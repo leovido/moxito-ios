@@ -60,15 +60,8 @@ struct HomeView: View {
 									progress = 0
 									Haptics.shared.play(.medium)
 
-									print(number)
-									if number == 0 {
-										Task {
-											claimViewModel.actions.send(.initiateClaim)
-										}
-									} else {
-										Task {
-											claimViewModel.actions.send(.initiateClaim)
-										}
+									Task {
+										claimViewModel.actions.send(.initiateClaim)
 									}
 								}
 							}, label: {
@@ -76,6 +69,7 @@ struct HomeView: View {
 									.foregroundStyle(.white)
 									.padding(16)
 							})
+							.disabled(number == 0)
 							.frame(minWidth: 102)
 							.frame(height: 38)
 							.font(.callout)
@@ -93,16 +87,16 @@ struct HomeView: View {
 								Text("Choose wallet for claiming Moxie")
 							}
 
-							Button(action: {
-								viewModel.isSearchMode.toggle()
-							}, label: {
-								Image(systemName: "magnifyingglass")
+							NavigationLink {
+								AccountView()
+							} label: {
+								Image("GearUnselected")
 									.resizable()
+									.renderingMode(.template)
 									.aspectRatio(contentMode: .fit)
 									.frame(width: 20, height: 20)
 									.foregroundStyle(Color(uiColor: MoxieColor.primary))
-							})
-							.sensoryFeedback(.success, trigger: viewModel.isSearchMode)
+							}
 							.frame(width: 38, height: 38)
 							.font(.callout)
 							.background(Color.white)
@@ -298,9 +292,12 @@ struct HomeView: View {
 					})
 					.onAppear {
 						do {
-							let currentSelectedNotificationOptions = try CustomDecoderAndEncoder.decoder.decode([NotificationOption].self, from: selectedNotificationOptionsData)
+							if selectedNotificationOptionsData == Data() {
+								let currentSelectedNotificationOptions = try CustomDecoderAndEncoder.decoder.decode([NotificationOption].self, from: selectedNotificationOptionsData)
 
-							viewModel.selectedNotificationOptions = currentSelectedNotificationOptions
+								viewModel.selectedNotificationOptions = currentSelectedNotificationOptions
+							}
+
 						} catch {
 							SentrySDK.capture(error: error)
 						}
@@ -374,6 +371,7 @@ struct HomeView: View {
 					}, message: {
 						Text("\(availableClaimAmountFormatted) $MOXIE successfully claimed 🌱")
 					})
+					.sensoryFeedback(.selection, trigger: number)
 					.sensoryFeedback(.success, trigger: claimViewModel.isClaimAlertShowing, condition: { _, newValue in
 						return !newValue
 					})
@@ -389,9 +387,6 @@ struct HomeView: View {
 					.onAppear {
 						SentrySDK.setUser(.init(userId: viewModel.model.entityID))
 					}
-					.sheet(isPresented: $viewModel.isSearchMode, content: {
-						SearchListView(viewModel: .init(client: .init(), query: "", items: [], currentFID: viewModel.inputFID))
-					})
 					.overlay(alignment: .top) {
 						if viewModel.error != nil {
 							ErrorView(error: $viewModel.error)

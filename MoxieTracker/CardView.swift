@@ -37,13 +37,13 @@ struct CardView: View {
 			VStack {
 				Image(systemName: imageSystemName)
 					.resizable()
-					.renderingMode(.template) // Use .template to apply the foreground color
+					.renderingMode(.template)
 					.aspectRatio(contentMode: .fit)
 					.padding(10)
-					.foregroundColor(.white) // Set the SF Symbol color to white
+					.foregroundColor(.white)
 					.background(
 						RoundedRectangle(cornerRadius: 10)
-							.fill(Color(uiColor: MoxieColor.green)) // Green background with rounded corners
+							.fill(Color(uiColor: MoxieColor.green))
 					)
 			}
 			.frame(width: 40, height: 40)
@@ -57,20 +57,22 @@ struct CardView: View {
 					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color.white)
 
-				HStack(spacing: 1) {
-					Text(amountFormatted)
-						.font(.title)
-						.font(.custom("Inter", size: 20))
-						.foregroundStyle(Color.white)
-						.fontWeight(.heavy)
-						.padding(.trailing, -4)
+				if !amountFormatted.isEmpty {
+					HStack(spacing: 1) {
+						Text(amountFormatted)
+							.font(.title)
+							.font(.custom("Inter", size: 20))
+							.foregroundStyle(Color.white)
+							.fontWeight(.heavy)
+							.padding(.trailing, -4)
 
-					Image("CoinMoxie", bundle: .main)
-						.resizable()
-						.aspectRatio(contentMode: .fit)
-						.frame(height: 35)
+						Image("CoinMoxie", bundle: .main)
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.frame(height: 35)
+					}
+					.frame(maxHeight: .infinity)
 				}
-				.frame(maxHeight: .infinity)
 
 				Text("~\(formattedDollarValue(dollarValue: dollarValue))")
 					.font(.caption)
@@ -82,15 +84,17 @@ struct CardView: View {
 
 			Spacer()
 
-			Menu {
-				Text(info)
-			} label: {
-				Image(systemName: "info.circle.fill")
-					.resizable()
-					.aspectRatio(contentMode: .fit)
-					.frame(width: 25)
-					.padding(.trailing)
-					.tint(Color(uiColor: MoxieColor.otherColor))
+			if !info.isEmpty {
+				Menu {
+					Text(info)
+				} label: {
+					Image(systemName: "info.circle.fill")
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+						.frame(width: 25)
+						.padding(.trailing)
+						.tint(Color(uiColor: MoxieColor.otherColor))
+				}
 			}
 		}
 		.padding(.vertical)

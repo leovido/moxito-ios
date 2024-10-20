@@ -1,14 +1,15 @@
 import SwiftUI
+import MoxieLib
 import HealthKit
+import Sentry
 
-class HealthKitManager {
+final class HealthKitManager {
 	let healthStore = HKHealthStore()
 
 	let readDataTypes: Set = [
 		HKObjectType.quantityType(forIdentifier: .stepCount)!,
 		HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
 		HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-		HKObjectType.quantityType(forIdentifier: .heartRate)!,
 		HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
 	]
 
@@ -135,15 +136,15 @@ class HealthKitManager {
 	}
 }
 
-class StepCountViewModel: ObservableObject {
+final class StepCountViewModel: ObservableObject {
 	private var healthKitManager = HealthKitManager()
 
-	@Published var steps: Double = 0.0
-	@Published var caloriesBurned: Double = 0.0
-	@Published var distanceTraveled: Double = 0.0
-	@Published var restingHeartRate: Double = 0.0
+	@Published var steps: Decimal = 0.0
+	@Published var caloriesBurned: Decimal = 0.0
+	@Published var distanceTraveled: Decimal = 0.0
+	@Published var restingHeartRate: Decimal = 0.0
 
-	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Double = 0, caloriesBurned: Double = 0, distanceTraveled: Double = 0, restingHeartRate: Double = 0) {
+	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0) {
 		self.healthKitManager = healthKitManager
 		self.steps = steps
 		self.caloriesBurned = caloriesBurned
@@ -179,7 +180,7 @@ class StepCountViewModel: ObservableObject {
 				if let error = error {
 					print("Error fetching steps: \(error)")
 				} else {
-					self?.steps = steps
+					self?.steps = Decimal(steps)
 				}
 			}
 		}
@@ -192,7 +193,7 @@ class StepCountViewModel: ObservableObject {
 				if let error = error {
 					print("Error fetching calories: \(error)")
 				} else {
-					self?.caloriesBurned = calories ?? 0
+					self?.caloriesBurned = Decimal(calories ?? 0)
 				}
 			}
 		}
@@ -203,12 +204,12 @@ class StepCountViewModel: ObservableObject {
 		healthKitManager.fetchDistance { [weak self] (distance, error) in
 			DispatchQueue.main.async {
 				if let error = error {
-					print("Error fetching distance: \(error)")
+					SentrySDK.capture(error: MoxieError.message("Error fetching distance \(error)"))
 				} else {
 					guard let distance = distance else {
 						return
 					}
-					self?.distanceTraveled = distance / 1000
+					self?.distanceTraveled = Decimal(distance) / 1000
 				}
 			}
 		}
@@ -221,7 +222,7 @@ class StepCountViewModel: ObservableObject {
 				if let error = error {
 					print("Error fetching resting heart rate: \(error)")
 				} else {
-					self?.restingHeartRate = heartRate ?? 0
+					self?.restingHeartRate = Decimal(heartRate ?? 0)
 				}
 			}
 		}
@@ -229,7 +230,6 @@ class StepCountViewModel: ObservableObject {
 }
 
 extension HealthKitManager {
-
 	func getTodayStepCount(completion: @escaping (Double, Error?) -> Void) {
 		guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
 			fatalError("Step Count Type is no longer available in HealthKit")

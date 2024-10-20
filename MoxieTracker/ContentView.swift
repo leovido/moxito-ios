@@ -31,8 +31,8 @@ struct ContentView: View {
 						.tag(Tab.home)
 					FitnessView()
 						.tag(Tab.fitness)
-					AccountView()
-						.tag(Tab.settings)
+					SearchListView(viewModel: .init(client: .init(), query: "", items: [], currentFID: viewModel.inputFID))
+						.tag(Tab.search)
 					ProfileView()
 						.tag(Tab.profile)
 				}

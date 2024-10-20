@@ -4,7 +4,7 @@ import MoxieLib
 enum Tab: String, Hashable, CaseIterable {
 	case home = "Home"
 	case profile = "Person"
-	case settings = "Gear"
+	case search = "magnifyingglass"
 	case fitness = "Fitness"
 }
 
@@ -34,10 +34,10 @@ struct CustomBottomTabBarView: View {
 							.frame(maxWidth: geo.size.width * 0.25)
 					}
 
-					TabBarButton(imageName: Tab.settings.rawValue, tabName: .settings, selectedTab: $currentTab)
+					TabBarButtonSearch(imageName: Tab.search.rawValue, tabName: .search, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
-							currentTab = .settings
+							currentTab = .search
 						}
 						.frame(maxWidth: geo.size.width * 0.25)
 
@@ -60,6 +60,20 @@ struct CustomBottomTabBarView: View {
 	}
 }
 
+private struct TabBarButtonSearch: View {
+	let imageName: String
+	let tabName: Tab
+
+	@Binding var selectedTab: Tab
+
+	var body: some View {
+		Image("magnifyingglass")
+			.renderingMode(.template)
+			.frame(width: 24, height: 24)
+			.foregroundStyle(tabName == selectedTab ? Color.white : Color("TabIconColor", bundle: .main))
+	}
+}
+
 private struct TabBarButton: View {
 	let imageName: String
 	let tabName: Tab
@@ -68,10 +82,9 @@ private struct TabBarButton: View {
 
 	var body: some View {
 		Image(tabName == selectedTab ? "\(imageName)Selected" : "\(imageName)Unselected")
-			.renderingMode(.original)
+			.renderingMode(.template)
 			.frame(width: 24, height: 24)
-			.tint(tabName == selectedTab ? Color.white : Color("OnboardingText", bundle: .main))
-			.fontWeight(.bold)
+			.foregroundStyle(tabName == selectedTab ? Color.white : Color("TabIconColor", bundle: .main))
 	}
 }
 
