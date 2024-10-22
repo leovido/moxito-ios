@@ -391,12 +391,11 @@ public final actor MoxieClient: MoxieProvider {
 	
 	public func fetchTotalPoolRewards() async throws -> Decimal {
 		do {
-			guard let url = URL(string: MoxieEndpoint.fitnessRewards),
-						var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+			guard let url = URL(string: MoxieEndpoint.fitnessRewards) else {
 				throw MoxieError.message("Invalid fans count endpoint")
 			}
 			
-			let request = URLRequest(url: components.url!)
+			let request = URLRequest(url: url)
 			
 			let (data, response) = try await session.data(for: request)
 			
