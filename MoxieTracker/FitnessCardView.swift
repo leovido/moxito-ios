@@ -86,12 +86,21 @@ struct FitnessCardView: View {
 					.foregroundStyle(Color.white)
 
 				HStack(alignment: .lastTextBaseline) {
-					Text(noFormatting ? amount.formatted(.number.precision(.fractionLength(0))) : amountFormatted)
-						.font(.title)
-						.font(.custom("Inter", size: 20))
-						.foregroundStyle(Color.white)
-						.fontWeight(.heavy)
-						.padding(.trailing, -4)
+					if type == .distance {
+						Text(amount.formatted(.number.precision(.fractionLength(2))))
+							.font(.title)
+							.font(.custom("Inter", size: 20))
+							.foregroundStyle(Color.white)
+							.fontWeight(.heavy)
+							.padding(.trailing, -4)
+					} else {
+						Text(noFormatting ? amount.formatted(.number.precision(.fractionLength(0))) : amountFormatted)
+							.font(.title)
+							.font(.custom("Inter", size: 20))
+							.foregroundStyle(Color.white)
+							.fontWeight(.heavy)
+							.padding(.trailing, -4)
+					}
 
 					Text(measurement)
 						.font(.caption)
