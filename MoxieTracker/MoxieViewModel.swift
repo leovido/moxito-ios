@@ -34,6 +34,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 	@Published var isLoading: Bool = false
 	@Published var price: Decimal = 0
+	@Published var totalPoolRewards: Decimal = 0
+
 	@Published var timeAgo: String = ""
 	@Published var userInputNotifications: Decimal
 	@Published var isSearchMode: Bool
@@ -285,6 +287,14 @@ final class MoxieViewModel: ObservableObject, Observable {
 			price = try await client.fetchPrice()
 		} catch {
 			price = 0
+		}
+	}
+
+	func fetchTotalPoolRewards() async throws {
+		do {
+			totalPoolRewards = try await client.fetchTotalPoolRewards()
+		} catch {
+			totalPoolRewards = 0
 		}
 	}
 

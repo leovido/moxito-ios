@@ -47,7 +47,12 @@ final class HealthKitManager {
 			return
 		}
 
-		let startDate = Calendar.current.startOfDay(for: Date())
+		let calendar = Calendar.current
+		guard let startDate = calendar.date(byAdding: .day, value: -2, to: Date()) else {
+			completion(nil, nil)
+			return
+		}
+
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
 
 		let query = HKStatisticsQuery(quantityType: calorieType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in

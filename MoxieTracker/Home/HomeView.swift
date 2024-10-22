@@ -4,20 +4,81 @@ import MoxieLib
 import ConfettiSwiftUI
 import Sentry
 
+struct HeaderView: View {
+	@EnvironmentObject var viewModel: MoxieViewModel
+	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
+
+	let tab: Tab
+
+	var body: some View {
+		HStack {
+			VStack(alignment: .leading) {
+				Text("\(viewModel.isSearchMode ? viewModel.model.socials.first?.profileDisplayName ?? "Moxie" : "Hello, " + (viewModel.model.socials.first?.profileDisplayName ?? "Moxie"))")
+					.scaledToFit()
+					.font(.body)
+					.font(.custom("Inter", size: 20))
+					.foregroundStyle(Color.white)
+					.fontWeight(.bold)
+					.multilineTextAlignment(.leading)
+				Text("Last update: \(viewModel.timeAgo)")
+					.fontWeight(.light)
+					.foregroundStyle(Color.white)
+					.font(.caption)
+					.font(.custom("Inter", size: 20))
+					.multilineTextAlignment(.leading)
+			}
+			Spacer()
+
+			Button(action: {
+				withAnimation {
+					claimViewModel.number = viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0
+					claimViewModel.progress = 0
+					Haptics.shared.play(.medium)
+
+					Task {
+						claimViewModel.actions.send(.initiateClaim(tab))
+					}
+				}
+			}, label: {
+				Text(viewModel.model.moxieClaimTotals.first?.availableClaimAmount == 0 ? "Claimed" : "Claim")
+					.foregroundStyle(.white)
+					.padding(16)
+			})
+			.disabled(viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0 == 0)
+			.frame(minWidth: 102)
+			.frame(height: 38)
+			.font(.callout)
+			.background(viewModel.model.moxieClaimTotals.first?.availableClaimAmount != 0 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.claimButton))
+			.clipShape(Capsule())
+
+			NavigationLink {
+				AccountView()
+			} label: {
+				Image("GearUnselected")
+					.resizable()
+					.renderingMode(.template)
+					.aspectRatio(contentMode: .fit)
+					.frame(width: 20, height: 20)
+					.foregroundStyle(Color(uiColor: MoxieColor.primary))
+			}
+			.frame(width: 38, height: 38)
+			.font(.callout)
+			.background(Color.white)
+			.clipShape(Circle())
+		}
+		.padding(.bottom, 20)
+	}
+}
+
 struct HomeView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()
 	@AppStorage("moxieClaimStatus") var moxieClaimStatus: Data = .init()
 	@AppStorage("selectedNotificationOptionsData") var selectedNotificationOptionsData: Data = .init()
 	@AppStorage("userInputNotificationsData") var userInputNotificationsString: String = ""
 
-	@State private var timer: Timer?
-	@State private var timerProgress: Timer?
-	@State private var number: Decimal = 10000
-	@State private var progress: Double = 0
-
 	@Environment(\.scenePhase) var scenePhase
 	@EnvironmentObject var viewModel: MoxieViewModel
-	@StateObject var claimViewModel: MoxieClaimViewModel = .init(moxieClaimStatus: nil)
+	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 
 	var availableClaimAmountFormatted: String {
 		guard let claim = viewModel.model.moxieClaimTotals.first else {
@@ -36,73 +97,7 @@ struct HomeView: View {
 						.resizable()
 						.ignoresSafeArea()
 					VStack {
-						HStack {
-							VStack(alignment: .leading) {
-								Text("\(viewModel.isSearchMode ? viewModel.model.socials.first?.profileDisplayName ?? "Moxie" : "Hello, " + (viewModel.model.socials.first?.profileDisplayName ?? "Moxie"))")
-									.scaledToFit()
-									.font(.body)
-									.font(.custom("Inter", size: 20))
-									.foregroundStyle(Color.white)
-									.fontWeight(.bold)
-									.multilineTextAlignment(.leading)
-								Text("Last update: \(viewModel.timeAgo)")
-									.fontWeight(.light)
-									.foregroundStyle(Color.white)
-									.font(.caption)
-									.font(.custom("Inter", size: 20))
-									.multilineTextAlignment(.leading)
-							}
-							Spacer()
-
-							Button(action: {
-								withAnimation {
-									number = viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0
-									progress = 0
-									Haptics.shared.play(.medium)
-
-									Task {
-										claimViewModel.actions.send(.initiateClaim)
-									}
-								}
-							}, label: {
-								Text(viewModel.model.moxieClaimTotals.first?.availableClaimAmount == 0 ? "Claimed" : "Claim")
-									.foregroundStyle(.white)
-									.padding(16)
-							})
-							.disabled(number == 0)
-							.frame(minWidth: 102)
-							.frame(height: 38)
-							.font(.callout)
-							.background(viewModel.model.moxieClaimTotals.first?.availableClaimAmount != 0 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.claimButton))
-							.clipShape(Capsule())
-							.confirmationDialog("Moxie claim",
-																	isPresented: $claimViewModel.isClaimDialogShowing,
-																	titleVisibility: .visible) {
-								ForEach(viewModel.wallets, id: \.self) { wallet in
-									Button(wallet) {
-										claimViewModel.actions.send(.selectedWallet(wallet))
-									}
-								}
-							} message: {
-								Text("Choose wallet for claiming Moxie")
-							}
-
-							NavigationLink {
-								AccountView()
-							} label: {
-								Image("GearUnselected")
-									.resizable()
-									.renderingMode(.template)
-									.aspectRatio(contentMode: .fit)
-									.frame(width: 20, height: 20)
-									.foregroundStyle(Color(uiColor: MoxieColor.primary))
-							}
-							.frame(width: 38, height: 38)
-							.font(.callout)
-							.background(Color.white)
-							.clipShape(Circle())
-						}
-						.padding(.bottom, 20)
+						HeaderView(tab: .home)
 
 						ScrollView(showsIndicators: false) {
 							HStack {
@@ -128,14 +123,14 @@ struct HomeView: View {
 										.foregroundStyle(Color(uiColor: MoxieColor.primary))
 
 									HStack {
-										Text("\(claimViewModel.willPlayAnimationNumbers ? number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
+										Text("\(claimViewModel.willPlayAnimationNumbers ? claimViewModel.number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
 											.font(.largeTitle)
 											.font(.custom("Inter", size: 20))
 											.foregroundStyle(Color(uiColor: MoxieColor.primary))
 											.fontWeight(.heavy)
 											.onChange(of: claimViewModel.willPlayAnimationNumbers, initial: true) { _, newValue in
 												if newValue {
-													startCountdown()
+													claimViewModel.startCountdown()
 												}
 											}
 
@@ -248,6 +243,17 @@ struct HomeView: View {
 						Spacer()
 					}
 					.padding()
+					.confirmationDialog("Moxie claim",
+															isPresented: $claimViewModel.isClaimDialogShowing,
+															titleVisibility: .visible) {
+						ForEach(viewModel.wallets, id: \.self) { wallet in
+							Button(wallet) {
+								claimViewModel.actions.send(.selectedWallet(wallet))
+							}
+						}
+					} message: {
+						Text("Choose wallet for claiming Moxie")
+					}
 					.redacted(reason: viewModel.isLoading ? .placeholder : [])
 					.onChange(of: scenePhase) { _, newPhase in
 						if newPhase == .active {
@@ -305,25 +311,25 @@ struct HomeView: View {
 					.overlay(alignment: .center, content: {
 						if claimViewModel.isClaimRequested {
 							VStack {
-								ProgressView(value: progress, total: 1.0)
+								ProgressView(value: claimViewModel.progress, total: 1.0)
 									.progressViewStyle(LinearProgressViewStyle())
 									.tint(Color(uiColor: MoxieColor.green))
 									.padding()
 									.onAppear {
-										startProgressTimer()
+										claimViewModel.startProgressTimer()
 									}
 									.onDisappear {
-										stopProgressTimer()
+										claimViewModel.stopProgressTimer()
 									}
 
-								Text("Claiming... \(Int(progress * 100))%")
+								Text("Claiming... \(Int(claimViewModel.progress * 100))%")
 									.font(.custom("Inter", size: 23))
 									.padding()
 									.foregroundStyle(Color.white)
 
 								Button {
 									withAnimation {
-										if Int(progress * 100) == 100 {
+										if Int(claimViewModel.progress * 100) == 100 {
 											claimViewModel.actions.send(.dismissClaimAlert)
 										} else {
 											let transactionId = claimViewModel.moxieClaimModel?.transactionID ?? ""
@@ -331,14 +337,14 @@ struct HomeView: View {
 										}
 									}
 								} label: {
-									Text(Int(progress * 100) == 100 ? "Done" : "Refresh")
+									Text(Int(claimViewModel.progress * 100) == 100 ? "Done" : "Refresh")
 										.font(.custom("Inter", size: 18))
 										.padding()
 										.foregroundStyle(Color.white)
 								}
 								.frame(minWidth: 102)
 								.frame(height: 38)
-								.background(Int(progress * 100) == 100 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.primary))
+								.background(Int(claimViewModel.progress * 100) == 100 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.primary))
 								.clipShape(Capsule())
 							}
 							.frame(height: geo.size.height)
@@ -354,7 +360,7 @@ struct HomeView: View {
 						}
 
 						Button {
-							claimViewModel.actions.send(.initiateClaim)
+							claimViewModel.actions.send(.initiateClaim(.home))
 						} label: {
 							Text("No")
 						}
@@ -371,7 +377,7 @@ struct HomeView: View {
 					}, message: {
 						Text("\(availableClaimAmountFormatted) $MOXIE successfully claimed 🌱")
 					})
-					.sensoryFeedback(.selection, trigger: number)
+//					.sensoryFeedback(.selection, trigger: claimViewModel.number)
 					.sensoryFeedback(.success, trigger: claimViewModel.isClaimAlertShowing, condition: { _, newValue in
 						return !newValue
 					})
@@ -405,45 +411,6 @@ struct HomeView: View {
 			Image(systemName: "house.fill")
 		}
 	}
-
-	func startProgressTimer() {
-		let totalDuration: TimeInterval = 5.0 // Total time for progress to complete (15 seconds)
-		let updateInterval: TimeInterval = 0.1 // Interval at which to update the progress
-
-		let progressIncrement: CGFloat = CGFloat(updateInterval / totalDuration)
-		timerProgress = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
-			if self.progress < 1.0 {
-				self.progress += Double(progressIncrement)
-			} else {
-				self.timerProgress?.invalidate()
-			}
-		}
-	}
-
-	// Stop the timer if the view disappears
-	func stopProgressTimer() {
-		timerProgress?.invalidate()
-		timerProgress = nil
-	}
-
-	private func startCountdown() {
-		let totalDuration: Decimal = 3.0 // Total countdown time in seconds
-		let interval: TimeInterval = 0.01 // Fixed time interval for smooth animation
-		let steps = totalDuration / Decimal(interval) // Total number of steps
-		let decrementAmount: Decimal = number / steps // Amount to decrement per step
-
-		// Schedule the timer
-		timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
-			if number > 0 {
-				withAnimation(.linear(duration: interval)) {
-					number -= decrementAmount
-				}
-			} else {
-				timer?.invalidate()
-				number = 0
-			}
-		}
-	}
 }
 
 // #Preview {
@@ -455,42 +422,4 @@ struct HomeView: View {
 #Preview {
 	HomeView()
 		.environment(MoxieViewModel(model: .placeholder, client: MockMoxieClient()))
-}
-
-struct CountdownView: View {
-		@State private var number: Decimal = 1000.0 // Start value as Decimal
-		@State private var timer: Timer? // Timer to handle countdown
-
-		var body: some View {
-				VStack {
-						Text("\(number.formatted(.number.precision(.fractionLength(0))))")
-								.font(.custom("Inter", size: 50))
-								.foregroundColor(.primary)
-								.onAppear {
-									if false {
-										startCountdown()
-									}
-								}
-								.onDisappear {
-										timer?.invalidate() // Invalidate the timer when view disappears
-								}
-				}
-		}
-
-		// Function to start the countdown animation
-		private func startCountdown() {
-				let totalDuration: Decimal = 3.0 // Total countdown time in seconds
-				let decrementInterval: Decimal = totalDuration / number // Time interval per decrement
-
-				// Convert the decrement interval to Double for Timer
-				timer = Timer.scheduledTimer(withTimeInterval: Double(truncating: decrementInterval as NSNumber), repeats: true) { _ in
-						if number > 0 {
-								withAnimation(.linear(duration: Double(truncating: decrementInterval as NSNumber))) {
-										number -= 1 // Decrement the number
-								}
-						} else {
-								timer?.invalidate() // Stop the timer when number reaches 0
-						}
-				}
-		}
 }

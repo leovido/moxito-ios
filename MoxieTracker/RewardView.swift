@@ -4,6 +4,8 @@ import MoxieLib
 struct RewardsView: View {
 	@Environment(\.locale) var locale
 	@StateObject var viewModel: StepCountViewModel = .init(steps: 7000, caloriesBurned: 2432, distanceTraveled: 30, restingHeartRate: 60)
+
+	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var mainViewModel: MoxieViewModel
 	@State private var isBeating = false // State variable for heart animation
 
@@ -23,7 +25,7 @@ struct RewardsView: View {
 
 	var body: some View {
 		NavigationStack {
-			GeometryReader { _ in
+			GeometryReader { geo in
 				ZStack {
 					Color(uiColor: MoxieColor.primary)
 						.ignoresSafeArea()
@@ -32,54 +34,7 @@ struct RewardsView: View {
 						.ignoresSafeArea()
 
 					VStack {
-						HStack {
-							VStack(alignment: .leading) {
-								Text("Hello, " + (mainViewModel.model.socials.first?.profileDisplayName ?? "Moxie"))
-									.scaledToFit()
-									.font(.body)
-									.font(.custom("Inter", size: 20))
-									.foregroundStyle(Color.white)
-									.fontWeight(.bold)
-									.multilineTextAlignment(.leading)
-								Text("Last update: \(mainViewModel.timeAgo)")
-									.fontWeight(.light)
-									.foregroundStyle(Color.white)
-									.font(.caption)
-									.font(.custom("Inter", size: 20))
-									.multilineTextAlignment(.leading)
-							}
-							Spacer()
-
-							Button(action: {
-
-							}, label: {
-								Text("Claimed")
-									.foregroundStyle(.white)
-									.padding(16)
-							})
-							.frame(minWidth: 102)
-							.frame(height: 38)
-							.font(.callout)
-							.background(Color(uiColor: MoxieColor.claimButton))
-							.clipShape(Capsule())
-
-							NavigationLink {
-								AccountView()
-							} label: {
-								Image("GearUnselected")
-									.resizable()
-									.renderingMode(.template)
-									.aspectRatio(contentMode: .fit)
-									.frame(width: 20, height: 20)
-									.foregroundStyle(Color(uiColor: MoxieColor.primary))
-							}
-							.frame(width: 38, height: 38)
-							.font(.callout)
-							.background(Color.white)
-							.clipShape(Circle())
-
-						}
-						.padding(.bottom, 20)
+						HeaderView(tab: .fitness)
 
 						ScrollView {
 							VStack {
@@ -105,11 +60,11 @@ struct RewardsView: View {
 									.padding(.horizontal, 50)
 
 								VStack(alignment: .center, spacing: 8) {
-									Text("Estimated claimable $MOXIE")
+									Text("Total pool rewards in $MOXIE")
 										.font(.headline)
 										.foregroundColor(Color(uiColor: MoxieColor.primary))
 									HStack {
-										Text("\(Int(5000), format: .number)")
+										Text(mainViewModel.totalPoolRewards.formatted(.number.precision(.fractionLength(0))))
 											.font(.custom("Inter", size: 30))
 											.foregroundColor(Color(uiColor: MoxieColor.primary))
 											.bold()
@@ -137,7 +92,68 @@ struct RewardsView: View {
 							Spacer()
 						}
 					}
+					.refreshable {
+						Task {
+							viewModel.fetchHealthData()
+							try await mainViewModel.fetchTotalPoolRewards()
+						}
+					}
 					.padding()
+					.confirmationDialog("Moxie claim",
+															isPresented: $claimViewModel.isClaimDialogShowingRewards,
+															titleVisibility: .visible) {
+						ForEach(mainViewModel.wallets, id: \.self) { wallet in
+							Button(wallet) {
+								claimViewModel.actions.send(.selectedWallet(wallet))
+							}
+						}
+					} message: {
+						Text("Choose wallet for claiming Moxie")
+					}
+					.overlay(alignment: .center, content: {
+						if claimViewModel.isClaimRequested {
+							VStack {
+								ProgressView(value: claimViewModel.progress, total: 1.0)
+									.progressViewStyle(LinearProgressViewStyle())
+									.tint(Color(uiColor: MoxieColor.green))
+									.padding()
+									.onAppear {
+										claimViewModel.startProgressTimer()
+									}
+									.onDisappear {
+										claimViewModel.stopProgressTimer()
+									}
+
+								Text("Claiming... \(Int(claimViewModel.progress * 100))%")
+									.font(.custom("Inter", size: 23))
+									.padding()
+									.foregroundStyle(Color.white)
+
+								Button {
+									withAnimation {
+										if Int(claimViewModel.progress * 100) == 100 {
+											claimViewModel.actions.send(.dismissClaimAlert)
+										} else {
+											let transactionId = claimViewModel.moxieClaimModel?.transactionID ?? ""
+											claimViewModel.actions.send(.checkClaimStatus(fid: mainViewModel.model.entityID, transactionId: transactionId))
+										}
+									}
+								} label: {
+									Text(Int(claimViewModel.progress * 100) == 100 ? "Done" : "Refresh")
+										.font(.custom("Inter", size: 18))
+										.padding()
+										.foregroundStyle(Color.white)
+								}
+								.frame(minWidth: 102)
+								.frame(height: 38)
+								.background(Int(claimViewModel.progress * 100) == 100 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.primary))
+								.clipShape(Capsule())
+							}
+							.frame(height: geo.size.height)
+							.background(Color(uiColor: MoxieColor.primary).opacity(0.8))
+							.transition(.opacity)
+						}
+					})
 				}
 			}
 		}

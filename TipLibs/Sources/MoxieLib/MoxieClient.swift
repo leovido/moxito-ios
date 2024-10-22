@@ -60,6 +60,7 @@ public enum MoxieEndpoint {
 	static let fansCount = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-fans-count"
 	static let claimRewardsStatus = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-claim-status"
 	static let cherylWidgetEligible = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/check-cheryl-ft"
+	static let fitnessRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/fitness-rewards"
 	static let price = "https://api.dexscreener.com/latest/dex/pairs/base/0x493AD7E1c509dE7c89e1963fe9005EaD49FdD19c"
 	static let usersEndpoint = "https://api.neynar.com/v2/farcaster/user/search"
 }
@@ -90,6 +91,7 @@ public protocol MoxieProvider {
 	func fetchClaimStatus(fid: String, transactionId: String) async throws -> MoxieClaimStatus
 	func fetchRewardSplits(fid: String) async throws -> MoxieSplits
 	func fetchFansCount(fid: String) async throws -> Int
+	func fetchTotalPoolRewards() async throws -> Decimal
 }
 
 public final class MockMoxieClient: MoxieProvider {
@@ -119,6 +121,10 @@ public final class MockMoxieClient: MoxieProvider {
 	public func fetchFansCount(fid: String) async throws -> Int {
 		return 1000
 	}
+	
+	public func fetchTotalPoolRewards() async throws -> Decimal {
+		return 0
+	}
 }
 
 public final class MockFailMoxieClient: MoxieProvider {
@@ -146,6 +152,10 @@ public final class MockFailMoxieClient: MoxieProvider {
 	}
 	
 	public func fetchFansCount(fid: String) async throws -> Int {
+		throw MoxieError.message("Invalid")
+	}
+	
+	public func fetchTotalPoolRewards() async throws -> Decimal {
 		throw MoxieError.message("Invalid")
 	}
 }
@@ -373,6 +383,42 @@ public final actor MoxieClient: MoxieProvider {
 				return 0
 			}
 			return fansCount
+			
+		} catch {
+			throw MoxieError.message(error.localizedDescription)
+		}
+	}
+	
+	public func fetchTotalPoolRewards() async throws -> Decimal {
+		do {
+			guard let url = URL(string: MoxieEndpoint.fitnessRewards),
+						var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+				throw MoxieError.message("Invalid fans count endpoint")
+			}
+			
+			let request = URLRequest(url: components.url!)
+			
+			let (data, response) = try await session.data(for: request)
+			
+			guard let response = response as? HTTPURLResponse else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 400 else {
+				throw MoxieError.badRequest
+			}
+			
+			guard response.statusCode != 429 else {
+				throw MoxieError.rateLimited
+			}
+			
+			guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+				return 0
+			}
+			
+			let value = json["totalRewards"] as! Double
+			let rewards = Decimal(value)
+			return rewards
 			
 		} catch {
 			throw MoxieError.message(error.localizedDescription)

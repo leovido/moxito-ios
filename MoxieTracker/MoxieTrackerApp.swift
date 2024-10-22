@@ -6,6 +6,8 @@ import Security
 @main
 struct MoxieTrackerApp: App {
 	@StateObject var mainViewModel = MoxieViewModel.shared
+	@StateObject var claimViewModel: MoxieClaimViewModel = .shared
+
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	@AppStorage("moxieData") var moxieData: Data = .init()
 
@@ -19,6 +21,7 @@ struct MoxieTrackerApp: App {
 				}
 			}
 			.environment(mainViewModel)
+			.environment(claimViewModel)
 			.defaultAppStorage(.group ?? .standard)
 		}
 	}

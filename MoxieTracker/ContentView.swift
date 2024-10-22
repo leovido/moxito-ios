@@ -2,20 +2,10 @@ import SwiftUI
 import MoxieLib
 import Combine
 
-struct FitnessView: View {
-	@StateObject var viewModel: StepCountViewModel = .init()
-
-	var body: some View {
-		RewardsView()
-		.onAppear {
-			viewModel.requestHealthKitAccess()
-			viewModel.fetchSteps()
-		}
-	}
-}
-
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
+	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
+	@StateObject var stepViewModel: StepCountViewModel = .init()
 
 	init() {
 		UITabBar.appearance().isHidden = true
@@ -29,7 +19,14 @@ struct ContentView: View {
 				Group {
 					HomeView()
 						.tag(Tab.home)
-					FitnessView()
+					RewardsView()
+						.onAppear {
+							stepViewModel.requestHealthKitAccess()
+							stepViewModel.fetchSteps()
+							Task {
+								try await viewModel.fetchTotalPoolRewards()
+							}
+						}
 						.tag(Tab.fitness)
 					SearchListView(viewModel: .init(client: .init(), query: "", items: [], currentFID: viewModel.inputFID))
 						.tag(Tab.search)
