@@ -11,7 +11,6 @@ final class FeatureFlagManager: ObservableObject {
 	init(devcycleClient: DevCycleClient? = nil) {
 		do {
 			let dvcUser = try DevCycleUser.builder().build()
-			dump(ProcessInfo.processInfo.environment)
 			self.devcycleClient = try DevCycleClient.builder()
 				.sdkKey(ProcessInfo.processInfo.environment["DEVCYCLE_API_KEY_PROD"] ?? "")
 				.user(dvcUser)
