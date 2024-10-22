@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Using steps to match rewards</string>
+	<string>Health data to match for fitness rewards</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Tracking health data to calculate fitness rewards</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>

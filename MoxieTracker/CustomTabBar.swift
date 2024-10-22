@@ -12,7 +12,7 @@ private let buttonDimen: CGFloat = 55
 
 struct CustomBottomTabBarView: View {
 	@Binding var currentTab: Tab
-	
+
 	var body: some View {
 		GeometryReader { geo in
 			VStack {
@@ -24,21 +24,21 @@ struct CustomBottomTabBarView: View {
 							currentTab = .home
 						}
 						.frame(maxWidth: geo.size.width * 0.25)
-					
+
 					TabBarButton(imageName: Tab.fitness.rawValue, tabName: .fitness, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
 							currentTab = .fitness
 						}
 						.frame(maxWidth: geo.size.width * 0.25)
-					
+
 					TabBarButtonSearch(imageName: Tab.search.rawValue, tabName: .search, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
 							currentTab = .search
 						}
 						.frame(maxWidth: geo.size.width * 0.25)
-					
+
 					TabBarButton(imageName: Tab.profile.rawValue, tabName: .profile, selectedTab: $currentTab)
 						.frame(width: buttonDimen, height: buttonDimen)
 						.onTapGesture {
@@ -61,9 +61,9 @@ struct CustomBottomTabBarView: View {
 private struct TabBarButtonSearch: View {
 	let imageName: String
 	let tabName: Tab
-	
+
 	@Binding var selectedTab: Tab
-	
+
 	var body: some View {
 		Image("magnifyingglass")
 			.renderingMode(.template)
@@ -75,9 +75,9 @@ private struct TabBarButtonSearch: View {
 private struct TabBarButton: View {
 	let imageName: String
 	let tabName: Tab
-	
+
 	@Binding var selectedTab: Tab
-	
+
 	var body: some View {
 		Image(tabName == selectedTab ? "\(imageName)Selected" : "\(imageName)Unselected")
 			.renderingMode(.template)
