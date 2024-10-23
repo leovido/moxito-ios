@@ -3,7 +3,7 @@ import MoxieLib
 
 struct RewardsView: View {
 	@Environment(\.locale) var locale
-	@StateObject var viewModel: StepCountViewModel = .init(steps: 7000, caloriesBurned: 2432, distanceTraveled: 30, restingHeartRate: 60)
+	@StateObject var viewModel: StepCountViewModel = .init()
 
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var mainViewModel: MoxieViewModel

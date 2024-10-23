@@ -48,10 +48,13 @@ final class HealthKitManager {
 		}
 
 		let calendar = Calendar.current
-		guard let startDate = calendar.date(byAdding: .day, value: -2, to: Date()) else {
-			completion(nil, nil)
-			return
-		}
+		var dateComponents = DateComponents()
+
+		dateComponents.year = 2024
+		dateComponents.month = 10
+		dateComponents.day = 21
+
+		let startDate = calendar.date(from: dateComponents) ?? Date()
 
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
 
@@ -165,7 +168,10 @@ final class StepCountViewModel: ObservableObject {
 			if success {
 				self?.fetchHealthData()
 			} else {
-				print("Authorization failed with error: \(String(describing: error))")
+				if let error {
+					SentrySDK.capture(error: error)
+					print("Authorization failed with error: \(String(describing: error))")
+				}
 			}
 		}
 	}
@@ -182,7 +188,8 @@ final class StepCountViewModel: ObservableObject {
 	func fetchSteps() {
 		healthKitManager.getTodayStepCount { [weak self] (steps, error) in
 			DispatchQueue.main.async {
-				if let error = error {
+				if let error {
+					SentrySDK.capture(error: error)
 					print("Error fetching steps: \(error)")
 				} else {
 					self?.steps = Decimal(steps)
@@ -196,6 +203,7 @@ final class StepCountViewModel: ObservableObject {
 		healthKitManager.fetchCaloriesBurned { [weak self] (calories, error) in
 			DispatchQueue.main.async {
 				if let error = error {
+					SentrySDK.capture(error: error)
 					print("Error fetching calories: \(error)")
 				} else {
 					self?.caloriesBurned = Decimal(calories ?? 0)
@@ -225,6 +233,7 @@ final class StepCountViewModel: ObservableObject {
 		healthKitManager.getRestingHeartRateForMonth { [weak self] (heartRate, error) in
 			DispatchQueue.main.async {
 				if let error = error {
+					SentrySDK.capture(error: error)
 					print("Error fetching resting heart rate: \(error)")
 				} else {
 					self?.restingHeartRate = Decimal(heartRate ?? 0)
