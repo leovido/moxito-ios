@@ -14,12 +14,12 @@
 		<key>CherylDarkWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>15</integer>
+			<integer>16</integer>
 		</dict>
 		<key>CherylWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>13</integer>
+			<integer>14</integer>
 		</dict>
 		<key>FCWidgetsExtension.xcscheme_^#shared#^_</key>
 		<dict>
@@ -38,7 +38,7 @@
 		<key>MoxieStatsWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>12</integer>
+			<integer>13</integer>
 		</dict>
 		<key>MoxieTrackerTests.xcscheme_^#shared#^_</key>
 		<dict>
@@ -70,7 +70,7 @@
 		<key>Moxito-DEBUG.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>11</integer>
+			<integer>12</integer>
 		</dict>
 		<key>Moxito.xcscheme_^#shared#^_</key>
 		<dict>
@@ -82,12 +82,12 @@
 		<key>MoxitoHariosWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>11</integer>
 		</dict>
 		<key>MoxitoStatsProfileWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>15</integer>
 		</dict>
 		<key>fc-poc-wf.xcscheme_^#shared#^_</key>
 		<dict>
