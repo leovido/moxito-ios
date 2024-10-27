@@ -55,7 +55,7 @@ struct ProfileView: View {
 
 						Link(destination: URL(string: "farcaster://home")!, label: {
 							Label(title: {
-								Text("Cast on Warpcast")
+								Text("Open Warpcast")
 
 							}, icon: {
 								Image("fc-logo", bundle: .main)

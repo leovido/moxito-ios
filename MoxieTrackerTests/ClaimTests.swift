@@ -137,7 +137,7 @@ final class ClaimTests: XCTestCase {
 	func testInitiateClaim() async throws {
 		vm = .init(moxieClaimStatus: nil, client: MockMoxieClient())
 
-		vm.actions.send(.initiateClaim)
+		vm.actions.send(.initiateClaim(.home))
 		
 		XCTAssertTrue(vm.isClaimDialogShowing)
 	}

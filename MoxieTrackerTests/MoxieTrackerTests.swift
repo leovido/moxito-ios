@@ -3,9 +3,9 @@ import XCTest
 import MoxieLib
 
 struct Participant {
-		var steps: Int
-		var calories: Int
-		var heartRateFluctuation: Int
+	var steps: Int
+	var calories: Int
+	var heartRateFluctuation: Int
 }
 
 // Function to calculate the reward for a single user
@@ -39,6 +39,76 @@ func calculateReward(for user: Participant, participants: [Participant], totalPr
 	return userReward
 }
 
+struct ActivityData {
+	var steps: Int
+	var caloriesBurned: Decimal
+	var avgHeartRate: Decimal
+	var tokensLocked: Decimal
+}
+
+// Weights for activity metrics
+let stepWeight: Decimal = 0.4
+let calorieWeight: Decimal = 0.3
+let heartRateWeight: Decimal = 0.3
+
+// Heart rate zone multiplier
+func heartRateMultiplier(for avgHeartRate: Decimal) -> Decimal {
+	switch avgHeartRate {
+	case 90...120: return 1.0
+	case 121...150: return 1.5
+	case 151...180: return 2.0
+	default: return 1.0
+	}
+}
+
+// Dynamic token multiplier based on available supply
+func dynamicTokenMultiplier(for tokensLocked: Decimal, currentAvailableSupply: Decimal, maxSupply: Decimal) -> Decimal {
+	let baseMultiplier: Decimal = 1.0       // Minimum multiplier
+		let maxMultiplierFactor: Decimal = 2.0  // Max multiplier when locking a large portion of the supply
+		
+		// Calculate the proportion of maxSupply that is locked
+		let lockedProportion = tokensLocked / maxSupply
+		
+		// Non-linear scaling factor: higher impact for larger locked proportions
+		let scalingFactor = lockedProportion * lockedProportion
+		
+		// Final multiplier calculation, with scaling applied
+		let adjustedMultiplier = baseMultiplier + (scalingFactor * maxMultiplierFactor)
+		
+		// Optional: If locking more than a specific threshold, apply a boost
+		let largeLockBonus = tokensLocked > 1000 ? adjustedMultiplier * 1.1 : adjustedMultiplier
+		
+		return largeLockBonus
+}
+
+// Calculate reward points
+func calculateRewardPoints(activity: ActivityData, currentAvailableSupply: Decimal, maxSupply: Decimal) -> Decimal {
+	let stepPoints = Decimal(activity.steps) * stepWeight
+	let caloriePoints = activity.caloriesBurned * calorieWeight
+	let heartRatePoints = heartRateMultiplier(for: activity.avgHeartRate) * heartRateWeight * 1000
+	
+	let basePoints = stepPoints + caloriePoints + heartRatePoints
+	
+	let tokenBonus = dynamicTokenMultiplier(for: activity.tokensLocked, currentAvailableSupply: currentAvailableSupply, maxSupply: maxSupply)
+	
+	return basePoints * tokenBonus
+}
+
+func calculateRewardScore(steps: Int, caloriesBurned: Decimal, restingHeartRate: Decimal, tokensLocked: Decimal, maxSupply: Decimal) -> Decimal {
+		// Base Activity Score (simplified here)
+	let stepsWeight = Decimal(steps) * 0.5
+	let caloriesWeight = caloriesBurned * 0.3
+		let activityScore = stepsWeight + caloriesWeight + (restingHeartRate > 60 ? 0.2 : 0.1)
+		
+		// Token Multiplier
+		let tokenMultiplier = dynamicTokenMultiplier(for: tokensLocked, currentAvailableSupply: 5000, maxSupply: maxSupply)
+
+		// Aggregate the score
+		let aggregatedScore = activityScore * tokenMultiplier
+		return aggregatedScore
+}
+
+
 
 final class MoxieTrackerTests: XCTestCase {
 	
@@ -48,6 +118,21 @@ final class MoxieTrackerTests: XCTestCase {
 	
 	override func tearDownWithError() throws {
 		// Put teardown code here. This method is called after the invocation of each test method in the class.
+	}
+	
+	func testNewRewardCalculation() throws {
+		// Example usage
+		let maxSupply: Decimal = 8070.985
+		let todayActivity = ActivityData(steps: 10000, caloriesBurned: 500, avgHeartRate: 130, tokensLocked: 1000)
+		
+		let rewardPoints = calculateRewardScore(steps: todayActivity.steps,
+																						caloriesBurned: todayActivity.caloriesBurned,
+																						restingHeartRate: todayActivity.avgHeartRate,
+																						tokensLocked: todayActivity.tokensLocked,
+																						maxSupply: maxSupply)
+		
+		XCTAssertEqual(rewardPoints, 0)
+		print("Reward Points for today: \(rewardPoints)")
 	}
 	
 	func testRewardCalculation() throws {

@@ -8,43 +8,58 @@ import MoxieLib
 struct LiveActivityView: View {
 	let context: ActivityViewContext<MoxieActivityAttributes>
 	
+	var isClaimAvailable: Bool {
+		let cleanedString = context.state.claimableMoxie.replacingOccurrences(of: ",", with: "")
+		
+		return Double(cleanedString) ?? 0 > 0
+	}
+
+	
 	var body: some View {
 		VStack {
-			HStack {
-				VStack(alignment: .center) {
+			HStack(spacing: 32) {
+				VStack(alignment: .leading) {
 					Text("Daily")
-						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-						.fontDesign(.rounded)
-						.fontWeight(.black)
-					Text(context.state.dailyMoxie)
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-						.fontWeight(.heavy)
-						.fontDesign(.rounded)
-					Text("~\(context.state.dailyUSD)")
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-						.font(.caption)
+						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 22))
 						.fontWeight(.light)
-						.fontDesign(.rounded)
+					Text(context.state.dailyMoxie)
+						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 28))
+						.fontWeight(.heavy)
+					Text("~\(context.state.dailyUSD)")
+						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 15))
+						.fontWeight(.regular)
 				}
 				
-				VStack {
+				VStack(alignment: .leading) {
 					Text("Claimable")
-						.foregroundStyle(Color(uiColor: MoxieColor.textColor))
-						.fontDesign(.rounded)
-						.fontWeight(.black)
-					
-					Text(context.state.claimableMoxie)
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-						.fontWeight(.heavy)
-						.fontDesign(.rounded)
-					Text(context.state.claimableUSD)
-						.foregroundStyle(Color(uiColor: MoxieColor.dark))
-						.font(.caption)
+						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 22))
 						.fontWeight(.light)
-						.fontDesign(.rounded)
+					Text(context.state.claimableMoxie)
+						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 28))
+						.fontWeight(.heavy)
+					Text(context.state.claimableUSD)
+						.foregroundStyle(Color.white)
+						.font(.custom("Inter", size: 15))
+						.fontWeight(.regular)
 				}
 			}
 			.padding(.vertical)
+			
+			if isClaimAvailable {
+				Spacer()
+				
+				Text("Claim")
+					.font(.system(size: 14, weight: .medium, design: .default))
+					.foregroundStyle(Color.white)
+					.padding(4)
+					.frame(maxWidth: .infinity)
+					.background(Color(uiColor: MoxieColor.backgroundColor))
+			}
 		}
 	}
 }
@@ -53,7 +68,7 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 	var body: some WidgetConfiguration {
 		ActivityConfiguration(for: MoxieActivityAttributes.self) { context in
 			LiveActivityView(context: context)
-			.activityBackgroundTint(Color(uiColor: MoxieColor.backgroundColor))
+			.activityBackgroundTint(Color(uiColor: MoxieColor.primary))
 			.activitySystemActionForegroundColor(Color.black)
 			
 		} dynamicIsland: { context in
@@ -103,7 +118,6 @@ struct MoxieWidgetSimpleLiveActivity: Widget {
 //				Text(context.state.dailyUSD)
 //					.font(.caption2)
 			}
-			.widgetURL(URL(string: "http://www.apple.com"))
 			.keylineTint(Color.red)
 		}
 	}

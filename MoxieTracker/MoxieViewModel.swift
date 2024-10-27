@@ -80,27 +80,25 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 
 	func startMoxieActivity() {
-		if model.entityID != "" {
-			if ActivityAuthorizationInfo().areActivitiesEnabled {
-				let attributes = MoxieActivityAttributes()
-				let contentState = MoxieActivityAttributes.ContentState(
-					dailyMoxie: model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
-					dailyUSD: formattedDollarValue(dollarValue: model.allEarningsAmount * price),
-					claimableMoxie: model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
-					claimableUSD: formattedDollarValue(dollarValue: model.moxieClaimTotals[0].availableClaimAmount * price),
-					username: model.socials[0].profileDisplayName,
-					fid: model.entityID,
-					imageURL: model.socials[0].profileImage)
-				do {
-					let activity = try Activity<MoxieActivityAttributes>.request(
-						attributes: attributes,
-						content: .init(state: contentState, staleDate: nil),
-						pushType: nil
-					)
-					currentActivity = activity
-				} catch {
-					print("Error starting activity: \(error.localizedDescription)")
-				}
+		if ActivityAuthorizationInfo().areActivitiesEnabled {
+			let attributes = MoxieActivityAttributes()
+			let contentState = MoxieActivityAttributes.ContentState(
+				dailyMoxie: model.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
+				dailyUSD: formattedDollarValue(dollarValue: model.allEarningsAmount * price),
+				claimableMoxie: model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
+				claimableUSD: formattedDollarValue(dollarValue: model.moxieClaimTotals[0].availableClaimAmount * price),
+				username: model.socials[0].profileDisplayName,
+				fid: model.entityID,
+				imageURL: model.socials[0].profileImage)
+			do {
+				let activity = try Activity<MoxieActivityAttributes>.request(
+					attributes: attributes,
+					content: .init(state: contentState, staleDate: nil),
+					pushType: nil
+				)
+				currentActivity = activity
+			} catch {
+				print("Error starting activity: \(error.localizedDescription)")
 			}
 		}
 	}
@@ -196,12 +194,29 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 		$model
 			.receive(on: DispatchQueue.main)
+			.filter({ $0.entityID.isEmpty })
+			.sink { [weak self] _ in
+				guard let self else {
+					return
+				}
+				Task {
+					try await self.removeActivity()
+				}
+			}
+			.store(in: &subscriptions)
+
+		$model
+			.receive(on: DispatchQueue.main)
 			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID
 				self.wallets = $0.socials.first?.connectedAddresses
 					.filter({$0.blockchain == "ethereum"})
 					.map({ $0.address }) ?? []
+
+				if self.currentActivity != nil {
+					self.startMoxieActivity()
+				}
 			}
 			.store(in: &subscriptions)
 
@@ -236,7 +251,16 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.store(in: &subscriptions)
 	}
 
+	func removeActivity() async throws {
+		await self.currentActivity?.end(ActivityContent(state: .init(dailyMoxie: "", dailyUSD: "", claimableMoxie: "", claimableUSD: "", username: "", fid: "", imageURL: ""), staleDate: nil), dismissalPolicy: .immediate)
+		self.currentActivity = nil
+	}
+
 	func updateDeliveryActivity(newModel: MoxieModel) {
+		guard price > 0 else { return }
+		let claimable = newModel.moxieClaimTotals.first?.availableClaimAmount ?? 0
+		let ttt = claimable * self.price
+
 		if newModel.entityID != "" {
 			Task {
 				for activity in Activity<MoxieActivityAttributes>.activities {
@@ -244,7 +268,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 						dailyMoxie: newModel.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
 						dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
 						claimableMoxie: newModel.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0",
-						claimableUSD: formattedDollarValue(dollarValue: newModel.moxieClaimTotals.first?.availableClaimAmount ?? 0 * self.price),
+						claimableUSD: formattedDollarValue(dollarValue: ttt),
 						username: model.socials.first?.profileDisplayName ?? "",
 						fid: model.entityID,
 						imageURL: model.socials.first?.profileImage ?? ""
@@ -252,6 +276,10 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 					await activity.update(using: updatedContentState)
 				}
+			}
+		} else {
+			Task {
+				try await self.removeActivity()
 			}
 		}
 	}
