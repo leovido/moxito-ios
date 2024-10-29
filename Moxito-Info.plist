@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Health data to match for fitness rewards</string>
+	<string>Moxito uses your health data only to display fitness rewards. We don’t store or share this data outside of your device.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Tracking health data to calculate fitness rewards</string>
+	<string>Moxito uses your health data only to display fitness rewards. We don’t store or share this data outside of your device.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>

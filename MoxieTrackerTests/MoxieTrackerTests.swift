@@ -11,18 +11,15 @@ struct Participant {
 // Function to calculate the reward for a single user
 func calculateReward(for user: Participant, participants: [Participant], totalPrize: Double) -> Double {
 	
-	// Maximum values for scaling purposes
 	let maxSteps = 10000.0
 	let maxCalories = 500.0
 	let maxHeartRateFluctuation = 40.0
 	
-	// Calculate user's score based on steps, calories, and heart rate fluctuation
 	let userStepScore = Double(user.steps) / maxSteps * 0.5
 	let userCalorieScore = Double(user.calories) / maxCalories * 0.3
 	let userHeartRateScore = Double(user.heartRateFluctuation) / maxHeartRateFluctuation * 0.2
 	let userTotalScore = userStepScore + userCalorieScore + userHeartRateScore
 	
-	// Calculate the total score for all participants
 	let totalEffort = participants.reduce(0.0) { total, participant in
 		let stepScore = Double(participant.steps) / maxSteps * 0.5
 		let calorieScore = Double(participant.calories) / maxCalories * 0.3
@@ -64,51 +61,48 @@ func heartRateMultiplier(for avgHeartRate: Decimal) -> Decimal {
 // Dynamic token multiplier based on available supply
 func dynamicTokenMultiplier(for tokensLocked: Decimal, currentAvailableSupply: Decimal, maxSupply: Decimal) -> Decimal {
 	let baseMultiplier: Decimal = 1.0       // Minimum multiplier
-		let maxMultiplierFactor: Decimal = 2.0  // Max multiplier when locking a large portion of the supply
-		
-		// Calculate the proportion of maxSupply that is locked
-		let lockedProportion = tokensLocked / maxSupply
-		
-		// Non-linear scaling factor: higher impact for larger locked proportions
-		let scalingFactor = lockedProportion * lockedProportion
-		
-		// Final multiplier calculation, with scaling applied
-		let adjustedMultiplier = baseMultiplier + (scalingFactor * maxMultiplierFactor)
-		
-		// Optional: If locking more than a specific threshold, apply a boost
-		let largeLockBonus = tokensLocked > 1000 ? adjustedMultiplier * 1.1 : adjustedMultiplier
-		
-		return largeLockBonus
+	let maxMultiplierFactor: Decimal = 2.0  // Max multiplier when locking a large portion of the supply
+	
+	// Calculate the proportion of maxSupply that is locked
+	let lockedProportion = tokensLocked / maxSupply
+	
+	// Non-linear scaling factor: higher impact for larger locked proportions
+	let scalingFactor = lockedProportion * lockedProportion
+	
+	// Final multiplier calculation, with scaling applied
+	let adjustedMultiplier = baseMultiplier + (scalingFactor * maxMultiplierFactor)
+	
+	// Optional: If locking more than a specific threshold, apply a boost
+	let largeLockBonus = tokensLocked > 1000 ? adjustedMultiplier * 1.1 : adjustedMultiplier
+	
+	return largeLockBonus
 }
 
-// Calculate reward points
-func calculateRewardPoints(activity: ActivityData, currentAvailableSupply: Decimal, maxSupply: Decimal) -> Decimal {
-	let stepPoints = Decimal(activity.steps) * stepWeight
-	let caloriePoints = activity.caloriesBurned * calorieWeight
+func calculateRewardPoints(activity: ActivityData) -> Decimal {
+	let maxSteps: Decimal = 10000.0
+	let maxCalories: Decimal = 500.0
+	
+	let stepPoints = (Decimal(activity.steps) / maxSteps) * stepWeight
+	let caloriePoints = (activity.caloriesBurned / maxCalories) * calorieWeight
 	let heartRatePoints = heartRateMultiplier(for: activity.avgHeartRate) * heartRateWeight * 1000
 	
 	let basePoints = stepPoints + caloriePoints + heartRatePoints
 	
-	let tokenBonus = dynamicTokenMultiplier(for: activity.tokensLocked, currentAvailableSupply: currentAvailableSupply, maxSupply: maxSupply)
-	
-	return basePoints * tokenBonus
+	return basePoints
 }
 
 func calculateRewardScore(steps: Int, caloriesBurned: Decimal, restingHeartRate: Decimal, tokensLocked: Decimal, maxSupply: Decimal) -> Decimal {
-		// Base Activity Score (simplified here)
+	// Base Activity Score (simplified here)
 	let stepsWeight = Decimal(steps) * 0.5
 	let caloriesWeight = caloriesBurned * 0.3
-		let activityScore = stepsWeight + caloriesWeight + (restingHeartRate > 60 ? 0.2 : 0.1)
-		
-		// Token Multiplier
-		let tokenMultiplier = dynamicTokenMultiplier(for: tokensLocked, currentAvailableSupply: 5000, maxSupply: maxSupply)
-
-		// Aggregate the score
-		let aggregatedScore = activityScore * tokenMultiplier
-		return aggregatedScore
+	let activityScore = stepsWeight + caloriesWeight + (restingHeartRate <= 60 ? 0.2 : 0.1)
+	
+	// Token Multiplier
+//	let tokenMultiplier = dynamicTokenMultiplier(for: tokensLocked, currentAvailableSupply: 5000, maxSupply: maxSupply)
+	
+	let aggregatedScore = activityScore
+	return aggregatedScore
 }
-
-
 
 final class MoxieTrackerTests: XCTestCase {
 	
@@ -118,6 +112,37 @@ final class MoxieTrackerTests: XCTestCase {
 	
 	override func tearDownWithError() throws {
 		// Put teardown code here. This method is called after the invocation of each test method in the class.
+	}
+	
+	func testCalculateRewardPoints() throws {
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 180)
+		let viewModel = StepCountViewModel()
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 600.7)
+	}
+	
+	func testWorkoutHR() throws {
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 170)
+		let viewModel = StepCountViewModel()
+		let score = viewModel.healthKitManager.fetchAverageHeartRatesForWorkouts()
+
+	}
+	
+	func testCalculateRewardPointsMax() throws {
+		let activity: Moxito.ActivityData = .init(steps: 20000, caloriesBurned: 500, distance: 50, avgHeartRate: 170)
+		let viewModel = StepCountViewModel()
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 600.7)
+	}
+	
+	func testDynamicTokenMultiplier() throws {
+		let currentAvailableSupply: Decimal = 5000
+		let maxSupply: Decimal = 8070.985
+		
+		let multiplier: Decimal = dynamicTokenMultiplier(for: 1000, currentAvailableSupply: currentAvailableSupply, maxSupply: maxSupply)
+		XCTAssertEqual(multiplier, 1.030702724478163778380977515172808)
 	}
 	
 	func testNewRewardCalculation() throws {

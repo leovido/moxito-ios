@@ -23,6 +23,10 @@ struct RewardsView: View {
 		}
 	}
 
+	var rewardsUSD: Decimal {
+		mainViewModel.totalPoolRewards * mainViewModel.price
+	}
+
 	var body: some View {
 		NavigationStack {
 			GeometryReader { geo in
@@ -75,6 +79,11 @@ struct RewardsView: View {
 											.frame(width: 20)
 											.foregroundColor(Color(uiColor: MoxieColor.primary))
 									}
+
+									Text("~\(formattedDollarValue(dollarValue: rewardsUSD))")
+										.font(.custom("Inter", size: 13))
+										.foregroundColor(Color(uiColor: MoxieColor.primary))
+										.padding(.top, -8)
 								}
 								.padding(.top)
 							}
@@ -87,7 +96,7 @@ struct RewardsView: View {
 
 							FitnessCardView(imageSystemName: "location.fill", title: "Distance travelled", amount: viewModel.distanceTraveled, type: .distance)
 
-							FitnessCardView(imageSystemName: "heart.fill", title: "Resting heart rate", amount: viewModel.restingHeartRate, noFormatting: true, type: .heartRate)
+							FitnessCardView(imageSystemName: "heart.fill", title: "Average workout HR", amount: viewModel.averageHeartRate, noFormatting: true, type: .heartRate)
 
 							Spacer()
 						}
@@ -155,6 +164,12 @@ struct RewardsView: View {
 						}
 					})
 				}
+				.onAppear {
+
+					viewModel.createActivityData { result in
+						dump(result)
+					}
+				}
 			}
 		}
 	}
@@ -164,5 +179,6 @@ struct RewardsView_Previews: PreviewProvider {
 	static var previews: some View {
 		RewardsView()
 			.environmentObject(MoxieViewModel())
+			.environmentObject(MoxieClaimViewModel())
 	}
 }

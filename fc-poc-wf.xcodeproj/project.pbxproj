@@ -45,6 +45,7 @@
 		47434F462CC2A51A00C42C5C /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47434F452CC2A51A00C42C5C /* RewardView.swift */; };
 		47434F482CC2A52F00C42C5C /* StepCountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */; };
 		47434F4A2CC2B05700C42C5C /* FitnessCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47434F492CC2B05400C42C5C /* FitnessCardView.swift */; };
+		474D3C352CCE5CBC00608C16 /* RewardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
@@ -282,6 +283,7 @@
 		47434F452CC2A51A00C42C5C /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
 		47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountViewModel.swift; sourceTree = "<group>"; };
 		47434F492CC2B05400C42C5C /* FitnessCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessCardView.swift; sourceTree = "<group>"; };
+		474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewModel.swift; sourceTree = "<group>"; };
 		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 			children = (
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
+				474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
 				475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */,
@@ -1282,6 +1285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47EC54792C87143E006C2820 /* AppDelegate.swift in Sources */,
+				474D3C352CCE5CBC00608C16 /* RewardsViewModel.swift in Sources */,
 				475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */,
 				47EC546E2C822A69006C2820 /* CardView.swift in Sources */,
 				475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */,
