@@ -5,7 +5,7 @@ public enum FCEndpoint {
 }
 
 public protocol FarcasterProvider {
-	func searchUsername(username: String, viewerFid: Int, limit: Int) async throws -> FarcasterUser
+	func searchUsername(username: String, limit: Int) async throws -> FarcasterUser
 }
 
 public final class FarcasterClient: FarcasterProvider {
@@ -18,7 +18,7 @@ public final class FarcasterClient: FarcasterProvider {
 		session.configuration.requestCachePolicy = .returnCacheDataElseLoad
 	}
 	
-	public func searchUsername(username: String, viewerFid: Int, limit: Int = 5) async throws -> FarcasterUser {
+	public func searchUsername(username: String, limit: Int = 5) async throws -> FarcasterUser {
 		do {
 			guard let url = URL(string: FCEndpoint.usersEndpoint),
 						let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -30,7 +30,6 @@ public final class FarcasterClient: FarcasterProvider {
 			
 			request.url?.append(queryItems: [
 				.init(name: "q", value: username),
-				.init(name: "viewer_fid", value: viewerFid.description),
 				.init(name: "limit", value: limit.description)
 			])
 			
@@ -38,7 +37,8 @@ public final class FarcasterClient: FarcasterProvider {
 			
 			let (data, _) = try await session.data(for: request)
 			let decoder = JSONDecoder()
-			let model = try decoder.decode(FarcasterUser.self, from: data)
+			
+			let model = try! decoder.decode(FarcasterUser.self, from: data)
 			
 			return model
 		} catch {

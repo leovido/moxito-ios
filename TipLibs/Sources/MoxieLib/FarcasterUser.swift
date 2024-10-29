@@ -21,32 +21,17 @@ public struct User: Codable, Identifiable, Hashable {
 	public var id: String {
 		return UUID().uuidString
 	}
-	public let object: String
 	public let fid: Int
-	public let custodyAddress, username, displayName: String?
+	public let username, displayName: String?
 	public let pfpURL: String
-	public let profile: Profile
-	public let followerCount, followingCount: Int
-	public let verifications: [String]
-	public let verifiedAddresses: VerifiedAddresses
-	public let activeStatus: String
 	public let powerBadge: Bool
-	public let viewerContext: ViewerContext
 	
 	public enum CodingKeys: String, CodingKey {
-		case object, fid
-		case custodyAddress = "custody_address"
+		case fid
 		case username
 		case displayName = "display_name"
 		case pfpURL = "pfp_url"
-		case profile
-		case followerCount = "follower_count"
-		case followingCount = "following_count"
-		case verifications
-		case verifiedAddresses = "verified_addresses"
-		case activeStatus = "active_status"
 		case powerBadge = "power_badge"
-		case viewerContext = "viewer_context"
 	}
 }
 

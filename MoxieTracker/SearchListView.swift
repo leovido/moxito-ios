@@ -49,7 +49,7 @@ public final class SearchViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				items = try await client.searchUsername(username: query, viewerFid: 203666, limit: 10).result.users
+				items = try await client.searchUsername(username: query, limit: 10).result.users
 
 				isLoading = false
 			} catch {
