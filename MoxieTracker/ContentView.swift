@@ -1,11 +1,12 @@
 import SwiftUI
 import MoxieLib
 import Combine
+import Sentry
 
 struct ContentView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
-	@StateObject var stepViewModel: StepCountViewModel = .init()
+	@EnvironmentObject var stepViewModel: StepCountViewModel
 
 	init() {
 		UITabBar.appearance().isHidden = true
@@ -21,10 +22,13 @@ struct ContentView: View {
 						.tag(Tab.home)
 					RewardsView()
 						.onAppear {
-							stepViewModel.requestHealthKitAccess()
-							stepViewModel.fetchSteps()
+							stepViewModel.actions.send(.requestAuthorizationHealthKit)
 							Task {
-								try await viewModel.fetchTotalPoolRewards()
+								do {
+									try await viewModel.fetchTotalPoolRewards()
+								} catch {
+									SentrySDK.capture(error: error)
+								}
 							}
 						}
 						.tag(Tab.fitness)

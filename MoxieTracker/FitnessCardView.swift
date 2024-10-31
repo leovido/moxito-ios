@@ -10,23 +10,16 @@ enum FitnessCardType: String, CaseIterable {
 
 struct FitnessCardView: View {
 	@Environment(\.locale) var locale
+	@Binding var filterSelection: Int
 
 	let imageSystemName: String
 	let title: String
-	let amount: Decimal
+	@Binding var amount: Decimal
 	let noFormatting: Bool
 	let type: FitnessCardType
 
 	var iconColor: Color {
 		return Color(uiColor: MoxieColor.green)
-		switch type {
-		case .calories:
-			return Color.yellow
-		case .distance:
-			return Color.blue
-		case .heartRate:
-			return Color.pink
-		}
 	}
 
 	var measurement: String {
@@ -43,9 +36,10 @@ struct FitnessCardView: View {
 	init(imageSystemName: String, title: String, amount: Decimal, noFormatting: Bool = false, type: FitnessCardType) {
 		self.imageSystemName = imageSystemName
 		self.title = title
-		self.amount = amount
+		self._amount = .constant(amount)
 		self.noFormatting = noFormatting
 		self.type = type
+		self._filterSelection = .constant(0)
 	}
 
 	var amountFormatted: String {

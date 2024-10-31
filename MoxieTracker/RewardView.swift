@@ -3,7 +3,7 @@ import MoxieLib
 
 struct RewardsView: View {
 	@Environment(\.locale) var locale
-	@StateObject var viewModel: StepCountViewModel = .init()
+	@EnvironmentObject var viewModel: StepCountViewModel
 
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var mainViewModel: MoxieViewModel
@@ -40,71 +40,191 @@ struct RewardsView: View {
 					VStack {
 						HeaderView(tab: .fitness)
 
-						ScrollView {
-							VStack {
-								HStack {
-									Image(systemName: "figure.walk")
-										.foregroundColor(Color(uiColor: MoxieColor.green))
-									Text("Steps today")
-										.font(.headline)
-										.foregroundColor(Color(uiColor: MoxieColor.primary))
-								}
-
-								HStack {
-									Text("\(viewModel.steps.formatted(.number.precision(.fractionLength(0))))")
-										.font(.system(size: 40, weight: .bold))
-										.foregroundColor(Color(uiColor: MoxieColor.primary))
-									Text("/ 10,000")
-										.font(.title3)
-										.foregroundColor(.gray)
-								}
-
-								ProgressView(value: Double(truncating: viewModel.steps as NSNumber), total: Double(10000))
-									.progressViewStyle(LinearProgressViewStyle(tint: Color(uiColor: MoxieColor.green)))
-									.padding(.horizontal, 50)
-
-								VStack(alignment: .center, spacing: 8) {
-									Text("Total pool rewards in $MOXIE")
-										.font(.headline)
-										.foregroundColor(Color(uiColor: MoxieColor.primary))
+						if viewModel.didAuthorizeHealthKit {
+							ScrollView(showsIndicators: false) {
+								VStack {
 									HStack {
-										Text(mainViewModel.totalPoolRewards.formatted(.number.precision(.fractionLength(0))))
-											.font(.custom("Inter", size: 30))
-											.foregroundColor(Color(uiColor: MoxieColor.primary))
-											.bold()
-
-										Image("CoinMoxiePurple")
-											.resizable()
-											.aspectRatio(contentMode: .fit)
-											.frame(width: 20)
+										Image(systemName: "figure.walk")
+											.foregroundColor(Color(uiColor: MoxieColor.green))
+										Text("Steps today")
+											.font(.headline)
 											.foregroundColor(Color(uiColor: MoxieColor.primary))
 									}
 
-									Text("~\(formattedDollarValue(dollarValue: rewardsUSD))")
-										.font(.custom("Inter", size: 13))
-										.foregroundColor(Color(uiColor: MoxieColor.primary))
-										.padding(.top, -8)
+									HStack {
+										Text("\(viewModel.steps.formatted(.number.precision(.fractionLength(0))))")
+											.font(.system(size: 40, weight: .bold))
+											.foregroundColor(Color(uiColor: MoxieColor.primary))
+										Text("/ \(viewModel.stepsLimit.formatted(.number.precision(.fractionLength(0))))")
+											.font(.title3)
+											.foregroundColor(.gray)
+									}
+
+									ProgressView(value: Double(truncating: viewModel.steps as NSNumber), total: Double(truncating: viewModel.stepsLimit as NSNumber))
+										.progressViewStyle(LinearProgressViewStyle(tint: Color(uiColor: MoxieColor.green)))
+										.padding(.horizontal, 50)
+
+									VStack(alignment: .center, spacing: 8) {
+										Text("Total pool rewards in $MOXIE")
+											.font(.footnote)
+											.font(.custom("Inter", size: 13))
+											.foregroundColor(Color(uiColor: MoxieColor.primary))
+										HStack {
+											Text(mainViewModel.totalPoolRewards.formatted(.number.precision(.fractionLength(0))))
+												.font(.largeTitle)
+												.font(.custom("Inter", size: 30))
+												.foregroundStyle(Color(uiColor: MoxieColor.primary))
+												.fontWeight(.heavy)
+
+											Image("CoinMoxiePurple")
+												.resizable()
+												.aspectRatio(contentMode: .fit)
+												.frame(width: 20)
+												.foregroundColor(Color(uiColor: MoxieColor.primary))
+										}
+
+										Text("~\(formattedDollarValue(dollarValue: rewardsUSD))")
+											.font(.caption)
+											.font(.custom("Inter", size: 12))
+											.foregroundStyle(Color(uiColor: MoxieColor.primary))
+											.padding(.top, -4)
+									}
+									.padding(.top)
 								}
-								.padding(.top)
+								.padding(.vertical, 20)
+								.background(Color.white)
+								.clipShape(RoundedRectangle(cornerRadius: 24))
+
+								HStack {
+									Spacer()
+
+									Button {
+										viewModel.filterSelection = 0
+									} label: {
+										Text("Day")
+											.foregroundStyle(viewModel.filterSelection == 0 ? Color.white : Color(uiColor: MoxieColor.grayPickerText))
+											.font(.custom("Inter", size: 14))
+									}
+									.frame(width: geo.size.width / 4)
+									.padding(4)
+									.background(viewModel.filterSelection == 0 ? Color(uiColor: MoxieColor.green) : .clear)
+									.clipShape(Capsule())
+
+									Spacer()
+
+									Button {
+										viewModel.filterSelection = 1
+									} label: {
+										Text("Week")
+											.foregroundStyle(viewModel.filterSelection == 1 ? Color.white : Color(uiColor: MoxieColor.grayPickerText))
+											.font(.custom("Inter", size: 14))
+									}
+									.frame(width: geo.size.width / 4)
+									.padding(4)
+									.background(viewModel.filterSelection == 1 ? Color(uiColor: MoxieColor.green) : .clear)
+									.clipShape(Capsule())
+
+									Spacer()
+
+									Button {
+										viewModel.filterSelection = 2
+									} label: {
+										Text("Month")
+											.foregroundStyle(viewModel.filterSelection == 2 ? Color.white : Color(uiColor: MoxieColor.grayPickerText))
+											.font(.custom("Inter", size: 14))
+									}
+									.frame(width: geo.size.width / 4)
+									.padding(4)
+									.background(viewModel.filterSelection == 2 ? Color(uiColor: MoxieColor.green) : .clear)
+									.clipShape(Capsule())
+
+									Spacer()
+								}
+								.padding(.vertical, 6)
+								.background(Color.white)
+								.clipShape(Capsule())
+								.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
+								.frame(maxWidth: .infinity)
+								.frame(height: 40)
+								.padding(.vertical, 6)
+
+								FitnessCardView(imageSystemName: "flame.fill", title: "Calories burned", amount: viewModel.caloriesBurned, type: .calories)
+
+								FitnessCardView(imageSystemName: "location.fill", title: "Distance travelled", amount: viewModel.distanceTraveled, type: .distance)
+
+								FitnessCardView(imageSystemName: "heart.fill", title: "Average workout HR", amount: viewModel.averageHeartRate, noFormatting: true, type: .heartRate)
+
+								FitnessCardView(imageSystemName: "heart.fill", title: "Resting HR", amount: viewModel.restingHeartRate, noFormatting: true, type: .heartRate)
+
+								Spacer()
 							}
+							.padding(.bottom, 50)
+						} else {
+							ScrollView(showsIndicators: false) {
+								Text("Fitness rewards and health data access")
+									.font(.headline)
+									.foregroundStyle(Color(uiColor: MoxieColor.primary))
+									.padding([.top, .horizontal])
+
+								Text("To participate in fitness rewards, you will need to grant access to your health data.")
+									.multilineTextAlignment(.center)
+									.font(.body)
+									.foregroundStyle(.gray)
+									.padding([.top, .horizontal])
+
+								Text("You have full control of your data, and Moxito won't share it with any third parties. Rewards are calculated on the client side for maximum privacy.")
+									.multilineTextAlignment(.center)
+									.font(.body)
+									.foregroundStyle(.gray)
+									.padding([.top, .horizontal])
+
+								VStack(alignment: .leading, spacing: 10) {
+									Text("To manage data access, follow these steps:")
+										.multilineTextAlignment(.center)
+										.foregroundStyle(Color(uiColor: MoxieColor.primary))
+										.font(.headline)
+										.padding()
+
+									Text("1. Tap the button below to open the Health app.")
+									Text("2. In the Health app, go to 'Profile' in the top right corner.")
+									Text("3. Select 'Apps' > 'Moxito' > 'Data Access & Devices'.")
+									Text("4. Ensure that data sharing permissions are enabled for this app.")
+								}
+								.font(.subheadline)
+								.lineLimit(nil)
+								.frame(maxWidth: .infinity, alignment: .leading)
+								.foregroundColor(.gray)
+								.padding()
+
+								Button(action: openHealthApp) {
+									HStack {
+										Image(systemName: "heart.fill")
+											.foregroundColor(.red)
+										Text("Open Health App")
+											.foregroundColor(.blue)
+											.underline()
+									}
+								}
+								.padding()
+								.background(Color(UIColor.secondarySystemBackground))
+								.cornerRadius(10)
+
+								Spacer()
+							}
+							.frame(maxWidth: .infinity)
 							.padding(.vertical, 20)
 							.background(Color.white)
 							.clipShape(RoundedRectangle(cornerRadius: 24))
-							.padding(.bottom)
-
-							FitnessCardView(imageSystemName: "flame.fill", title: "Calories burned", amount: viewModel.caloriesBurned, type: .calories)
-
-							FitnessCardView(imageSystemName: "location.fill", title: "Distance travelled", amount: viewModel.distanceTraveled, type: .distance)
-
-							FitnessCardView(imageSystemName: "heart.fill", title: "Average workout HR", amount: viewModel.averageHeartRate, noFormatting: true, type: .heartRate)
-
-							Spacer()
+							.padding(.bottom, 50)
 						}
+
 					}
 					.refreshable {
-						Task {
-							viewModel.fetchHealthData()
-							try await mainViewModel.fetchTotalPoolRewards()
+						if viewModel.didAuthorizeHealthKit {
+							Task {
+								viewModel.fetchHealthData()
+								try await mainViewModel.fetchTotalPoolRewards()
+							}
 						}
 					}
 					.padding()
@@ -165,12 +285,15 @@ struct RewardsView: View {
 					})
 				}
 				.onAppear {
-
-					viewModel.createActivityData { result in
-						dump(result)
-					}
+					viewModel.actions.send(.onAppear)
 				}
 			}
+		}
+	}
+
+	private func openHealthApp() {
+		if let url = URL(string: "x-apple-health://") {
+			UIApplication.shared.open(url)
 		}
 	}
 }

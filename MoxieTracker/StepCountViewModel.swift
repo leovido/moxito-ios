@@ -1,241 +1,31 @@
 import SwiftUI
 import MoxieLib
 import HealthKit
+import Combine
 import Sentry
 
-final class HealthKitManager {
-	let healthStore = HKHealthStore()
-
-	let readDataTypes: Set = [
-		HKObjectType.workoutType(),
-		HKObjectType.quantityType(forIdentifier: .stepCount)!,
-		HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-		HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-		HKObjectType.quantityType(forIdentifier: .heartRate)!,
-		HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
-	]
-
-	// Request Authorization
-	func requestAuthorization(completion: @escaping (Bool, Error?) -> Void) {
-		healthStore.requestAuthorization(toShare: nil, read: readDataTypes) { success, error in
-			completion(success, error)
-		}
-	}
-
-	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([Date: Double]) -> Void) {
-		var scoresByDate: [Date: Double] = [:]
-		let calendar = Calendar.current
-
-		let healthStore = HKHealthStore()
-		let stepQuantityType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
-
-		var date = start
-		while date <= end {
-			let nextDate = calendar.date(byAdding: .day, value: 1, to: date)!
-			let predicate = HKQuery.predicateForSamples(withStart: date, end: nextDate, options: .strictStartDate)
-
-			let query = HKStatisticsQuery(quantityType: stepQuantityType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
-				if let sum = result?.sumQuantity() {
-					let score = sum.doubleValue(for: HKUnit.count())
-					scoresByDate[date] = score
-				}
-
-				if date == end {
-					completion(scoresByDate)
-				}
-			}
-
-			healthStore.execute(query)
-			date = nextDate
-		}
-	}
-
-	// Fetch step count for the current day
-	func fetchStepCount(completion: @escaping (Double?) -> Void) {
-		guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-			completion(nil)
-			return
-		}
-
-		let startDate = Calendar.current.startOfDay(for: Date())
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
-
-		let query = HKStatisticsQuery(quantityType: stepType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
-			guard let result = result, let sum = result.sumQuantity() else {
-				completion(nil)
-				return
-			}
-			completion(sum.doubleValue(for: HKUnit.count()))
-		}
-
-		healthStore.execute(query)
-	}
-
-	func checkNoManualInput(completion: @escaping (Bool) -> Void) {
-		guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-			completion(false)
-			return
-		}
-
-		let startDate = Calendar.current.startOfDay(for: Date())
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
-
-		let queryManualEntry = HKSampleQuery(sampleType: stepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in
-			guard let samples = results as? [HKQuantitySample], error == nil else {
-				print("Error fetching steps: \(error?.localizedDescription ?? "Unknown error")")
-				return
-			}
-
-			for sample in samples {
-				if let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool, wasUserEntered {
-					print("Steps were manually entered by the user.")
-					completion(true)
-				} else {
-					print("Steps recorded by source: \(sample.sourceRevision.source.name)")
-					completion(false)
-				}
-			}
-		}
-		healthStore.execute(queryManualEntry)
-	}
-
-	// Fetch active calories burned
-	func fetchCaloriesBurned(completion: @escaping (Double?, Error?) -> Void) {
-		guard let calorieType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned) else {
-			completion(nil, nil)
-			return
-		}
-
-		let calendar = Calendar.current
-		var dateComponents = DateComponents()
-
-		dateComponents.year = 2024
-		dateComponents.month = 10
-		dateComponents.day = 21
-
-		let startDate = calendar.date(from: dateComponents) ?? Date()
-
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
-
-		let query = HKStatisticsQuery(quantityType: calorieType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in
-			guard let result = result, let sum = result.sumQuantity() else {
-				completion(nil, error)
-				return
-			}
-			completion(sum.doubleValue(for: HKUnit.kilocalorie()), nil)
-		}
-		healthStore.execute(query)
-	}
-
-	// Fetch the resting heart rate data for the past month and calculate the average
-	func getRestingHeartRateForMonth(completion: @escaping (Double?, Error?) -> Void) {
-		let heartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
-
-		let now = Date()
-		guard let startDate = Calendar.current.date(byAdding: .month, value: -1, to: now) else {
-			completion(nil, nil) // If start date calculation fails, return no data.
-			return
-		}
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: now, options: .strictStartDate)
-
-		let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in
-			guard let samples = results as? [HKQuantitySample], error == nil else {
-				completion(nil, error)
-				return
-			}
-
-			// If there are no samples, return nil
-			guard !samples.isEmpty else {
-				completion(nil, nil)
-				return
-			}
-
-			// Calculate the average heart rate over the last month
-			let totalHeartRate = samples.reduce(0.0) { sum, sample in
-				sum + sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-			}
-			let averageHeartRate = totalHeartRate / Double(samples.count)
-			completion(averageHeartRate, nil)
-		}
-
-		healthStore.execute(query)
-	}
-
-	func getAverageHeartRate(completion: @escaping (Double?, Error?) -> Void) {
-		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-
-		let now = Date()
-		guard let startDate = Calendar.current.date(byAdding: .month, value: -1, to: now) else {
-			completion(nil, nil)
-			return
-		}
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: now, options: .strictStartDate)
-
-		let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in
-			guard let samples = results as? [HKQuantitySample], error == nil else {
-				completion(nil, error)
-				return
-			}
-
-			guard !samples.isEmpty else {
-				completion(nil, nil)
-				return
-			}
-
-			let totalHeartRate = samples.reduce(0.0) { sum, sample in
-				sum + sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-			}
-			let averageHeartRate = totalHeartRate / Double(samples.count)
-			completion(averageHeartRate, nil)
-		}
-
-		healthStore.execute(query)
-	}
-
-	// Fetch distance walked/running
-	func fetchDistance(completion: @escaping (Double?, Error?) -> Void) {
-		guard let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) else {
-			completion(nil, nil)
-			return
-		}
-
-		let startDate = Calendar.current.startOfDay(for: Date())
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
-
-		let query = HKStatisticsQuery(quantityType: distanceType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in
-			guard let result = result, let sum = result.sumQuantity() else {
-				completion(nil, error)
-				return
-			}
-			completion(sum.doubleValue(for: HKUnit.meter()), nil)
-		}
-		healthStore.execute(query)
-	}
-
-	// Fetch heart rate for the current day
-	func fetchHeartRate(completion: @escaping ([Double], Error?) -> Void) {
-		guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else {
-			completion([], nil)
-			return
-		}
-
-		let startDate = Calendar.current.startOfDay(for: Date())
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
-
-		let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in
-			guard let results = results as? [HKQuantitySample] else {
-				completion([], error)
-				return
-			}
-			let heartRates = results.map { $0.quantity.doubleValue(for: HKUnit(from: "count/min")) }
-			completion(heartRates, nil)
-		}
-		healthStore.execute(query)
-	}
+enum Result<T: Hashable, E: Hashable>: Hashable {
+	case success(T)
+	case error(E)
 }
 
-final class StepCountViewModel: ObservableObject {
-	var healthKitManager = HealthKitManager()
+enum HealthKitError: Error {
+	case noAuthorization
+	case noData
+}
+
+enum StepCountAction: Hashable {
+	case fetchHealthData
+	case receiveHealthKitAccess(Result<Bool, HealthKitError>)
+	case checkFIDPoints
+	case onAppear
+	case requestAuthorizationHealthKit
+	case calculatePoints(startDate: Date, endDate: Date)
+}
+
+@MainActor
+final class StepCountViewModel: ObservableObject, Observable {
+	let healthKitManager: HealthKitManager
 
 	@Published var steps: Decimal = 0.0
 	@Published var caloriesBurned: Decimal = 0.0
@@ -243,6 +33,16 @@ final class StepCountViewModel: ObservableObject {
 	@Published var restingHeartRate: Decimal = 0.0
 	@Published var averageHeartRate: Decimal = 0.0
 	@Published var estimatedRewardPoints: Decimal = 0.0
+	@Published var didAuthorizeHealthKit: Bool = false
+	@Published var filterSelection: Int = 0 {
+		didSet {
+			fetchHealthData()
+		}
+	}
+	@Published var stepsLimit: Decimal = 10000
+
+	let actions: PassthroughSubject<StepCountAction, Never> = .init()
+	private(set) var subscriptions: Set<AnyCancellable> = []
 
 	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0) {
 		self.healthKitManager = healthKitManager
@@ -251,51 +51,98 @@ final class StepCountViewModel: ObservableObject {
 		self.distanceTraveled = distanceTraveled
 		self.restingHeartRate = restingHeartRate
 
-		fetchHealthData()
+		let sharedPublisher = actions.share()
 
-		self.estimatedRewardPoints = calculateRewardPoints(
-			activity: ActivityData(
-				steps: steps,
-				caloriesBurned: caloriesBurned,
-				distance: distanceTraveled,
-				avgHeartRate: restingHeartRate
-			)
-		)
+		sharedPublisher.sink { [weak self] action in
+			switch action {
+			case .requestAuthorizationHealthKit:
+				Task {
+					try await self?.requestHealthKitAccess()
+
+				}
+			case .fetchHealthData:
+				self?.fetchHealthData()
+			case .onAppear:
+				return
+			case .calculatePoints:
+				let calendar = Calendar.current
+				let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
+				let endDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 28))!
+
+				self?.calculateTotalPoints(startDate: startDate, endDate: endDate)
+			case .checkFIDPoints:
+				return
+			case .receiveHealthKitAccess(.success(let isSuccess)):
+				self?.didAuthorizeHealthKit = isSuccess
+
+				self?.actions.send(.fetchHealthData)
+			case .receiveHealthKitAccess(.error(let error)):
+				self?.didAuthorizeHealthKit = false
+			}
+		}
+		.store(in: &subscriptions)
+
+		$filterSelection
+			.sink { [weak self] newSelection in
+				switch newSelection {
+				case 0:
+					self?.stepsLimit = 10000.0
+				case 1:
+					self?.stepsLimit = 10_000 * 7
+
+				case 2:
+					let calendar = Calendar.current
+					let date = Date()
+
+					let range = calendar.range(of: .day, in: .month, for: date)
+
+					let numberOfDaysInMonth = range?.count ?? 30
+					self?.stepsLimit = Decimal(10_000 * numberOfDaysInMonth)
+				default:
+					break
+				}
+			}
+			.store(in: &subscriptions)
+
+		$estimatedRewardPoints
+			.sink { _ in
+
+			}
+			.store(in: &subscriptions)
 	}
 
 	func calculateRewardPoints(activity: ActivityData) -> Decimal {
 		let maxSteps: Decimal = 10000.0
 		let maxCalories: Decimal = 500.0
 
-		let stepPoints = (activity.steps / maxSteps) * stepWeight
-		let caloriePoints = (activity.caloriesBurned / maxCalories) * calorieWeight
+		let stepBonus: Decimal = activity.steps >= maxSteps ? 1.1 : 1.0
+		let calorieBonus: Decimal = activity.caloriesBurned >= maxCalories ? 1.1 : 1.0
+
+		let stepPoints = (activity.steps / maxSteps) * stepWeight * stepBonus
+		let caloriePoints = (activity.caloriesBurned / maxCalories) * calorieWeight * calorieBonus
+
 		let distancePoints = (activity.distance) * distanceWeight
-		let heartRatePoints = heartRateMultiplier(for: activity.avgHeartRate) * heartRateWeight * 1000
+		let heartRatePoints = heartRateMultiplier(for: averageHeartRate) * heartRateWeight * 1000
 
 		let basePoints = stepPoints + caloriePoints + distancePoints + heartRatePoints
 
 		return basePoints
 	}
 
-	func createActivityData(completion: @escaping (Decimal) -> Void) {
-		let calendar = Calendar.current
-		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
-		let endDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 28))!
-
-		fetchHealthDataForDateRangeWeek(start: startDate, end: endDate) { results in
+	func calculateTotalPoints(startDate: Date, endDate: Date) {
+		fetchHealthDataForDateRange(start: startDate, end: endDate) { results in
 			let activity = ActivityData(steps: results["steps"] ?? 0,
 																	caloriesBurned: results["calories"] ?? 0,
 																	distance: results["distance"] ?? 0,
 																	avgHeartRate: results["heartRate"] ?? 0)
 
-			dump(activity)
 			let result = self.calculateRewardPoints(activity: activity)
 
-			completion(result)
+			self.estimatedRewardPoints = result
 		}
 	}
 
-	func fetchHealthDataForDateRangeWeek(start: Date, end: Date, completion: @escaping ([String: Decimal]) -> Void) {
+	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([String: Decimal]) -> Void) {
 		healthKitManager.checkNoManualInput { isManualInput in
 			guard !isManualInput else {
 				completion(["steps": 0, "calories": 0, "distance": 0, "heartRate": 0])
@@ -344,15 +191,7 @@ final class StepCountViewModel: ObservableObject {
 			}
 			healthStore.execute(distanceQuery)
 
-			// Heart Rate Query (average)
-			group.enter()
-			let heartRateQuery = HKStatisticsQuery(quantityType: heartRateQuantityType, quantitySamplePredicate: predicate, options: .discreteAverage) { _, result, _ in
-				if let avg = result?.averageQuantity() {
-					results["heartRate"] = Decimal(avg.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())))
-				}
-				group.leave()
-			}
-			healthStore.execute(heartRateQuery)
+			results["heartRate"] = self.averageHeartRate
 
 			// Completion handler after all queries complete
 			group.notify(queue: .main) {
@@ -386,14 +225,27 @@ final class StepCountViewModel: ObservableObject {
 	}
 
 	// Request HealthKit access and fetch all required data
-	func requestHealthKitAccess() {
-		healthKitManager.requestAuthorization { [weak self] (success, error) in
-			if success {
-				self?.fetchHealthData()
-			} else {
-				if let error {
-					SentrySDK.capture(error: error)
-					print("Authorization failed with error: \(String(describing: error))")
+	func requestHealthKitAccess() async throws {
+		try await withCheckedThrowingContinuation { continuation in
+			healthKitManager.requestAuthorization { [weak self] (success, error) in
+
+				DispatchQueue.main.async {
+
+					if success {
+						self?.actions.send(.receiveHealthKitAccess(.success(success))
+						)
+						continuation.resume()
+					} else {
+						self?.actions.send(.receiveHealthKitAccess(.error(.noAuthorization))
+						)
+
+						if let error = error {
+							SentrySDK.capture(error: error)
+							continuation.resume(throwing: error)
+						} else {
+							continuation.resume(throwing: NSError(domain: "HealthKitAuthorization", code: -1, userInfo: [NSLocalizedDescriptionKey: "Authorization failed with unknown error"]))
+						}
+					}
 				}
 			}
 		}
@@ -401,18 +253,51 @@ final class StepCountViewModel: ObservableObject {
 
 	// Fetch all required health data (steps, calories, distance, resting heart rate)
 	func fetchHealthData() {
-		fetchSteps()
-		fetchCaloriesBurned()
-		fetchDistanceTraveled()
-		fetchRestingHeartRate()
-		fetchAverageHeartRate()
+		let value: (Date, Date)
+
+		switch filterSelection {
+		case 0:
+			let startDate = Calendar.current.startOfDay(for: Date())
+			var components = DateComponents()
+			components.day = 1
+			components.second = -1
+			let endDate = Calendar.current.date(byAdding: components, to: startDate)!
+			value = (startDate, endDate)
+
+		case 1:
+			let startOfWeek = Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: Date()).date!
+			var components = DateComponents()
+			components.weekOfYear = 1
+			components.second = -1
+			let endOfWeek = Calendar.current.date(byAdding: components, to: startOfWeek)!
+			value = (startOfWeek, endOfWeek)
+
+		case 2:
+			let components = Calendar.current.dateComponents([.year, .month], from: Date())
+			let startOfMonth = Calendar.current.date(from: components)!
+			var componentsEnd = DateComponents()
+			componentsEnd.month = 1
+			componentsEnd.second = -1
+			let endOfMonth = Calendar.current.date(byAdding: componentsEnd, to: startOfMonth)!
+			value = (startOfMonth, endOfMonth)
+
+		default:
+			value = (Date(), Date())
+		}
+
+		fetchSteps(startDate: value.0, endDate: value.1)
+		fetchCaloriesBurned(startDate: value.0, endDate: value.1)
+		fetchDistanceTraveled(startDate: value.0, endDate: value.1)
+		fetchRestingHeartRate(startDate: value.0, endDate: value.1)
+		fetchAverageHeartRate(startDate: value.0, endDate: value.1)
 	}
 
 	// Fetch today's step count
-	func fetchSteps() {
-		healthKitManager.getTodayStepCount { [weak self] (steps, error) in
+	func fetchSteps(startDate: Date = Date(), endDate: Date = Date()) {
+		healthKitManager.getTodayStepCount(startDate: startDate, endDate: endDate) { [weak self] (steps, error) in
 			DispatchQueue.main.async {
 				if let error {
+					self?.steps = 0
 					SentrySDK.capture(event: .init(error: MoxieError.message("Error fetching steps \(error)")))
 				} else {
 					self?.steps = Decimal(steps)
@@ -422,10 +307,11 @@ final class StepCountViewModel: ObservableObject {
 	}
 
 	// Fetch today's calories burned
-	func fetchCaloriesBurned() {
-		healthKitManager.fetchCaloriesBurned { [weak self] (calories, error) in
+	func fetchCaloriesBurned(startDate: Date = Date(), endDate: Date = Date()) {
+		healthKitManager.fetchCaloriesBurned(startDate: startDate, endDate: endDate) { [weak self] (calories, error) in
 			DispatchQueue.main.async {
 				if let error = error {
+					self?.caloriesBurned = 0
 					SentrySDK.capture(event: .init(error: MoxieError.message("Error fetching calories \(error)")))
 				} else {
 					self?.caloriesBurned = Decimal(calories ?? 0)
@@ -435,10 +321,12 @@ final class StepCountViewModel: ObservableObject {
 	}
 
 	// Fetch today's distance traveled
-	func fetchDistanceTraveled() {
-		healthKitManager.fetchDistance { [weak self] (distance, error) in
+	func fetchDistanceTraveled(startDate: Date = Date(), endDate: Date = Date()) {
+		healthKitManager.fetchDistance(startDate: startDate, endDate: endDate) { [weak self] (distance, error) in
 			DispatchQueue.main.async {
 				if let error = error {
+					self?.distanceTraveled = 0
+
 					SentrySDK.capture(event: .init(error: MoxieError.message("Error fetching distance \(error)")))
 				} else {
 					guard let distance = distance else {
@@ -451,12 +339,13 @@ final class StepCountViewModel: ObservableObject {
 	}
 
 	// Fetch resting heart rate
-	func fetchRestingHeartRate() {
+	func fetchRestingHeartRate(startDate: Date = Date(), endDate: Date = Date()) {
 		healthKitManager.getRestingHeartRateForMonth { [weak self] (heartRate, error) in
 			DispatchQueue.main.async {
 				if let error = error {
+					self?.restingHeartRate = 0
+
 					SentrySDK.capture(error: error)
-					print("Error fetching resting heart rate: \(error)")
 				} else {
 					self?.restingHeartRate = Decimal(heartRate ?? 0)
 				}
@@ -464,158 +353,27 @@ final class StepCountViewModel: ObservableObject {
 		}
 	}
 
-	func fetchAverageHeartRate() {
-		healthKitManager.fetchAverageHeartRateForOctober { avgHR in
-			self.averageHeartRate = Decimal(avgHR ?? 0)
-		}
-	}
-}
+	func fetchAverageHR(startDate: Date = Date(), endDate: Date = Date()) {
+		healthKitManager.getAverageHeartRate(startDate: startDate, endDate: endDate) { [weak self] (heartRate, error) in
+			DispatchQueue.main.async {
+				if let error = error {
+					self?.averageHeartRate = 0
 
-extension HealthKitManager {
-	func getTodayStepCount(completion: @escaping (Double, Error?) -> Void) {
-		guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-			fatalError("Step Count Type is no longer available in HealthKit")
-		}
-
-		let startDate = Calendar.current.startOfDay(for: Date())
-		let endDate = Date()
-
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-
-		let query = HKStatisticsQuery(quantityType: stepType, quantitySamplePredicate: predicate, options: .cumulativeSum) { (_, result, error) in
-			guard let result = result, let sum = result.sumQuantity() else {
-				completion(0.0, error)
-				return
-			}
-			let stepCount = sum.doubleValue(for: HKUnit.count())
-			completion(stepCount, nil)
-		}
-
-		healthStore.execute(query)
-	}
-
-	// Step 2: Fetch Workouts
-	func fetchWorkouts(from startDate: Date, to endDate: Date, completion: @escaping ([HKWorkout]) -> Void) {
-		let workoutType = HKObjectType.workoutType()
-
-		// Set the date range predicate
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-
-		// Create the query with the date range predicate
-		let query = HKSampleQuery(sampleType: workoutType, predicate: predicate, limit: 0, sortDescriptors: nil) { (_, results, error) in
-			guard let workouts = results as? [HKWorkout], error == nil else {
-				print("Error fetching workouts: \(error?.localizedDescription ?? "unknown error")")
-				return
-			}
-
-			completion(workouts)
-		}
-
-		healthStore.execute(query)
-	}
-
-	// Example usage
-	func fetchWorkoutsForOctober() {
-		let calendar = Calendar.current
-		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
-		let endDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 28))!
-
-		fetchWorkouts(from: startDate, to: endDate) { workouts in
-			for workout in workouts {
-				print("Workout type: \(workout.workoutActivityType.rawValue), Duration: \(workout.duration), Calories burned: \(workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0) kcal")
-			}
-		}
-	}
-
-	// Step 3: Fetch Heart Rate for a Workout and Calculate Average
-	func fetchAverageHeartRate(for workout: HKWorkout, completion: @escaping (Double?) -> Void) {
-		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-		let workoutPredicate = HKQuery.predicateForSamples(withStart: workout.startDate, end: workout.endDate, options: .strictStartDate)
-
-		let query = HKStatisticsQuery(quantityType: heartRateType, quantitySamplePredicate: workoutPredicate, options: .discreteAverage) { (_, result, _) in
-			guard let avgHeartRate = result?.averageQuantity() else {
-				completion(nil)
-				return
-			}
-
-			let avgHeartRateValue = avgHeartRate.doubleValue(for: HKUnit(from: "count/min"))
-			completion(avgHeartRateValue)
-		}
-
-		healthStore.execute(query)
-	}
-
-	func fetchAverageHeartRateForOctober(completion: @escaping (Double?) -> Void) {
-		let healthStore = HKHealthStore()
-		let workoutType = HKObjectType.workoutType()
-
-		let calendar = Calendar.current
-		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 1))!
-		let endDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 31, hour: 23, minute: 59, second: 59))!
-
-		// Predicate to filter workouts within October
-		let datePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-
-		// Query to fetch workouts within the date range
-		let workoutQuery = HKSampleQuery(sampleType: workoutType, predicate: datePredicate, limit: 0, sortDescriptors: nil) { (_, results, error) in
-			guard let workouts = results as? [HKWorkout], error == nil else {
-				print("Error fetching workouts: \(error?.localizedDescription ?? "unknown error")")
-				completion(nil)
-				return
-			}
-
-			// Array to store average heart rate for each workout
-			var totalHeartRate = 0.0
-			var heartRateCount = 0
-
-			let dispatchGroup = DispatchGroup()
-
-			// Loop through each workout and fetch average heart rate
-			for workout in workouts {
-				dispatchGroup.enter()
-				self.fetchAverageHeartRateForWorkout(workout: workout) { avgHeartRate in
-					if let avgHeartRate = avgHeartRate {
-						totalHeartRate += avgHeartRate
-						heartRateCount += 1
-					}
-					dispatchGroup.leave()
-				}
-			}
-
-			// Wait for all heart rate queries to complete
-			dispatchGroup.notify(queue: .main) {
-				if heartRateCount > 0 {
-					let overallAverageHeartRate = totalHeartRate / Double(heartRateCount)
-					completion(overallAverageHeartRate)
+					SentrySDK.capture(error: error)
 				} else {
-					completion(nil)
+					self?.averageHeartRate = Decimal(heartRate ?? 0)
 				}
 			}
 		}
-
-		healthStore.execute(workoutQuery)
 	}
 
-	func fetchAverageHeartRateForWorkout(workout: HKWorkout, completion: @escaping (Double?) -> Void) {
-		let healthStore = HKHealthStore()
-		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+	func fetchAverageHeartRate(startDate: Date = Date(), endDate: Date = Date()) {
+		healthKitManager.fetchAvgHRWorkouts(startDate: startDate, endDate: endDate) { avgHR in
+			self.averageHeartRate = Decimal(avgHR ?? 0)
 
-		// Predicate to filter heart rate samples within the workout duration
-		let predicate = HKQuery.predicateForSamples(withStart: workout.startDate, end: workout.endDate, options: .strictStartDate)
-
-		// Query to get heart rate data for the workout
-		let heartRateQuery = HKStatisticsQuery(quantityType: heartRateType, quantitySamplePredicate: predicate, options: .discreteAverage) { (_, result, error) in
-			guard let avgHeartRate = result?.averageQuantity() else {
-				print("Error fetching heart rate for workout: \(error?.localizedDescription ?? "unknown error")")
-				completion(nil)
-				return
+			if self.averageHeartRate == 0 {
+				self.fetchAverageHR(startDate: startDate, endDate: endDate)
 			}
-
-			let heartRateValue = avgHeartRate.doubleValue(for: HKUnit(from: "count/min"))
-			completion(heartRateValue)
 		}
-
-		healthStore.execute(heartRateQuery)
 	}
-
 }
