@@ -340,7 +340,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 	// Fetch resting heart rate
 	func fetchRestingHeartRate(startDate: Date = Date(), endDate: Date = Date()) {
-		healthKitManager.getRestingHeartRateForMonth { [weak self] (heartRate, error) in
+		healthKitManager.getRestingHeartRateForMonth(startDate: startDate, endDate: endDate) { [weak self] (heartRate, error) in
 			DispatchQueue.main.async {
 				if let error = error {
 					self?.restingHeartRate = 0

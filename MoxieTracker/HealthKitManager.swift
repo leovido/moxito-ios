@@ -113,17 +113,21 @@ final class HealthKitManager {
 		healthStore.execute(query)
 	}
 
-	func getRestingHeartRateForMonth(completion: @escaping (Double?, Error?) -> Void) {
+	func getRestingHeartRateForMonth(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void) {
 		let heartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
 
-		let now = Date()
-		guard let startDate = Calendar.current.date(byAdding: .month, value: -1, to: now) else {
-			completion(nil, nil)
-			return
-		}
-		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: now, options: .strictStartDate)
+		let predicate = HKQuery.predicateForSamples(
+			withStart: startDate,
+			end: endDate,
+			options: .strictStartDate
+		)
 
-		let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in
+		let query = HKSampleQuery(
+			sampleType: heartRateType,
+			predicate: predicate,
+			limit: HKObjectQueryNoLimit,
+			sortDescriptors: nil
+		) { _, results, error in
 			guard let samples = results as? [HKQuantitySample], error == nil else {
 				completion(nil, error)
 				return
