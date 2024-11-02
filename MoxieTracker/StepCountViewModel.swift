@@ -19,7 +19,7 @@ enum StepCountAction: Hashable {
 	case fetchHealthData
 	case receiveHealthKitAccess(Result<Bool, HealthKitError>)
 	case checkFIDPoints
-	case onAppear
+	case onAppear(fid: Int)
 	case requestAuthorizationHealthKit
 	case calculatePoints(startDate: Date, endDate: Date)
 }
@@ -71,7 +71,10 @@ final class StepCountViewModel: ObservableObject, Observable {
 				}
 			case .fetchHealthData:
 				self?.fetchHealthData()
-			case .onAppear:
+			case .onAppear(let fid):
+//				Task {
+//					try await self?.fetchCheckins(fid: fid)
+//				}
 				return
 			case .calculatePoints(let startDate, let endDate):
 				self?.calculateTotalPoints(startDate: startDate, endDate: endDate)
@@ -115,11 +118,28 @@ final class StepCountViewModel: ObservableObject, Observable {
 			.store(in: &subscriptions)
 	}
 
-	func fetchCheckins() async throws {
-		let checkins = try await client.fetchAllCheckinsByUse(fid: 203666, startDate: Date(), endDate: Date())
-		self.allWeeksData = checkins.reduce(into: [:]) { _, checkin in
-			let date = checkin.createdAt.startOfDay
+	func getStartAndEndOfCurrentWeek() -> (startOfWeek: Date?, endOfWeek: Date?) {
+			let calendar = Calendar.current
+			let today = Date()
 
+			// Get the start of the current week
+			guard let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start else {
+					return (nil, nil)
+			}
+
+			// Calculate the end of the current week by adding 6 days to the start of the week
+			let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)
+
+			return (startOfWeek, endOfWeek)
+	}
+
+	func fetchCheckins(fid: Int) async throws {
+		let (startOfWeek, endOfWeek) = getStartAndEndOfCurrentWeek()
+		let checkins = try await client.fetchAllCheckinsByUse(fid: fid, startDate: startOfWeek ?? Date(), endDate: endOfWeek ?? Date())
+		self.allWeeksData = checkins.reduce(into: [:]) { result, checkin in
+			let date = checkin.createdAt.startOfDay()
+
+			result[date] = [.init(date: date, isCheckedIn: true)]
 		}
 	}
 
@@ -394,29 +414,6 @@ extension StepCountViewModel {
 	func changeWeek(by offset: Int) {
 		if let newWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: offset, to: currentWeekStartDate.startOfDay()) {
 			currentWeekStartDate = newWeekDate
-			fetchWeekDataIfNeeded(for: newWeekDate)
-		}
-	}
-
-	func fetchWeekDataIfNeeded(for weekStartDate: Date) {
-		let normalizedDate = weekStartDate.startOfDay()
-		if allWeeksData[normalizedDate] == nil {
-			allWeeksData[normalizedDate] = generateSampleDays(for: normalizedDate)
-		}
-	}
-
-	func generateSampleDays(for startDate: Date) -> [Day] {
-		(0..<7).compactMap { offset in
-			if let date = Calendar.current.date(byAdding: .day, value: offset, to: startDate) {
-				let isCheckedIn: Bool?
-				if date < Date() {
-					isCheckedIn = Bool.random()
-				} else {
-					isCheckedIn = nil
-				}
-				return Day(date: date, isCheckedIn: isCheckedIn)
-			}
-			return nil
 		}
 	}
 

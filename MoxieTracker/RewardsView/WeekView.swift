@@ -29,13 +29,14 @@ struct WeekView: View {
 	private func circleColor(for day: Day) -> Color {
 		switch day.isCheckedIn {
 		case .some(true): return Color(uiColor: MoxieColor.green)
-		case .some(false): return Color(uiColor: .systemGray6)
-		default: return .white
+		case .some(false): return Color(uiColor: .gray)
+		default: return Color.white
 		}
 	}
 }
 
 struct SwipeableWeekView: View {
+	@EnvironmentObject var mainViewModel: MoxieViewModel
 	@EnvironmentObject var viewModel: StepCountViewModel
 
 	var body: some View {
@@ -55,12 +56,7 @@ struct SwipeableWeekView: View {
 							}
 					)
 			} else {
-				Text("Loading...")
-					.padding()
-					.onAppear {
-						// Populate the current and nearby weeks if not already done
-						viewModel.fetchWeekDataIfNeeded(for: viewModel.currentWeekStartDate)
-					}
+				EmptyView()
 			}
 		}
 	}

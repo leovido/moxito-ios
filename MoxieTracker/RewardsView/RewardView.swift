@@ -129,6 +129,8 @@ struct RewardsView: View {
 								.background(Color.white)
 								.clipShape(RoundedRectangle(cornerRadius: 14))
 
+								SwipeableWeekView()
+
 								HStack {
 									Spacer()
 
@@ -319,7 +321,7 @@ struct RewardsView: View {
 					})
 				}
 				.onAppear {
-					viewModel.actions.send(.onAppear)
+					viewModel.actions.send(.onAppear(fid: Int(mainViewModel.model.entityID) ?? 0))
 				}
 			}
 		}
