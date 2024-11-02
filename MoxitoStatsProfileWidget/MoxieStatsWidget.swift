@@ -1,6 +1,7 @@
 import WidgetKit
 import SwiftUI
 import MoxieLib
+import MoxitoLib
 
 struct Provider: TimelineProvider {
 	func placeholder(in context: Context) -> SimpleEntry {

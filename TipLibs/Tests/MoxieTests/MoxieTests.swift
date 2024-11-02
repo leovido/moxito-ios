@@ -1,7 +1,12 @@
 import XCTest
+import MoxitoLib
 @testable import MoxieLib
 
 final class MockClient: MoxieProvider {
+	func fetchTotalPoolRewards() async throws -> Decimal {
+		return 10000
+	}
+	
 	func fetchFansCount(fid: String) async throws -> Int {
 		return 1000
 	}

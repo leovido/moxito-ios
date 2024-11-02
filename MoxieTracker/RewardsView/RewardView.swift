@@ -9,6 +9,18 @@ struct RewardsView: View {
 	@EnvironmentObject var mainViewModel: MoxieViewModel
 	@State private var isBeating = false // State variable for heart animation
 
+	let textOptionsCheckinShare: [String] = [
+		"Earning $MOXIE rewards today for staying active!\n\nChecking in with Moxito for my steps and fitness progress.\n\ncc: @moxito 🌱",
+
+		"Today’s check-in with Moxito for fitness rewards!\n\nLogging my steps and making my fitness count. Let’s go! 💪\n\ncc: @moxito🌱",
+
+		"Another day, another check-in!\n\nTracking my steps and fitness for $MOXIE rewards with Moxito.\n\ncc: @moxito🌱",
+
+		"Fitness rewards on!\n\nChecking in with Moxito today to log my progress and earn some $MOXIE!\n\ncc: @moxito🌱",
+
+		"Checking in with Moxito for daily $MOXIE rewards!\n\nMaking every step count towards my fitness goals.\n\ncc: @moxito🌱"
+	]
+
 	var distance1: Measurement<UnitLength> {
 		return Measurement(value: Double(truncating: viewModel.distanceTraveled as NSNumber), unit: UnitLength.kilometers)
 	}
@@ -94,6 +106,28 @@ struct RewardsView: View {
 								.padding(.vertical, 20)
 								.background(Color.white)
 								.clipShape(RoundedRectangle(cornerRadius: 24))
+
+								HStack {
+									Text("Check in via frame in Warpcast")
+										.font(.footnote)
+										.font(.custom("Inter", size: 13))
+										.foregroundColor(Color(uiColor: MoxieColor.primary))
+										.padding(.leading)
+
+									Spacer()
+
+									Link(destination: URL(string: "https://warpcast.com/~/compose?text=\(textOptionsCheckinShare.randomElement()!)&embeds[]=https://moxito.xyz/fitnessRewards")!, label: {
+										Text("Check in")
+											.foregroundStyle(Color.white)
+											.padding(.horizontal)
+									})
+										.padding(8)
+										.background(Color(uiColor: MoxieColor.primary))
+										.clipShape(RoundedRectangle(cornerRadius: 24))
+								}
+								.padding(6)
+								.background(Color.white)
+								.clipShape(RoundedRectangle(cornerRadius: 14))
 
 								HStack {
 									Spacer()
@@ -303,5 +337,6 @@ struct RewardsView_Previews: PreviewProvider {
 		RewardsView()
 			.environmentObject(MoxieViewModel())
 			.environmentObject(MoxieClaimViewModel())
+			.environmentObject(StepCountViewModel(didAuthorizeHealthKit: true))
 	}
 }

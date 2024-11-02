@@ -3,6 +3,7 @@ import WidgetKit
 import MoxieLib
 import ConfettiSwiftUI
 import Sentry
+import MoxitoLib
 
 struct HeaderView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
@@ -34,6 +35,7 @@ struct HeaderView: View {
 					claimViewModel.number = viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0
 					claimViewModel.progress = 0
 					Haptics.shared.play(.medium)
+					SentrySDK.capture(message: "Claimed Moxie")
 
 					Task {
 						claimViewModel.actions.send(.initiateClaim(tab))

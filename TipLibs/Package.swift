@@ -8,10 +8,12 @@ let package = Package(
 		platforms: [.iOS(.v17),
 								.watchOS(.v10)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "TipLibs",
             targets: ["TipLibs"]),
+				.library(
+						name: "MoxitoLib",
+						targets: ["MoxitoLib"]),
 				.library(
 						name: "MoxieLib",
 						targets: ["MoxieLib"])
@@ -25,7 +27,13 @@ let package = Package(
 						name: "TipLibsTests",
 						dependencies: ["TipLibs"]),
 				.target(
-						name: "MoxieLib"),
+						name: "MoxitoLib"),
+				.testTarget(
+						name: "MoxitoLibTests",
+						dependencies: ["MoxitoLib"]),
+				.target(
+						name: "MoxieLib",
+						dependencies: ["MoxitoLib"]),
 				.testTarget(
 						name: "MoxieTests",
 						dependencies: ["MoxieLib"])

@@ -3,6 +3,7 @@ import SwiftUI
 import MoxieLib
 import AppIntents
 import Sentry
+import MoxitoLib
 
 enum FeatureFlag {
 	static let claimButton = false

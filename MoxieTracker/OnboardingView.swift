@@ -3,6 +3,7 @@ import MoxieLib
 import Combine
 import Sentry
 import DevCycle
+import MoxitoLib
 
 struct OnboardingView: View {
 	@AppStorage("moxieData") var moxieData: Data = .init()

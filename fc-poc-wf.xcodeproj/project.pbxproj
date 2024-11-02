@@ -62,7 +62,9 @@
 		475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C02CADAA0C00E0CFEA /* ProfileView.swift */; };
 		475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */; };
 		475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */; };
+		477FB5CB2CD66F1000AC3CC9 /* MoxitoLib in Frameworks */ = {isa = PBXBuildFile; productRef = 477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */; };
 		479489E72CD0F0020010CF9B /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E62CD0EFFE0010CF9B /* HealthKitManager.swift */; };
+		479489EA2CD65F5B0010CF9B /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E92CD65F590010CF9B /* WeekView.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
 		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
 		47C324072C6E578400BE03C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C324062C6E578400BE03C2 /* Assets.xcassets */; };
@@ -298,6 +300,7 @@
 		475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionMoxieStatView.swift; sourceTree = "<group>"; };
 		475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
 		479489E62CD0EFFE0010CF9B /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		479489E92CD65F590010CF9B /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
 		47C324042C6E578300BE03C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -392,6 +395,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477FB5CB2CD66F1000AC3CC9 /* MoxitoLib in Frameworks */,
 				475F73BC2CA95B1600E0CFEA /* ActivityKit.framework in Frameworks */,
 				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
 				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
@@ -526,6 +530,7 @@
 				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
 				47434F492CC2B05400C42C5C /* FitnessCardView.swift */,
+				479489E82CD65F4F0010CF9B /* RewardsView */,
 				47EC547C2C88324E006C2820 /* Haptics.swift */,
 				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
 				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
@@ -540,7 +545,6 @@
 				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
 				475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */,
 				475F73C02CADAA0C00E0CFEA /* ProfileView.swift */,
-				47434F452CC2A51A00C42C5C /* RewardView.swift */,
 				475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */,
 				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
 				47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */,
@@ -593,6 +597,15 @@
 				471FE9C22C7F829C00D20F4C /* Info.plist */,
 			);
 			path = MoxieWidget;
+			sourceTree = "<group>";
+		};
+		479489E82CD65F4F0010CF9B /* RewardsView */ = {
+			isa = PBXGroup;
+			children = (
+				479489E92CD65F590010CF9B /* WeekView.swift */,
+				47434F452CC2A51A00C42C5C /* RewardView.swift */,
+			);
+			path = RewardsView;
 			sourceTree = "<group>";
 		};
 		47C323F62C6E578300BE03C2 = {
@@ -792,6 +805,7 @@
 				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
 				47E4CBE12C90AFC100BE77E8 /* Sentry */,
 				475F73B42CA884AD00E0CFEA /* DevCycle */,
+				477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -1305,6 +1319,7 @@
 				475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */,
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
+				479489EA2CD65F5B0010CF9B /* WeekView.swift in Sources */,
 				47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */,
 				475F73B72CA888D200E0CFEA /* OnboardingViewModel.swift in Sources */,
 				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
@@ -2508,6 +2523,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */;
 			productName = DevCycle;
+		};
+		477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxitoLib;
 		};
 		47E4CBE12C90AFC100BE77E8 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;

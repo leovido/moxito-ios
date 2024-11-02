@@ -3,6 +3,7 @@ import SwiftUI
 import MoxieLib
 import AppIntents
 import Sentry
+import MoxitoLib
 
 struct Provider: AppIntentTimelineProvider {
 	func placeholder(in context: Context) -> SimpleEntry {

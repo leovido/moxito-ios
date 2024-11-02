@@ -3,6 +3,7 @@ import MoxieLib
 import HealthKit
 import Combine
 import Sentry
+import MoxitoLib
 
 enum Result<T: Hashable, E: Hashable>: Hashable {
 	case success(T)
@@ -41,15 +42,23 @@ final class StepCountViewModel: ObservableObject, Observable {
 	}
 	@Published var stepsLimit: Decimal = 10000
 
+	@Published var currentWeekStartDate = Calendar.current.nextMonday(for: Date())
+	@Published var allWeeksData: [Date: [Day]] = [:]
+
+	let client: MoxitoClient
+
 	let actions: PassthroughSubject<StepCountAction, Never> = .init()
 	private(set) var subscriptions: Set<AnyCancellable> = []
 
-	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0) {
+	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0, didAuthorizeHealthKit: Bool = false,
+			 client: MoxitoClient = .init()) {
 		self.healthKitManager = healthKitManager
 		self.steps = steps
 		self.caloriesBurned = caloriesBurned
 		self.distanceTraveled = distanceTraveled
 		self.restingHeartRate = restingHeartRate
+		self.didAuthorizeHealthKit = didAuthorizeHealthKit
+		self.client = client
 
 		let sharedPublisher = actions.share()
 
@@ -64,11 +73,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 				self?.fetchHealthData()
 			case .onAppear:
 				return
-			case .calculatePoints:
-				let calendar = Calendar.current
-				let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
-				let endDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 28))!
-
+			case .calculatePoints(let startDate, let endDate):
 				self?.calculateTotalPoints(startDate: startDate, endDate: endDate)
 			case .checkFIDPoints:
 				return
@@ -89,7 +94,6 @@ final class StepCountViewModel: ObservableObject, Observable {
 					self?.stepsLimit = 10000.0
 				case 1:
 					self?.stepsLimit = 10_000 * 7
-
 				case 2:
 					let calendar = Calendar.current
 					let date = Date()
@@ -109,6 +113,14 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 			}
 			.store(in: &subscriptions)
+	}
+
+	func fetchCheckins() async throws {
+		let checkins = try await client.fetchAllCheckinsByUse(fid: 203666, startDate: Date(), endDate: Date())
+		self.allWeeksData = checkins.reduce(into: [:]) { _, checkin in
+			let date = checkin.createdAt.startOfDay
+
+		}
 	}
 
 	func calculateRewardPoints(activity: ActivityData) -> Decimal {
@@ -375,5 +387,42 @@ final class StepCountViewModel: ObservableObject, Observable {
 				self.fetchAverageHR(startDate: startDate, endDate: endDate)
 			}
 		}
+	}
+}
+
+extension StepCountViewModel {
+	func changeWeek(by offset: Int) {
+		if let newWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: offset, to: currentWeekStartDate.startOfDay()) {
+			currentWeekStartDate = newWeekDate
+			fetchWeekDataIfNeeded(for: newWeekDate)
+		}
+	}
+
+	func fetchWeekDataIfNeeded(for weekStartDate: Date) {
+		let normalizedDate = weekStartDate.startOfDay()
+		if allWeeksData[normalizedDate] == nil {
+			allWeeksData[normalizedDate] = generateSampleDays(for: normalizedDate)
+		}
+	}
+
+	func generateSampleDays(for startDate: Date) -> [Day] {
+		(0..<7).compactMap { offset in
+			if let date = Calendar.current.date(byAdding: .day, value: offset, to: startDate) {
+				let isCheckedIn: Bool?
+				if date < Date() {
+					isCheckedIn = Bool.random()
+				} else {
+					isCheckedIn = nil
+				}
+				return Day(date: date, isCheckedIn: isCheckedIn)
+			}
+			return nil
+		}
+	}
+
+	func formattedDate(_ date: Date) -> String {
+		let formatter = DateFormatter()
+		formatter.dateStyle = .medium
+		return formatter.string(from: date)
 	}
 }

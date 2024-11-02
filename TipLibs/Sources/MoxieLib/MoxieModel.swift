@@ -283,8 +283,8 @@ extension MoxieModel {
 		socials: [
 			.init(
 				profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png",
-				profileDisplayName: "Tester",
-				profileHandle: "@test",
+				profileDisplayName: "Moxito",
+				profileHandle: "@moxito",
 				connectedAddresses: [
 					.init(address: "0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF", blockchain: "ethereum"),
 					.init(address: "0xDEADBEEF00000000000000000000000000000000", blockchain: "ethereum")
