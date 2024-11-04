@@ -170,7 +170,7 @@ struct RewardsView: View {
 										.clipShape(RoundedRectangle(cornerRadius: 24))
 								}
 								.padding(6)
-								.background(Color.white)
+								.background(Color(uiColor: MoxieColor.primary))
 								.clipShape(RoundedRectangle(cornerRadius: 14))
 
 								SwipeableWeekView()
