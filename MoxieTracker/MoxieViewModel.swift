@@ -76,7 +76,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 		setupListeners()
 
-		startMoxieActivity()
+//		startMoxieActivity()
 	}
 
 	func startMoxieActivity() {
