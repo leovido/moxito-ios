@@ -22,12 +22,19 @@ enum StepCountAction: Hashable {
 	case onAppear(fid: Int)
 	case requestAuthorizationHealthKit
 	case calculatePoints(startDate: Date, endDate: Date)
+	case syncPoints(Decimal)
+	case presentScoresView
+	case fetchScores
+	case receiveScores(Result<[MoxitoScoreModel], HealthKitError>)
 }
 
 @MainActor
 final class StepCountViewModel: ObservableObject, Observable {
 	let healthKitManager: HealthKitManager
 
+	@Published var scores: [MoxitoScoreModel] = []
+	@Published var checkins: [MoxitoCheckinModel] = []
+	@Published var fid: Int = 0
 	@Published var steps: Decimal = 0.0
 	@Published var caloriesBurned: Decimal = 0.0
 	@Published var distanceTraveled: Decimal = 0.0
@@ -35,6 +42,9 @@ final class StepCountViewModel: ObservableObject, Observable {
 	@Published var averageHeartRate: Decimal = 0.0
 	@Published var estimatedRewardPoints: Decimal = 0.0
 	@Published var didAuthorizeHealthKit: Bool = false
+	@Published var isSyncingData: Bool = false
+	@Published var isInSync: Bool = false
+	@Published var isScoresViewVisible: Bool = false
 	@Published var filterSelection: Int = 0 {
 		didSet {
 			fetchHealthData()
@@ -60,32 +70,105 @@ final class StepCountViewModel: ObservableObject, Observable {
 		self.didAuthorizeHealthKit = didAuthorizeHealthKit
 		self.client = client
 
+		$checkins
+			.removeDuplicates()
+			.filter { !$0.isEmpty }
+			.sink { [weak self] newValues in
+				guard let self else {
+					return
+				}
+				if scores.count == 0 {
+					Task {
+						self.isSyncingData = true
+						await withTaskGroup(of: Void.self) { group in
+							for model in newValues {
+								group.addTask {
+									do {
+										let endDate = await self.endOfDay(for: model.createdAt) ?? Date()
+										let points = await self.calculateTotalPoints(startDate: model.createdAt, endDate: endDate)
+
+										_ = try await client.postScore(model: .init(
+											score: points,
+											fid: self.fid,
+											checkInDate: model.createdAt,
+											weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
+										))
+									} catch {
+										SentrySDK.capture(error: error)
+									}
+								}
+							}
+						}
+						self.isInSync = true
+						self.isSyncingData = false
+						self.actions.send(.fetchScores)
+					}
+				} else {
+					self.isInSync = true
+					self.isSyncingData = false
+				}
+			}
+			.store(in: &subscriptions)
+
 		let sharedPublisher = actions.share()
 
 		sharedPublisher.sink { [weak self] action in
+			guard let self else {
+				return
+			}
 			switch action {
+			case .fetchScores:
+				Task {
+					let allScores = try await self.client.fetchAllScores(fid: self.fid)
+
+					self.actions.send(.receiveScores(.success(allScores)))
+				}
+			case .receiveScores(.success(let scores)):
+				self.scores = scores
+			case .receiveScores(.error(let error)):
+				self.scores = []
+			case .presentScoresView:
+				self.isScoresViewVisible = true
 			case .requestAuthorizationHealthKit:
 				Task {
-					try await self?.requestHealthKitAccess()
-
+					try await self.requestHealthKitAccess()
 				}
 			case .fetchHealthData:
-				self?.fetchHealthData()
+				self.fetchHealthData()
 			case .onAppear(let fid):
-//				Task {
-//					try await self?.fetchCheckins(fid: fid)
-//				}
+				self.fid = fid
+				Task {
+					do {
+						let scores = try await self.client.fetchAllScores(fid: fid)
+						self.actions.send(.receiveScores(.success(scores)))
+						try await self.fetchCheckins(fid: fid)
+					} catch {
+						SentrySDK.capture(error: error)
+					}
+				}
+
 				return
 			case .calculatePoints(let startDate, let endDate):
-				self?.calculateTotalPoints(startDate: startDate, endDate: endDate)
+				Task {
+					await self.calculateTotalPoints(startDate: startDate, endDate: endDate)
+
+					self.actions.send(.syncPoints(self.estimatedRewardPoints ?? 0))
+				}
 			case .checkFIDPoints:
 				return
 			case .receiveHealthKitAccess(.success(let isSuccess)):
-				self?.didAuthorizeHealthKit = isSuccess
+				self.didAuthorizeHealthKit = isSuccess
 
-				self?.actions.send(.fetchHealthData)
+				self.actions.send(.fetchHealthData)
 			case .receiveHealthKitAccess(.error(let error)):
-				self?.didAuthorizeHealthKit = false
+				self.didAuthorizeHealthKit = false
+
+			case .syncPoints(let score):
+				Task {
+					let model = MoxitoScoreModel.init(score: score, fid: self.fid, checkInDate: Date(), weightFactorId: "97ed5eff-d2c6-4696-884d-dc5dbe36f27a")
+					let result = try await self.client.postScore(model: model)
+
+				}
 			}
 		}
 		.store(in: &subscriptions)
@@ -110,32 +193,44 @@ final class StepCountViewModel: ObservableObject, Observable {
 				}
 			}
 			.store(in: &subscriptions)
-
-		$estimatedRewardPoints
-			.sink { _ in
-
-			}
-			.store(in: &subscriptions)
 	}
 
 	func getStartAndEndOfCurrentWeek() -> (startOfWeek: Date?, endOfWeek: Date?) {
-			let calendar = Calendar.current
-			let today = Date()
+		let calendar = Calendar.current
+		let today = Date()
 
-			// Get the start of the current week
-			guard let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start else {
-					return (nil, nil)
-			}
+		// Get the start of the current week
+		guard let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start else {
+			return (nil, nil)
+		}
 
-			// Calculate the end of the current week by adding 6 days to the start of the week
-			let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)
+		// Calculate the end of the current week by adding 6 days to the start of the week
+		let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)
 
-			return (startOfWeek, endOfWeek)
+		return (startOfWeek, endOfWeek)
+	}
+
+	func endOfDay(for date: Date) -> Date? {
+		let calendar = Calendar.current
+		var components = DateComponents()
+		components.hour = 23
+		components.minute = 59
+		components.second = 59
+		return calendar.date(bySettingHour: components.hour!,
+												 minute: components.minute!,
+												 second: components.second!,
+												 of: date)
 	}
 
 	func fetchCheckins(fid: Int) async throws {
-		let (startOfWeek, endOfWeek) = getStartAndEndOfCurrentWeek()
-		let checkins = try await client.fetchAllCheckinsByUse(fid: fid, startDate: startOfWeek ?? Date(), endDate: endOfWeek ?? Date())
+		let calendar = Calendar.current
+		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
+		let endDate = calendar.date(from: DateComponents(year: 2024, month: 11, day: 4))!
+
+//		let (startOfWeek, endOfWeek) = getStartAndEndOfCurrentWeek()
+		let checkins = try await client.fetchAllCheckinsByUse(fid: fid, startDate: startDate, endDate: endDate)
+
+		self.checkins = checkins
 		self.allWeeksData = checkins.reduce(into: [:]) { result, checkin in
 			let date = checkin.createdAt.startOfDay()
 
@@ -147,37 +242,83 @@ final class StepCountViewModel: ObservableObject, Observable {
 		let maxSteps: Decimal = 10000.0
 		let maxCalories: Decimal = 500.0
 
-		let stepBonus: Decimal = activity.steps >= maxSteps ? 1.1 : 1.0
-		let calorieBonus: Decimal = activity.caloriesBurned >= maxCalories ? 1.1 : 1.0
+		// Bonus scaling for steps
+		let stepBonus: Decimal = calculateBonus(for: activity.steps, thresholds: [10000, 12500, 15000, 20000])
+		// Bonus scaling for calories burned
+		let calorieBonus: Decimal = calculateBonus(for: activity.caloriesBurned, thresholds: [500, 700, 900, 1200])
 
+		// Apply step bonus and weight
 		let stepPoints = (activity.steps / maxSteps) * stepWeight * stepBonus
+		// Apply calorie bonus and weight
 		let caloriePoints = (activity.caloriesBurned / maxCalories) * calorieWeight * calorieBonus
 
+		// Weighted points for distance traveled
 		let distancePoints = (activity.distance) * distanceWeight
-		let heartRatePoints = heartRateMultiplier(for: averageHeartRate) * heartRateWeight * 1000
 
+		// Adjusted heart rate points using logarithmic scaling
+		let heartRatePoints = logHeartRateMultiplier(for: activity.avgHeartRate) * heartRateWeight * 1000
+
+		// Calculate total points with updated weights and scaling
 		let basePoints = stepPoints + caloriePoints + distancePoints + heartRatePoints
 
-		return basePoints
+		// Cap points if necessary to align with token pool distribution
+		return min(basePoints, 20000) // Assuming 20,000 as a daily cap for sustainable distribution
 	}
 
-	func calculateTotalPoints(startDate: Date, endDate: Date) {
-		fetchHealthDataForDateRange(start: startDate, end: endDate) { results in
-			let activity = ActivityData(steps: results["steps"] ?? 0,
-																	caloriesBurned: results["calories"] ?? 0,
-																	distance: results["distance"] ?? 0,
-																	avgHeartRate: results["heartRate"] ?? 0)
+	// Helper function for incremental bonuses
+	func calculateBonus(for value: Decimal, thresholds: [Decimal]) -> Decimal {
+		for (index, threshold) in thresholds.enumerated().reversed() {
+			if value >= threshold {
+				return Decimal(1.1 + (Double(index)) * 0.1) // E.g., 1.1, 1.2, 1.3, etc.
+			}
+		}
+		return 1.0 // Default if below first threshold
+	}
 
-			let result = self.calculateRewardPoints(activity: activity)
+	// Logarithmic heart rate multiplier for balanced scoring
+	func logHeartRateMultiplier(for avgHeartRate: Decimal) -> Decimal {
+		switch avgHeartRate {
+		case 90..<110: return Decimal(log2(1.2))
+		case 110..<130: return Decimal(log2(1.3))
+		case 130..<150: return Decimal(log2(1.5))
+		case 150..<170: return Decimal(log2(1.7))
+		case 170..<200: return Decimal(log2(2.0))
+		default: return Decimal(log2(1.1))
+		}
+	}
 
-			self.estimatedRewardPoints = result
+	func calculateTotalPoints(startDate: Date, endDate: Date) async -> Decimal {
+		let results = await fetchHealthDataForDateRange(start: startDate, end: endDate)
+
+		let activity = ActivityData(
+			steps: results["steps"] ?? 0,
+			caloriesBurned: results["calories"] ?? 0,
+			distance: results["distance"] ?? 0,
+			avgHeartRate: results["heartRate"] ?? 0
+		)
+
+		let result = calculateRewardPoints(activity: activity)
+		return result
+	}
+
+	func fetchHealthDataForDateRange(start: Date, end: Date) async -> [String: Decimal] {
+		await withCheckedContinuation { continuation in
+			fetchHealthDataForDateRange(start: start, end: end) { results in
+				continuation.resume(returning: results)
+			}
 		}
 	}
 
 	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([String: Decimal]) -> Void) {
+		let group = DispatchGroup()
+		var isCompleted = false // This flag ensures `completion` is called only once
+
 		healthKitManager.checkNoManualInput { isManualInput in
 			guard !isManualInput else {
-				completion(["steps": 0, "calories": 0, "distance": 0, "heartRate": 0])
+				if !isCompleted {
+					isCompleted = true
+					completion(["steps": 0, "calories": 0, "distance": 0, "heartRate": 0])
+				}
 				return
 			}
 
@@ -187,11 +328,8 @@ final class StepCountViewModel: ObservableObject, Observable {
 			let stepQuantityType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
 			let calorieQuantityType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
 			let distanceQuantityType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-			let heartRateQuantityType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 
-			// Store results in a dictionary
 			var results: [String: Decimal] = ["steps": 0, "calories": 0, "distance": 0, "heartRate": 0]
-			let group = DispatchGroup()
 
 			// Steps Query
 			group.enter()
@@ -217,17 +355,20 @@ final class StepCountViewModel: ObservableObject, Observable {
 			group.enter()
 			let distanceQuery = HKStatisticsQuery(quantityType: distanceQuantityType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
 				if let sum = result?.sumQuantity() {
-					results["distance"] = Decimal(sum.doubleValue(for: HKUnit.meter()) / 1000) // Convert to kilometers
+					results["distance"] = Decimal(sum.doubleValue(for: HKUnit.meter()) / 1000)
 				}
 				group.leave()
 			}
 			healthStore.execute(distanceQuery)
 
+			// Set heart rate directly since it’s not dependent on async query
 			results["heartRate"] = self.averageHeartRate
 
-			// Completion handler after all queries complete
 			group.notify(queue: .main) {
-				completion(results)
+				if !isCompleted {
+					isCompleted = true
+					completion(results)
+				}
 			}
 		}
 	}
@@ -286,32 +427,28 @@ final class StepCountViewModel: ObservableObject, Observable {
 	// Fetch all required health data (steps, calories, distance, resting heart rate)
 	func fetchHealthData() {
 		let value: (Date, Date)
+		let calendar = Calendar.current
 
 		switch filterSelection {
-		case 0:
-			let startDate = Calendar.current.startOfDay(for: Date())
+		case 0: // Today
+			let startDate = calendar.startOfDay(for: Date())
 			var components = DateComponents()
 			components.day = 1
 			components.second = -1
-			let endDate = Calendar.current.date(byAdding: components, to: startDate)!
+			let endDate = calendar.date(byAdding: components, to: startDate)!
 			value = (startDate, endDate)
 
-		case 1:
-			let startOfWeek = Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: Date()).date!
+		case 1: // This week
+			let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
 			var components = DateComponents()
-			components.weekOfYear = 1
-			components.second = -1
-			let endOfWeek = Calendar.current.date(byAdding: components, to: startOfWeek)!
+			components.day = 7
+			let endOfWeek = calendar.date(byAdding: components, to: startOfWeek)!
 			value = (startOfWeek, endOfWeek)
 
-		case 2:
-			let components = Calendar.current.dateComponents([.year, .month], from: Date())
-			let startOfMonth = Calendar.current.date(from: components)!
-			var componentsEnd = DateComponents()
-			componentsEnd.month = 1
-			componentsEnd.second = -1
-			let endOfMonth = Calendar.current.date(byAdding: componentsEnd, to: startOfMonth)!
-			value = (startOfMonth, endOfMonth)
+		case 2: // This month
+			let endDate = calendar.startOfDay(for: Date()) // Today
+			let startDate = calendar.date(byAdding: .day, value: -30, to: endDate)!
+			value = (startDate, endDate)
 
 		default:
 			value = (Date(), Date())

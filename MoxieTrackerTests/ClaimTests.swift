@@ -1,6 +1,7 @@
 import XCTest
 @testable import Moxito
 import MoxieLib
+import MoxitoLib
 
 @MainActor
 final class ClaimTests: XCTestCase {

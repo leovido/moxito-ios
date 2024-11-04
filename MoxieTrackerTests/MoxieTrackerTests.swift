@@ -117,24 +117,60 @@ final class MoxieTrackerTests: XCTestCase {
 	}
 	
 	func testCalculateRewardPoints() throws {
-		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 180)
-		viewModel.averageHeartRate = 180
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 0)
 		let score = viewModel.calculateRewardPoints(activity: activity)
 		
-		XCTAssertEqual(score, 410.6)
+		XCTAssertEqual(score, 38.160704749987004416)
+	}
+	
+	func testCalculateRewardPoints2() throws {
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 60)
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 38.160704749987004416)
 	}
 	
 	func testCalculateRewardPointsMax() throws {
-		let activity: Moxito.ActivityData = .init(steps: 20000, caloriesBurned: 500, distance: 50, avgHeartRate: 80)
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 130)
 		viewModel.averageHeartRate = 190
 		let score = viewModel.calculateRewardPoints(activity: activity)
 		
 		XCTAssertEqual(score, 600.7)
 	}
 	
+	func testCalculateRewardPointsMax2() throws {
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 600, distance: 50, avgHeartRate: 130)
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 600.7)
+	}
+	
 	func testCalculateRewardPointsAverage() throws {
-		let activity: Moxito.ActivityData = .init(steps: 20000, caloriesBurned: 500, distance: 50, avgHeartRate: 80)
-		viewModel.averageHeartRate = 120
+		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 500, distance: 50, avgHeartRate: 90)
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 600.7)
+	}
+	
+	func testCalculateRewardPointsLessSteps() throws {
+		let activity: Moxito.ActivityData = .init(steps: 2000, caloriesBurned: 40, distance: 0.02, avgHeartRate: 80)
+		viewModel.averageHeartRate = 60
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 200.088)
+	}
+	
+	func testCalculateRewardPointsLessSteps4000() throws {
+		let activity: Moxito.ActivityData = .init(steps: 4000, caloriesBurned: 40, distance: 0.02, avgHeartRate: 80)
+		viewModel.averageHeartRate = 60
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 600.7)
+	}
+	
+	func testCalculateRewardPointsLessSteps6000() throws {
+		let activity: Moxito.ActivityData = .init(steps: 11000, caloriesBurned: 500, distance: 0.02, avgHeartRate: 80)
+		viewModel.averageHeartRate = 60
 		let score = viewModel.calculateRewardPoints(activity: activity)
 		
 		XCTAssertEqual(score, 600.7)

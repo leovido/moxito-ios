@@ -87,7 +87,6 @@ final class HealthKitManager {
 					print("Steps were manually entered by the user.")
 					completion(true)
 				} else {
-					print("Steps recorded by source: \(sample.sourceRevision.source.name)")
 					completion(false)
 				}
 			}
