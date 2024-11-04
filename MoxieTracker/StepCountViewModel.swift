@@ -77,35 +77,30 @@ final class StepCountViewModel: ObservableObject, Observable {
 				guard let self else {
 					return
 				}
-				if scores.count == 0 {
-					Task {
-						self.isSyncingData = true
-						await withTaskGroup(of: Void.self) { group in
-							for model in newValues {
-								group.addTask {
-									do {
-										let endDate = await self.endOfDay(for: model.createdAt) ?? Date()
-										let points = await self.calculateTotalPoints(startDate: model.createdAt, endDate: endDate)
+				Task {
+					self.isSyncingData = true
+					await withTaskGroup(of: Void.self) { group in
+						for model in newValues {
+							group.addTask {
+								do {
+									let endDate = await self.endOfDay(for: model.createdAt) ?? Date()
+									let points = await self.calculateTotalPoints(startDate: model.createdAt, endDate: endDate)
 
-										_ = try await client.postScore(model: .init(
-											score: points,
-											fid: self.fid,
-											checkInDate: model.createdAt,
-											weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
-										))
-									} catch {
-										SentrySDK.capture(error: error)
-									}
+									_ = try await client.postScore(model: .init(
+										score: points,
+										fid: self.fid,
+										checkInDate: model.createdAt,
+										weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
+									))
+								} catch {
+									SentrySDK.capture(error: error)
 								}
 							}
 						}
-						self.isInSync = true
-						self.isSyncingData = false
-						self.actions.send(.fetchScores)
 					}
-				} else {
 					self.isInSync = true
 					self.isSyncingData = false
+					self.actions.send(.fetchScores)
 				}
 			}
 			.store(in: &subscriptions)
