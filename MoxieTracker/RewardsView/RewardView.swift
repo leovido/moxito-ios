@@ -166,7 +166,7 @@ struct RewardsView: View {
 
 									Spacer()
 
-									Link(destination: URL(string: "https://warpcast.com/~/compose?text=\(textOptionsCheckinShare.randomElement()!)&embeds[]=https://moxito.xyz/fitnessRewards")!, label: {
+									Link(destination: URL(string: "https://warpcast.com/leovido.eth/0xe71043e1")!, label: {
 										Text("Check in")
 											.foregroundStyle(Color.white)
 											.padding(.horizontal)
