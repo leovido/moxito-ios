@@ -234,13 +234,13 @@ final class StepCountViewModel: ObservableObject, Observable {
 	}
 
 	func calculateRewardPoints(activity: ActivityData) -> Decimal {
-		let maxSteps: Decimal = 10000.0
-		let maxCalories: Decimal = 500.0
+		let maxSteps: Double = 10000.0
+		let maxCalories: Double = 500.0
 
 		// Bonus scaling for steps
-		let stepBonus: Decimal = calculateBonus(for: activity.steps, thresholds: [10000, 12500, 15000, 20000])
+		let stepBonus = calculateBonus(for: activity.steps, thresholds: [10000, 12500, 15000, 20000])
 		// Bonus scaling for calories burned
-		let calorieBonus: Decimal = calculateBonus(for: activity.caloriesBurned, thresholds: [500, 700, 900, 1200])
+		let calorieBonus = calculateBonus(for: activity.caloriesBurned, thresholds: [500, 700, 900, 1200])
 
 		// Apply step bonus and weight
 		let stepPoints = (activity.steps / maxSteps) * stepWeight * stepBonus
@@ -257,28 +257,28 @@ final class StepCountViewModel: ObservableObject, Observable {
 		let basePoints = stepPoints + caloriePoints + distancePoints + heartRatePoints
 
 		// Cap points if necessary to align with token pool distribution
-		return min(basePoints, 20000) // Assuming 20,000 as a daily cap for sustainable distribution
+		return Decimal(min(basePoints, 20000)) // Assuming 20,000 as a daily cap for sustainable distribution
 	}
 
 	// Helper function for incremental bonuses
-	func calculateBonus(for value: Decimal, thresholds: [Decimal]) -> Decimal {
+	func calculateBonus(for value: Double, thresholds: [Double]) -> Double {
 		for (index, threshold) in thresholds.enumerated().reversed() {
 			if value >= threshold {
-				return Decimal(1.1 + (Double(index)) * 0.1) // E.g., 1.1, 1.2, 1.3, etc.
+				return 1.1 + (Double(index)) * 0.1
 			}
 		}
-		return 1.0 // Default if below first threshold
+		return 1.0
 	}
 
 	// Logarithmic heart rate multiplier for balanced scoring
-	func logHeartRateMultiplier(for avgHeartRate: Decimal) -> Decimal {
+	func logHeartRateMultiplier(for avgHeartRate: Double) -> Double {
 		switch avgHeartRate {
-		case 90..<110: return Decimal(log2(1.2))
-		case 110..<130: return Decimal(log2(1.3))
-		case 130..<150: return Decimal(log2(1.5))
-		case 150..<170: return Decimal(log2(1.7))
-		case 170..<200: return Decimal(log2(2.0))
-		default: return Decimal(log2(1.1))
+		case 90..<110: return log2(1.2)
+		case 110..<130: return log2(1.3)
+		case 130..<150: return log2(1.5)
+		case 150..<170: return log2(1.7)
+		case 170..<200: return log2(2.0)
+		default: return log2(1.1)
 		}
 	}
 
@@ -296,7 +296,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 		return result
 	}
 
-	func fetchHealthDataForDateRange(start: Date, end: Date) async -> [String: Decimal] {
+	func fetchHealthDataForDateRange(start: Date, end: Date) async -> [String: Double] {
 		await withCheckedContinuation { continuation in
 			fetchHealthDataForDateRange(start: start, end: end) { results in
 				continuation.resume(returning: results)
@@ -304,7 +304,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 		}
 	}
 
-	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([String: Decimal]) -> Void) {
+	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([String: Double]) -> Void) {
 		let group = DispatchGroup()
 		var isCompleted = false // This flag ensures `completion` is called only once
 
@@ -324,13 +324,13 @@ final class StepCountViewModel: ObservableObject, Observable {
 			let calorieQuantityType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
 			let distanceQuantityType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
 
-			var results: [String: Decimal] = ["steps": 0, "calories": 0, "distance": 0, "heartRate": 0]
+			var results: [String: Double] = ["steps": 0, "calories": 0, "distance": 0, "heartRate": 0]
 
 			// Steps Query
 			group.enter()
 			let stepQuery = HKStatisticsQuery(quantityType: stepQuantityType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
 				if let sum = result?.sumQuantity() {
-					results["steps"] = Decimal(sum.doubleValue(for: HKUnit.count()))
+					results["steps"] = sum.doubleValue(for: HKUnit.count())
 				}
 				group.leave()
 			}
@@ -340,7 +340,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 			group.enter()
 			let calorieQuery = HKStatisticsQuery(quantityType: calorieQuantityType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
 				if let sum = result?.sumQuantity() {
-					results["calories"] = Decimal(sum.doubleValue(for: HKUnit.kilocalorie()))
+					results["calories"] = sum.doubleValue(for: HKUnit.kilocalorie())
 				}
 				group.leave()
 			}
@@ -350,14 +350,13 @@ final class StepCountViewModel: ObservableObject, Observable {
 			group.enter()
 			let distanceQuery = HKStatisticsQuery(quantityType: distanceQuantityType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
 				if let sum = result?.sumQuantity() {
-					results["distance"] = Decimal(sum.doubleValue(for: HKUnit.meter()) / 1000)
+					results["distance"] = sum.doubleValue(for: HKUnit.meter()) / 1000
 				}
 				group.leave()
 			}
 			healthStore.execute(distanceQuery)
 
-			// Set heart rate directly since it’s not dependent on async query
-			results["heartRate"] = self.averageHeartRate
+			results["heartRate"] = Double(truncating: self.averageHeartRate as NSNumber)
 
 			group.notify(queue: .main) {
 				if !isCompleted {

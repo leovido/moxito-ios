@@ -113,7 +113,7 @@ struct RewardsView: View {
 												.font(.custom("Inter", size: 13))
 												.foregroundColor(Color(uiColor: MoxieColor.primary))
 
-											Text("If you see \"SYNCED\" at the bottom, your rewards are up to date. You'll receive a DM with further instructions once everyone is fully synced.")
+											Text("If you see \"Synced\" at the bottom of this view, your scores are up to date for fitness rewards. You'll receive a DM with further instructions once everyone is fully synced.")
 												.font(.footnote)
 												.padding(.horizontal)
 												.multilineTextAlignment(.center)
@@ -125,7 +125,7 @@ struct RewardsView: View {
 													viewModel.actions.send(.presentScoresView)
 												}
 											} label: {
-												Text(viewModel.isInSync ? "View" : "SYNCING...")
+												Text("View scores")
 													.foregroundStyle(Color.white)
 													.padding(.horizontal)
 											}
@@ -138,6 +138,16 @@ struct RewardsView: View {
 											)
 											.clipShape(RoundedRectangle(cornerRadius: 24))
 											.padding(.top, 4)
+
+											HStack {
+												Text(viewModel.isInSync ? "Synced" : "Syncing...")
+													.foregroundStyle(Color(uiColor: MoxieColor.primary))
+													.padding(.horizontal)
+													.font(.custom("Inter", size: 11))
+
+												Image(systemName: viewModel.isInSync ? "checkmark.circle.fill" : "circle")
+													.foregroundStyle(Color(uiColor: MoxieColor.green))
+											}
 										}
 
 									}

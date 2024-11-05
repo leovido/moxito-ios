@@ -2,16 +2,16 @@ import HealthKit
 import SwiftUI
 
 struct ActivityData {
-	var steps: Decimal
-	var caloriesBurned: Decimal
-	var distance: Decimal
-	var avgHeartRate: Decimal
+	var steps: Double
+	var caloriesBurned: Double
+	var distance: Double
+	var avgHeartRate: Double
 }
 
-let stepWeight: Decimal = 0.3
-let calorieWeight: Decimal = 0.3
-let distanceWeight: Decimal = 0.2
-let heartRateWeight: Decimal = 0.2
+let stepWeight: Double = 0.3
+let calorieWeight: Double = 0.3
+let distanceWeight: Double = 0.2
+let heartRateWeight: Double = 0.2
 
 func heartRateMultiplier(for avgHeartRate: Decimal) -> Decimal {
 	switch avgHeartRate {
