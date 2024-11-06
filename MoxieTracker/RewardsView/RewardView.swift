@@ -7,7 +7,7 @@ struct RewardsView: View {
 
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var mainViewModel: MoxieViewModel
-	@State private var isBeating = false // State variable for heart animation
+	@State private var isBeating = false
 
 	var isFitnessRewardsPaused: Bool {
 		let calendar = Calendar.current
@@ -234,6 +234,7 @@ struct RewardsView: View {
 								.background(Color.white)
 								.clipShape(Capsule())
 								.sensoryFeedback(.selection, trigger: viewModel.filterSelection)
+								.sensoryFeedback(.selection, trigger: claimViewModel.number)
 								.frame(maxWidth: .infinity)
 								.frame(height: 40)
 								.padding(.vertical, 6)

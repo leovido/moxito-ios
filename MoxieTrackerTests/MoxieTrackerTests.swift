@@ -138,6 +138,13 @@ final class MoxieTrackerTests: XCTestCase {
 		XCTAssertEqual(score, 600.7)
 	}
 	
+	func testCalculateRewardPointsArob() throws {
+		let activity: Moxito.ActivityData = .init(steps: 25000, caloriesBurned: 1200, distance: 19.3, avgHeartRate: 130)
+		let score = viewModel.calculateRewardPoints(activity: activity)
+		
+		XCTAssertEqual(score, 600.7)
+	}
+	
 	func testCalculateRewardPointsMax2() throws {
 		let activity: Moxito.ActivityData = .init(steps: 10000, caloriesBurned: 600, distance: 50, avgHeartRate: 130)
 		let score = viewModel.calculateRewardPoints(activity: activity)
