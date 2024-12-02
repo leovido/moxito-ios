@@ -25,14 +25,15 @@ enum StepCountAction: Hashable {
 	case syncPoints(Decimal)
 	case presentScoresView
 	case fetchScores
-	case receiveScores(Result<[MoxitoScoreModel], HealthKitError>)
+	case receiveScores(Result<[Round], HealthKitError>)
 }
 
 @MainActor
 final class StepCountViewModel: ObservableObject, Observable {
 	let healthKitManager: HealthKitManager
 
-	@Published var scores: [MoxitoScoreModel] = []
+	@Published var scores: [Round] = []
+	@Published var stepsTodayText: String = "Steps today"
 	@Published var checkins: [MoxitoCheckinModel] = []
 	@Published var fid: Int = 0
 	@Published var steps: Decimal = 0.0
@@ -116,7 +117,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 				Task {
 					let allScores = try await self.client.fetchAllScores(fid: self.fid)
 
-					self.actions.send(.receiveScores(.success(allScores)))
+					self.actions.send(.receiveScores(.success(allScores.rounds)))
 				}
 			case .receiveScores(.success(let scores)):
 				self.scores = scores
@@ -135,7 +136,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 				Task {
 					do {
 						let scores = try await self.client.fetchAllScores(fid: fid)
-						self.actions.send(.receiveScores(.success(scores)))
+						self.actions.send(.receiveScores(.success(scores.rounds)))
 						try await self.fetchCheckins(fid: fid)
 					} catch {
 						SentrySDK.capture(error: error)
@@ -173,8 +174,10 @@ final class StepCountViewModel: ObservableObject, Observable {
 				switch newSelection {
 				case 0:
 					self?.stepsLimit = 10000.0
+					self?.stepsTodayText = "Steps today"
 				case 1:
 					self?.stepsLimit = 10_000 * 7
+					self?.stepsTodayText = "Steps this week"
 				case 2:
 					let calendar = Calendar.current
 					let date = Date()
@@ -183,6 +186,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 					let numberOfDaysInMonth = range?.count ?? 30
 					self?.stepsLimit = Decimal(10_000 * numberOfDaysInMonth)
+					self?.stepsTodayText = "Steps this month"
 				default:
 					break
 				}

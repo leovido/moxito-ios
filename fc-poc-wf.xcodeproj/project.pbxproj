@@ -100,6 +100,8 @@
 		47E4CC472C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
 		47E4CC482C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
 		47E4CC492C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
+		47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */; };
+		47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -332,6 +334,8 @@
 		47E4CC3E2C9990C600BE77E8 /* Inter.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inter.ttf; sourceTree = "<group>"; };
 		47E4CC3F2C9990C600BE77E8 /* Inter-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Italic.ttf"; sourceTree = "<group>"; };
 		47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncingPointsView.swift; sourceTree = "<group>"; };
+		47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -604,6 +608,8 @@
 			children = (
 				479489E92CD65F590010CF9B /* WeekView.swift */,
 				47434F452CC2A51A00C42C5C /* RewardView.swift */,
+				47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */,
+				47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */,
 			);
 			path = RewardsView;
 			sourceTree = "<group>";
@@ -1333,7 +1339,9 @@
 				475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */,
 				47434F482CC2A52F00C42C5C /* StepCountViewModel.swift in Sources */,
 				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
+				47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */,
 				471FE9762C7F808C00D20F4C /* MoxieTrackerApp.swift in Sources */,
+				47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

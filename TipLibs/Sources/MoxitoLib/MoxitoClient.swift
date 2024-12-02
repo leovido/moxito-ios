@@ -70,7 +70,7 @@ public struct MoxitoCheckinModel: Codable, Hashable {
 
 public enum MoxitoEndpoint {
 	static let checkins = "https://moxito.xyz/api/checkins"
-	static let scores = "https://moxito.xyz/api/scores"
+	static let scores = "https://moxito-allowlist-git-featur-ac1a9c-christians-projects-e3a74c6a.vercel.app/api/scoresActivity"
 }
 
 public final class MoxitoClient {
@@ -110,7 +110,7 @@ public final class MoxitoClient {
 		}
 	}
 	
-	public func fetchAllScores(fid: Int) async throws -> [MoxitoScoreModel] {
+	public func fetchAllScores(fid: Int) async throws -> MoxitoActivity {
 		do {
 			guard let url = URL(string: MoxitoEndpoint.scores),
 						var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -118,7 +118,7 @@ public final class MoxitoClient {
 			}
 			
 			components.queryItems = [
-				.init(name: "fid", value: fid.description)
+				.init(name: "fid", value: "21114")
 			]
 			
 			let request = URLRequest(url: components.url!)
@@ -138,7 +138,7 @@ public final class MoxitoClient {
 			}
 			
 			let decoder = CustomDecoderAndEncoder.decoder
-			let models = try decoder.decode([MoxitoScoreModel].self, from: data)
+			let models = try decoder.decode(MoxitoActivity.self, from: data)
 			
 			return models
 		} catch {

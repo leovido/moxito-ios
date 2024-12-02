@@ -9,13 +9,6 @@ struct RewardsView: View {
 	@EnvironmentObject var mainViewModel: MoxieViewModel
 	@State private var isBeating = false
 
-	var isFitnessRewardsPaused: Bool {
-		let calendar = Calendar.current
-		let startDate = calendar.date(from: DateComponents(year: 2024, month: 11, day: 11))!
-
-		return startDate >= Date()
-	}
-
 	let textOptionsCheckinShare: [String] = [
 		"Earning $MOXIE rewards today for staying active!\n\nChecking in with Moxito for my steps and fitness progress.\n\ncc: @moxito 🌱",
 
@@ -65,7 +58,7 @@ struct RewardsView: View {
 									HStack {
 										Image(systemName: "figure.walk")
 											.foregroundColor(Color(uiColor: MoxieColor.green))
-										Text("Steps today")
+										Text(viewModel.stepsTodayText)
 											.font(.headline)
 											.foregroundColor(Color(uiColor: MoxieColor.primary))
 									}
@@ -84,72 +77,32 @@ struct RewardsView: View {
 										.padding(.horizontal, 50)
 
 									VStack(alignment: .center, spacing: 8) {
-										if !isFitnessRewardsPaused {
-											Text("Total pool rewards in $MOXIE")
-												.font(.footnote)
-												.font(.custom("Inter", size: 13))
-											HStack {
-												Text(mainViewModel.totalPoolRewards.formatted(.number.precision(.fractionLength(0))))
-													.font(.largeTitle)
-													.font(.custom("Inter", size: 30))
-													.foregroundStyle(Color(uiColor: MoxieColor.primary))
-													.fontWeight(.heavy)
+										Text("Total pool rewards in $MOXIE")
+											.font(.footnote)
+											.font(.custom("Inter", size: 13))
+											.foregroundStyle(Color(uiColor: MoxieColor.primary))
 
-												Image("CoinMoxiePurple")
-													.resizable()
-													.aspectRatio(contentMode: .fit)
-													.frame(width: 20)
-													.foregroundColor(Color(uiColor: MoxieColor.primary))
-											}
-
-											Text("~\(formattedDollarValue(dollarValue: rewardsUSD))")
-												.font(.caption)
-												.font(.custom("Inter", size: 12))
+										HStack {
+											Text(mainViewModel.totalPoolRewards.formatted(.number.precision(.fractionLength(0))))
+												.font(.largeTitle)
+												.font(.custom("Inter", size: 30))
 												.foregroundStyle(Color(uiColor: MoxieColor.primary))
-												.padding(.top, -4)
-										} else {
-											Text("Fitness rewards paused until the 11th")
-												.font(.footnote)
-												.font(.custom("Inter", size: 13))
+												.fontWeight(.heavy)
+
+											Image("CoinMoxiePurple")
+												.resizable()
+												.aspectRatio(contentMode: .fit)
+												.frame(width: 20)
 												.foregroundColor(Color(uiColor: MoxieColor.primary))
-
-											Text("If you see \"Synced\" at the bottom of this view, your scores are up to date for fitness rewards. You'll receive a DM with further instructions once everyone is fully synced.")
-												.font(.footnote)
-												.padding(.horizontal)
-												.multilineTextAlignment(.center)
-												.font(.custom("Inter", size: 13))
-												.foregroundColor(Color(uiColor: MoxieColor.primary))
-
-											Button {
-												if !viewModel.scores.isEmpty {
-													viewModel.actions.send(.presentScoresView)
-												}
-											} label: {
-												Text("View scores")
-													.foregroundStyle(Color.white)
-													.padding(.horizontal)
-											}
-											.disabled(!viewModel.isInSync)
-											.padding(8)
-											.background(
-													Color(uiColor: viewModel.checkins.contains {
-															Calendar.current.isDateInToday($0.createdAt)
-													} ? MoxieColor.green : MoxieColor.primary)
-											)
-											.clipShape(RoundedRectangle(cornerRadius: 24))
-											.padding(.top, 4)
-
-											HStack {
-												Text(viewModel.isInSync ? "Synced" : "Syncing...")
-													.foregroundStyle(Color(uiColor: MoxieColor.primary))
-													.padding(.horizontal)
-													.font(.custom("Inter", size: 11))
-
-												Image(systemName: viewModel.isInSync ? "checkmark.circle.fill" : "circle")
-													.foregroundStyle(Color(uiColor: MoxieColor.green))
-											}
 										}
 
+										Text("~\(formattedDollarValue(dollarValue: rewardsUSD))")
+											.font(.caption)
+											.font(.custom("Inter", size: 12))
+											.foregroundStyle(Color(uiColor: MoxieColor.primary))
+											.padding(.top, -4)
+
+										SyncingPointsView()
 									}
 									.padding(.top)
 								}
@@ -171,13 +124,13 @@ struct RewardsView: View {
 											.foregroundStyle(Color.white)
 											.padding(.horizontal)
 									})
-										.padding(8)
-										.background(
-												Color(uiColor: viewModel.checkins.contains {
-														Calendar.current.isDateInToday($0.createdAt)
-												} ? MoxieColor.green : MoxieColor.primary)
-										)
-										.clipShape(RoundedRectangle(cornerRadius: 24))
+									.padding(8)
+									.background(
+										Color(uiColor: viewModel.checkins.contains {
+											Calendar.current.isDateInToday($0.createdAt)
+										} ? MoxieColor.green : MoxieColor.primary)
+									)
+									.clipShape(RoundedRectangle(cornerRadius: 24))
 								}
 								.padding(6)
 								.background(Color.white)
@@ -332,16 +285,7 @@ struct RewardsView: View {
 						Text("Choose wallet for claiming Moxie")
 					}
 					.sheet(isPresented: $viewModel.isScoresViewVisible, content: {
-						VStack {
-							List(viewModel.scores) { score in
-								HStack {
-									Text(score.checkInDate.formatted(.dateTime))
-									Spacer()
-									Text(score.score.formatted(.number.precision(.fractionLength(2))))
-								}
-								.foregroundStyle(Color(uiColor: MoxieColor.primary))
-							}
-						}
+						ActivityResultsView()
 					})
 					.overlay(alignment: .center, content: {
 						if claimViewModel.isClaimRequested {
