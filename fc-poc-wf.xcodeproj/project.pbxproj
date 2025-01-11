@@ -122,6 +122,7 @@
 		47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54892C8F22FA006C2820 /* OnboardingView.swift */; };
 		47FB8BAB2D329A1A0034B1F8 /* Config-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */; };
 		47FB8BAD2D329A230034B1F8 /* Config.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */; };
+		47FB8BD52D329C1A0034B1F8 /* VotingBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -360,6 +361,7 @@
 		47EC54892C8F22FA006C2820 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-Release.xcconfig"; sourceTree = "<group>"; };
 		47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.template.xcconfig; sourceTree = "<group>"; };
+		47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingBannerView.swift; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -763,6 +765,7 @@
 			isa = PBXGroup;
 			children = (
 				47EC54652C822950006C2820 /* HomeView.swift */,
+				47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */,
 				47EC54732C822DA5006C2820 /* ErrorView.swift */,
 			);
 			path = Home;
@@ -1342,6 +1345,7 @@
 				475F73B72CA888D200E0CFEA /* OnboardingViewModel.swift in Sources */,
 				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
+				47FB8BD52D329C1A0034B1F8 /* VotingBannerView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
 				47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */,

@@ -146,7 +146,7 @@ public final class MoxitoClient {
 		}
 	}
 	
-	public func fetchAllCheckinsByUse(fid: Int, startDate: Date, endDate: Date) async throws -> [MoxitoCheckinModel] {
+	public func fetchAllCheckinsByUse(fid: Int?, startDate: Date, endDate: Date) async throws -> [MoxitoCheckinModel] {
 		do {
 			guard let url = URL(string: MoxitoEndpoint.checkins),
 						var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -156,11 +156,16 @@ public final class MoxitoClient {
 			let startDateString = startDate.formatted(.iso8601)
 			let endDateString = endDate.formatted(.iso8601)
 			
-			components.queryItems = [
-				.init(name: "fid", value: fid.description),
-				.init(name: "startDate", value: startDateString),
-				.init(name: "endDate", value: endDateString),
+			var queryItems = [
+				URLQueryItem(name: "startDate", value: startDateString),
+				URLQueryItem(name: "endDate", value: endDateString)
 			]
+			
+			if let fid = fid {
+				queryItems.append(URLQueryItem(name: "fid", value: fid.description))
+			}
+			
+			components.queryItems = queryItems
 			
 			let request = URLRequest(url: components.url!)
 			

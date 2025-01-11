@@ -26,6 +26,7 @@ enum StepCountAction: Hashable {
 	case presentScoresView
 	case fetchScores
 	case receiveScores(Result<[Round], HealthKitError>)
+	case fetchTotalUsersCountCheckins
 }
 
 @MainActor
@@ -34,6 +35,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 	let healthKitManager: HealthKitManager
 
+	@Published var totalUsersCheckedInCount: Int = 0
 	@Published var scores: [Round] = []
 	@Published var stepsTodayText: String = "Steps today"
 	@Published var checkins: [MoxitoCheckinModel] = []
@@ -120,6 +122,11 @@ final class StepCountViewModel: ObservableObject, Observable {
 					let allScores = try await self.client.fetchAllScores(fid: self.fid)
 
 					self.actions.send(.receiveScores(.success(allScores.rounds)))
+				}
+			case .fetchTotalUsersCountCheckins:
+				Task {
+					let count = try await self.client.fetchAllCheckinsByUse(fid: nil, startDate: Calendar.current.startOfDay(for: Date()), endDate: Date()).count
+					self.totalUsersCheckedInCount = count
 				}
 			case .receiveScores(.success(let scores)):
 				self.scores = scores
@@ -234,6 +241,16 @@ final class StepCountViewModel: ObservableObject, Observable {
 												 minute: components.minute!,
 												 second: components.second!,
 												 of: date)
+	}
+
+	func fetchTotalUsersCountCheckins() async throws {
+		let count = try await client.fetchAllCheckinsByUse(
+			fid: nil,
+			startDate: Calendar.current.startOfDay(for: Date()),
+			endDate: Date()
+		).count
+
+		totalUsersCheckedInCount = count
 	}
 
 	func fetchCheckins(fid: Int) async throws {

@@ -8,6 +8,8 @@ struct RewardsView: View {
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var mainViewModel: MoxieViewModel
 	@State private var isBeating = false
+	@State private var timeRemaining: TimeInterval = 0
+	@State private var timer: Timer?
 
 	let textOptionsCheckinShare: [String] = [
 		"Earning $MOXIE rewards today for staying active!\n\nChecking in with Moxito for my steps and fitness progress.\n\ncc: @moxito 🌱",
@@ -39,6 +41,13 @@ struct RewardsView: View {
 		mainViewModel.totalPoolRewards * mainViewModel.price
 	}
 
+	private var formattedTimeRemaining: String {
+		let hours = Int(timeRemaining) / 3600
+		let minutes = Int(timeRemaining) / 60 % 60
+		let seconds = Int(timeRemaining) % 60
+		return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+	}
+
 	var body: some View {
 		NavigationStack {
 			GeometryReader { geo in
@@ -54,6 +63,8 @@ struct RewardsView: View {
 
 						if viewModel.didAuthorizeHealthKit {
 							ScrollView(showsIndicators: false) {
+//								VotingBannerView(expirationDate: Date().addingTimeInterval(10000000))
+
 //								NavPillView()
 //									.padding(.bottom, 32)
 								VStack {
@@ -113,24 +124,38 @@ struct RewardsView: View {
 								.clipShape(RoundedRectangle(cornerRadius: 24))
 
 								HStack {
-									Text("Check in via frame in Warpcast")
-										.font(.footnote)
-										.font(.custom("Inter", size: 13))
-										.foregroundColor(Color(uiColor: MoxieColor.primary))
-										.padding(.leading)
+									VStack(alignment: .leading, spacing: 4) {
+										Text("Check in via frame")
+											.font(.footnote)
+											.font(.custom("Inter", size: 13))
+											.foregroundColor(Color(uiColor: MoxieColor.primary))
+
+										Group {
+											if viewModel.checkins.contains(where: { Calendar.current.isDateInToday($0.createdAt) }) {
+												Text("Next round starts in: \(formattedTimeRemaining)")
+											} else {
+												Text("Time left to check in: \(formattedTimeRemaining)")
+											}
+											Text("\(viewModel.totalUsersCheckedInCount) checked in")
+										}
+											.font(.caption)
+											.foregroundColor(.gray)
+									}
+									.padding(.leading)
 
 									Spacer()
 
 									Link(destination: URL(string: "https://warpcast.com/leovido.eth/0xe71043e1")!, label: {
 										Text(viewModel.checkins.contains {
 											Calendar.current.isDateInToday($0.createdAt)
-										} ? "Checked in" : "Check in")
+										} ? "✓" : "Check in")
 											.foregroundStyle(Color.white)
+											.frame(width: 100)
 											.padding(.horizontal)
 									})
 									.disabled(viewModel.checkins.contains {
 										Calendar.current.isDateInToday($0.createdAt)
-									 })
+									})
 									.padding(8)
 									.background(
 										Color(uiColor: viewModel.checkins.contains {
@@ -340,7 +365,16 @@ struct RewardsView: View {
 					})
 				}
 				.onAppear {
+					viewModel.actions.send(.fetchTotalUsersCountCheckins)
 					viewModel.actions.send(.onAppear(fid: Int(mainViewModel.model.entityID) ?? 0))
+					updateTimeRemaining()
+					timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+						updateTimeRemaining()
+					}
+				}
+				.onDisappear {
+					timer?.invalidate()
+					timer = nil
 				}
 			}
 		}
@@ -350,6 +384,24 @@ struct RewardsView: View {
 		if let url = URL(string: "x-apple-health://") {
 			UIApplication.shared.open(url)
 		}
+	}
+
+	private func updateTimeRemaining() {
+		let calendar = Calendar.current
+		let now = Date()
+		let utcCalendar = Calendar(identifier: .gregorian)
+		var components = DateComponents()
+		components.timeZone = TimeZone(identifier: "UTC")
+		components.hour = 0
+		components.minute = 0
+		components.second = 0
+
+		guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: now),
+			  let nextDeadline = utcCalendar.nextDate(after: now, matching: components, matchingPolicy: .nextTime) else {
+			return
+		}
+
+		timeRemaining = nextDeadline.timeIntervalSince(now)
 	}
 }
 

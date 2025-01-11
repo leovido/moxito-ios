@@ -46,16 +46,26 @@ extension AppDelegate {
 
 	// Handle the second background task (Processing)
 	func handleProcessingTask(task: BGProcessingTask) {
-		scheduleDataProcessing() // Reschedule the next background processing task
+		scheduleDataProcessing()
 
 		Task {
-			StepCountViewModel.shared.actions.send(.calculatePoints(
-				startDate: Calendar.current.startOfDay(for: Date()),
-				endDate: Date()
-			))
+			do {
+				// Send the action and await its completion
+				let calendar = Calendar(identifier: .gregorian)
+				var utcCalendar = calendar
+				utcCalendar.timeZone = TimeZone(identifier: "UTC")!
+
+				StepCountViewModel.shared.actions.send(.calculatePoints(
+					startDate: utcCalendar.startOfDay(for: Date()),  // 00:00:00 UTC of current day
+					endDate: utcCalendar.date(byAdding: .day, value: 1, to: utcCalendar.startOfDay(for: Date()))! // 00:00:00 UTC of next day
+				))
+
+				task.setTaskCompleted(success: true)
+			} catch {
+				task.setTaskCompleted(success: false)
+			}
 		}
 
-		// Handle task expiration
 		task.expirationHandler = {
 			task.setTaskCompleted(success: false)
 		}
