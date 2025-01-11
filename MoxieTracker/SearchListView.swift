@@ -10,6 +10,7 @@ public final class SearchViewModel: ObservableObject {
 	@Published var query: String = ""
 	@Published var items: [User]
 	@Published var isLoading: Bool = false
+	@Published var task: Task<Void, Never>?
 
 	private(set) var subscriptions: [AnyCancellable] = []
 
@@ -29,7 +30,7 @@ public final class SearchViewModel: ObservableObject {
 		$query
 			.debounce(for: .seconds(0.5), scheduler: RunLoop.main)
 			.filter({
-				!$0.isEmpty
+				$0.count >= 3
 			})
 			.sink { _ in
 				self.searchUser()
@@ -46,11 +47,11 @@ public final class SearchViewModel: ObservableObject {
 	}
 
 	public func searchUser() {
+		task?.cancel()
 		isLoading = true
-		Task {
+		task = Task {
 			do {
 				items = try await client.searchUsername(username: query, limit: 10).result.users
-
 				isLoading = false
 			} catch {
 				isLoading = false

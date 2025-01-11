@@ -167,26 +167,23 @@ final class MoxieViewModel: ObservableObject, Observable {
 				}
 				.store(in: &subscriptions)
 		} else {
-			Publishers.CombineLatest3($inputFID, $filterSelection, $model)
+			Publishers.CombineLatest($inputFID, $filterSelection)
 				.dropFirst()
 				.removeDuplicates { (previous, current) in
 					return previous.0 == current.0 &&
-					previous.1 == current.1 &&
-					previous.2 == current.2
+					previous.1 == current.1
 				}
 				.receive(on: DispatchQueue.main)
 				.handleEvents(receiveRequest: { _ in
 					self.inFlightTask?.cancel()
 				})
 				.debounce(for: .seconds(0.25), scheduler: DispatchQueue.main)
-				.sink { [weak self] newInput, newFilter, newModel in
+				.sink { [weak self] newInput, newFilter in
 					guard let self = self, newInput > 0 else {
 						return
 					}
-					if newInput.description != newModel.entityID {
-						inFlightTask = Task {
-							try await self.fetchStats(filter: MoxieFilter(rawValue: newFilter) ?? .today)
-						}
+					inFlightTask = Task {
+						try await self.fetchStats(filter: MoxieFilter(rawValue: newFilter) ?? .today)
 					}
 				}
 				.store(in: &subscriptions)

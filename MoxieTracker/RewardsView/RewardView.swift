@@ -54,6 +54,8 @@ struct RewardsView: View {
 
 						if viewModel.didAuthorizeHealthKit {
 							ScrollView(showsIndicators: false) {
+//								NavPillView()
+//									.padding(.bottom, 32)
 								VStack {
 									HStack {
 										Image(systemName: "figure.walk")
@@ -77,7 +79,7 @@ struct RewardsView: View {
 										.padding(.horizontal, 50)
 
 									VStack(alignment: .center, spacing: 8) {
-										Text("Total pool rewards in $MOXIE")
+										Text("Estimated $MOXIE earned")
 											.font(.footnote)
 											.font(.custom("Inter", size: 13))
 											.foregroundStyle(Color(uiColor: MoxieColor.primary))
@@ -120,10 +122,15 @@ struct RewardsView: View {
 									Spacer()
 
 									Link(destination: URL(string: "https://warpcast.com/leovido.eth/0xe71043e1")!, label: {
-										Text("Check in")
+										Text(viewModel.checkins.contains {
+											Calendar.current.isDateInToday($0.createdAt)
+										} ? "Checked in" : "Check in")
 											.foregroundStyle(Color.white)
 											.padding(.horizontal)
 									})
+									.disabled(viewModel.checkins.contains {
+										Calendar.current.isDateInToday($0.createdAt)
+									 })
 									.padding(8)
 									.background(
 										Color(uiColor: viewModel.checkins.contains {
@@ -136,7 +143,7 @@ struct RewardsView: View {
 								.background(Color.white)
 								.clipShape(RoundedRectangle(cornerRadius: 14))
 
-								SwipeableWeekView()
+//								SwipeableWeekView()
 
 								HStack {
 									Spacer()

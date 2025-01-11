@@ -1,9 +1,9 @@
 import HealthKit
 
 final class HealthKitManager {
-	let healthStore = HKHealthStore()
+	private let healthStore = HKHealthStore()
 
-	let readDataTypes: Set = [
+	private let readDataTypes: Set = [
 		HKObjectType.workoutType(),
 		HKObjectType.quantityType(forIdentifier: .stepCount)!,
 		HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
@@ -23,7 +23,6 @@ final class HealthKitManager {
 		var scoresByDate: [Date: Double] = [:]
 		let calendar = Calendar.current
 
-		let healthStore = HKHealthStore()
 		let stepQuantityType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
 
 		var date = start
@@ -57,10 +56,13 @@ final class HealthKitManager {
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
 		let query = HKStatisticsQuery(quantityType: stepType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
-			guard let result = result, let sum = result.sumQuantity() else {
+
+			guard let result = result,
+						let sum = result.sumQuantity() else {
 				completion(nil)
 				return
 			}
+
 			completion(sum.doubleValue(for: HKUnit.count()))
 		}
 
@@ -102,13 +104,23 @@ final class HealthKitManager {
 
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
-		let query = HKStatisticsQuery(quantityType: calorieType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in
-			guard let result = result, let sum = result.sumQuantity() else {
+		let query = HKSampleQuery(sampleType: calorieType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, error in
+			guard let samples = samples as? [HKQuantitySample], error == nil else {
 				completion(0, error)
 				return
 			}
-			completion(sum.doubleValue(for: HKUnit.kilocalorie()), nil)
+
+			let totalCalories = samples.reduce(0.0) { sum, sample in
+				if let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool, wasUserEntered {
+					print("Excluding manual calorie entry: \(sample.quantity.doubleValue(for: HKUnit.kilocalorie())) kcal")
+					return sum
+				}
+				return sum + sample.quantity.doubleValue(for: HKUnit.kilocalorie())
+			}
+
+			completion(totalCalories, nil)
 		}
+
 		healthStore.execute(query)
 	}
 
@@ -132,15 +144,23 @@ final class HealthKitManager {
 				return
 			}
 
-			guard !samples.isEmpty else {
+			let filteredSamples = samples.filter { sample in
+				if let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool, wasUserEntered {
+					print("Excluding manual heart rate entry: \(sample.quantity.doubleValue(for: HKUnit(from: "count/min"))) bpm")
+					return false
+				}
+				return true
+			}
+
+			guard !filteredSamples.isEmpty else {
 				completion(nil, nil)
 				return
 			}
 
-			let totalHeartRate = samples.reduce(0.0) { sum, sample in
+			let totalHeartRate = filteredSamples.reduce(0.0) { sum, sample in
 				sum + sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
 			}
-			let averageHeartRate = totalHeartRate / Double(samples.count)
+			let averageHeartRate = totalHeartRate / Double(filteredSamples.count)
 			completion(averageHeartRate, nil)
 		}
 
@@ -187,13 +207,23 @@ final class HealthKitManager {
 
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
-		let query = HKStatisticsQuery(quantityType: distanceType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in
-			guard let result = result, let sum = result.sumQuantity() else {
+		let query = HKSampleQuery(sampleType: distanceType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, error in
+			guard let samples = samples as? [HKQuantitySample], error == nil else {
 				completion(0, error)
 				return
 			}
-			completion(sum.doubleValue(for: HKUnit.meter()), nil)
+
+			let totalDistance = samples.reduce(0.0) { sum, sample in
+				if let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool, wasUserEntered {
+					print("Excluding manual distance entry: \(sample.quantity.doubleValue(for: HKUnit.meter())) meters")
+					return sum
+				}
+				return sum + sample.quantity.doubleValue(for: HKUnit.meter())
+			}
+
+			completion(totalDistance, nil)
 		}
+
 		healthStore.execute(query)
 	}
 }
@@ -206,13 +236,21 @@ extension HealthKitManager {
 
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
-		let query = HKStatisticsQuery(quantityType: stepType, quantitySamplePredicate: predicate, options: .cumulativeSum) { (_, result, error) in
-			guard let result = result, let sum = result.sumQuantity() else {
+		let query = HKSampleQuery(sampleType: stepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, error in
+			guard let samples = samples as? [HKQuantitySample], error == nil else {
 				completion(0.0, error)
 				return
 			}
-			let stepCount = sum.doubleValue(for: HKUnit.count())
-			completion(stepCount, nil)
+
+			let totalSteps = samples.reduce(0.0) { sum, sample in
+				if let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool, wasUserEntered {
+					print("Excluding manual entry: \(sample.quantity.doubleValue(for: HKUnit.count())) steps")
+					return sum
+				}
+				return sum + sample.quantity.doubleValue(for: HKUnit.count())
+			}
+
+			completion(totalSteps, nil)
 		}
 
 		healthStore.execute(query)
@@ -270,7 +308,6 @@ extension HealthKitManager {
 	}
 
 	func fetchAvgHRWorkouts(startDate: Date, endDate: Date, completion: @escaping (Double?) -> Void) {
-		let healthStore = HKHealthStore()
 		let workoutType = HKObjectType.workoutType()
 
 		// Predicate to filter workouts within October
@@ -317,7 +354,6 @@ extension HealthKitManager {
 	}
 
 	func fetchAverageHeartRateForWorkout(workout: HKWorkout, completion: @escaping (Double?) -> Void) {
-		let healthStore = HKHealthStore()
 		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 
 		// Predicate to filter heart rate samples within the workout duration

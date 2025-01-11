@@ -30,6 +30,8 @@ enum StepCountAction: Hashable {
 
 @MainActor
 final class StepCountViewModel: ObservableObject, Observable {
+	static let shared = StepCountViewModel()
+
 	let healthKitManager: HealthKitManager
 
 	@Published var scores: [Round] = []
@@ -145,10 +147,15 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 				return
 			case .calculatePoints(let startDate, let endDate):
+				checkins.forEach { hhh in
+					hhh.createdAt == Date()
+				}
 				Task {
-					await self.calculateTotalPoints(startDate: startDate, endDate: endDate)
+					let points =  await self.calculateTotalPoints(startDate: startDate, endDate: endDate)
 
-					self.actions.send(.syncPoints(self.estimatedRewardPoints ?? 0))
+					self.estimatedRewardPoints = points
+
+					self.actions.send(.syncPoints(points))
 				}
 			case .checkFIDPoints:
 				return
@@ -159,11 +166,19 @@ final class StepCountViewModel: ObservableObject, Observable {
 			case .receiveHealthKitAccess(.error(let error)):
 				self.didAuthorizeHealthKit = false
 
+				SentrySDK.capture(error: error)
+
 			case .syncPoints(let score):
 				Task {
-					let model = MoxitoScoreModel.init(score: score, fid: self.fid, checkInDate: Date(), weightFactorId: "97ed5eff-d2c6-4696-884d-dc5dbe36f27a")
-					let result = try await self.client.postScore(model: model)
-
+					let model = MoxitoScoreModel(score: score,
+																			 fid: self.fid,
+																			 checkInDate: Date(),
+																			 weightFactorId: "97ed5eff-d2c6-4696-884d-dc5dbe36f27a")
+					do {
+						_ = try await self.client.postScore(model: model)
+					} catch {
+						SentrySDK.capture(error: error)
+					}
 				}
 			}
 		}
@@ -222,12 +237,8 @@ final class StepCountViewModel: ObservableObject, Observable {
 	}
 
 	func fetchCheckins(fid: Int) async throws {
-		let calendar = Calendar.current
-		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
-		let endDate = calendar.date(from: DateComponents(year: 2024, month: 11, day: 4))!
-
-//		let (startOfWeek, endOfWeek) = getStartAndEndOfCurrentWeek()
-		let checkins = try await client.fetchAllCheckinsByUse(fid: fid, startDate: startDate, endDate: endDate)
+		let (startOfWeek, endOfWeek) = getStartAndEndOfCurrentWeek()
+		let checkins = try await client.fetchAllCheckinsByUse(fid: fid, startDate: startOfWeek ?? Date(), endDate: endOfWeek ?? Date())
 
 		self.checkins = checkins
 		self.allWeeksData = checkins.reduce(into: [:]) { result, checkin in
@@ -310,7 +321,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([String: Double]) -> Void) {
 		let group = DispatchGroup()
-		var isCompleted = false // This flag ensures `completion` is called only once
+		var isCompleted = false
 
 		healthKitManager.checkNoManualInput { isManualInput in
 			guard !isManualInput else {

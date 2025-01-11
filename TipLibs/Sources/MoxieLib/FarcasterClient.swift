@@ -33,12 +33,12 @@ public final class FarcasterClient: FarcasterProvider {
 				.init(name: "limit", value: limit.description)
 			])
 			
-			request.setValue("NEYNAR_API_DOCS", forHTTPHeaderField: "api_key")
+			request.setValue( Bundle.main.infoDictionary?["NEYNAR_API_KEY"] as? String ?? "", forHTTPHeaderField: "api_key")
 			
 			let (data, _) = try await session.data(for: request)
 			let decoder = JSONDecoder()
 			
-			let model = try! decoder.decode(FarcasterUser.self, from: data)
+			let model = try decoder.decode(FarcasterUser.self, from: data)
 			
 			return model
 		} catch {

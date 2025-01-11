@@ -272,17 +272,20 @@ public struct Social: Codable, Hashable {
 }
 
 extension MoxieModel {
+	public static let castEarnings: Decimal = .init(.random(in: 0...10000))
+	public static let frameEarnings: Decimal = .init(.random(in: 0...10000))
+	
 	public static let placeholder: MoxieModel = .init(
-		allEarningsAmount: .init(.random(in: 0...10000)),
-		castEarningsAmount: .init(.random(in: 0...10000)),
-		frameDevEarningsAmount: .init(.random(in: 0...10000)),
+		allEarningsAmount: castEarnings + frameEarnings,
+		castEarningsAmount: castEarnings,
+		frameDevEarningsAmount: frameEarnings,
 		otherEarningsAmount: .init(.random(in: 0...10000)),
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
 		socials: [
 			.init(
-				profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png",
+				profileImage: "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/ad619d89-c6f1-4f01-e672-172ec9ed4100/anim=false,fit=contain,f=auto,w=288",
 				profileDisplayName: "Moxito",
 				profileHandle: "@moxito",
 				connectedAddresses: [

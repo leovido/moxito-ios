@@ -20,8 +20,12 @@ extension MoxieFilter: CustomStringConvertible {
 	}
 }
 
+public enum API {
+	static let baseURL = "https://api.moxito.xyz"
+}
+
 public enum MoxieEndpoint {
-	static let dailyRewards = "https://w8wn0nevnc.execute-api.eu-west-1.amazonaws.com/prod/moxie-daily"
+	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily"
 	static let claimRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-claim"
 	static let splits = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-splits"
 	static let fansCount = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-fans-count"
@@ -382,7 +386,7 @@ public final actor MoxieClient: MoxieProvider {
 				return 0
 			}
 			
-			let value = json["totalRewards"] as! Double
+			let value = json["totalRewards"] as? Double ?? 0
 			let rewards = Decimal(value)
 			return rewards
 			

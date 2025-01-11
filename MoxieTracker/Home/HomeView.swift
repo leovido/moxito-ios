@@ -395,17 +395,16 @@ struct HomeView: View {
 					})
 					.alert("Wallet confirmation", isPresented: $claimViewModel.isClaimAlertShowing, actions: {
 						Button {
-							claimViewModel.actions.send(.claimRewards(fid: viewModel.model.entityID, wallet: claimViewModel.selectedWallet))
-						} label: {
-							Text("Yes")
-						}
-
-						Button {
 							claimViewModel.actions.send(.initiateClaim(.home))
 						} label: {
 							Text("No")
 						}
 
+						Button {
+							claimViewModel.actions.send(.claimRewards(fid: viewModel.model.entityID, wallet: claimViewModel.selectedWallet))
+						} label: {
+							Text("Yes")
+						}
 					}, message: {
 						Text("Do you want to use \(claimViewModel.selectedWalletDisplay) to claim?")
 					})

@@ -102,6 +102,7 @@
 		47E4CC492C99A6F700BE77E8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */; };
 		47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */; };
 		47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */; };
+		47EB01B22D104BA100ABA9A0 /* NavPillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01B12D104B9200ABA9A0 /* NavPillView.swift */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -119,6 +120,8 @@
 		47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */; };
 		47EC54882C8F0582006C2820 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47EC54872C8F0582006C2820 /* Launch Screen.storyboard */; };
 		47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54892C8F22FA006C2820 /* OnboardingView.swift */; };
+		47FB8BAB2D329A1A0034B1F8 /* Config-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */; };
+		47FB8BAD2D329A230034B1F8 /* Config.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
@@ -336,6 +339,7 @@
 		47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncingPointsView.swift; sourceTree = "<group>"; };
 		47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
+		47EB01B12D104B9200ABA9A0 /* NavPillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPillView.swift; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 		47EC54822C8CC4F6006C2820 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		47EC54872C8F0582006C2820 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		47EC54892C8F22FA006C2820 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-Release.xcconfig"; sourceTree = "<group>"; };
+		47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.template.xcconfig; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -607,6 +613,7 @@
 			isa = PBXGroup;
 			children = (
 				479489E92CD65F590010CF9B /* WeekView.swift */,
+				47EB01B12D104B9200ABA9A0 /* NavPillView.swift */,
 				47434F452CC2A51A00C42C5C /* RewardView.swift */,
 				47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */,
 				47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */,
@@ -640,6 +647,8 @@
 				47434EBA2CBDC92400C42C5C /* CherylDarkWidget */,
 				47C324312C6E57D400BE03C2 /* Frameworks */,
 				47C324002C6E578300BE03C2 /* Products */,
+				47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */,
+				47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1212,6 +1221,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47FB8BAB2D329A1A0034B1F8 /* Config-Release.xcconfig in Resources */,
+				47FB8BAD2D329A230034B1F8 /* Config.template.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1312,6 +1323,7 @@
 				475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */,
 				47EC546E2C822A69006C2820 /* CardView.swift in Sources */,
 				475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */,
+				47EB01B22D104BA100ABA9A0 /* NavPillView.swift in Sources */,
 				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
 				475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */,
@@ -1525,6 +1537,7 @@
 /* Begin XCBuildConfiguration section */
 		471FE9952C7F808D00D20F4C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1540,6 +1553,9 @@
 				INFOPLIST_FILE = "Moxito-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Moxito;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Moxito uses your health data only to display fitness rewards. We don’t store or share this data outside of your device.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Moxito uses your health data only to display fitness rewards. We don’t store or share this data outside of your device.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1557,14 +1573,18 @@
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		471FE9962C7F808D00D20F4C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1580,6 +1600,9 @@
 				INFOPLIST_FILE = "Moxito-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Moxito;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Moxito uses your health data only to display fitness rewards. We don’t store or share this data outside of your device.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Moxito uses your health data only to display fitness rewards. We don’t store or share this data outside of your device.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1597,9 +1620,12 @@
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.Moxito;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

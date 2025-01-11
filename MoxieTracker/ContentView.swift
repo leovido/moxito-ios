@@ -12,7 +12,7 @@ struct ContentView: View {
 		UITabBar.appearance().isHidden = true
 	}
 
-	@State private var selectedTab: Tab = Tab.home
+	@State private var selectedTab: Tab = Tab.fitness
 
 	var body: some View {
 		ZStack(alignment: .bottom) {

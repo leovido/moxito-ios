@@ -118,7 +118,7 @@ public final class MoxitoClient {
 			}
 			
 			components.queryItems = [
-				.init(name: "fid", value: "21114")
+				.init(name: "fid", value: fid.description)
 			]
 			
 			let request = URLRequest(url: components.url!)

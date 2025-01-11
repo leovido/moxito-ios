@@ -11,10 +11,14 @@ struct ActivityResultsView: View {
 				Text("Activity results")
 					.font(.title)
 					.fontWeight(.bold)
-					.padding(.horizontal)
+					.padding(.leading)
 
-				ForEach(viewModel.scores, id: \.title) { title in
-					RoundSection(round: title)
+				if viewModel.scores.isEmpty {
+					ContentUnavailableView("No activity results yet.", systemImage: "figure.run", description: Text("Check in via frame to participate in fitness rewards every day"))
+				} else {
+					ForEach(viewModel.scores, id: \.title) { title in
+						RoundSection(round: title)
+					}
 				}
 			}
 			.padding(.vertical)
