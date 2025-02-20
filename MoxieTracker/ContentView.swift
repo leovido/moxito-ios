@@ -21,16 +21,6 @@ struct ContentView: View {
 					HomeView()
 						.tag(Tab.home)
 					RewardsView()
-						.onAppear {
-							stepViewModel.actions.send(.requestAuthorizationHealthKit)
-							Task {
-								do {
-									try await viewModel.fetchTotalPoolRewards()
-								} catch {
-									SentrySDK.capture(error: error)
-								}
-							}
-						}
 						.tag(Tab.fitness)
 					SearchListView(viewModel: .init(client: .init(), query: "", items: [], currentFID: viewModel.inputFID))
 						.tag(Tab.search)

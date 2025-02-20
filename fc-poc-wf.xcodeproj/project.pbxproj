@@ -124,6 +124,19 @@
 		47FB8BAD2D329A230034B1F8 /* Config.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */; };
 		47FB8BD52D329C1A0034B1F8 /* VotingBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */; };
 		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
+		B9D7FADA2D676F7400BD57A0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */; };
+		B9D7FAE32D6772EA00BD57A0 /* ClaimingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */; };
+		B9D7FAE42D6772EA00BD57A0 /* EarningsCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */; };
+		B9D7FAE52D6772EA00BD57A0 /* FilterButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE12D6772EA00BD57A0 /* FilterButtonsView.swift */; };
+		B9D7FAE62D6772EA00BD57A0 /* ClaimBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FADE2D6772EA00BD57A0 /* ClaimBalanceView.swift */; };
+		B9D7FAE72D6772EA00BD57A0 /* VotingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE22D6772EA00BD57A0 /* VotingInfoView.swift */; };
+		B9D7FAE92D677CD500BD57A0 /* RefreshableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE82D677CD000BD57A0 /* RefreshableView.swift */; };
+		B9D7FAEB2D677D3300BD57A0 /* HomeView+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAEA2D677D2D00BD57A0 /* HomeView+Alerts.swift */; };
+		B9D7FAEE2D677D7000BD57A0 /* TSTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAED2D677D6E00BD57A0 /* TSTView.swift */; };
+		B9D7FAF12D678B0700BD57A0 /* StorageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF02D678B0300BD57A0 /* StorageState.swift */; };
+		B9D7FAF42D678DBF00BD57A0 /* AlertClaimsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF32D678DBA00BD57A0 /* AlertClaimsModifier.swift */; };
+		B9D7FAF62D678DD600BD57A0 /* HomeStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF52D678DD300BD57A0 /* HomeStateManager.swift */; };
+		B9D7FAF92D67901400BD57A0 /* ClamStatePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF82D67900F00BD57A0 /* ClamStatePreferences.swift */; };
 		B9DF7F542C73611B0073D772 /* OpenGraph in Frameworks */ = {isa = PBXBuildFile; productRef = B9DF7F532C73611B0073D772 /* OpenGraph */; };
 		B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
 		B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
@@ -362,6 +375,20 @@
 		47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-Release.xcconfig"; sourceTree = "<group>"; };
 		47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.template.xcconfig; sourceTree = "<group>"; };
 		47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingBannerView.swift; sourceTree = "<group>"; };
+		B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		B9D7FADD2D6772B800BD57A0 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		B9D7FADE2D6772EA00BD57A0 /* ClaimBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimBalanceView.swift; sourceTree = "<group>"; };
+		B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimingOverlayView.swift; sourceTree = "<group>"; };
+		B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningsCardsView.swift; sourceTree = "<group>"; };
+		B9D7FAE12D6772EA00BD57A0 /* FilterButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButtonsView.swift; sourceTree = "<group>"; };
+		B9D7FAE22D6772EA00BD57A0 /* VotingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingInfoView.swift; sourceTree = "<group>"; };
+		B9D7FAE82D677CD000BD57A0 /* RefreshableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableView.swift; sourceTree = "<group>"; };
+		B9D7FAEA2D677D2D00BD57A0 /* HomeView+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView+Alerts.swift"; sourceTree = "<group>"; };
+		B9D7FAED2D677D6E00BD57A0 /* TSTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSTView.swift; sourceTree = "<group>"; };
+		B9D7FAF02D678B0300BD57A0 /* StorageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageState.swift; sourceTree = "<group>"; };
+		B9D7FAF32D678DBA00BD57A0 /* AlertClaimsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertClaimsModifier.swift; sourceTree = "<group>"; };
+		B9D7FAF52D678DD300BD57A0 /* HomeStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStateManager.swift; sourceTree = "<group>"; };
+		B9D7FAF82D67900F00BD57A0 /* ClamStatePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClamStatePreferences.swift; sourceTree = "<group>"; };
 		B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FartherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DF7F5E2C73B0FD0073D772 /* FartherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetBundle.swift; sourceTree = "<group>"; };
 		B9DF7F602C73B0FD0073D772 /* FartherWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FartherWidgetLiveActivity.swift; sourceTree = "<group>"; };
@@ -534,6 +561,7 @@
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
 				474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */,
+				B9D7FAD82D676F5C00BD57A0 /* New Group */,
 				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
 				475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */,
@@ -560,6 +588,7 @@
 				475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */,
 				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
 				47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */,
+				B9D7FAEF2D678AF700BD57A0 /* Persistence */,
 				47434F442CC2A50600C42C5C /* Untitled.swift */,
 				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
@@ -766,7 +795,18 @@
 			children = (
 				47EC54652C822950006C2820 /* HomeView.swift */,
 				47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */,
+				B9D7FAF72D67900A00BD57A0 /* Preferences */,
+				B9D7FADE2D6772EA00BD57A0 /* ClaimBalanceView.swift */,
+				B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */,
+				B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */,
 				47EC54732C822DA5006C2820 /* ErrorView.swift */,
+				B9D7FAE12D6772EA00BD57A0 /* FilterButtonsView.swift */,
+				B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */,
+				47EC54652C822950006C2820 /* HomeView.swift */,
+				B9D7FADD2D6772B800BD57A0 /* Untitled.swift */,
+				B9D7FAE22D6772EA00BD57A0 /* VotingInfoView.swift */,
+				B9D7FAF22D678DB400BD57A0 /* Modifiers */,
+				B9D7FAEC2D677D6000BD57A0 /* SupportingViews */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -778,6 +818,48 @@
 				47EC54672C8229B2006C2820 /* SettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		B9D7FAD82D676F5C00BD57A0 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		B9D7FAEC2D677D6000BD57A0 /* SupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				B9D7FAED2D677D6E00BD57A0 /* TSTView.swift */,
+				B9D7FAEA2D677D2D00BD57A0 /* HomeView+Alerts.swift */,
+				B9D7FAE82D677CD000BD57A0 /* RefreshableView.swift */,
+			);
+			path = SupportingViews;
+			sourceTree = "<group>";
+		};
+		B9D7FAEF2D678AF700BD57A0 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B9D7FAF02D678B0300BD57A0 /* StorageState.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		B9D7FAF22D678DB400BD57A0 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				B9D7FAF32D678DBA00BD57A0 /* AlertClaimsModifier.swift */,
+				B9D7FAF52D678DD300BD57A0 /* HomeStateManager.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		B9D7FAF72D67900A00BD57A0 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				B9D7FAF82D67900F00BD57A0 /* ClamStatePreferences.swift */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		B9DF7F5D2C73B0FD0073D772 /* FartherWidget */ = {
@@ -1338,24 +1420,37 @@
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
 				475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */,
+				B9D7FAF12D678B0700BD57A0 /* StorageState.swift in Sources */,
 				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
 				479489EA2CD65F5B0010CF9B /* WeekView.swift in Sources */,
 				47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */,
+				B9D7FAE32D6772EA00BD57A0 /* ClaimingOverlayView.swift in Sources */,
+				B9D7FAE42D6772EA00BD57A0 /* EarningsCardsView.swift in Sources */,
+				B9D7FAE52D6772EA00BD57A0 /* FilterButtonsView.swift in Sources */,
+				B9D7FAE62D6772EA00BD57A0 /* ClaimBalanceView.swift in Sources */,
+				B9D7FAEB2D677D3300BD57A0 /* HomeView+Alerts.swift in Sources */,
+				B9D7FAE72D6772EA00BD57A0 /* VotingInfoView.swift in Sources */,
 				475F73B72CA888D200E0CFEA /* OnboardingViewModel.swift in Sources */,
+				B9D7FAF62D678DD600BD57A0 /* HomeStateManager.swift in Sources */,
 				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47FB8BD52D329C1A0034B1F8 /* VotingBannerView.swift in Sources */,
+				B9D7FADA2D676F7400BD57A0 /* HeaderView.swift in Sources */,
 				47EC546C2C822A25006C2820 /* ScheduleNotificationView.swift in Sources */,
+				B9D7FAF42D678DBF00BD57A0 /* AlertClaimsModifier.swift in Sources */,
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
 				47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */,
 				475F73B92CA94F8F00E0CFEA /* AuthViewModel.swift in Sources */,
 				47434F462CC2A51A00C42C5C /* RewardView.swift in Sources */,
 				47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */,
+				B9D7FAF92D67901400BD57A0 /* ClamStatePreferences.swift in Sources */,
 				475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */,
 				47434F482CC2A52F00C42C5C /* StepCountViewModel.swift in Sources */,
+				B9D7FAEE2D677D7000BD57A0 /* TSTView.swift in Sources */,
 				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
 				47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */,
+				B9D7FAE92D677CD500BD57A0 /* RefreshableView.swift in Sources */,
 				471FE9762C7F808C00D20F4C /* MoxieTrackerApp.swift in Sources */,
 				47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */,
 			);
