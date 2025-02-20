@@ -37,4 +37,7 @@ struct ClaimProgressOverlay: View {
 
 #Preview {
 	ClaimProgressOverlay(isShowing: true, progress: 0.5, height: 100)
+		.environmentObject(MoxieViewModel())
+		.environmentObject(MoxieClaimViewModel())
+		.previewLayout(.sizeThatFits)
 }

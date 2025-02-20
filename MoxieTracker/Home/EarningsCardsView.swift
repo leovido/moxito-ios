@@ -21,7 +21,6 @@ struct EarningsCardsView: View {
 								 amount: viewModel.model.castEarningsAmount,
 								 price: viewModel.price,
 								 info: "Earnings from casts. Likes, recasts/quoteCasts and replies all earn you $MOXIE")
-				.help("Just do something")
 				
 				CardView(imageSystemName: "rectangle.grid.1x2.fill",
 								 title: "Frame earnings",
@@ -37,4 +36,4 @@ struct EarningsCardsView: View {
 			}
 		}
 	}
-} 
+}
