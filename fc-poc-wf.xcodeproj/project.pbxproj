@@ -132,7 +132,7 @@
 		B9D7FAE72D6772EA00BD57A0 /* VotingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE22D6772EA00BD57A0 /* VotingInfoView.swift */; };
 		B9D7FAE92D677CD500BD57A0 /* RefreshableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE82D677CD000BD57A0 /* RefreshableView.swift */; };
 		B9D7FAEB2D677D3300BD57A0 /* HomeView+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAEA2D677D2D00BD57A0 /* HomeView+Alerts.swift */; };
-		B9D7FAEE2D677D7000BD57A0 /* TSTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAED2D677D6E00BD57A0 /* TSTView.swift */; };
+		B9D7FAEE2D677D7000BD57A0 /* ClaimProgressOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAED2D677D6E00BD57A0 /* ClaimProgressOverlay.swift */; };
 		B9D7FAF12D678B0700BD57A0 /* StorageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF02D678B0300BD57A0 /* StorageState.swift */; };
 		B9D7FAF42D678DBF00BD57A0 /* AlertClaimsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF32D678DBA00BD57A0 /* AlertClaimsModifier.swift */; };
 		B9D7FAF62D678DD600BD57A0 /* HomeStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAF52D678DD300BD57A0 /* HomeStateManager.swift */; };
@@ -384,7 +384,7 @@
 		B9D7FAE22D6772EA00BD57A0 /* VotingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingInfoView.swift; sourceTree = "<group>"; };
 		B9D7FAE82D677CD000BD57A0 /* RefreshableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableView.swift; sourceTree = "<group>"; };
 		B9D7FAEA2D677D2D00BD57A0 /* HomeView+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView+Alerts.swift"; sourceTree = "<group>"; };
-		B9D7FAED2D677D6E00BD57A0 /* TSTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSTView.swift; sourceTree = "<group>"; };
+		B9D7FAED2D677D6E00BD57A0 /* ClaimProgressOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimProgressOverlay.swift; sourceTree = "<group>"; };
 		B9D7FAF02D678B0300BD57A0 /* StorageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageState.swift; sourceTree = "<group>"; };
 		B9D7FAF32D678DBA00BD57A0 /* AlertClaimsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertClaimsModifier.swift; sourceTree = "<group>"; };
 		B9D7FAF52D678DD300BD57A0 /* HomeStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStateManager.swift; sourceTree = "<group>"; };
@@ -830,7 +830,7 @@
 		B9D7FAEC2D677D6000BD57A0 /* SupportingViews */ = {
 			isa = PBXGroup;
 			children = (
-				B9D7FAED2D677D6E00BD57A0 /* TSTView.swift */,
+				B9D7FAED2D677D6E00BD57A0 /* ClaimProgressOverlay.swift */,
 				B9D7FAEA2D677D2D00BD57A0 /* HomeView+Alerts.swift */,
 				B9D7FAE82D677CD000BD57A0 /* RefreshableView.swift */,
 			);
@@ -1447,7 +1447,7 @@
 				B9D7FAF92D67901400BD57A0 /* ClamStatePreferences.swift in Sources */,
 				475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */,
 				47434F482CC2A52F00C42C5C /* StepCountViewModel.swift in Sources */,
-				B9D7FAEE2D677D7000BD57A0 /* TSTView.swift in Sources */,
+				B9D7FAEE2D677D7000BD57A0 /* ClaimProgressOverlay.swift in Sources */,
 				47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */,
 				47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */,
 				B9D7FAE92D677CD500BD57A0 /* RefreshableView.swift in Sources */,

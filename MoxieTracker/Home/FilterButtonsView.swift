@@ -16,7 +16,7 @@ struct FilterButtonsView: View {
 						.foregroundStyle(filterSelection == index ? Color.white : Color(uiColor: MoxieColor.grayPickerText))
 						.font(.custom("Inter", size: 14))
 				}
-				.frame(width: 100) // Adjust width as needed
+				.frame(width: 100)
 				.padding(4)
 				.background(filterSelection == index ? Color(uiColor: MoxieColor.green) : .clear)
 				.clipShape(Capsule())

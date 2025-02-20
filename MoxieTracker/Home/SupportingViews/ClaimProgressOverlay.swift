@@ -29,6 +29,8 @@ struct ClaimProgressOverlay: View {
 			.frame(height: height)
 			.background(Color(uiColor: MoxieColor.primary).opacity(0.8))
 			.transition(.opacity)
+			.preference(key: ClaimStatePreferenceKey.self,
+									value: .claiming(progress: progress))
 		}
 	}
 }
