@@ -3,9 +3,9 @@ import SwiftUI
 struct AlertClaimsModifier: ViewModifier {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
-	
+
 	let availableClaimAmountFormatted: String
-	
+
 	func body(content: Content) -> some View {
 		content
 			.alert("Wallet confirmation", isPresented: $claimViewModel.isClaimAlertShowing) {

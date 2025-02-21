@@ -5,9 +5,9 @@ import Sentry
 struct HeaderView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
-	
+
 	let tab: Tab
-	
+
 	var body: some View {
 		HStack {
 			VStack(alignment: .leading) {
@@ -26,14 +26,14 @@ struct HeaderView: View {
 					.multilineTextAlignment(.leading)
 			}
 			Spacer()
-			
+
 			Button(action: {
 				withAnimation {
 					claimViewModel.number = viewModel.model.moxieClaimTotals.first?.availableClaimAmount ?? 0
 					claimViewModel.progress = 0
 					Haptics.shared.play(.medium)
 					SentrySDK.capture(message: "Claimed Moxie")
-					
+
 					Task {
 						claimViewModel.actions.send(.initiateClaim(tab))
 					}
@@ -49,7 +49,7 @@ struct HeaderView: View {
 			.font(.callout)
 			.background(viewModel.model.moxieClaimTotals.first?.availableClaimAmount != 0 ? Color(uiColor: MoxieColor.green) : Color(uiColor: MoxieColor.claimButton))
 			.clipShape(Capsule())
-			
+
 			NavigationLink {
 				AccountView()
 			} label: {

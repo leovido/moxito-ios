@@ -3,7 +3,7 @@ import MoxieLib
 
 struct EarningsCardsView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
-	
+
 	var body: some View {
 		VStack {
 			if viewModel.inputFID == -1 {
@@ -21,13 +21,13 @@ struct EarningsCardsView: View {
 								 amount: viewModel.model.castEarningsAmount,
 								 price: viewModel.price,
 								 info: "Earnings from casts. Likes, recasts/quoteCasts and replies all earn you $MOXIE")
-				
+
 				CardView(imageSystemName: "rectangle.grid.1x2.fill",
 								 title: "Frame earnings",
 								 amount: viewModel.model.frameDevEarningsAmount,
 								 price: viewModel.price,
 								 info: "Earnings from frames that you build when you use Airstack frame validator")
-				
+
 				CardView(imageSystemName: "circle.hexagongrid.fill",
 								 title: "All earnings",
 								 amount: viewModel.model.allEarningsAmount,

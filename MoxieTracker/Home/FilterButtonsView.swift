@@ -3,11 +3,11 @@ import MoxieLib
 
 struct FilterButtonsView: View {
 	@Binding var filterSelection: Int
-	
+
 	var body: some View {
 		HStack {
 			Spacer()
-			
+
 			ForEach(0..<3) { index in
 				Button {
 					filterSelection = index
@@ -20,7 +20,7 @@ struct FilterButtonsView: View {
 				.padding(4)
 				.background(filterSelection == index ? Color(uiColor: MoxieColor.green) : .clear)
 				.clipShape(Capsule())
-				
+
 				Spacer()
 			}
 		}

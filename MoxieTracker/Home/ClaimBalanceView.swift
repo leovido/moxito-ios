@@ -4,7 +4,7 @@ import MoxieLib
 struct ClaimBalanceView: View {
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var viewModel: MoxieViewModel
-	
+
 	var body: some View {
 		VStack(alignment: .center) {
 			if viewModel.model.socials.first?.profileImage != nil {
@@ -20,13 +20,13 @@ struct ClaimBalanceView: View {
 				.frame(width: 100, height: 100)
 				.padding(.top, -8)
 			}
-			
+
 			Text("Your claimable balance is")
 				.scaledToFit()
 				.font(.footnote)
 				.font(.custom("Inter", size: 13))
 				.foregroundStyle(Color(uiColor: MoxieColor.primary))
-			
+
 			HStack {
 				Text("\(claimViewModel.willPlayAnimationNumbers ? claimViewModel.number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
 					.font(.largeTitle)
@@ -38,7 +38,7 @@ struct ClaimBalanceView: View {
 							claimViewModel.startCountdown()
 						}
 					}
-				
+
 				Image("CoinMoxiePurple", bundle: .main)
 					.resizable()
 					.aspectRatio(contentMode: .fit)

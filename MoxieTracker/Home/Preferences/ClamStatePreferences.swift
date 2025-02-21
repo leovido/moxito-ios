@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ClaimStatePreferenceKey: PreferenceKey {
 	static var defaultValue: ClaimState = .idle
-	
+
 	static func reduce(value: inout ClaimState, nextValue: () -> ClaimState) {
 		value = nextValue()
 	}

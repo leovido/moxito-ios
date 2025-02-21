@@ -42,6 +42,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var moxieChangeText: String = ""
 	@Published var isNotificationSheetPresented: Bool = false
 	@Published var moxieSplits: MoxieSplits = .placeholder
+	@Published var availableClaimAmountFormatted: String = ""
 
 	@Published var selectedNotificationOptions: [NotificationOption] = []
 
@@ -62,7 +63,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 			 client: MoxieProvider = MoxieClient(),
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
-			 userInputNotifications: Decimal = 0) {
+			 userInputNotifications: Decimal = 0,
+			 availableClaimAmountFormatted: String = "") {
 		self.client = client
 		self.isSearchMode = isSearchMode
 		self.filterSelection = filterSelection
@@ -73,7 +75,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.inputFID = Int(input) ?? 0
 
 		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0") ?? 0
-
+		self.availableClaimAmountFormatted = ""
 		setupListeners()
 
 //		startMoxieActivity()
@@ -114,6 +116,15 @@ final class MoxieViewModel: ObservableObject, Observable {
 	}
 
 	func setupListeners() {
+		$model
+			.compactMap(\.moxieClaimTotals)
+			.compactMap({ $0.first })
+			.map(\.availableClaimAmount)
+			.sink { [weak self] availableClaimAmount in
+				self?.availableClaimAmountFormatted = availableClaimAmount.formatted(.number.precision(.fractionLength(0)))
+			}
+			.store(in: &subscriptions)
+
 		$selectedNotificationOptions
 			.removeDuplicates()
 			.sink { [weak self] _ in

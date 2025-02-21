@@ -6,11 +6,11 @@ import MoxitoLib
 struct HomeStateManagerModifier: ViewModifier {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
-	
+
 	@StateObject private var storage: StorageState = .init()
-	
+
 	@Environment(\.scenePhase) var scenePhase
-	
+
 	func body(content: Content) -> some View {
 		content
 			.onChange(of: scenePhase) { _, newPhase in
@@ -58,10 +58,10 @@ struct HomeStateManagerModifier: ViewModifier {
 				do {
 					if storage.selectedNotificationOptionsData == Data() {
 						let currentSelectedNotificationOptions = try CustomDecoderAndEncoder.decoder.decode([NotificationOption].self, from: storage.selectedNotificationOptionsData)
-						
+
 						viewModel.selectedNotificationOptions = currentSelectedNotificationOptions
 					}
-					
+
 				} catch {
 					SentrySDK.capture(error: error)
 				}

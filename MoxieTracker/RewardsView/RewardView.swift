@@ -369,7 +369,7 @@ struct RewardsView: View {
 
 					viewModel.actions.send(.onAppear(fid: Int(mainViewModel.model.entityID) ?? 0))
 
-          viewModel.actions.send(.requestAuthorizationHealthKit)
+					viewModel.actions.send(.requestAuthorizationHealthKit)
 					Task {
 						do {
 							try await mainViewModel.fetchTotalPoolRewards()

@@ -4,9 +4,9 @@ import MoxieLib
 struct RefreshButton: View {
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var viewModel: MoxieViewModel
-	
+
 	let progress: Double
-	
+
 	var body: some View {
 		Button {
 			withAnimation {

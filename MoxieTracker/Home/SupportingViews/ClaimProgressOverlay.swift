@@ -4,11 +4,11 @@ import MoxieLib
 struct ClaimProgressOverlay: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
-	
+
 	let isShowing: Bool
 	let progress: Double
 	let height: CGFloat
-	
+
 	var body: some View {
 		if isShowing {
 			VStack {
@@ -18,12 +18,12 @@ struct ClaimProgressOverlay: View {
 					.padding()
 					.onAppear { claimViewModel.startProgressTimer() }
 					.onDisappear { claimViewModel.stopProgressTimer() }
-				
+
 				Text("Claiming... \(Int(progress * 100))%")
 					.font(.custom("Inter", size: 23))
 					.padding()
 					.foregroundStyle(Color.white)
-				
+
 				RefreshButton(progress: progress)
 			}
 			.frame(height: height)
