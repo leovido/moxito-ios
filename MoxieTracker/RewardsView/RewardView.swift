@@ -90,37 +90,27 @@ struct RewardsView: View {
 										.padding(.horizontal, 50)
 
 									VStack(alignment: .center, spacing: 8) {
-										Text("Estimated $MOXIE earned")
+										Text("Points today")
 											.font(.footnote)
 											.font(.custom("Inter", size: 13))
 											.foregroundStyle(Color(uiColor: MoxieColor.primary))
 
-										HStack {
-											Text(mainViewModel.totalPoolRewards.formatted(.number.precision(.fractionLength(0))))
-												.font(.largeTitle)
-												.font(.custom("Inter", size: 30))
-												.foregroundStyle(Color(uiColor: MoxieColor.primary))
-												.fontWeight(.heavy)
-
-											Image("CoinMoxiePurple")
-												.resizable()
-												.aspectRatio(contentMode: .fit)
-												.frame(width: 20)
-												.foregroundColor(Color(uiColor: MoxieColor.primary))
-										}
-
-										Text("~\(formattedDollarValue(dollarValue: rewardsUSD))")
-											.font(.caption)
-											.font(.custom("Inter", size: 12))
+										Text(viewModel.estimatedRewardPoints.formatted(.number.precision(.fractionLength(0))))
+											.font(.largeTitle)
+											.font(.custom("Inter", size: 30))
 											.foregroundStyle(Color(uiColor: MoxieColor.primary))
-											.padding(.top, -4)
+											.fontWeight(.heavy)
 
 										SyncingPointsView()
 									}
 									.padding(.top)
 								}
 								.padding(.vertical, 20)
-								.background(Color.white)
+								.background(
+									RoundedRectangle(cornerRadius: 24)
+										.fill(Color.white)
+										.shadow(radius: 8)
+								)
 								.clipShape(RoundedRectangle(cornerRadius: 24))
 
 								HStack {
@@ -132,9 +122,16 @@ struct RewardsView: View {
 
 										Group {
 											if viewModel.checkins.contains(where: { Calendar.current.isDateInToday($0.createdAt) }) {
-												Text("Next round starts in: \(formattedTimeRemaining)")
+												VStack(alignment: .leading) {
+													Text("Next round starts in:")
+													Text("\(formattedTimeRemaining)")
+												}
 											} else {
-												Text("Time left to check in: \(formattedTimeRemaining)")
+												VStack(alignment: .leading) {
+													Text("Time left to check in:")
+													Text("\(formattedTimeRemaining)")
+												}
+
 											}
 											Text("\(viewModel.totalUsersCheckedInCount) checked in")
 										}
@@ -365,8 +362,18 @@ struct RewardsView: View {
 					})
 				}
 				.onAppear {
-					viewModel.actions.send(.fetchTotalUsersCountCheckins)
+					let calendar = Calendar(identifier: .gregorian)
+					var utcCalendar = calendar
+					utcCalendar.timeZone = TimeZone(identifier: "UTC")!
+
 					viewModel.actions.send(.onAppear(fid: Int(mainViewModel.model.entityID) ?? 0))
+
+					viewModel.actions.send(.fetchLatestRound)
+					viewModel.actions.send(.fetchTotalUsersCountCheckins)
+					viewModel.actions.send(.calculatePoints(
+													startDate: utcCalendar.startOfDay(for: Date()),
+													endDate: utcCalendar.date(byAdding: .day, value: 1, to: utcCalendar.startOfDay(for: Date()))!
+											))
 					updateTimeRemaining()
 					timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
 						updateTimeRemaining()

@@ -17,6 +17,8 @@ enum HealthKitError: Error {
 
 enum StepCountAction: Hashable {
 	case fetchHealthData
+	case fetchLatestRound
+	case receiveLatestRound(Result<MoxitoRound, HealthKitError>)
 	case receiveHealthKitAccess(Result<Bool, HealthKitError>)
 	case checkFIDPoints
 	case onAppear(fid: Int)
@@ -39,6 +41,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 	@Published var scores: [Round] = []
 	@Published var stepsTodayText: String = "Steps today"
 	@Published var checkins: [MoxitoCheckinModel] = []
+	@Published var currentRound: MoxitoRound?
 	@Published var fid: Int = 0
 	@Published var steps: Decimal = 0.0
 	@Published var caloriesBurned: Decimal = 0.0
@@ -66,7 +69,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 	private(set) var subscriptions: Set<AnyCancellable> = []
 
 	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0, didAuthorizeHealthKit: Bool = false,
-			 client: MoxitoClient = .init()) {
+			 client: MoxitoClient = .init(), currentRound: MoxitoRound? = nil) {
 		self.healthKitManager = healthKitManager
 		self.steps = steps
 		self.caloriesBurned = caloriesBurned
@@ -74,6 +77,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 		self.restingHeartRate = restingHeartRate
 		self.didAuthorizeHealthKit = didAuthorizeHealthKit
 		self.client = client
+		self.currentRound = currentRound
 
 		$checkins
 			.removeDuplicates()
@@ -91,12 +95,14 @@ final class StepCountViewModel: ObservableObject, Observable {
 									let endDate = await self.endOfDay(for: model.createdAt) ?? Date()
 									let points = await self.calculateTotalPoints(startDate: model.createdAt, endDate: endDate)
 
-									_ = try await client.postScore(model: .init(
-										score: points,
-										fid: self.fid,
-										checkInDate: model.createdAt,
-										weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
-									))
+									_ = try await client.postScore(
+										model: .init(
+											score: points,
+											fid: self.fid,
+											checkInDate: model.createdAt,
+											weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
+										),
+										roundId: currentRound?.roundId ?? "")
 								} catch {
 									SentrySDK.capture(error: error)
 								}
@@ -117,6 +123,15 @@ final class StepCountViewModel: ObservableObject, Observable {
 				return
 			}
 			switch action {
+			case .fetchLatestRound:
+				Task {
+					let latestRound = try await self.client.fetchLatestRound()
+					self.actions.send(.receiveLatestRound(.success(latestRound)))
+				}
+			case .receiveLatestRound(.success(let round)):
+				self.currentRound = round
+			case .receiveLatestRound(.error(let error)):
+				self.currentRound = nil
 			case .fetchScores:
 				Task {
 					let allScores = try await self.client.fetchAllScores(fid: self.fid)
@@ -154,10 +169,12 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 				return
 			case .calculatePoints(let startDate, let endDate):
-				checkins.forEach { hhh in
-					hhh.createdAt == Date()
+				let hasCheckinToday = checkins.contains { checkin in
+					Calendar.current.isDate(checkin.createdAt, inSameDayAs: Date())
 				}
 				Task {
+					let round = try await self.client.fetchLatestRound()
+					self.currentRound = round
 					let points =  await self.calculateTotalPoints(startDate: startDate, endDate: endDate)
 
 					self.estimatedRewardPoints = points
@@ -177,12 +194,14 @@ final class StepCountViewModel: ObservableObject, Observable {
 
 			case .syncPoints(let score):
 				Task {
-					let model = MoxitoScoreModel(score: score,
+					do {
+						// Ensure we have the current round
+						let round = try await self.client.fetchLatestRound()
+						let model = MoxitoScoreModel(score: score,
 																			 fid: self.fid,
 																			 checkInDate: Date(),
 																			 weightFactorId: "97ed5eff-d2c6-4696-884d-dc5dbe36f27a")
-					do {
-						_ = try await self.client.postScore(model: model)
+						_ = try await self.client.postScore(model: model, roundId: round.roundId)
 					} catch {
 						SentrySDK.capture(error: error)
 					}

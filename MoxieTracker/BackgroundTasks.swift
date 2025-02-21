@@ -19,10 +19,17 @@ extension AppDelegate {
 			}
 			self.handleProcessingTask(task: task)
 		}
+
+		scheduleAppRefresh()
+		scheduleDataProcessing()
 	}
 
 	// Handle the first background task (App Refresh)
 	func handleAppRefresh(task: BGAppRefreshTask) {
+		task.expirationHandler = {
+			task.setTaskCompleted(success: false)
+		}
+
 		scheduleAppRefresh() // Reschedule the next background fetch
 
 		Task {
@@ -37,38 +44,29 @@ extension AppDelegate {
 				task.setTaskCompleted(success: false)
 			}
 		}
-
-		// Handle task expiration
-		task.expirationHandler = {
-			task.setTaskCompleted(success: false)
-		}
 	}
 
 	// Handle the second background task (Processing)
 	func handleProcessingTask(task: BGProcessingTask) {
-		scheduleDataProcessing()
-
-		Task {
-			do {
-				// Send the action and await its completion
-				let calendar = Calendar(identifier: .gregorian)
-				var utcCalendar = calendar
-				utcCalendar.timeZone = TimeZone(identifier: "UTC")!
-
-				StepCountViewModel.shared.actions.send(.calculatePoints(
-					startDate: utcCalendar.startOfDay(for: Date()),  // 00:00:00 UTC of current day
-					endDate: utcCalendar.date(byAdding: .day, value: 1, to: utcCalendar.startOfDay(for: Date()))! // 00:00:00 UTC of next day
-				))
-
-				task.setTaskCompleted(success: true)
-			} catch {
-				task.setTaskCompleted(success: false)
-			}
-		}
-
 		task.expirationHandler = {
+			print("❌ Processing task expired")
 			task.setTaskCompleted(success: false)
 		}
+
+		scheduleDataProcessing()
+
+		print("📊 Starting processing task at \(Date())")
+
+		let calendar = Calendar(identifier: .gregorian)
+		var utcCalendar = calendar
+		utcCalendar.timeZone = TimeZone(identifier: "UTC")!
+
+		StepCountViewModel.shared.actions.send(.calculatePoints(
+			startDate: utcCalendar.startOfDay(for: Date()),
+			endDate: utcCalendar.date(byAdding: .day, value: 1, to: utcCalendar.startOfDay(for: Date()))!
+		))
+
+		print("✅ Completed processing task")
 	}
 
 	func scheduleAppRefresh() {
@@ -85,14 +83,23 @@ extension AppDelegate {
 	// Schedule the second background task
 	func scheduleDataProcessing() {
 		let request = BGProcessingTaskRequest(identifier: "com.christianleovido.Moxito.processData")
-		request.requiresNetworkConnectivity = true // Use network if needed
-		request.requiresExternalPower = false     // Avoid requiring power for flexibility
-		request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 60 * 1)
+		request.requiresNetworkConnectivity = true
+		request.requiresExternalPower = false
+		// Note: This timing isn't guaranteed by the system
+		request.earliestBeginDate = Date(timeIntervalSinceNow: 60)
 
 		do {
 			try BGTaskScheduler.shared.submit(request)
+			print("✅ Successfully scheduled next processing task")
+
+      BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+				print(" Pending background tasks: \(tasks.count)")
+				tasks.forEach { task in
+					print("  - Task: \(task.identifier), scheduled for: \(task.earliestBeginDate?.description ?? "unknown")")
+				}
+		}
 		} catch {
-			print("Failed to schedule data processing task: \(error.localizedDescription)")
+			print("❌ Failed to schedule data processing task: \(error.localizedDescription)")
 		}
 	}
 }

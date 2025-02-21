@@ -24,6 +24,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 
 		registerBackgroundTasks()
 		scheduleAppRefresh()
+		scheduleDataProcessing()
+
 		return true
 	}
 

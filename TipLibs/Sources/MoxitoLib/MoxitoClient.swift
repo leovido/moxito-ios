@@ -6,6 +6,24 @@ public enum MoxitoError: Error {
 	case rateLimited
 }
 
+public struct MoxitoRound: Codable, Identifiable, Hashable {
+		public let id: String
+		public let roundId: String
+		public let roundNumber: Int
+		public let startDate: Date
+		public let endDate: Date
+		public let createdAt: Date
+		
+		public enum CodingKeys: String, CodingKey {
+				case id = "_id"
+				case roundId
+				case roundNumber
+				case startDate
+				case endDate
+				case createdAt
+		}
+}
+
 public struct MoxitoScoreModel: Identifiable, Codable, Hashable {
 	public var id: UUID = UUID()
 	public let score: Decimal
@@ -70,14 +88,15 @@ public struct MoxitoCheckinModel: Codable, Hashable {
 
 public enum MoxitoEndpoint {
 	static let checkins = "https://moxito.xyz/api/checkins"
-	static let scores = "https://moxito-allowlist-git-featur-ac1a9c-christians-projects-e3a74c6a.vercel.app/api/scoresActivity"
+	static let rounds = "https://moxito.xyz/api/rounds"
+	static let scores = "https://0ca1-85-255-232-109.ngrok-free.app/api/scoresActivity"
 }
 
 public final class MoxitoClient {
 	public init() {}
 	private let session: URLSession = .init(configuration: .default, delegate: nil, delegateQueue: nil)
 	
-	public func postScore(model: MoxitoScoreModel) async throws -> Bool {
+	public func postScore(model: MoxitoScoreModel, roundId: String) async throws -> Bool {
 		do {
 			guard let url = URL(string: MoxitoEndpoint.scores),
 						model.fid > 0 else {
@@ -86,10 +105,15 @@ public final class MoxitoClient {
 			
 			let d = try CustomDecoderAndEncoder.encoder.encode(model)
 			
+			var modelObject = try JSONSerialization.jsonObject(with: d) as! [String: Any]
+			modelObject["roundId"] = roundId
+			
+			let modelData = try JSONSerialization.data(withJSONObject: modelObject)
+			
 			var request = URLRequest(url: url)
 			
 			request.httpMethod = "POST"
-			request.httpBody = d
+			request.httpBody = modelData
 			
 			let (data, response) = try await session.data(for: request)
 			
@@ -97,14 +121,39 @@ public final class MoxitoClient {
 				throw MoxitoError.badRequest
 			}
 			
-			guard response.statusCode != 400 else {
+			guard (200...299) ~= response.statusCode else {
 				throw MoxitoError.badRequest
 			}
 			
-			guard response.statusCode != 429 else {
-				throw MoxitoError.rateLimited
-			}
 			return true
+		} catch {
+			throw error
+		}
+	}
+	
+	public func fetchLatestRound() async throws -> MoxitoRound {
+		do {
+			guard let url = URL(string: MoxitoEndpoint.rounds) else {
+				throw MoxitoError.message("Invalid")
+			}
+						
+			var request = URLRequest(url: url)
+			
+			request.httpMethod = "GET"
+			
+			let (data, response) = try await session.data(for: request)
+			
+			guard let response = response as? HTTPURLResponse else {
+				throw MoxitoError.badRequest
+			}
+			
+			guard (200...299) ~= response.statusCode else {
+				throw MoxitoError.badRequest
+			}
+			
+			let round = try CustomDecoderAndEncoder.decoder.decode(MoxitoRound.self, from: data)
+			
+			return round
 		} catch {
 			throw error
 		}
