@@ -33,6 +33,7 @@ enum StepCountAction: Hashable {
 
 @MainActor
 final class StepCountViewModel: ObservableObject, Observable {
+	static let shared = StepCountViewModel()
 	let healthKitManager: HealthKitService
 
 	@Published var totalUsersCheckedInCount: Int = 0
@@ -100,7 +101,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 											checkInDate: model.createdAt,
 											weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
 										),
-										roundId: currentRound?.roundId ?? "")
+										roundId: self.currentRound?.roundId ?? "")
 								} catch {
 									SentrySDK.capture(error: error)
 								}
