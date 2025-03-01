@@ -4,26 +4,26 @@ import MoxieLib
 struct VotingInfoView: View {
 	var body: some View {
 		VStack(alignment: .leading) {
-			Text("Moxie Retro1 Grant voting is now open!")
-				.font(.body)
+			Text("Moxito announcements")
+				.font(.headline)
 				.font(.custom("Inter", size: 18))
 				.foregroundColor(Color.white)
 				.padding()
 
-			Text("If you like the Moxito, please consider voting for 6. ds8 — He is splitting his winnings 1:1 with Moxito + Moxie Browser extension.")
+			Text("Announcements will be posted here! Moxito is a web3 and fitness/health app that allows you to earn rewards for your activity and more.")
 				.font(.body)
 				.font(.custom("Inter", size: 15))
 				.foregroundColor(Color.white)
 				.padding([.leading, .bottom, .trailing])
 
-			Text("Voting closes on the 7th!")
+			Text("Find out more on Warpcast:")
 				.font(.caption)
 				.font(.custom("Inter", size: 13))
 				.foregroundColor(Color.white)
 				.padding([.leading, .bottom])
 
-			Link(destination: URL(string: "https://snapshot.box/#/s:moxie.eth/proposal/0x82a8b1b8a2bd77d3b706b8cd0c80d1d12947a63cd20630e44d44f960e67be5a4")!, label: {
-				Text("Go vote!")
+			Link(destination: URL(string: "https://warpcast.com/moxito")!, label: {
+				Text("Visit channel!")
 					.foregroundStyle(Color.white)
 					.padding(.horizontal)
 			})

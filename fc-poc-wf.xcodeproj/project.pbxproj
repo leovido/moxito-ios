@@ -558,7 +558,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		471FE9742C7F808C00D20F4C /* MoxieTracker */ = {
+		471FE9742C7F808C00D20F4C /* Moxito */ = {
 			isa = PBXGroup;
 			children = (
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
@@ -581,7 +581,7 @@
 				47E6B31E2D6959F1002B980A /* ViewModels */,
 				47E6B31F2D6959FC002B980A /* Views */,
 			);
-			path = MoxieTracker;
+			path = Moxito;
 			sourceTree = "<group>";
 		};
 		471FE97B2C7F808D00D20F4C /* Preview Content */ = {
@@ -592,22 +592,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		471FE9852C7F808D00D20F4C /* MoxieTrackerTests */ = {
+		471FE9852C7F808D00D20F4C /* MoxitoTests */ = {
 			isa = PBXGroup;
 			children = (
 				471FE9862C7F808D00D20F4C /* MoxieTrackerTests.swift */,
 				475F73AB2CA6037000E0CFEA /* ClaimTests.swift */,
 			);
-			path = MoxieTrackerTests;
+			path = MoxitoTests;
 			sourceTree = "<group>";
 		};
-		471FE98F2C7F808D00D20F4C /* MoxieTrackerUITests */ = {
+		471FE98F2C7F808D00D20F4C /* MoxitoUITests */ = {
 			isa = PBXGroup;
 			children = (
 				471FE9902C7F808D00D20F4C /* MoxieTrackerUITests.swift */,
 				471FE9922C7F808D00D20F4C /* MoxieTrackerUITestsLaunchTests.swift */,
 			);
-			path = MoxieTrackerUITests;
+			path = MoxitoUITests;
 			sourceTree = "<group>";
 		};
 		471FE9AA2C7F821400D20F4C /* MoxieWidget */ = {
@@ -651,9 +651,9 @@
 				47C3241C2C6E578400BE03C2 /* fc-poc-wfUITests */,
 				47C324362C6E57D500BE03C2 /* FCWidgets */,
 				B9DF7F5D2C73B0FD0073D772 /* FartherWidget */,
-				471FE9742C7F808C00D20F4C /* MoxieTracker */,
-				471FE9852C7F808D00D20F4C /* MoxieTrackerTests */,
-				471FE98F2C7F808D00D20F4C /* MoxieTrackerUITests */,
+				471FE9742C7F808C00D20F4C /* Moxito */,
+				471FE9852C7F808D00D20F4C /* MoxitoTests */,
+				471FE98F2C7F808D00D20F4C /* MoxitoUITests */,
 				471FE9AA2C7F821400D20F4C /* MoxieWidget */,
 				47E4CC2A2C98563600BE77E8 /* MoxitoHariosWidget */,
 				47434E352CB6D87400C42C5C /* MoxitoStatsProfileWidget */,
@@ -1422,7 +1422,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint ./MoxieTracker --autocorrect\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+			shellScript = "if command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint ./Moxito --autocorrect\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
 		8CA6C22ED7344468AA1179F4 /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1689,7 +1689,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Moxito/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1736,7 +1736,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"MoxieTracker/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Moxito/Preview Content\"";
 				DEVELOPMENT_TEAM = HL92L2PJSU;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
