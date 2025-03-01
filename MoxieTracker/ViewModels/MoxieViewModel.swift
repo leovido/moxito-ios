@@ -89,9 +89,9 @@ final class MoxieViewModel: ObservableObject, Observable {
 				dailyUSD: formattedDollarValue(dollarValue: model.allEarningsAmount * price),
 				claimableMoxie: model.moxieClaimTotals[0].availableClaimAmount.formatted(.number.precision(.fractionLength(0))),
 				claimableUSD: formattedDollarValue(dollarValue: model.moxieClaimTotals[0].availableClaimAmount * price),
-				username: model.socials[0].profileDisplayName,
+				username: model.socials.profileDisplayName,
 				fid: model.entityID,
-				imageURL: model.socials[0].profileImage)
+				imageURL: model.socials.profileImage)
 			do {
 				let activity = try Activity<MoxieActivityAttributes>.request(
 					attributes: attributes,
@@ -184,6 +184,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 					return previous.0 == current.0 &&
 					previous.1 == current.1
 				}
+				.print("CombineLatest3")
 				.receive(on: DispatchQueue.main)
 				.handleEvents(receiveRequest: { _ in
 					self.inFlightTask?.cancel()
@@ -218,7 +219,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			.filter({ Int($0.entityID) ?? 0 > 0 })
 			.sink {
 				self.input = $0.entityID
-				self.wallets = $0.socials.first?.connectedAddresses
+				self.wallets = $0.socials.connectedAddresses
 					.filter({$0.blockchain == "ethereum"})
 					.map({ $0.address }) ?? []
 
@@ -277,9 +278,9 @@ final class MoxieViewModel: ObservableObject, Observable {
 						dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
 						claimableMoxie: newModel.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0",
 						claimableUSD: formattedDollarValue(dollarValue: ttt),
-						username: model.socials.first?.profileDisplayName ?? "",
+						username: model.socials.profileDisplayName,
 						fid: model.entityID,
-						imageURL: model.socials.first?.profileImage ?? ""
+						imageURL: model.socials.profileImage
 					)
 
 					await activity.update(using: updatedContentState)
@@ -350,7 +351,6 @@ final class MoxieViewModel: ObservableObject, Observable {
 
 			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
 				if error.localizedDescription == "The data couldn’t be read because it is missing." {
-//					self.error = MoxieError.message("User does not have Moxie pass")
 				} else {
 					self.error = MoxieError.message(error.localizedDescription)
 				}

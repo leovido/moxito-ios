@@ -10,7 +10,7 @@ struct ProfileView: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 
 	var tvlText: String {
-		guard let fcScore = viewModel.model.socials.first?.farcasterScore else {
+		guard let fcScore = viewModel.model.socials.farcasterScore else {
 			return ""
 		}
 		let d = Decimal(string: fcScore.tvl) ?? 0
@@ -20,7 +20,7 @@ struct ProfileView: View {
 	}
 
 	var farScore: String {
-		guard let fcScore = viewModel.model.socials.first?.farcasterScore?.farScore else {
+		guard let fcScore = viewModel.model.socials.farcasterScore?.farScore else {
 			return ""
 		}
 		return fcScore.formatted(.number.precision(.fractionLength(2)))
@@ -32,7 +32,7 @@ struct ProfileView: View {
 				Color(uiColor: MoxieColor.primary)
 					.ignoresSafeArea(.all)
 				VStack {
-					ProfileCardAlternativeView(model: viewModel.model, rank: viewModel.model.socials.first?.farcasterScore?.farRank ?? 0)
+					ProfileCardAlternativeView(model: viewModel.model, rank: viewModel.model.socials.farcasterScore?.farRank ?? 0)
 
 					ScrollView {
 						LazyVGrid(columns: columns, spacing: 16) {
@@ -45,7 +45,7 @@ struct ProfileView: View {
 							}
 
 							VStack {
-								GridItemBigView(farScore: viewModel.model.socials.first?.farcasterScore?.farScore ?? 0)
+								GridItemBigView(farScore: viewModel.model.socials.farcasterScore?.farScore ?? 0)
 
 								Spacer()
 							}

@@ -174,7 +174,7 @@ public struct MoxieModel: Codable, Hashable {
 	public let frameDevEarningsAmount, otherEarningsAmount: Decimal
 	public let endTimestamp, startTimestamp: Date
 	public let timeframe: String
-	public let socials: [Social]
+	public let socials: Social
 	public let entityID: String
 	public let fansCount: Int
 	public let moxieClaimTotals: [MoxieClaimTotal]
@@ -194,17 +194,17 @@ public struct MoxieModel: Codable, Hashable {
 		castEarningsAmount = try values.decodeIfPresent(Decimal.self, forKey: .castEarningsAmount) ?? 0
 		frameDevEarningsAmount = try values.decodeIfPresent(Decimal.self, forKey: .frameDevEarningsAmount) ?? 0
 		otherEarningsAmount = try values.decodeIfPresent(Decimal.self, forKey: .otherEarningsAmount) ?? 0
-		endTimestamp = try values.decodeIfPresent(Date.self, forKey: .endTimestamp) ?? .now
-		startTimestamp = try values.decodeIfPresent(Date.self, forKey: .startTimestamp) ?? .now
+		endTimestamp = try values.decodeIfPresent(Date.self, forKey: .endTimestamp) ?? Date(timeIntervalSince1970: 1_000_000_000)
+		startTimestamp = try values.decodeIfPresent(Date.self, forKey: .startTimestamp) ?? Date(timeIntervalSince1970: 1_000_000_000)
 		timeframe = try values.decodeIfPresent(String.self, forKey: .timeframe) ?? ""
-		socials = try values.decodeIfPresent([Social].self, forKey: .socials) ?? []
+		socials = try values.decodeIfPresent(Social.self, forKey: .socials) ?? .init(profileImage: "", profileDisplayName: "Moxie", profileHandle: "Moxie", connectedAddresses: [])
 		entityID = try values.decodeIfPresent(String.self, forKey: .entityID) ?? ""
 		moxieClaimTotals = try values.decodeIfPresent([MoxieClaimTotal].self, forKey: .moxieClaimTotals) ?? []
 		splitDetails = try values.decodeIfPresent([MoxieSplitDetail].self, forKey: .splitDetails) ?? []
 		fansCount = try values.decodeIfPresent(Int.self, forKey: .fansCount) ?? 0
 	}
 	
-	public init(allEarningsAmount: Decimal, castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, endTimestamp: Date, startTimestamp: Date, timeframe: String, socials: [Social], entityID: String, moxieClaimTotals: [MoxieClaimTotal], splitDetails: [MoxieSplitDetail], fansCount: Int) {
+	public init(allEarningsAmount: Decimal, castEarningsAmount: Decimal, frameDevEarningsAmount: Decimal, otherEarningsAmount: Decimal, endTimestamp: Date, startTimestamp: Date, timeframe: String, socials: Social, entityID: String, moxieClaimTotals: [MoxieClaimTotal], splitDetails: [MoxieSplitDetail], fansCount: Int) {
 		self.allEarningsAmount = allEarningsAmount
 		self.castEarningsAmount = castEarningsAmount
 		self.frameDevEarningsAmount = frameDevEarningsAmount
@@ -267,7 +267,7 @@ public struct Social: Codable, Hashable {
 		profileDisplayName = try values.decodeIfPresent(String.self, forKey: .profileDisplayName) ?? ""
 		profileHandle = try values.decodeIfPresent(String.self, forKey: .profileHandle) ?? ""
 		connectedAddresses = try values.decodeIfPresent([ConnectedAddress].self, forKey: .connectedAddresses) ?? []
-		farcasterScore = try values.decodeIfPresent(MoxieFarcasterScore.self, forKey: .farcasterScore)
+		farcasterScore = try? values.decodeIfPresent(MoxieFarcasterScore.self, forKey: .farcasterScore)
 	}
 }
 
@@ -283,23 +283,22 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [
-			.init(
-				profileImage: "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/ad619d89-c6f1-4f01-e672-172ec9ed4100/anim=false,fit=contain,f=auto,w=288",
-				profileDisplayName: "Moxito",
-				profileHandle: "@moxito",
-				connectedAddresses: [
-					.init(address: "0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF", blockchain: "ethereum"),
-					.init(address: "0xDEADBEEF00000000000000000000000000000000", blockchain: "ethereum")
-				],
-				farcasterScore: .init(
-					farRank: .init(.random(in: 0...100)),
-					farScore: .init(.random(in: 0...1000)),
-					liquidityBoost: .init(.random(in: 0...1000)),
-					powerBoost: .init(.random(in: 0...1000)),
-					tvl: "209384",
-					tvlBoost: .init(.random(in: 0...1000)))
-			)],
+		socials: .init(
+			profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png",
+			 profileDisplayName: "Moxito",
+			 profileHandle: "@moxito",
+			 connectedAddresses: [
+				 .init(address: "0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF", blockchain: "ethereum"),
+				 .init(address: "0xDEADBEEF00000000000000000000000000000000", blockchain: "ethereum")
+			 ],
+			 farcasterScore: .init(
+				 farRank: .init(.random(in: 0...100)),
+				 farScore: .init(.random(in: 0...1000)),
+				 liquidityBoost: .init(.random(in: 0...1000)),
+				 powerBoost: .init(.random(in: 0...1000)),
+				 tvl: "209384",
+				 tvlBoost: .init(.random(in: 0...1000)))
+		 ),
 		entityID: "0",
 		moxieClaimTotals: [
 			.init(
@@ -318,21 +317,20 @@ extension MoxieModel {
 		endTimestamp: .now,
 		startTimestamp: .now,
 		timeframe: "TODAY",
-		socials: [
-			.init(
-				profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png",
-				profileDisplayName: "Tester",
-				profileHandle: "@test",
-				connectedAddresses: [],
-				farcasterScore: .init(
-					farRank: 0,
-					farScore: 0,
-					liquidityBoost: 0,
-					powerBoost: 0,
-					tvl: "0",
-					tvlBoost: 0
-			)
-			)],
+		socials: .init(
+			profileImage: "https://wrpcd.net/cdn-cgi/image/anim=true,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FI2rEbPF.png",
+			 profileDisplayName: "Tester",
+			 profileHandle: "@test",
+			 connectedAddresses: [],
+			 farcasterScore: .init(
+				 farRank: 0,
+				 farScore: 0,
+				 liquidityBoost: 0,
+				 powerBoost: 0,
+				 tvl: "0",
+				 tvlBoost: 0
+		 )
+		 ),
 		entityID: "",
 		moxieClaimTotals: [
 			.init(

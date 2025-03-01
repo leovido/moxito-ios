@@ -7,8 +7,8 @@ struct ClaimBalanceView: View {
 
 	var body: some View {
 		VStack(alignment: .center) {
-			if viewModel.model.socials.first?.profileImage != nil {
-				AsyncImage(url: URL(string: viewModel.model.socials.first!.profileImage),
+			if !viewModel.model.socials.profileImage.isEmpty {
+				AsyncImage(url: URL(string: viewModel.model.socials.profileImage),
 									 content: { image in
 					image
 						.resizable()

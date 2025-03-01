@@ -47,7 +47,6 @@
 		47434F4A2CC2B05700C42C5C /* FitnessCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47434F492CC2B05400C42C5C /* FitnessCardView.swift */; };
 		474D3C352CCE5CBC00608C16 /* RewardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */; };
 		47553E242CA16864006064FB /* MoxitoHariosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A22CA1C7EA00E0CFEA /* Keychain.swift */; };
 		475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */; };
 		475F73AC2CA6037400E0CFEA /* ClaimTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AB2CA6037000E0CFEA /* ClaimTests.swift */; };
 		475F73AE2CA60D5200E0CFEA /* MoxieClaimViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */; };
@@ -63,7 +62,7 @@
 		475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */; };
 		475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */; };
 		477FB5CB2CD66F1000AC3CC9 /* MoxitoLib in Frameworks */ = {isa = PBXBuildFile; productRef = 477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */; };
-		479489E72CD0F0020010CF9B /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E62CD0EFFE0010CF9B /* HealthKitManager.swift */; };
+		479489E72CD0F0020010CF9B /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E62CD0EFFE0010CF9B /* HealthKitService.swift */; };
 		479489EA2CD65F5B0010CF9B /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E92CD65F590010CF9B /* WeekView.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
 		47C324052C6E578300BE03C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324042C6E578300BE03C2 /* ContentView.swift */; };
@@ -103,6 +102,11 @@
 		47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */; };
 		47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */; };
 		47EB01B22D104BA100ABA9A0 /* NavPillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01B12D104B9200ABA9A0 /* NavPillView.swift */; };
+		47E6B31B2D69592C002B980A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B31A2D69592C002B980A /* AuthService.swift */; };
+		47E6B3212D6A1081002B980A /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3202D6A107E002B980A /* KeychainService.swift */; };
+		47E6B3242D6CDCC7002B980A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3232D6CDCC3002B980A /* ErrorHandler.swift */; };
+		47E6B3262D6CDDD9002B980A /* KeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3252D6CDDD6002B980A /* KeychainProvider.swift */; };
+		47E6B3282D6CDEFC002B980A /* AuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3272D6CDEFA002B980A /* AuthProvider.swift */; };
 		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
@@ -113,7 +117,7 @@
 		47EC54742C822DA5006C2820 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54732C822DA5006C2820 /* ErrorView.swift */; };
 		47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54762C84DF3A006C2820 /* SearchListView.swift */; };
 		47EC54792C87143E006C2820 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54782C87143E006C2820 /* AppDelegate.swift */; };
-		47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547A2C87164E006C2820 /* BackgroundTasks.swift */; };
+		47EC547B2C87164E006C2820 /* AppDelegate+BackgroundTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547A2C87164E006C2820 /* AppDelegate+BackgroundTasks.swift */; };
 		47EC547D2C88324E006C2820 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC547C2C88324E006C2820 /* Haptics.swift */; };
 		47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */; };
 		47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54822C8CC4F6006C2820 /* AccountView.swift */; };
@@ -300,12 +304,10 @@
 		47434E972CBD398000C42C5C /* CherylWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherylWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47434EB02CBDC1DF00C42C5C /* CherylDarkWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherylDarkWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47434EB72CBDC92300C42C5C /* CherylDarkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CherylDarkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		47434F442CC2A50600C42C5C /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		47434F452CC2A51A00C42C5C /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
 		47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountViewModel.swift; sourceTree = "<group>"; };
 		47434F492CC2B05400C42C5C /* FitnessCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessCardView.swift; sourceTree = "<group>"; };
 		474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewModel.swift; sourceTree = "<group>"; };
-		475F73A22CA1C7EA00E0CFEA /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniSearchView.swift; sourceTree = "<group>"; };
 		475F73AB2CA6037000E0CFEA /* ClaimTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimTests.swift; sourceTree = "<group>"; };
 		475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieClaimViewModel.swift; sourceTree = "<group>"; };
@@ -317,7 +319,7 @@
 		475F73C02CADAA0C00E0CFEA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionMoxieStatView.swift; sourceTree = "<group>"; };
 		475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
-		479489E62CD0EFFE0010CF9B /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		479489E62CD0EFFE0010CF9B /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		479489E92CD65F590010CF9B /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fc-poc-wf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fc_poc_wfApp.swift; sourceTree = "<group>"; };
@@ -353,6 +355,11 @@
 		47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncingPointsView.swift; sourceTree = "<group>"; };
 		47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		47EB01B12D104B9200ABA9A0 /* NavPillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPillView.swift; sourceTree = "<group>"; };
+		47E6B31A2D69592C002B980A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		47E6B3202D6A107E002B980A /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		47E6B3232D6CDCC3002B980A /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		47E6B3252D6CDDD6002B980A /* KeychainProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainProvider.swift; sourceTree = "<group>"; };
+		47E6B3272D6CDEFA002B980A /* AuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProvider.swift; sourceTree = "<group>"; };
 		47EC54652C822950006C2820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		47EC54672C8229B2006C2820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		47EC54692C8229F4006C2820 /* MoxieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieViewModel.swift; sourceTree = "<group>"; };
@@ -363,7 +370,7 @@
 		47EC54752C8479D2006C2820 /* Moxito-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Moxito-Info.plist"; sourceTree = "<group>"; };
 		47EC54762C84DF3A006C2820 /* SearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
 		47EC54782C87143E006C2820 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		47EC547A2C87164E006C2820 /* BackgroundTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTasks.swift; sourceTree = "<group>"; };
+		47EC547A2C87164E006C2820 /* AppDelegate+BackgroundTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+BackgroundTasks.swift"; sourceTree = "<group>"; };
 		47EC547C2C88324E006C2820 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		47EC547E2C8B0121006C2820 /* MoxieWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MoxieWidgetExtension.entitlements; sourceTree = "<group>"; };
 		47EC547F2C8B019F006C2820 /* Moxito.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Moxito.entitlements; sourceTree = "<group>"; };
@@ -375,7 +382,6 @@
 		47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.template.xcconfig; sourceTree = "<group>"; };
 		47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingBannerView.swift; sourceTree = "<group>"; };
 		B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		B9D7FADD2D6772B800BD57A0 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		B9D7FADE2D6772EA00BD57A0 /* ClaimBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimBalanceView.swift; sourceTree = "<group>"; };
 		B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimingOverlayView.swift; sourceTree = "<group>"; };
 		B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningsCardsView.swift; sourceTree = "<group>"; };
@@ -558,43 +564,23 @@
 			children = (
 				47E4CBDD2C9057AF00BE77E8 /* Fastfile */,
 				47EC54872C8F0582006C2820 /* Launch Screen.storyboard */,
-				474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */,
-				B9D7FAD82D676F5C00BD57A0 /* New Group */,
-				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
 				47EC54782C87143E006C2820 /* AppDelegate.swift */,
-				475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */,
-				47EC547A2C87164E006C2820 /* BackgroundTasks.swift */,
-				47EC546D2C822A69006C2820 /* CardView.swift */,
-				471FE9772C7F808C00D20F4C /* ContentView.swift */,
 				47E4CC462C99A6F700BE77E8 /* CustomTabBar.swift */,
-				47434F492CC2B05400C42C5C /* FitnessCardView.swift */,
-				479489E82CD65F4F0010CF9B /* RewardsView */,
-				47EC547C2C88324E006C2820 /* Haptics.swift */,
-				475F73A22CA1C7EA00E0CFEA /* Keychain.swift */,
-				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
 				475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */,
-				475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
-				479489E62CD0EFFE0010CF9B /* HealthKitManager.swift */,
-				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
-				47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */,
-				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
-				475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */,
-				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
-				475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */,
-				475F73C02CADAA0C00E0CFEA /* ProfileView.swift */,
-				475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */,
-				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
-				47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */,
-				B9D7FAEF2D678AF700BD57A0 /* Persistence */,
-				47434F442CC2A50600C42C5C /* Untitled.swift */,
-				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
 				475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */,
 				47E4CC3D2C9990AF00BE77E8 /* fonts */,
+				47E6B3222D6CDCB5002B980A /* Helpers */,
 				47EC54712C822B23006C2820 /* Home */,
+				47E6B31C2D6959E6002B980A /* Models */,
+				B9D7FAEF2D678AF700BD57A0 /* Persistence */,
 				471FE97B2C7F808D00D20F4C /* Preview Content */,
+				479489E82CD65F4F0010CF9B /* RewardsView */,
+				47E6B31D2D6959EC002B980A /* Services */,
 				47EC54722C822B2D006C2820 /* Settings */,
+				47E6B31E2D6959F1002B980A /* ViewModels */,
+				47E6B31F2D6959FC002B980A /* Views */,
 			);
 			path = MoxieTracker;
 			sourceTree = "<group>";
@@ -788,12 +774,71 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		47E6B31C2D6959E6002B980A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		47E6B31D2D6959EC002B980A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				47E6B3272D6CDEFA002B980A /* AuthProvider.swift */,
+				47E6B31A2D69592C002B980A /* AuthService.swift */,
+				479489E62CD0EFFE0010CF9B /* HealthKitService.swift */,
+				47E6B3252D6CDDD6002B980A /* KeychainProvider.swift */,
+				47E6B3202D6A107E002B980A /* KeychainService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		47E6B31E2D6959F1002B980A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */,
+				475F73AD2CA60D4E00E0CFEA /* MoxieClaimViewModel.swift */,
+				47EC54692C8229F4006C2820 /* MoxieViewModel.swift */,
+				475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */,
+				474D3C342CCE5CB800608C16 /* RewardsViewModel.swift */,
+				47434F472CC2A52F00C42C5C /* StepCountViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		47E6B31F2D6959FC002B980A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				47EC54822C8CC4F6006C2820 /* AccountView.swift */,
+				47EC546D2C822A69006C2820 /* CardView.swift */,
+				471FE9772C7F808C00D20F4C /* ContentView.swift */,
+				47434F492CC2B05400C42C5C /* FitnessCardView.swift */,
+				475F73A42CA2DA5900E0CFEA /* MiniSearchView.swift */,
+				47E4CBE72C91C2B400BE77E8 /* MoxitoWebView.swift */,
+				47EC54892C8F22FA006C2820 /* OnboardingView.swift */,
+				47EC546F2C822AC4006C2820 /* ProfileCardView.swift */,
+				475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */,
+				475F73C02CADAA0C00E0CFEA /* ProfileView.swift */,
+				47EC54762C84DF3A006C2820 /* SearchListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		47E6B3222D6CDCB5002B980A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				47EC547A2C87164E006C2820 /* AppDelegate+BackgroundTasks.swift */,
+				47E6B3232D6CDCC3002B980A /* ErrorHandler.swift */,
+				47EC547C2C88324E006C2820 /* Haptics.swift */,
+				475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */,
+				47EC54802C8B0CC9006C2820 /* UserDefaults+Extension.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		47EC54712C822B23006C2820 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				47EC54652C822950006C2820 /* HomeView.swift */,
-				47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */,
-				B9D7FAF72D67900A00BD57A0 /* Preferences */,
 				B9D7FADE2D6772EA00BD57A0 /* ClaimBalanceView.swift */,
 				B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */,
 				B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */,
@@ -801,9 +846,9 @@
 				B9D7FAE12D6772EA00BD57A0 /* FilterButtonsView.swift */,
 				B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */,
 				47EC54652C822950006C2820 /* HomeView.swift */,
-				B9D7FADD2D6772B800BD57A0 /* Untitled.swift */,
 				B9D7FAE22D6772EA00BD57A0 /* VotingInfoView.swift */,
 				B9D7FAF22D678DB400BD57A0 /* Modifiers */,
+				B9D7FAF72D67900A00BD57A0 /* Preferences */,
 				B9D7FAEC2D677D6000BD57A0 /* SupportingViews */,
 			);
 			path = Home;
@@ -816,13 +861,6 @@
 				47EC54672C8229B2006C2820 /* SettingsView.swift */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		B9D7FAD82D676F5C00BD57A0 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		B9D7FAEC2D677D6000BD57A0 /* SupportingViews */ = {
@@ -1401,6 +1439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47EC54792C87143E006C2820 /* AppDelegate.swift in Sources */,
+				47E6B31B2D69592C002B980A /* AuthService.swift in Sources */,
 				474D3C352CCE5CBC00608C16 /* RewardsViewModel.swift in Sources */,
 				475F73A52CA2DA6100E0CFEA /* MiniSearchView.swift in Sources */,
 				47EC546E2C822A69006C2820 /* CardView.swift in Sources */,
@@ -1408,28 +1447,30 @@
 				47EB01B22D104BA100ABA9A0 /* NavPillView.swift in Sources */,
 				47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */,
 				47EC54662C822950006C2820 /* HomeView.swift in Sources */,
+				47E6B3262D6CDDD9002B980A /* KeychainProvider.swift in Sources */,
 				475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */,
 				47434F4A2CC2B05700C42C5C /* FitnessCardView.swift in Sources */,
 				47E4CC472C99A6F700BE77E8 /* CustomTabBar.swift in Sources */,
-				479489E72CD0F0020010CF9B /* HealthKitManager.swift in Sources */,
+				479489E72CD0F0020010CF9B /* HealthKitService.swift in Sources */,
 				475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
 				475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */,
+				47E6B3282D6CDEFC002B980A /* AuthProvider.swift in Sources */,
 				B9D7FAF12D678B0700BD57A0 /* StorageState.swift in Sources */,
-				47EC547B2C87164E006C2820 /* BackgroundTasks.swift in Sources */,
+				47EC547B2C87164E006C2820 /* AppDelegate+BackgroundTasks.swift in Sources */,
 				47EC547D2C88324E006C2820 /* Haptics.swift in Sources */,
 				479489EA2CD65F5B0010CF9B /* WeekView.swift in Sources */,
 				47EC54832C8CC4F6006C2820 /* AccountView.swift in Sources */,
 				B9D7FAE32D6772EA00BD57A0 /* ClaimingOverlayView.swift in Sources */,
+				47E6B3212D6A1081002B980A /* KeychainService.swift in Sources */,
 				B9D7FAE42D6772EA00BD57A0 /* EarningsCardsView.swift in Sources */,
 				B9D7FAE52D6772EA00BD57A0 /* FilterButtonsView.swift in Sources */,
 				B9D7FAE62D6772EA00BD57A0 /* ClaimBalanceView.swift in Sources */,
 				B9D7FAE72D6772EA00BD57A0 /* VotingInfoView.swift in Sources */,
 				475F73B72CA888D200E0CFEA /* OnboardingViewModel.swift in Sources */,
 				B9D7FAF62D678DD600BD57A0 /* HomeStateManager.swift in Sources */,
-				475F73A32CA1C7F000E0CFEA /* Keychain.swift in Sources */,
 				471FE9782C7F808C00D20F4C /* ContentView.swift in Sources */,
 				47FB8BD52D329C1A0034B1F8 /* VotingBannerView.swift in Sources */,
 				B9D7FADA2D676F7400BD57A0 /* HeaderView.swift in Sources */,
@@ -1438,6 +1479,7 @@
 				47EC54702C822AC4006C2820 /* ProfileCardView.swift in Sources */,
 				47E4CBE82C91C2B400BE77E8 /* MoxitoWebView.swift in Sources */,
 				475F73B92CA94F8F00E0CFEA /* AuthViewModel.swift in Sources */,
+				47E6B3242D6CDCC7002B980A /* ErrorHandler.swift in Sources */,
 				47434F462CC2A51A00C42C5C /* RewardView.swift in Sources */,
 				47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */,
 				B9D7FAF92D67901400BD57A0 /* ClamStatePreferences.swift in Sources */,

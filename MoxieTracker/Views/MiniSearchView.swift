@@ -18,7 +18,7 @@ struct MiniSearchView: View {
 				VStack {
 					HStack {
 						VStack(alignment: .leading) {
-							Text("\(viewModel.model.socials.first?.profileDisplayName ?? "Moxie")")
+							Text("\(viewModel.model.socials.profileDisplayName ?? "Moxie")")
 								.font(.body)
 								.font(.custom("Inter", size: 20))
 								.foregroundStyle(Color.white)
@@ -39,8 +39,8 @@ struct MiniSearchView: View {
 					ScrollView(showsIndicators: false) {
 						HStack {
 							VStack(alignment: .center) {
-								if viewModel.model.socials.first?.profileImage != nil {
-									AsyncImage(url: URL(string: viewModel.model.socials.first!.profileImage),
+								if !viewModel.model.socials.profileImage.isEmpty {
+									AsyncImage(url: URL(string: viewModel.model.socials.profileImage),
 														 content: { image in
 										image
 											.resizable()

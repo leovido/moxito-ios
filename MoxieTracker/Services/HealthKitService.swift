@@ -1,7 +1,7 @@
 import HealthKit
 
-final class HealthKitManager {
-	private let healthStore = HKHealthStore()
+final class HealthKitService {
+	let healthStore = HKHealthStore()
 
 	private let readDataTypes: Set = [
 		HKObjectType.workoutType(),
@@ -27,7 +27,7 @@ final class HealthKitManager {
 
 		var date = start
 		while date <= end {
-			let nextDate = calendar.date(byAdding: .day, value: 1, to: date)!
+			let nextDate = calendar.date(byAdding: .day, value: 1, to: date) ?? Date()
 			let predicate = HKQuery.predicateForSamples(withStart: date, end: nextDate, options: .strictStartDate)
 
 			let query = HKStatisticsQuery(quantityType: stepQuantityType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
@@ -46,7 +46,6 @@ final class HealthKitManager {
 		}
 	}
 
-	// Fetch step count for the current day
 	func fetchStepCount(startDate: Date, endDate: Date, completion: @escaping (Double?) -> Void) {
 		guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
 			completion(nil)
@@ -198,7 +197,6 @@ final class HealthKitManager {
 		healthStore.execute(query)
 	}
 
-	// Fetch distance walked/running
 	func fetchDistance(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void) {
 		guard let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) else {
 			completion(nil, nil)
@@ -228,7 +226,7 @@ final class HealthKitManager {
 	}
 }
 
-extension HealthKitManager {
+extension HealthKitService {
 	func getTodayStepCount(startDate: Date, endDate: Date, completion: @escaping (Double, Error?) -> Void) {
 		guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
 			fatalError("Step Count Type is no longer available in HealthKit")
@@ -256,14 +254,11 @@ extension HealthKitManager {
 		healthStore.execute(query)
 	}
 
-	// Step 2: Fetch Workouts
 	func fetchWorkouts(from startDate: Date, to endDate: Date, completion: @escaping ([HKWorkout]) -> Void) {
 		let workoutType = HKObjectType.workoutType()
 
-		// Set the date range predicate
 		let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
-		// Create the query with the date range predicate
 		let query = HKSampleQuery(sampleType: workoutType, predicate: predicate, limit: 0, sortDescriptors: nil) { (_, results, error) in
 			guard let workouts = results as? [HKWorkout], error == nil else {
 				print("Error fetching workouts: \(error?.localizedDescription ?? "unknown error")")
@@ -276,7 +271,6 @@ extension HealthKitManager {
 		healthStore.execute(query)
 	}
 
-	// Example usage
 	func fetchWorkoutsForOctober() {
 		let calendar = Calendar.current
 		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
@@ -289,7 +283,6 @@ extension HealthKitManager {
 		}
 	}
 
-	// Step 3: Fetch Heart Rate for a Workout and Calculate Average
 	func fetchAverageHeartRate(for workout: HKWorkout, completion: @escaping (Double?) -> Void) {
 		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 		let workoutPredicate = HKQuery.predicateForSamples(withStart: workout.startDate, end: workout.endDate, options: .strictStartDate)
@@ -310,10 +303,8 @@ extension HealthKitManager {
 	func fetchAvgHRWorkouts(startDate: Date, endDate: Date, completion: @escaping (Double?) -> Void) {
 		let workoutType = HKObjectType.workoutType()
 
-		// Predicate to filter workouts within October
 		let datePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
-		// Query to fetch workouts within the date range
 		let workoutQuery = HKSampleQuery(sampleType: workoutType, predicate: datePredicate, limit: 0, sortDescriptors: nil) { (_, results, error) in
 			guard let workouts = results as? [HKWorkout], error == nil else {
 				print("Error fetching workouts: \(error?.localizedDescription ?? "unknown error")")
@@ -321,13 +312,11 @@ extension HealthKitManager {
 				return
 			}
 
-			// Array to store average heart rate for each workout
 			var totalHeartRate = 0.0
 			var heartRateCount = 0
 
 			let dispatchGroup = DispatchGroup()
 
-			// Loop through each workout and fetch average heart rate
 			for workout in workouts {
 				dispatchGroup.enter()
 				self.fetchAverageHeartRateForWorkout(workout: workout) { avgHeartRate in
@@ -339,7 +328,6 @@ extension HealthKitManager {
 				}
 			}
 
-			// Wait for all heart rate queries to complete
 			dispatchGroup.notify(queue: .main) {
 				if heartRateCount > 0 {
 					let overallAverageHeartRate = totalHeartRate / Double(heartRateCount)
@@ -356,10 +344,8 @@ extension HealthKitManager {
 	func fetchAverageHeartRateForWorkout(workout: HKWorkout, completion: @escaping (Double?) -> Void) {
 		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 
-		// Predicate to filter heart rate samples within the workout duration
 		let predicate = HKQuery.predicateForSamples(withStart: workout.startDate, end: workout.endDate, options: .strictStartDate)
 
-		// Query to get heart rate data for the workout
 		let heartRateQuery = HKStatisticsQuery(quantityType: heartRateType, quantitySamplePredicate: predicate, options: .discreteAverage) { (_, result, error) in
 			guard let avgHeartRate = result?.averageQuantity() else {
 				print("Error fetching heart rate for workout: \(error?.localizedDescription ?? "unknown error")")

@@ -11,7 +11,7 @@ struct HeaderView: View {
 	var body: some View {
 		HStack {
 			VStack(alignment: .leading) {
-				Text("\(viewModel.isSearchMode ? viewModel.model.socials.first?.profileDisplayName ?? "Moxie" : "Hello, " + (viewModel.model.socials.first?.profileDisplayName ?? "Moxie"))")
+				Text("\(viewModel.isSearchMode ? viewModel.model.socials.profileDisplayName ?? "Moxie" : "Hello, " + (viewModel.model.socials.profileDisplayName ?? "Moxie"))")
 					.scaledToFit()
 					.font(.body)
 					.font(.custom("Inter", size: 20))
