@@ -1,13 +1,6 @@
-//
-//  MoxieTrackerUITestsLaunchTests.swift
-//  MoxieTrackerUITests
-//
-//  Created by Christian Ray Leovido on 28/08/2024.
-//
-
 import XCTest
 
-final class MoxieTrackerUITestsLaunchTests: XCTestCase {
+final class MoxitoUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

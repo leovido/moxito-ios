@@ -289,9 +289,9 @@
 		471FE9772C7F808C00D20F4C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		471FE9792C7F808D00D20F4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		471FE97C2C7F808D00D20F4C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		471FE9822C7F808D00D20F4C /* MoxieTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoxieTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		471FE9822C7F808D00D20F4C /* MoxitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoxitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		471FE9862C7F808D00D20F4C /* MoxieTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieTrackerTests.swift; sourceTree = "<group>"; };
-		471FE98C2C7F808D00D20F4C /* MoxieTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoxieTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		471FE98C2C7F808D00D20F4C /* MoxitoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoxitoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		471FE9902C7F808D00D20F4C /* MoxieTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieTrackerUITests.swift; sourceTree = "<group>"; };
 		471FE9922C7F808D00D20F4C /* MoxieTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoxieTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MoxieWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -676,8 +676,8 @@
 				47C324302C6E57D400BE03C2 /* FCWidgetsExtension.appex */,
 				B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */,
 				471FE9732C7F808C00D20F4C /* Moxito.app */,
-				471FE9822C7F808D00D20F4C /* MoxieTrackerTests.xctest */,
-				471FE98C2C7F808D00D20F4C /* MoxieTrackerUITests.xctest */,
+				471FE9822C7F808D00D20F4C /* MoxitoTests.xctest */,
+				471FE98C2C7F808D00D20F4C /* MoxitoUITests.xctest */,
 				471FE9A72C7F821400D20F4C /* MoxieWidgetExtension.appex */,
 				47E4CC272C98563600BE77E8 /* MoxitoHariosWidgetExtension.appex */,
 				47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */,
@@ -954,9 +954,9 @@
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
 			productType = "com.apple.product-type.application";
 		};
-		471FE9812C7F808D00D20F4C /* MoxieTrackerTests */ = {
+		471FE9812C7F808D00D20F4C /* MoxitoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 471FE9972C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxieTrackerTests" */;
+			buildConfigurationList = 471FE9972C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxitoTests" */;
 			buildPhases = (
 				471FE97E2C7F808D00D20F4C /* Sources */,
 				471FE97F2C7F808D00D20F4C /* Frameworks */,
@@ -967,14 +967,14 @@
 			dependencies = (
 				471FE9842C7F808D00D20F4C /* PBXTargetDependency */,
 			);
-			name = MoxieTrackerTests;
+			name = MoxitoTests;
 			productName = MoxieTrackerTests;
-			productReference = 471FE9822C7F808D00D20F4C /* MoxieTrackerTests.xctest */;
+			productReference = 471FE9822C7F808D00D20F4C /* MoxitoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		471FE98B2C7F808D00D20F4C /* MoxieTrackerUITests */ = {
+		471FE98B2C7F808D00D20F4C /* MoxitoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 471FE99A2C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxieTrackerUITests" */;
+			buildConfigurationList = 471FE99A2C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxitoUITests" */;
 			buildPhases = (
 				471FE9882C7F808D00D20F4C /* Sources */,
 				471FE9892C7F808D00D20F4C /* Frameworks */,
@@ -985,12 +985,12 @@
 			dependencies = (
 				471FE98E2C7F808D00D20F4C /* PBXTargetDependency */,
 			);
-			name = MoxieTrackerUITests;
+			name = MoxitoUITests;
 			packageProductDependencies = (
 				471FE99D2C7F809600D20F4C /* MoxieLib */,
 			);
 			productName = MoxieTrackerUITests;
-			productReference = 471FE98C2C7F808D00D20F4C /* MoxieTrackerUITests.xctest */;
+			productReference = 471FE98C2C7F808D00D20F4C /* MoxitoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */ = {
@@ -1282,8 +1282,8 @@
 				47C3242F2C6E57D400BE03C2 /* FCWidgetsExtension */,
 				B9DF7F592C73B0FD0073D772 /* FartherWidgetExtension */,
 				471FE9722C7F808C00D20F4C /* Moxito */,
-				471FE9812C7F808D00D20F4C /* MoxieTrackerTests */,
-				471FE98B2C7F808D00D20F4C /* MoxieTrackerUITests */,
+				471FE9812C7F808D00D20F4C /* MoxitoTests */,
+				471FE98B2C7F808D00D20F4C /* MoxitoUITests */,
 				471FE9A62C7F821400D20F4C /* MoxieWidgetExtension */,
 				47E4CC262C98563600BE77E8 /* MoxitoHariosWidgetExtension */,
 				47434E312CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension */,
@@ -1783,7 +1783,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxieTrackerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxitoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -1802,7 +1802,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxieTrackerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxitoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -1820,12 +1820,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxieTrackerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxitoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MoxieTracker;
+				TEST_TARGET_NAME = Moxito;
 			};
 			name = Debug;
 		};
@@ -1838,12 +1838,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxieTrackerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxitoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MoxieTracker;
+				TEST_TARGET_NAME = Moxito;
 			};
 			name = Release;
 		};
@@ -2518,7 +2518,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		471FE9972C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxieTrackerTests" */ = {
+		471FE9972C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxitoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				471FE9982C7F808D00D20F4C /* Debug */,
@@ -2527,7 +2527,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		471FE99A2C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxieTrackerUITests" */ = {
+		471FE99A2C7F808D00D20F4C /* Build configuration list for PBXNativeTarget "MoxitoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				471FE99B2C7F808D00D20F4C /* Debug */,

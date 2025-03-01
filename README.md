@@ -42,6 +42,90 @@ Moxito is an iOS application that integrates with Farcaster's social protocol to
 - Actor-based concurrency
 - Repository pattern for data management
 
+### Diagram
+
+```mermaid
+graph TD
+    subgraph "UI Layer"
+        A[MoxieTrackerApp]
+        B[OnboardingView]
+        C[ContentView]
+        D[ErrorView]
+    end
+
+    subgraph "View Models"
+        E[AuthViewModel]
+        F[MoxieViewModel]
+        G[MoxieClaimViewModel]
+        H[StepCountViewModel]
+    end
+
+    subgraph "Services Layer"
+        I[AuthenticationService]
+        J[KeychainService]
+        K[MoxieClient]
+        L[ErrorHandler]
+    end
+
+    subgraph "Data Layer"
+        M[UserDefaults]
+        N[Keychain]
+        O[HealthKit]
+    end
+
+    subgraph "External Services"
+        P[Sentry]
+        Q[DevCycle]
+        R[Farcaster API]
+    end
+
+    %% App Flow
+    A --> |Initializes|E
+    A --> |Initializes|F
+    A --> |Initializes|G
+    A --> |Initializes|H
+
+    %% View Dependencies
+    B --> |Uses|E
+    C --> |Uses|F
+    C --> |Uses|G
+    C --> |Uses|H
+
+    %% ViewModel -> Service Dependencies
+    E --> |Auth Requests|I
+    E --> |Store Credentials|J
+    F --> |API Requests|K
+    G --> |API Requests|K
+
+    %% Service -> Data Layer
+    I --> |Store Session|M
+    J --> |Secure Storage|N
+    K --> |Cache Data|M
+    H --> |Health Data|O
+
+    %% Error Handling
+    L --> |Log Errors|P
+    E --> |Report Errors|L
+    F --> |Report Errors|L
+    G --> |Report Errors|L
+
+    %% External Integration
+    K --> |API Calls|R
+    A --> |Feature Flags|Q
+
+    classDef viewLayer fill:#d4eaf7,stroke:#3498db,stroke-width:2px
+    classDef viewModelLayer fill:#b5e7a0,stroke:#82b74b,stroke-width:2px
+    classDef serviceLayer fill:#ffb7b2,stroke:#e74c3c,stroke-width:2px
+    classDef dataLayer fill:#f7dc6f,stroke:#f1c40f,stroke-width:2px
+    classDef externalLayer fill:#d7bde2,stroke:#8e44ad,stroke-width:2px
+
+    class A,B,C,D viewLayer
+    class E,F,G,H viewModelLayer
+    class I,J,K,L serviceLayer
+    class M,N,O dataLayer
+    class P,Q,R externalLayer
+```
+
 ## 📱 Key Components
 
 ### Authentication

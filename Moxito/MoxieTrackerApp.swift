@@ -4,7 +4,7 @@ import MoxieLib
 import Security
 
 @main
-struct MoxieTrackerApp: App {
+struct MoxitoApp: App {
 	@StateObject var mainViewModel = MoxieViewModel.shared
 	@StateObject var claimViewModel: MoxieClaimViewModel = .shared
 	@StateObject var stepViewModel: StepCountViewModel = .init()

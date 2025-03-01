@@ -105,7 +105,7 @@ func calculateRewardScore(steps: Int, caloriesBurned: Decimal, restingHeartRate:
 }
 
 @MainActor
-final class MoxieTrackerTests: XCTestCase {
+final class MoxitoTests: XCTestCase {
 	var viewModel: StepCountViewModel!
 	
 	override func setUpWithError() throws {
