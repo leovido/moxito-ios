@@ -25,7 +25,7 @@ public enum API {
 }
 
 public enum MoxieEndpoint {
-	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily"
+	static let dailyRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-daily-new"
 	static let claimRewards = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-claim"
 	static let splits = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-splits"
 	static let fansCount = "https://gzkks0v6g8.execute-api.us-east-1.amazonaws.com/prod/moxie-fans-count"
@@ -36,7 +36,7 @@ public enum MoxieEndpoint {
 	static let usersEndpoint = "https://api.neynar.com/v2/farcaster/user/search"
 }
 
-public enum MoxieError {
+public enum MoxieError: Hashable {
 	case message(String)
 	case badRequest
 	case rateLimited

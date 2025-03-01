@@ -26,15 +26,15 @@ struct Provider: TimelineProvider {
 		}
 		
 		let entries: [SimpleEntry] = [
-			SimpleEntry(date: .now,
-										fcScore: .init(
-										farRank: moxieModel.socials.first?.farcasterScore?.farRank ?? 0,
-										farScore:	 moxieModel.socials.first?.farcasterScore?.farScore ?? 0,
-										liquidityBoost: moxieModel.socials.first?.farcasterScore?.liquidityBoost ?? 0,
-										powerBoost: moxieModel.socials.first?.farcasterScore?.powerBoost ?? 0,
-										tvl: moxieModel.socials.first?.farcasterScore?.tvl ?? "0",
-										tvlBoost: moxieModel.socials.first?.farcasterScore?.tvlBoost ?? 0),
-									fansCount: moxieModel.fansCount)
+//			SimpleEntry(date: .now,
+//										fcScore: .init(
+//										farRank: moxieModel.socials.first?.farcasterScore?.farRank ?? 0,
+//										farScore:	 moxieModel.socials.first?.farcasterScore?.farScore ?? 0,
+//										liquidityBoost: moxieModel.socials.first?.farcasterScore?.liquidityBoost ?? 0,
+//										powerBoost: moxieModel.socials.first?.farcasterScore?.powerBoost ?? 0,
+//										tvl: moxieModel.socials.first?.farcasterScore?.tvl ?? "0",
+//										tvlBoost: moxieModel.socials.first?.farcasterScore?.tvlBoost ?? 0),
+//									fansCount: moxieModel.fansCount)
 		]
 		
 		completion(Timeline(entries: entries, policy: .atEnd))

@@ -14,6 +14,7 @@ struct OnboardingView: View {
 	@SwiftUI.Environment(\.colorScheme) var colorScheme
 
 	@EnvironmentObject var viewModel: MoxieViewModel
+
 //	@StateObject var featureFlagManager: FeatureFlagManager
 	@StateObject var viewModelOnboarding: OnboardingViewModel = .init(isAlertShowing: false)
 
@@ -46,7 +47,9 @@ struct OnboardingView: View {
 						.multilineTextAlignment(.center)
 
 					Button(action: {
-						authViewModel.startLogin()
+						Task {
+							try await authViewModel.startLogin()
+						}
 					}) {
 						Image("SignInWarpcast", bundle: .main)
 					}
@@ -128,42 +131,25 @@ struct OnboardingView: View {
 				guard let url = authViewModel.url else {
 					return
 				}
-				handleDeepLink(url: url)
+				do {
+					let fid = try authViewModel.handleDeepLink(url: url)
+					viewModel.input = fid
+					viewModel.inputFID = Int(fid) ?? 0
+				} catch {
+					SentrySDK.capture(error: error)
+				}
 			}
 		}
 		.onOpenURL { incomingURL in
-			handleDeepLink(url: incomingURL)
-		}
-	}
-
-	func handleDeepLink(url: URL) {
-		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-					components.scheme == "moxito",
-					components.host == "auth",
-					let queryItems = components.queryItems else {
-			return
-		}
-		let signer64 = queryItems.first(where: { $0.name == "id" })?.value
-		let fid64 = queryItems.first(where: { $0.name == "fid" })?.value
-
-		if let signer = signer64, let fid = fid64 {
-			if let decodedSigner = Data(base64Encoded: signer),
-				 let decodedSignerString = String(data: decodedSigner, encoding: .utf8),
-				 let decodedFID = Data(base64Encoded: fid),
-				 let decodedFIDString = String(data: decodedFID, encoding: .utf8) {
-				saveToKeychain(token: decodedSignerString, for: decodedFIDString, service: "com.christianleovido.Moxito")
-
-				viewModel.input = decodedFIDString
-				viewModel.inputFID = Int(decodedFIDString) ?? 0
-
-			} else {
-				SentrySDK.capture(error: MoxieError.message("Failed to decode Base64 data"))
+			do {
+				let fid = try authViewModel.handleDeepLink(url: incomingURL)
+				viewModel.input = fid
+				viewModel.inputFID = Int(fid) ?? 0
+			} catch {
+				SentrySDK.capture(error: error)
 			}
-		} else {
-			print("Required query items missing: signer or fid.")
 		}
 	}
-
 }
 
 #Preview {

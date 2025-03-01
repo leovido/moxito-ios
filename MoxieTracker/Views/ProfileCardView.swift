@@ -7,7 +7,7 @@ struct ProfileCardView: View {
 	var body: some View {
 		VStack {
 			HStack {
-				AsyncImage(url: URL(string: model?.socials.first?.profileImage ?? ""),
+				AsyncImage(url: URL(string: model?.socials.profileImage ?? ""),
 									 content: { image in
 					image
 						.resizable()
@@ -20,13 +20,13 @@ struct ProfileCardView: View {
 				.padding(.leading)
 
 				VStack(alignment: .leading) {
-					Text("\(model?.socials.first?.profileDisplayName ?? "")")
+					Text("\(String(describing: model?.socials.profileDisplayName))")
 						.font(.body)
 						.fontWeight(.medium)
 						.foregroundStyle(Color.white)
 						.font(.custom("Inter", size: 16))
 
-					Text("@\(model?.socials.first?.profileHandle ?? "")")
+					Text("@\(model?.socials.profileHandle ?? "")")
 						.font(.caption)
 						.fontWeight(.light)
 						.opacity(0.8)
@@ -52,7 +52,7 @@ struct ProfileCardAlternativeView: View {
 	var body: some View {
 		VStack(spacing: 0) {
 			ZStack {
-				AsyncImage(url: URL(string: model?.socials.first?.profileImage ?? ""),
+				AsyncImage(url: URL(string: model?.socials.profileImage ?? ""),
 									 content: { image in
 					image
 						.resizable()
@@ -82,7 +82,7 @@ struct ProfileCardAlternativeView: View {
 			}
 
 			VStack {
-				Text("@\(model?.socials.first?.profileHandle ?? "")")
+				Text("@\(model?.socials.profileHandle ?? "")")
 					.font(.custom("Inter", size: 16))
 					.foregroundStyle(Color.white)
 					.bold()

@@ -1,4 +1,5 @@
 import SwiftUI
+import Sentry
 import MoxieLib
 
 struct RewardsView: View {
@@ -367,6 +368,15 @@ struct RewardsView: View {
 					utcCalendar.timeZone = TimeZone(identifier: "UTC")!
 
 					viewModel.actions.send(.onAppear(fid: Int(mainViewModel.model.entityID) ?? 0))
+
+					viewModel.actions.send(.requestAuthorizationHealthKit)
+					Task {
+						do {
+							try await mainViewModel.fetchTotalPoolRewards()
+						} catch {
+							SentrySDK.capture(error: error)
+						}
+					}
 
 					viewModel.actions.send(.fetchLatestRound)
 					viewModel.actions.send(.fetchTotalUsersCountCheckins)

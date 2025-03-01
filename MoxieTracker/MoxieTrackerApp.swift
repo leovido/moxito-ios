@@ -21,9 +21,9 @@ struct MoxieTrackerApp: App {
 					ContentView()
 				}
 			}
-			.environment(mainViewModel)
-			.environment(claimViewModel)
-			.environment(stepViewModel)
+			.environmentObject(mainViewModel)
+			.environmentObject(claimViewModel)
+			.environmentObject(stepViewModel)
 			.defaultAppStorage(.group ?? .standard)
 		}
 	}

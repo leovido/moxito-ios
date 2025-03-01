@@ -41,7 +41,6 @@ struct SwipeableWeekView: View {
 
 	var body: some View {
 		VStack {
-			// Fetch weekDays only if available
 			if let weekDays = viewModel.allWeeksData[viewModel.currentWeekStartDate.startOfDay()] {
 				WeekView(days: Binding(get: { weekDays }, set: { viewModel.allWeeksData[viewModel.currentWeekStartDate.startOfDay()] = $0 }))
 					.padding(.horizontal)

@@ -34,8 +34,7 @@ enum StepCountAction: Hashable {
 @MainActor
 final class StepCountViewModel: ObservableObject, Observable {
 	static let shared = StepCountViewModel()
-
-	let healthKitManager: HealthKitManager
+	let healthKitManager: HealthKitService
 
 	@Published var totalUsersCheckedInCount: Int = 0
 	@Published var scores: [Round] = []
@@ -68,8 +67,8 @@ final class StepCountViewModel: ObservableObject, Observable {
 	let actions: PassthroughSubject<StepCountAction, Never> = .init()
 	private(set) var subscriptions: Set<AnyCancellable> = []
 
-	init(healthKitManager: HealthKitManager = HealthKitManager(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0, didAuthorizeHealthKit: Bool = false,
-			 client: MoxitoClient = .init(), currentRound: MoxitoRound? = nil) {
+	init(healthKitManager: HealthKitService = HealthKitService(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0, didAuthorizeHealthKit: Bool = false,
+			 client: MoxitoClient = .init()) {
 		self.healthKitManager = healthKitManager
 		self.steps = steps
 		self.caloriesBurned = caloriesBurned
@@ -102,7 +101,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 											checkInDate: model.createdAt,
 											weightFactorId: "0dd3ab92-d855-4975-a2c4-acb74462305b"
 										),
-										roundId: currentRound?.roundId ?? "")
+										roundId: self.currentRound?.roundId ?? "")
 								} catch {
 									SentrySDK.capture(error: error)
 								}
