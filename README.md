@@ -8,10 +8,10 @@ Moxito is an iOS application that integrates with Farcaster's social protocol to
 
 ## 📱 Screenshots
 
-![Screenshot 1](./Screenshots/iphone_app_store_moxito_1.png)
-![Screenshot 2](./Screenshots/iphone_app_store_moxito_2.png)
-![Screenshot 3](./Screenshots/iphone_app_store_moxito_3.png)
-![Screenshot 4](./Screenshots/iphone_app_store_moxito_7.png)
+<p><img src="./Screenshots/iphone_app_store_moxito_1.png" width="33%" />
+<img src="./Screenshots/iphone_app_store_moxito_2.png" width="33%" />
+<img src="./Screenshots/iphone_app_store_moxito_3.png" width="33%" />
+<img src="./Screenshots/iphone_app_store_moxito_7.png" width="33%" /></p>
 
 ## 🌟 Features
 
