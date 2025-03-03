@@ -6,6 +6,16 @@
 
 Moxito is an iOS application that integrates with Farcaster's social protocol to track and manage Moxie rewards. The app showcases modern iOS development practices, SwiftUI implementation, and robust architecture patterns.
 
+## Why Moxito?
+Moxito was born in Farcaster, a social platform where [Moxie](https://moxie.xyz/) started. I participated in a Hackathon and won second prize and a Retro Grant placing as a finalist. 
+
+Moxito started as a convenience app to track $MOXIE rewards, leveraging the Subgraphs and APIs provided by [Moxie](https://developer.moxie.xyz/). The following image shows an iOS widget that shows "Daily" and "Claimable" tokens.
+
+<img src="https://github.com/user-attachments/assets/c85f9f02-282f-441f-9e70-9a082d9b4626" width="40%" />
+
+Moxito evolved to be a fitness and health app, promoting and rewarding good healthy habits.
+Users get rewards for walking, running, and doing any physical activity. HealthKit is used to fetch the health data and an algorithm would calculate the rewards based on effort (steps, calories burned, distance, heart rate, etc.)
+
 ## 📱 Screenshots
 
 <p><img src="./Screenshots/iphone_app_store_moxito_1.png" width="33%" />
