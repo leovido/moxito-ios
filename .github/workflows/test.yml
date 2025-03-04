@@ -24,12 +24,11 @@ jobs:
     
     - name: Build and Test
       run: |
-        xcodebuild build-for-testing test-without-building \
+        xcodebuild build test \
           -project fc-poc-wf.xcodeproj \
           -scheme Moxito \
           -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
-          -enableCodeCoverage YES \
-          clean test
+          -enableCodeCoverage YES
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
