@@ -8,6 +8,6 @@
       location = "container:fc-poc-wf.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../MoxieTrackerTests.xctestplan">
+      location = "group:../MoxitoTests.xctestplan">
    </FileRef>
 </Workspace>
