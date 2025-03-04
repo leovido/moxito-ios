@@ -104,6 +104,7 @@
 		47E6B3242D6CDCC7002B980A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3232D6CDCC3002B980A /* ErrorHandler.swift */; };
 		47E6B3262D6CDDD9002B980A /* KeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3252D6CDDD6002B980A /* KeychainProvider.swift */; };
 		47E6B3282D6CDEFC002B980A /* AuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3272D6CDEFA002B980A /* AuthProvider.swift */; };
+		47E6B3EB2D7350C6002B980A /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6B3EA2D7350C6002B980A /* NotificationService.swift */; };
 		47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */; };
 		47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */; };
 		47EB01B22D104BA100ABA9A0 /* NavPillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01B12D104B9200ABA9A0 /* NavPillView.swift */; };
@@ -356,6 +357,7 @@
 		47E6B3232D6CDCC3002B980A /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		47E6B3252D6CDDD6002B980A /* KeychainProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainProvider.swift; sourceTree = "<group>"; };
 		47E6B3272D6CDEFA002B980A /* AuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProvider.swift; sourceTree = "<group>"; };
+		47E6B3EA2D7350C6002B980A /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncingPointsView.swift; sourceTree = "<group>"; };
 		47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		47EB01B12D104B9200ABA9A0 /* NavPillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPillView.swift; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 			children = (
 				47E6B3272D6CDEFA002B980A /* AuthProvider.swift */,
 				47E6B31A2D69592C002B980A /* AuthService.swift */,
+				47E6B3EA2D7350C6002B980A /* NotificationService.swift */,
 				479489E62CD0EFFE0010CF9B /* HealthKitService.swift */,
 				47E6B3252D6CDDD6002B980A /* KeychainProvider.swift */,
 				47E6B3202D6A107E002B980A /* KeychainService.swift */,
@@ -1463,6 +1466,7 @@
 				475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */,
 				47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */,
 				47EC54772C84DF3A006C2820 /* SearchListView.swift in Sources */,
+				47E6B3EB2D7350C6002B980A /* NotificationService.swift in Sources */,
 				47EC54812C8B0CC9006C2820 /* UserDefaults+Extension.swift in Sources */,
 				475F73B02CA810B900E0CFEA /* MoxieActivityAttributes.swift in Sources */,
 				47E6B3282D6CDEFC002B980A /* AuthProvider.swift in Sources */,

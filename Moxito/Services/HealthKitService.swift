@@ -1,6 +1,17 @@
 import HealthKit
 
-final class HealthKitService {
+protocol HealthKitProvider {
+	func requestAuthorization(completion: @escaping (Bool, Error?) -> Void)
+	func fetchHealthDataForDateRange(start: Date, end: Date, completion: @escaping ([Date: Double]) -> Void)
+	func fetchStepCount(startDate: Date, endDate: Date, completion: @escaping (Double?) -> Void)
+	func checkNoManualInput(completion: @escaping (Bool) -> Void)
+	func fetchCaloriesBurned(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void)
+	func getRestingHeartRateForMonth(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void)
+	func getAverageHeartRate(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void)
+	func fetchDistance(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void)
+}
+
+final class HealthKitService: HealthKitProvider {
 	let healthStore = HKHealthStore()
 
 	private let readDataTypes: Set = [
@@ -124,7 +135,10 @@ final class HealthKitService {
 	}
 
 	func getRestingHeartRateForMonth(startDate: Date, endDate: Date, completion: @escaping (Double?, Error?) -> Void) {
-		let heartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
+		guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate) else {
+			completion(nil, nil)
+			return
+		}
 
 		let predicate = HKQuery.predicateForSamples(
 			withStart: startDate,
@@ -271,18 +285,6 @@ extension HealthKitService {
 		healthStore.execute(query)
 	}
 
-	func fetchWorkoutsForOctober() {
-		let calendar = Calendar.current
-		let startDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 21))!
-		let endDate = calendar.date(from: DateComponents(year: 2024, month: 10, day: 28))!
-
-		fetchWorkouts(from: startDate, to: endDate) { workouts in
-			for workout in workouts {
-				print("Workout type: \(workout.workoutActivityType.rawValue), Duration: \(workout.duration), Calories burned: \(workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0) kcal")
-			}
-		}
-	}
-
 	func fetchAverageHeartRate(for workout: HKWorkout, completion: @escaping (Double?) -> Void) {
 		let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 		let workoutPredicate = HKQuery.predicateForSamples(withStart: workout.startDate, end: workout.endDate, options: .strictStartDate)
@@ -359,5 +361,4 @@ extension HealthKitService {
 
 		healthStore.execute(heartRateQuery)
 	}
-
 }
