@@ -4,6 +4,8 @@
 ![Platform](https://img.shields.io/badge/Platform-iOS%2017.0-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
+<p><img src="./Screenshots/header.png" width="100%" />
+
 Moxito is an iOS application that integrates with Farcaster's social protocol to track and manage Moxie rewards. The app showcases modern iOS development practices, SwiftUI implementation, and robust architecture patterns.
 
 ## Why Moxito?
@@ -18,10 +20,22 @@ Users get rewards for walking, running, and doing any physical activity. HealthK
 
 ## 📱 Screenshots
 
-<p><img src="./Screenshots/iphone_app_store_moxito_1.png" width="33%" />
-<img src="./Screenshots/iphone_app_store_moxito_2.png" width="33%" />
-<img src="./Screenshots/iphone_app_store_moxito_3.png" width="33%" />
-<img src="./Screenshots/iphone_app_store_moxito_7.png" width="33%" /></p>
+<p><img src="./Screenshots/iphone_app_store_moxito_1.png" width="30%" />
+<img src="./Screenshots/iphone_app_store_moxito_2.png" width="30%" />
+<img src="./Screenshots/iphone_app_store_moxito_3.png" width="30%" /></p>
+
+## 🛠 Development Setup
+
+1. Clone the repository
+2. Open `fc-poc-wf.xcworkspace` in Xcode
+3. Select the `Moxito-DEBUG` scheme
+4. Run the app on a simulator or connected device
+
+## 📦 Dependencies
+
+- Sentry for error tracking
+- MoxieLib for core functionality
+- MoxitoLib for additional features
 
 ## 🌟 Features
 
@@ -177,20 +191,15 @@ Implements sophisticated background task handling for data updates:
 - Memory management best practices
 - Network request batching
 
-## 🛠 Development Setup
+## 🤝 Team
 
-1. Clone the repository
-2. Open `fc-poc-wf.xcworkspace` in Xcode
-3. Select the `Moxito-DEBUG` scheme
-4. Run the app on a simulator or connected device
+Design made by Harios:
+[Warpcast](https://warpcast.com/harios)
 
-## 📦 Dependencies
+Founder, coding, development by myself (Christian Leovido):
+[Warpcast](https://warpcast.com/leovido.eth)
 
-- Sentry for error tracking
-- MoxieLib for core functionality
-- MoxitoLib for additional features
-
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please open an issue or submit a pull request.
 
@@ -208,5 +217,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Warpcast](https://warpcast.com/moxito)
 
 ## 📫 Contact
-
 For any inquiries, please open an issue or contact me on [Warpcast](https://warpcast.com/leovido.eth).
