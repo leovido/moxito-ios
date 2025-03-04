@@ -19,9 +19,12 @@ jobs:
     - name: List available schemes # Debug step
       run: xcodebuild -workspace fc-poc-wf.xcworkspace -list
     
+    - name: Build
+      run: xcodebuild build-for-testing -workspace fc-poc-wf.xcworkspace -scheme Moxito-DEBUG -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2'
+    
     - name: Run tests
       run: |
-        xcodebuild build-for-testing test-without-building \
+        xcodebuild test-without-building \
           -scheme MoxitoTests \
           -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2' \
           -workspace fc-poc-wf.xcworkspace -quiet \
