@@ -138,15 +138,6 @@ struct ScheduleNotificationView: View {
 		})
 		.toolbar(.hidden, for: .tabBar)
 		.navigationTitle("Notifications")
-		.onAppear {
-			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-					if granted {
-							print("Permission granted")
-					} else {
-							print("Permission denied")
-					}
-			}
-		}
 	}
 }
 

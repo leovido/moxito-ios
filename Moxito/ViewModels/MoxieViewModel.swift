@@ -54,6 +54,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	@Published var inputFID: Int
 
 	private let client: MoxieProvider
+	private let notificationService: NotificationProvider
 
 	private(set) var subscriptions: Set<AnyCancellable> = []
 
@@ -64,7 +65,8 @@ final class MoxieViewModel: ObservableObject, Observable {
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
 			 userInputNotifications: Decimal = 0,
-			 availableClaimAmountFormatted: String = "") {
+			 availableClaimAmountFormatted: String = "",
+			 notificationService: NotificationProvider = NotificationService()) {
 		self.client = client
 		self.isSearchMode = isSearchMode
 		self.filterSelection = filterSelection
@@ -73,6 +75,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		self.model = model
 		self.input = input
 		self.inputFID = Int(input) ?? 0
+		self.notificationService = notificationService
 
 		self.userInputNotifications = Decimal(string: persistence.string(forKey: "userInputNotificationsData") ?? "0") ?? 0
 		self.availableClaimAmountFormatted = ""
@@ -221,7 +224,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 				self.input = $0.entityID
 				self.wallets = $0.socials.connectedAddresses
 					.filter({$0.blockchain == "ethereum"})
-					.map({ $0.address }) ?? []
+					.map({ $0.address })
 
 				if self.currentActivity != nil {
 					self.startMoxieActivity()
@@ -350,7 +353,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			self.inFlightTask = nil
 
 			if error.localizedDescription != "Invalid" && error.localizedDescription != "cancelled" {
-				if error.localizedDescription == "The data couldn’t be read because it is missing." {
+				if error.localizedDescription == "The data couldn't be read because it is missing." {
 				} else {
 					self.error = MoxieError.message(error.localizedDescription)
 				}
