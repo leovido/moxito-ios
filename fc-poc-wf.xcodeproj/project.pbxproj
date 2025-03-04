@@ -314,7 +314,6 @@
 		475F73B62CA888CD00E0CFEA /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		475F73B82CA94F8C00E0CFEA /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		475F73BA2CA95AF800E0CFEA /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
-		475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Moxito.xctestplan; path = MoxieTrackerTests/Moxito.xctestplan; sourceTree = SOURCE_ROOT; };
 		475F73C02CADAA0C00E0CFEA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionMoxieStatView.swift; sourceTree = "<group>"; };
 		475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
@@ -379,7 +378,6 @@
 		47EC54892C8F22FA006C2820 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-Release.xcconfig"; sourceTree = "<group>"; };
 		47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.template.xcconfig; sourceTree = "<group>"; };
-		47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingBannerView.swift; sourceTree = "<group>"; };
 		B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		B9D7FADE2D6772EA00BD57A0 /* ClaimBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimBalanceView.swift; sourceTree = "<group>"; };
 		B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimingOverlayView.swift; sourceTree = "<group>"; };
@@ -568,7 +566,6 @@
 				475F73AF2CA810B100E0CFEA /* MoxieActivityAttributes.swift */,
 				471FE9752C7F808C00D20F4C /* MoxieTrackerApp.swift */,
 				471FE9792C7F808D00D20F4C /* Assets.xcassets */,
-				475F73BF2CAC568D00E0CFEA /* Moxito.xctestplan */,
 				47E4CC3D2C9990AF00BE77E8 /* fonts */,
 				47E6B3222D6CDCB5002B980A /* Helpers */,
 				47EC54712C822B23006C2820 /* Home */,
@@ -839,7 +836,6 @@
 		47E6B3752D73354D002B980A /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				47FB8BD42D329C1A0034B1F8 /* VotingBannerView.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1785,10 +1781,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxitoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moxito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Moxito";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moxito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)Moxito";
 			};
 			name = Debug;
 		};
@@ -1804,10 +1804,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.christianleovido.MoxitoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moxito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Moxito";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moxito.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)Moxito";
 			};
 			name = Release;
 		};

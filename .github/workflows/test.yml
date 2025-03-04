@@ -1,0 +1,30 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Run tests
+      run: |
+        xcodebuild build-for-testing test-without-building \
+          -scheme MoxitoTests \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.0' \
+          -workspace fc-poc-wf.xcworkspace -quiet \
+          -enableCodeCoverage YES \
+          -resultBundlePath TestResults
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        xcode: true
+        xcode_derived_data: ./DerivedData 
