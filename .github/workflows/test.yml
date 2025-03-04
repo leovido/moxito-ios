@@ -16,20 +16,21 @@ jobs:
     - name: Select Xcode Version
       run: sudo xcode-select -s /Applications/Xcode_15.2.app
     
-    - name: List available schemes # Debug step
-      run: xcodebuild -workspace fc-poc-wf.xcworkspace -list
-    
-    - name: Build
-      run: xcodebuild build-for-testing -workspace fc-poc-wf.xcworkspace -scheme Moxito-DEBUG -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2'
-    
-    - name: Run tests
+    - name: Debug Project Structure
       run: |
-        xcodebuild test-without-building \
+        echo "=== Workspace Schemes ==="
+        ls -la fc-poc-wf.xcworkspace/xcshareddata/xcschemes/
+        echo "=== Available Schemes ==="
+        xcodebuild -workspace fc-poc-wf.xcworkspace -list
+    
+    - name: Build and Test
+      run: |
+        xcodebuild test \
+          -workspace fc-poc-wf.xcworkspace \
           -scheme MoxitoTests \
           -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2' \
-          -workspace fc-poc-wf.xcworkspace -quiet \
           -enableCodeCoverage YES \
-          -resultBundlePath TestResults
+          clean test
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
