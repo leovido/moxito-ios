@@ -18,9 +18,10 @@ jobs:
     
     - name: Build and Test
       run: |
-        xcodebuild test -workspace fc-poc-wf.xcworkspace \ 
+        xcodebuild test \
+        -workspace fc-poc-wf.xcworkspace \
         -scheme MoxitoTests \
-        -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2'
+        -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2' \
         -enableCodeCoverage YES
     
     - name: Upload coverage to Codecov
