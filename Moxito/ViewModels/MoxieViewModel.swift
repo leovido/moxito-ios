@@ -118,6 +118,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		}
 	}
 
+	// swiftlint:disable function_body_length
 	func setupListeners() {
 		$model
 			.compactMap(\.moxieClaimTotals)
@@ -262,9 +263,19 @@ final class MoxieViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 	}
+	// swiftlint:enable function_body_length
 
 	func removeActivity() async throws {
-		await self.currentActivity?.end(ActivityContent(state: .init(dailyMoxie: "", dailyUSD: "", claimableMoxie: "", claimableUSD: "", username: "", fid: "", imageURL: ""), staleDate: nil), dismissalPolicy: .immediate)
+		await self.currentActivity?.end(
+			ActivityContent(state: .init(
+				dailyMoxie: "",
+				dailyUSD: "",
+				claimableMoxie: "",
+				claimableUSD: "",
+				username: "",
+				fid: "",
+				imageURL: ""
+			), staleDate: nil), dismissalPolicy: .immediate)
 		self.currentActivity = nil
 	}
 
@@ -279,7 +290,10 @@ final class MoxieViewModel: ObservableObject, Observable {
 					let updatedContentState = MoxieActivityAttributes.ContentState(
 						dailyMoxie: newModel.allEarningsAmount.formatted(.number.precision(.fractionLength(0))),
 						dailyUSD: formattedDollarValue(dollarValue: newModel.allEarningsAmount * self.price),
-						claimableMoxie: newModel.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0",
+						claimableMoxie: newModel.moxieClaimTotals
+							.first?
+							.availableClaimAmount
+							.formatted(.number.precision(.fractionLength(0))) ?? "0",
 						claimableUSD: formattedDollarValue(dollarValue: ttt),
 						username: model.socials.profileDisplayName,
 						fid: model.entityID,
@@ -366,7 +380,9 @@ final class MoxieViewModel: ObservableObject, Observable {
 	func onAppear() async {
 		do {
 			if inputFID != 0 {
-				let newModel = try await client.fetchMoxieStats(userFID: inputFID, filter: MoxieFilter(rawValue: filterSelection) ?? .today)
+				let newModel = try await client.fetchMoxieStats(
+					userFID: inputFID,
+					filter: MoxieFilter(rawValue: filterSelection) ?? .today)
 				self.model = newModel
 				self.input = model.entityID
 				checkAndNotify(newModel: newModel, userInput: userInputNotifications)

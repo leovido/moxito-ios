@@ -81,7 +81,7 @@ struct AltRewardsView: View {
 	}
 }
 
-struct AltRewardsView_PREVIEW: PreviewProvider {
+struct AltRewardsViewPreview: PreviewProvider {
 	static var previews: some View {
 		AltRewardsView()
 	}

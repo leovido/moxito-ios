@@ -7,7 +7,7 @@ import Security
 struct MoxitoApp: App {
 	@StateObject var mainViewModel = MoxieViewModel.shared
 	@StateObject var claimViewModel: MoxieClaimViewModel = .shared
-	@StateObject var stepViewModel: StepCountViewModel = .init()
+	@StateObject var stepViewModel: StepCountViewModel = .init(client: .init())
 
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	@AppStorage("moxieData") var moxieData: Data = .init()

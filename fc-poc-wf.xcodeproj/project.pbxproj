@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		471FE9422C74C10B00D20F4C /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9402C74C10600D20F4C /* Provider.swift */; };
-		471FE9442C75090500D20F4C /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9432C75090500D20F4C /* TipLibs */; };
 		471FE9462C764B8B00D20F4C /* FCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9452C764B8B00D20F4C /* FCard.swift */; };
 		471FE9482C764FF600D20F4C /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9472C764FF600D20F4C /* LeaderboardView.swift */; };
 		471FE94A2C7749C400D20F4C /* GenericTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9492C7749C400D20F4C /* GenericTipView.swift */; };
@@ -30,6 +29,10 @@
 		471FE9BF2C7F823400D20F4C /* MoxieWidgetSimpleBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE95C2C7E59A500D20F4C /* MoxieWidgetSimpleBundle.swift */; };
 		471FE9C02C7F823400D20F4C /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9622C7E59A500D20F4C /* AppIntent.swift */; };
 		471FE9C52C7F82E400D20F4C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9C42C7F82E400D20F4C /* MoxieLib */; };
+		4727832F2D7732DB00A366E7 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 4727832E2D7732DB00A366E7 /* MoxieLib */; };
+		472783312D7732DB00A366E7 /* MoxitoLib in Frameworks */ = {isa = PBXBuildFile; productRef = 472783302D7732DB00A366E7 /* MoxitoLib */; };
+		4727835A2D776CF200A366E7 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = 472783592D776CF200A366E7 /* TipLibs */; };
+		4727835C2D776D0600A366E7 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = 4727835B2D776D0600A366E7 /* TipLibs */; };
 		47434E332CB6D87400C42C5C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
 		47434E342CB6D87400C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
 		47434E432CB6D87500C42C5C /* MoxitoStatsProfileWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -61,7 +64,6 @@
 		475F73C12CADAA1100E0CFEA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C02CADAA0C00E0CFEA /* ProfileView.swift */; };
 		475F73C42CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C32CAEBDC800E0CFEA /* ProfileSectionMoxieStatView.swift */; };
 		475F73C62CAEC5E100E0CFEA /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475F73C52CAEC5DE00E0CFEA /* ScaledFont.swift */; };
-		477FB5CB2CD66F1000AC3CC9 /* MoxitoLib in Frameworks */ = {isa = PBXBuildFile; productRef = 477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */; };
 		479489E72CD0F0020010CF9B /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E62CD0EFFE0010CF9B /* HealthKitService.swift */; };
 		479489EA2CD65F5B0010CF9B /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479489E92CD65F590010CF9B /* WeekView.swift */; };
 		47C324032C6E578300BE03C2 /* fc_poc_wfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C324022C6E578300BE03C2 /* fc_poc_wfApp.swift */; };
@@ -108,7 +110,6 @@
 		47EB01AE2CF9EF1D00ABA9A0 /* SyncingPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AD2CF9EF1A00ABA9A0 /* SyncingPointsView.swift */; };
 		47EB01B02CF9F11000ABA9A0 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01AF2CF9F10D00ABA9A0 /* PointsView.swift */; };
 		47EB01B22D104BA100ABA9A0 /* NavPillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB01B12D104B9200ABA9A0 /* NavPillView.swift */; };
-		47EC54642C808080006C2820 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 47EC54632C808080006C2820 /* MoxieLib */; };
 		47EC54662C822950006C2820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54652C822950006C2820 /* HomeView.swift */; };
 		47EC54682C8229B2006C2820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54672C8229B2006C2820 /* SettingsView.swift */; };
 		47EC546A2C8229F4006C2820 /* MoxieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54692C8229F4006C2820 /* MoxieViewModel.swift */; };
@@ -127,7 +128,6 @@
 		47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54892C8F22FA006C2820 /* OnboardingView.swift */; };
 		47FB8BAB2D329A1A0034B1F8 /* Config-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */; };
 		47FB8BAD2D329A230034B1F8 /* Config.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */; };
-		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9D7FADA2D676F7400BD57A0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */; };
 		B9D7FAE32D6772EA00BD57A0 /* ClaimingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */; };
 		B9D7FAE42D6772EA00BD57A0 /* EarningsCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */; };
@@ -437,12 +437,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				477FB5CB2CD66F1000AC3CC9 /* MoxitoLib in Frameworks */,
+				472783312D7732DB00A366E7 /* MoxitoLib in Frameworks */,
 				475F73BC2CA95B1600E0CFEA /* ActivityKit.framework in Frameworks */,
 				47EC54862C8E04AE006C2820 /* ConfettiSwiftUI in Frameworks */,
-				47EC54642C808080006C2820 /* MoxieLib in Frameworks */,
 				47E4CBE22C90AFC100BE77E8 /* Sentry in Frameworks */,
 				475F73B52CA884AD00E0CFEA /* DevCycle in Frameworks */,
+				4727832F2D7732DB00A366E7 /* MoxieLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,7 +506,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				471FE9442C75090500D20F4C /* TipLibs in Frameworks */,
+				4727835C2D776D0600A366E7 /* TipLibs in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +549,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */,
+				4727835A2D776CF200A366E7 /* TipLibs in Frameworks */,
 				B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */,
 				B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */,
 			);
@@ -943,11 +943,11 @@
 			);
 			name = Moxito;
 			packageProductDependencies = (
-				47EC54632C808080006C2820 /* MoxieLib */,
 				47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */,
 				47E4CBE12C90AFC100BE77E8 /* Sentry */,
 				475F73B42CA884AD00E0CFEA /* DevCycle */,
-				477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */,
+				4727832E2D7732DB00A366E7 /* MoxieLib */,
+				472783302D7732DB00A366E7 /* MoxitoLib */,
 			);
 			productName = MoxieTracker;
 			productReference = 471FE9732C7F808C00D20F4C /* Moxito.app */;
@@ -1099,7 +1099,7 @@
 			);
 			name = "fc-poc-wf";
 			packageProductDependencies = (
-				471FE9432C75090500D20F4C /* TipLibs */,
+				4727835B2D776D0600A366E7 /* TipLibs */,
 			);
 			productName = "fc-poc-wf";
 			productReference = 47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */;
@@ -1195,7 +1195,7 @@
 			);
 			name = FartherWidgetExtension;
 			packageProductDependencies = (
-				B983C1022C74BC3E009B8893 /* TipLibs */,
+				472783592D776CF200A366E7 /* TipLibs */,
 			);
 			productName = FartherWidgetExtension;
 			productReference = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */;
@@ -1270,6 +1270,8 @@
 				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */,
+				472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */,
+				47E01CD62D79F0F3001971B6 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -1421,7 +1423,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint ./Moxito --autocorrect\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint ./Moxito\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
 		8CA6C22ED7344468AA1179F4 /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1681,7 +1683,7 @@
 /* Begin XCBuildConfiguration section */
 		471FE9952C7F808D00D20F4C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */;
+			baseConfigurationReference = 47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2645,6 +2647,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = TipLibs;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2652,6 +2661,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.14.0;
+			};
+		};
+		47E01CD62D79F0F3001971B6 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.58.2;
 			};
 		};
 		47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
@@ -2681,10 +2698,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		471FE9432C75090500D20F4C /* TipLibs */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TipLibs;
-		};
 		471FE99D2C7F809600D20F4C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
@@ -2692,6 +2705,24 @@
 		471FE9C42C7F82E400D20F4C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
+		};
+		4727832E2D7732DB00A366E7 /* MoxieLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxieLib;
+		};
+		472783302D7732DB00A366E7 /* MoxitoLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoxitoLib;
+		};
+		472783592D776CF200A366E7 /* TipLibs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */;
+			productName = TipLibs;
+		};
+		4727835B2D776D0600A366E7 /* TipLibs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */;
+			productName = TipLibs;
 		};
 		47434E562CB6D89E00C42C5C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2710,10 +2741,6 @@
 			package = 475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */;
 			productName = DevCycle;
 		};
-		477FB5CA2CD66F1000AC3CC9 /* MoxitoLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MoxitoLib;
-		};
 		47E4CBE12C90AFC100BE77E8 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
@@ -2723,18 +2750,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
 		};
-		47EC54632C808080006C2820 /* MoxieLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MoxieLib;
-		};
 		47EC54852C8E04AE006C2820 /* ConfettiSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
 			productName = ConfettiSwiftUI;
-		};
-		B983C1022C74BC3E009B8893 /* TipLibs */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TipLibs;
 		};
 		B9DF7F532C73611B0073D772 /* OpenGraph */ = {
 			isa = XCSwiftPackageProductDependency;

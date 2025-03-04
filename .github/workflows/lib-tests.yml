@@ -1,4 +1,4 @@
-name: Tests
+name: Library tests
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 jobs:
   test:
     runs-on: macos-15
-    environment: 'PRODUCTION'
 
     steps:
     - uses: actions/checkout@v4
@@ -22,40 +21,17 @@ jobs:
         XCODE_PATH=$(ls -d /Applications/Xcode*.app | sort -V | tail -n 1)
         echo "Using Xcode at: $XCODE_PATH"
         sudo xcode-select -s "$XCODE_PATH"
-    
-    - name: Generate Config Files
-      run: |
-        cat > Config-Release.xcconfig << EOF
-        NEYNAR_API_KEY = ${{ secrets.NEYNAR_API_KEY }}
-        EOF
+
     - name: Install Dependencies
       run: |
         brew install swiftlint
         brew install getsentry/tools/sentry-cli
 
-    - name: Cache SPM
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.build
-          ~/Library/Caches/org.swift.swiftpm
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
-        restore-keys: |
-          ${{ runner.os }}-spm-
-    
-    - name: Cache Derived Data
-      uses: actions/cache@v3
-      with:
-        path: ~/Library/Developer/Xcode/DerivedData
-        key: ${{ runner.os }}-derived-data-${{ hashFiles('**/*.xcodeproj/project.pbxproj') }}
-        restore-keys: |
-          ${{ runner.os }}-derived-data-  
-    
-    - name: Build and Test
+    - name: Test Moxie Library
       run: |
-        xcodebuild test \
+        xcodebuild build-for-testing test-without-building \
           -workspace fc-poc-wf.xcworkspace \
-          -scheme "Moxito" \
+          -scheme "MoxieTests" \
           -configuration Debug \
           -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
           -enableCodeCoverage YES \

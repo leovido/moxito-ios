@@ -427,6 +427,6 @@ struct RewardsView_Previews: PreviewProvider {
 		RewardsView()
 			.environmentObject(MoxieViewModel())
 			.environmentObject(MoxieClaimViewModel())
-			.environmentObject(StepCountViewModel(didAuthorizeHealthKit: true))
+			.environmentObject(StepCountViewModel(didAuthorizeHealthKit: true, client: .init()))
 	}
 }

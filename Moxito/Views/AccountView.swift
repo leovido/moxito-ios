@@ -170,13 +170,13 @@ struct MoxieSimpleWidget: View {
 	@EnvironmentObject var viewModel: MoxieViewModel
 
 	var dollarValueDaily: String {
-		let d = viewModel.price * viewModel.model.allEarningsAmount
-		return formattedDollarValue(dollarValue: d)
+		let decimal = viewModel.price * viewModel.model.allEarningsAmount
+		return formattedDollarValue(dollarValue: decimal)
 	}
 
 	var dollarValueClaimable: String {
-		let d = viewModel.model.moxieClaimTotals[0].availableClaimAmount * viewModel.price
-		return formattedDollarValue(dollarValue: d)
+		let decimal = viewModel.model.moxieClaimTotals[0].availableClaimAmount * viewModel.price
+		return formattedDollarValue(dollarValue: decimal)
 	}
 
 	var body: some View {

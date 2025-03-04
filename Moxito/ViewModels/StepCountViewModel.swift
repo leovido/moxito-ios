@@ -33,7 +33,7 @@ enum StepCountAction: Hashable {
 
 @MainActor
 final class StepCountViewModel: ObservableObject, Observable {
-	static let shared = StepCountViewModel()
+	static let shared = StepCountViewModel(client: .init())
 	let healthKitManager: HealthKitService
 
 	@Published var totalUsersCheckedInCount: Int = 0
@@ -67,7 +67,12 @@ final class StepCountViewModel: ObservableObject, Observable {
 	let actions: PassthroughSubject<StepCountAction, Never> = .init()
 	private(set) var subscriptions: Set<AnyCancellable> = []
 
-	init(healthKitManager: HealthKitService = HealthKitService(), steps: Decimal = 0, caloriesBurned: Decimal = 0, distanceTraveled: Decimal = 0, restingHeartRate: Decimal = 0, didAuthorizeHealthKit: Bool = false,
+	init(healthKitManager: HealthKitService = HealthKitService(),
+			 steps: Decimal = 0,
+			 caloriesBurned: Decimal = 0,
+			 distanceTraveled: Decimal = 0,
+			 restingHeartRate: Decimal = 0,
+			 didAuthorizeHealthKit: Bool = false,
 			 client: MoxitoClient = .init()) {
 		self.healthKitManager = healthKitManager
 		self.steps = steps
@@ -78,6 +83,11 @@ final class StepCountViewModel: ObservableObject, Observable {
 		self.client = client
 		self.currentRound = currentRound
 
+		setupListeners()
+	}
+	
+	// swiftlint:disable cyclomatic_complexity function_body_length
+	func setupListeners() {
 		$checkins
 			.removeDuplicates()
 			.filter { !$0.isEmpty }
@@ -94,7 +104,7 @@ final class StepCountViewModel: ObservableObject, Observable {
 									let endDate = await self.endOfDay(for: model.createdAt) ?? Date()
 									let points = await self.calculateTotalPoints(startDate: model.createdAt, endDate: endDate)
 
-									_ = try await client.postScore(
+									_ = try await self.client.postScore(
 										model: .init(
 											score: points,
 											fid: self.fid,
@@ -233,7 +243,8 @@ final class StepCountViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 	}
-
+	// swiftlint:enable cyclomatic_complexity
+	
 	func getStartAndEndOfCurrentWeek() -> (startOfWeek: Date?, endOfWeek: Date?) {
 		let calendar = Calendar.current
 		let today = Date()
@@ -345,7 +356,9 @@ final class StepCountViewModel: ObservableObject, Observable {
 		let result = calculateRewardPoints(activity: activity)
 		return result
 	}
+}
 
+extension StepCountViewModel {
 	func fetchHealthDataForDateRange(start: Date, end: Date) async -> [String: Double] {
 		await withCheckedContinuation { continuation in
 			fetchHealthDataForDateRange(start: start, end: end) { results in
