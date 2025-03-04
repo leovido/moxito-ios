@@ -16,13 +16,20 @@ jobs:
     - name: Select Xcode Version
       run: sudo xcode-select -s /Applications/Xcode_15.2.app
     
+    - name: List Available Destinations
+      run: xcrun simctl list devices
+      
+    - name: Create Simulator
+      run: xcrun simctl create "iPhone 15 Pro" "iPhone 15 Pro"
+    
     - name: Build and Test
       run: |
         xcodebuild test \
-        -workspace fc-poc-wf.xcworkspace \
-        -scheme MoxitoTests \
-        -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2' \
-        -enableCodeCoverage YES
+          -workspace fc-poc-wf.xcworkspace \
+          -scheme MoxitoTests \
+          -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+          -enableCodeCoverage YES \
+          clean test
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
