@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		471FE9422C74C10B00D20F4C /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9402C74C10600D20F4C /* Provider.swift */; };
-		471FE9442C75090500D20F4C /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9432C75090500D20F4C /* TipLibs */; };
 		471FE9462C764B8B00D20F4C /* FCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9452C764B8B00D20F4C /* FCard.swift */; };
 		471FE9482C764FF600D20F4C /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9472C764FF600D20F4C /* LeaderboardView.swift */; };
 		471FE94A2C7749C400D20F4C /* GenericTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FE9492C7749C400D20F4C /* GenericTipView.swift */; };
@@ -32,6 +31,8 @@
 		471FE9C52C7F82E400D20F4C /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 471FE9C42C7F82E400D20F4C /* MoxieLib */; };
 		4727832F2D7732DB00A366E7 /* MoxieLib in Frameworks */ = {isa = PBXBuildFile; productRef = 4727832E2D7732DB00A366E7 /* MoxieLib */; };
 		472783312D7732DB00A366E7 /* MoxitoLib in Frameworks */ = {isa = PBXBuildFile; productRef = 472783302D7732DB00A366E7 /* MoxitoLib */; };
+		4727835A2D776CF200A366E7 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = 472783592D776CF200A366E7 /* TipLibs */; };
+		4727835C2D776D0600A366E7 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = 4727835B2D776D0600A366E7 /* TipLibs */; };
 		47434E332CB6D87400C42C5C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324322C6E57D400BE03C2 /* WidgetKit.framework */; };
 		47434E342CB6D87400C42C5C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C324342C6E57D500BE03C2 /* SwiftUI.framework */; };
 		47434E432CB6D87500C42C5C /* MoxitoStatsProfileWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 47434E322CB6D87400C42C5C /* MoxitoStatsProfileWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -127,7 +128,6 @@
 		47EC548A2C8F22FA006C2820 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EC54892C8F22FA006C2820 /* OnboardingView.swift */; };
 		47FB8BAB2D329A1A0034B1F8 /* Config-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAA2D329A1A0034B1F8 /* Config-Release.xcconfig */; };
 		47FB8BAD2D329A230034B1F8 /* Config.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 47FB8BAC2D329A230034B1F8 /* Config.template.xcconfig */; };
-		B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */ = {isa = PBXBuildFile; productRef = B983C1022C74BC3E009B8893 /* TipLibs */; };
 		B9D7FADA2D676F7400BD57A0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAD92D676F7100BD57A0 /* HeaderView.swift */; };
 		B9D7FAE32D6772EA00BD57A0 /* ClaimingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FADF2D6772EA00BD57A0 /* ClaimingOverlayView.swift */; };
 		B9D7FAE42D6772EA00BD57A0 /* EarningsCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D7FAE02D6772EA00BD57A0 /* EarningsCardsView.swift */; };
@@ -506,7 +506,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				471FE9442C75090500D20F4C /* TipLibs in Frameworks */,
+				4727835C2D776D0600A366E7 /* TipLibs in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +549,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B983C1032C74BC3E009B8893 /* TipLibs in Frameworks */,
+				4727835A2D776CF200A366E7 /* TipLibs in Frameworks */,
 				B9DF7F5C2C73B0FD0073D772 /* SwiftUI.framework in Frameworks */,
 				B9DF7F5B2C73B0FD0073D772 /* WidgetKit.framework in Frameworks */,
 			);
@@ -1099,7 +1099,7 @@
 			);
 			name = "fc-poc-wf";
 			packageProductDependencies = (
-				471FE9432C75090500D20F4C /* TipLibs */,
+				4727835B2D776D0600A366E7 /* TipLibs */,
 			);
 			productName = "fc-poc-wf";
 			productReference = 47C323FF2C6E578300BE03C2 /* fc-poc-wf.app */;
@@ -1195,7 +1195,7 @@
 			);
 			name = FartherWidgetExtension;
 			packageProductDependencies = (
-				B983C1022C74BC3E009B8893 /* TipLibs */,
+				472783592D776CF200A366E7 /* TipLibs */,
 			);
 			productName = FartherWidgetExtension;
 			productReference = B9DF7F5A2C73B0FD0073D772 /* FartherWidgetExtension.appex */;
@@ -1270,6 +1270,7 @@
 				47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				47E4CBE02C90AFC100BE77E8 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */,
+				472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */,
 			);
 			productRefGroup = 47C324002C6E578300BE03C2 /* Products */;
 			projectDirPath = "";
@@ -2645,6 +2646,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = TipLibs;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		475F73B32CA884AD00E0CFEA /* XCRemoteSwiftPackageReference "ios-client-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2681,10 +2689,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		471FE9432C75090500D20F4C /* TipLibs */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TipLibs;
-		};
 		471FE99D2C7F809600D20F4C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxieLib;
@@ -2700,6 +2704,16 @@
 		472783302D7732DB00A366E7 /* MoxitoLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoxitoLib;
+		};
+		472783592D776CF200A366E7 /* TipLibs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */;
+			productName = TipLibs;
+		};
+		4727835B2D776D0600A366E7 /* TipLibs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 472783582D776CE900A366E7 /* XCLocalSwiftPackageReference "TipLibs" */;
+			productName = TipLibs;
 		};
 		47434E562CB6D89E00C42C5C /* MoxieLib */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2731,10 +2745,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 47EC54842C8E04AE006C2820 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
 			productName = ConfettiSwiftUI;
-		};
-		B983C1022C74BC3E009B8893 /* TipLibs */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TipLibs;
 		};
 		B9DF7F532C73611B0073D772 /* OpenGraph */ = {
 			isa = XCSwiftPackageProductDependency;
