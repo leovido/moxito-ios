@@ -54,7 +54,7 @@ jobs:
           -workspace fc-poc-wf.xcworkspace \
           -scheme "Moxito" \
           -configuration Debug \
-          -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
+          -destination "id=$DEVICE_ID" \
           | xcpretty --color --simple
 
     - name: Test
