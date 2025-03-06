@@ -27,63 +27,51 @@ jobs:
         cat > Config-Release.xcconfig << EOF
         NEYNAR_API_KEY = NEYNAR_DOCS
         EOF
+
     - name: Install Dependencies
       run: |
         brew install swiftlint
-        brew install getsentry/tools/sentry-cli
-
-    - name: Cache SPM
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.build
-          ~/Library/Caches/org.swift.swiftpm
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
-        restore-keys: |
-          ${{ runner.os }}-spm-
+        brew install getsentry/tools/sentry-cli 
     
-    - name: Cache Derived Data
-      uses: actions/cache@v3
-      with:
-        path: ~/Library/Developer/Xcode/DerivedData
-        key: ${{ runner.os }}-derived-data-${{ hashFiles('**/*.xcodeproj/project.pbxproj') }}
-        restore-keys: |
-          ${{ runner.os }}-derived-data-  
-    
-    - name: Start Simulator
+    - name: Prepare for Testing
       run: |
+        echo "Killing existing simulator processes..."
+        killall Simulator || true
+        killall -9 com.apple.CoreSimulator.CoreSimulatorService || true
+        
+        echo "Getting specific simulator ID..."
         DEVICE_ID=$(xcrun simctl list devices | grep -m 1 'iPhone 16' | awk -F'[()]' '{print $2}')
+        echo "Device ID: $DEVICE_ID"
+        
+        echo "Booting specific simulator..."
         xcrun simctl boot "$DEVICE_ID" || true
-        xcrun simctl list devices
+        sleep 10
 
     - name: Build
       timeout-minutes: 10
       run: |
-        xcodebuild build-for-testing \
+        xcodebuild clean build-for-testing \
           -workspace fc-poc-wf.xcworkspace \
           -scheme "Moxito" \
           -configuration Debug \
           -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
-          COMPILER_INDEX_STORE_ENABLE=NO \
           | xcpretty --color --simple
 
     - name: Test
       timeout-minutes: 10
       run: |
-        # Kill any existing Simulator processes
-        killall Simulator || true
-        killall -9 com.apple.CoreSimulator.CoreSimulatorService || true
-        
-        # Wait for simulator to be ready
-        xcrun simctl boot "iPhone 16" || true
-        sleep 5
+        # Get specific simulator ID
+        DEVICE_ID=$(xcrun simctl list devices | grep -m 1 'iPhone 16' | awk -F'[()]' '{print $2}')
         
         xcodebuild test-without-building \
           -workspace fc-poc-wf.xcworkspace \
           -scheme "Moxito" \
-          -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
+          -destination "id=$DEVICE_ID" \
           -enableCodeCoverage YES \
           -resultBundlePath TestResults \
+          -parallel-testing-enabled NO \
+          -maximum-concurrent-test-simulator-destinations 1 \
+          -disable-concurrent-destination-testing \
           | xcpretty --color --simple
     
     - name: Upload coverage to Codecov
