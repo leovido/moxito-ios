@@ -51,18 +51,27 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-derived-data-  
     
-    - name: Build and Test
-      env:
-        DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
-        SKIP_SWIFTLINT: true  # Skip SwiftLint here since we ran it separately
+    - name: Build
+      timeout-minutes: 10
       run: |
-        xcodebuild test \
+        xcodebuild build-for-testing \
           -workspace fc-poc-wf.xcworkspace \
           -scheme "Moxito" \
           -configuration Debug \
           -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
+          COMPILER_INDEX_STORE_ENABLE=NO \
+          | xcpretty --color --simple
+
+    - name: Test
+      timeout-minutes: 10
+      run: |
+        xcodebuild test-without-building \
+          -workspace fc-poc-wf.xcworkspace \
+          -scheme "Moxito" \
+          -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
           -enableCodeCoverage YES \
-          -resultBundlePath TestResults
+          -resultBundlePath TestResults \
+          | xcpretty --color --simple
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
