@@ -9,7 +9,6 @@ on:
 jobs:
   test:
     runs-on: macos-15
-    environment: 'PRODUCTION'
 
     steps:
     - uses: actions/checkout@v4
@@ -26,7 +25,7 @@ jobs:
     - name: Generate Config Files
       run: |
         cat > Config-Release.xcconfig << EOF
-        NEYNAR_API_KEY = ${{ secrets.NEYNAR_API_KEY }}
+        NEYNAR_API_KEY = NEYNAR_DOCS
         EOF
     - name: Install Dependencies
       run: |
@@ -51,6 +50,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-derived-data-  
     
+    - name: Start Simulator
+      run: |
+        DEVICE_ID=$(xcrun simctl list devices | grep -m 1 'iPhone 16' | awk -F'[()]' '{print $2}')
+        xcrun simctl boot "$DEVICE_ID" || true
+        xcrun simctl list devices
+
     - name: Build
       timeout-minutes: 10
       run: |
@@ -65,6 +70,14 @@ jobs:
     - name: Test
       timeout-minutes: 10
       run: |
+        # Kill any existing Simulator processes
+        killall Simulator || true
+        killall -9 com.apple.CoreSimulator.CoreSimulatorService || true
+        
+        # Wait for simulator to be ready
+        xcrun simctl boot "iPhone 16" || true
+        sleep 5
+        
         xcodebuild test-without-building \
           -workspace fc-poc-wf.xcworkspace \
           -scheme "Moxito" \
