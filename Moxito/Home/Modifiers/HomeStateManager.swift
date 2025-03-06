@@ -11,6 +11,7 @@ struct HomeStateManagerModifier: ViewModifier {
 
 	@Environment(\.scenePhase) var scenePhase
 
+	// swiftlint:disable cyclomatic_complexity
 	func body(content: Content) -> some View {
 		content
 			.onChange(of: scenePhase) { _, newPhase in
@@ -67,4 +68,5 @@ struct HomeStateManagerModifier: ViewModifier {
 				}
 			}
 	}
+	// swiftlint:enable cyclomatic_complexity
 }

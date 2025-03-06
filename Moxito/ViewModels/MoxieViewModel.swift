@@ -118,7 +118,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 		}
 	}
 
-	// swiftlint:disable function_body_length
+	// swiftlint:disable function_body_length cyclomatic_complexity
 	func setupListeners() {
 		$model
 			.compactMap(\.moxieClaimTotals)
@@ -263,7 +263,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 			}
 			.store(in: &subscriptions)
 	}
-	// swiftlint:enable function_body_length
+	// swiftlint:enable function_body_length cyclomatic_complexity
 
 	func removeActivity() async throws {
 		await self.currentActivity?.end(

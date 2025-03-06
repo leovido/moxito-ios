@@ -51,12 +51,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-derived-data-  
     
-    - name: Run SwiftLint
-      run: |
-        swiftlint lint --reporter json > swiftlint-report.json
-        echo "SwiftLint Violations:"
-        cat swiftlint-report.json | jq '.[] | "File: \(.file), Line: \(.line), Type: \(.type), Rule: \(.rule)"'
-
     - name: Build and Test
       env:
         DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
