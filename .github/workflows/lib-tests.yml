@@ -1,0 +1,45 @@
+name: Library tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-15
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: List Available Xcode Versions
+      run: ls -la /Applications/Xcode*
+    
+    - name: Select Xcode Version
+      run: |
+        XCODE_PATH=$(ls -d /Applications/Xcode*.app | sort -V | tail -n 1)
+        echo "Using Xcode at: $XCODE_PATH"
+        sudo xcode-select -s "$XCODE_PATH"
+
+    - name: Install Dependencies
+      run: |
+        brew install swiftlint
+        brew install getsentry/tools/sentry-cli
+
+    - name: Test Moxie Library
+      run: |
+        xcodebuild build-for-testing test-without-building \
+          -workspace fc-poc-wf.xcworkspace \
+          -scheme "MoxieTests" \
+          -configuration Debug \
+          -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
+          -enableCodeCoverage YES \
+          -resultBundlePath TestResults -quiet
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        xcode: true
+        xcode_derived_data: ~/Library/Developer/Xcode/DerivedData

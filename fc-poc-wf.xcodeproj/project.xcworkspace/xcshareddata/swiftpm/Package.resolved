@@ -1,5 +1,24 @@
 {
+  "originHash" : "33cce944a4ec5180cec63f8f6f9fe897542234bf255d86272b95bc43957df33f",
   "pins" : [
+    {
+      "identity" : "confettiswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/simibac/ConfettiSwiftUI.git",
+      "state" : {
+        "revision" : "f45961f97bbae6fff6e2e64546fea0189425ad92",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "ios-client-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DevCycleHQ/ios-client-sdk.git",
+      "state" : {
+        "revision" : "ca08da33e4e49f753fd8d2b7b708f46153c51947",
+        "version" : "1.17.3"
+      }
+    },
     {
       "identity" : "opengraph",
       "kind" : "remoteSourceControl",
@@ -8,7 +27,25 @@
         "revision" : "15fa71b31cf85695cf7035a077aaa624f679f53a",
         "version" : "1.6.0"
       }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa.git",
+      "state" : {
+        "revision" : "e0fa062817b277fd9ab597b54b8e2f92dc65b009",
+        "version" : "8.46.0"
+      }
+    },
+    {
+      "identity" : "swift-eventsource",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LaunchDarkly/swift-eventsource.git",
+      "state" : {
+        "revision" : "57051701c58a93603ffa2051f8e9cf0c8cff7814",
+        "version" : "3.3.0"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

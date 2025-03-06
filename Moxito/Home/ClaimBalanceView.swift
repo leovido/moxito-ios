@@ -5,6 +5,18 @@ struct ClaimBalanceView: View {
 	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
 	@EnvironmentObject var viewModel: MoxieViewModel
 
+	var balance: String {
+		if claimViewModel.willPlayAnimationNumbers {
+			return claimViewModel.number.formatted(.number.precision(.fractionLength(0)))
+		} else {
+			return viewModel.model
+				.moxieClaimTotals
+				.first?
+				.availableClaimAmount
+				.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE"
+		}
+	}
+
 	var body: some View {
 		VStack(alignment: .center) {
 			if !viewModel.model.socials.profileImage.isEmpty {
@@ -28,7 +40,7 @@ struct ClaimBalanceView: View {
 				.foregroundStyle(Color(uiColor: MoxieColor.primary))
 
 			HStack {
-				Text("\(claimViewModel.willPlayAnimationNumbers ? claimViewModel.number.formatted(.number.precision(.fractionLength(0))) : viewModel.model.moxieClaimTotals.first?.availableClaimAmount.formatted(.number.precision(.fractionLength(0))) ?? "0 $MOXIE")")
+				Text(balance)
 					.font(.largeTitle)
 					.font(.custom("Inter", size: 20))
 					.foregroundStyle(Color(uiColor: MoxieColor.primary))

@@ -13,8 +13,8 @@ struct ProfileView: View {
 		guard let fcScore = viewModel.model.socials.farcasterScore else {
 			return ""
 		}
-		let d = Decimal(string: fcScore.tvl) ?? 0
-		let value = d / pow(10, 18)
+		let decimal = Decimal(string: fcScore.tvl) ?? 0
+		let value = decimal / pow(10, 18)
 
 		return value.formatted(.number.precision(.fractionLength(2)))
 	}
@@ -133,27 +133,27 @@ struct GridItemBigView: View {
 	let farScore: Decimal
 
 	var like: String {
-		let d = farScore * 0.5
+		let decimal = farScore * 0.5
 
-		return d.formatted(.number.precision(.fractionLength(0)))
+		return decimal.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var reply: String {
-		let d = farScore * 1
+		let decimal = farScore * 1
 
-		return d.formatted(.number.precision(.fractionLength(0)))
+		return decimal.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var recast: String {
-		let d = farScore * 2
+		let decimal = farScore * 2
 
-		return d.formatted(.number.precision(.fractionLength(0)))
+		return decimal.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var replyke: String {
-		let d = farScore * 3.5
+		let decimal = farScore * 3.5
 
-		return d.formatted(.number.precision(.fractionLength(0)))
+		return decimal.formatted(.number.precision(.fractionLength(0)))
 	}
 
 	var body: some View {
