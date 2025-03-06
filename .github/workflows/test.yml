@@ -51,7 +51,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-derived-data-  
     
+    - name: Run SwiftLint
+      run: |
+        swiftlint lint --reporter json > swiftlint-report.json
+        echo "SwiftLint Violations:"
+        cat swiftlint-report.json | jq '.[] | "File: \(.file), Line: \(.line), Type: \(.type), Rule: \(.rule)"'
+
     - name: Build and Test
+      env:
+        DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+        SKIP_SWIFTLINT: true  # Skip SwiftLint here since we ran it separately
       run: |
         xcodebuild test \
           -workspace fc-poc-wf.xcworkspace \
@@ -59,7 +68,7 @@ jobs:
           -configuration Debug \
           -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
           -enableCodeCoverage YES \
-          -resultBundlePath TestResults -quiet
+          -resultBundlePath TestResults
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
