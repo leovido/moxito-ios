@@ -10,6 +10,13 @@
 
 Moxito is an iOS application that integrates with Farcaster's social protocol to track and manage Moxie rewards. The app showcases modern iOS development practices, SwiftUI implementation, and robust architecture patterns.
 
+## Impact
+- 🏆 Won $10500 in hackathon prizes (Devfolio + Airstack Retro Grant)
+- 📱 100+ TestFlight users
+- 👥 1.1K organic followers on Farcaster
+- ⭐ Featured by Airstack and Moxie team
+- 🎨 Viral iOS widgets that users loved
+
 ## Why Moxito?
 Moxito was born in Farcaster, a social platform where [Moxie](https://moxie.xyz/) started. I participated in a Hackathon and won second prize and a Retro Grant placing as a finalist. 
 
