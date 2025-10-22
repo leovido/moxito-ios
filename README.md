@@ -33,6 +33,21 @@ Users get rewards for walking, running, and doing any physical activity. HealthK
 <img src="./Screenshots/iphone_app_store_moxito_2.png" width="30%" />
 <img src="./Screenshots/iphone_app_store_moxito_3.png" width="30%" /></p>
 
+## 📝 Note on Code Quality
+
+This project was built during the Moxiethon hackathon with a focus on 
+shipping to real users quickly. Some architectural decisions prioritized 
+speed over perfection.
+
+**What I'd do differently today:**
+- Improve backend architecture (AWS Lambda structure)
+- Better error handling and resilience
+- Stronger separation of concerns
+
+**But it worked:** 100+ TestFlight users, $10.5K in prizes, 1.1K followers.
+
+Sometimes shipping fast beats perfect code. This taught me that.
+
 ## 🛠 Development Setup
 
 1. Clone the repository
