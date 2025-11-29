@@ -61,7 +61,7 @@ final class MoxieViewModel: ObservableObject, Observable {
 	init(input: String = "",
 			 model: MoxieModel = .noop,
 			 isLoading: Bool = false,
-			 client: MoxieProvider = MoxieClient(),
+			 client: MoxieProvider = MockMoxieClient(),
 			 isSearchMode: Bool = false,
 			 filterSelection: Int = 0,
 			 userInputNotifications: Decimal = 0,

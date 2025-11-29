@@ -52,7 +52,7 @@ final class MoxieClaimViewModel: ObservableObject, Observable {
 
 	init(moxieClaimStatus: MoxieClaimStatus? = nil,
 			 moxieClaimModel: MoxieClaimModel? = nil,
-			 client: MoxieProvider = MoxieClient()) {
+			 client: MoxieProvider = MockMoxieClient()) {
 		self.client = client
 		self.moxieClaimModel = moxieClaimModel
 		self.moxieClaimStatus = moxieClaimStatus
