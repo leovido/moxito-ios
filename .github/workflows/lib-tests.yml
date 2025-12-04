@@ -33,7 +33,7 @@ jobs:
           -workspace fc-poc-wf.xcworkspace \
           -scheme "MoxieTests" \
           -configuration Debug \
-          -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16' \
+          -destination 'platform=iOS Simulator,OS=18.4,name=iPhone 16' \
           -enableCodeCoverage YES \
           -resultBundlePath TestResults -quiet
     
