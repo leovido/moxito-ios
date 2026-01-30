@@ -6,11 +6,10 @@ struct RewardsView: View {
 	@Environment(\.locale) var locale
 	@EnvironmentObject var viewModel: StepCountViewModel
 
-	@EnvironmentObject var claimViewModel: MoxieClaimViewModel
-	@EnvironmentObject var mainViewModel: MoxieViewModel
-	@State private var isBeating = false
-	@State private var timeRemaining: TimeInterval = 0
-	@State private var timer: Timer?
+        @EnvironmentObject var claimViewModel: MoxieClaimViewModel
+        @EnvironmentObject var mainViewModel: MoxieViewModel
+        @State private var isBeating = false
+        @StateObject private var rewardsViewModel = RewardsViewModel()
 
 	let textOptionsCheckinShare: [String] = [
 		"Earning $MOXIE rewards today for staying active!\n\nChecking in with Moxito for my steps and fitness progress.\n\ncc: @moxito 🌱",
@@ -42,12 +41,13 @@ struct RewardsView: View {
 		mainViewModel.totalPoolRewards * mainViewModel.price
 	}
 
-	private var formattedTimeRemaining: String {
-		let hours = Int(timeRemaining) / 3600
-		let minutes = Int(timeRemaining) / 60 % 60
-		let seconds = Int(timeRemaining) % 60
-		return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-	}
+        private var formattedTimeRemaining: String {
+                let time = rewardsViewModel.timeRemaining
+                let hours = Int(time) / 3600
+                let minutes = Int(time) / 60 % 60
+                let seconds = Int(time) % 60
+                return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        }
 
 	var body: some View {
 		NavigationStack {
@@ -270,7 +270,7 @@ struct RewardsView: View {
 								.foregroundColor(.gray)
 								.padding()
 
-								Button(action: openHealthApp) {
+                                                                Button(action: rewardsViewModel.openHealthApp) {
 									HStack {
 										Image(systemName: "heart.fill")
 											.foregroundColor(.red)
@@ -384,42 +384,14 @@ struct RewardsView: View {
 													startDate: utcCalendar.startOfDay(for: Date()),
 													endDate: utcCalendar.date(byAdding: .day, value: 1, to: utcCalendar.startOfDay(for: Date()))!
 											))
-					updateTimeRemaining()
-					timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-						updateTimeRemaining()
-					}
-				}
-				.onDisappear {
-					timer?.invalidate()
-					timer = nil
-				}
-			}
-		}
-	}
-
-	private func openHealthApp() {
-		if let url = URL(string: "x-apple-health://") {
-			UIApplication.shared.open(url)
-		}
-	}
-
-	private func updateTimeRemaining() {
-		let calendar = Calendar.current
-		let now = Date()
-		let utcCalendar = Calendar(identifier: .gregorian)
-		var components = DateComponents()
-		components.timeZone = TimeZone(identifier: "UTC")
-		components.hour = 0
-		components.minute = 0
-		components.second = 0
-
-		guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: now),
-			  let nextDeadline = utcCalendar.nextDate(after: now, matching: components, matchingPolicy: .nextTime) else {
-			return
-		}
-
-		timeRemaining = nextDeadline.timeIntervalSince(now)
-	}
+                                        rewardsViewModel.actions.send(.onAppear)
+                                }
+                                .onDisappear {
+                                        rewardsViewModel.actions.send(.onDisappear)
+                                }
+                        }
+                }
+        }
 }
 
 struct RewardsView_Previews: PreviewProvider {
