@@ -3,7 +3,6 @@
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%2017.0-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
-[![codecov](https://codecov.io/gh/leovido/moxito-ios/branch/main/graph/badge.svg?token=your-token)](https://codecov.io/gh/leovido/moxito-ios)
 [![Tests](https://github.com/leovido/moxito-ios/actions/workflows/test.yml/badge.svg)](https://github.com/leovido/moxito-ios/actions/workflows/test.yml)
 
 <p><img src="./Screenshots/header.png" width="100%" />
